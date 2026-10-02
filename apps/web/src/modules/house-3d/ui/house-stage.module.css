@@ -1,0 +1,47 @@
+.stage {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.viewport {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--scene-background);
+}
+
+.poster {
+  object-fit: cover;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  touch-action: none;
+}
+
+.shown {
+  opacity: 1;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--control-height);
+}
+
+.note {
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}
