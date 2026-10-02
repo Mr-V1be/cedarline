@@ -7,10 +7,10 @@ import {
   type Configuration,
   type ConfigurationState,
 } from '@kedrovnik/configurator'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import type { ConfiguratorView } from '../application/open-configurator'
-import { stepOfGroup, visibleSteps, type Step, type StepKey } from './steps/steps'
+import { STEPS, stepOfGroup, visibleSteps, type Step, type StepKey } from './steps/steps'
 
 export interface ConfiguratorController {
   readonly configuration: Configuration
@@ -37,9 +37,26 @@ export function useConfigurator(view: ConfiguratorView): ConfiguratorController 
   const [revision, setRevision] = useState(0)
 
   const state = useMemo(() => configurator.evaluate(configuration), [configurator, configuration])
-  const steps = useMemo(() => visibleSteps(state), [state])
+  // Keyed by the visible step keys: the list changes only when a step appears or disappears.
+  const visible = visibleSteps(state)
+    .map((candidate) => candidate.key)
+    .join(',')
+  const steps = useMemo(
+    () => STEPS.filter((candidate) => visible.split(',').includes(candidate.key)),
+    [visible],
+  )
   const step =
     steps.find((candidate) => candidate.key === stepKey) ?? steps[0] ?? stepOfGroup('footprint')
+  // Stable between choices, so the page's scroll observer is not rebuilt on every click.
+  const goTo = useCallback(
+    (key: StepKey) => {
+      const target = steps.find((candidate) => candidate.key === key)
+      if (target === undefined) return
+      setStepKey(target.key)
+      setCamera(target.camera)
+    },
+    [steps],
+  )
 
   return {
     configuration,
@@ -58,11 +75,6 @@ export function useConfigurator(view: ConfiguratorView): ConfiguratorController 
         if (!(error instanceof ConfiguratorError)) throw error
       }
     },
-    goTo: (key) => {
-      const target = steps.find((candidate) => candidate.key === key)
-      if (target === undefined) return
-      setStepKey(target.key)
-      setCamera(target.camera)
-    },
+    goTo,
   }
 }

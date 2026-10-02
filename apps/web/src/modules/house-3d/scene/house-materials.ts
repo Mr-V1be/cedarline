@@ -15,6 +15,7 @@ export interface HouseMaterialSettings {
 const NORMAL_STRENGTH = 1
 const SEAM_WIDTH = 0.006
 const SEAM_DARKENING = 0.5
+const ROOF_ROUGHNESS = 0.62
 
 /** Full PBR material from a texture set; colourable sets are multiplied by `color`. */
 function pbr(
@@ -97,8 +98,14 @@ export function createHouseMaterials(
       ...emissive,
     }),
     floor: pbr(textures.deck, SCENE_PALETTE.plain, emissive),
-    // Painted steel: a little metal, a dulled sky reflection, so the roof reads dark from above.
-    roof: pbr(textures.roofMetal, SCENE_PALETTE.roof, { metalness: 0.3, envMapIntensity: 0.55 }),
+    // Painted steel: satin finish (no glossy roughness map), a little metal and a dulled sky
+    // reflection, so slopes facing the sun stay the colour of the roof instead of turning silver.
+    roof: pbr(textures.roofMetal, SCENE_PALETTE.roof, {
+      metalness: 0.3,
+      roughness: ROOF_ROUGHNESS,
+      roughnessMap: null,
+      envMapIntensity: 0.55,
+    }),
     roofTrim: plain(SCENE_PALETTE.roofTrim, 0.6, 0.3),
     plinth: pbr(textures.concrete, SCENE_PALETTE.plain),
     frame: plain(SCENE_PALETTE.frame, 0.45, 0.2),
