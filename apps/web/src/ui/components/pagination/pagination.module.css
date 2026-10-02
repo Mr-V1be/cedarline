@@ -1,0 +1,40 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.pages {
+  display: flex;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.page,
+.step {
+  display: grid;
+  place-items: center;
+  min-width: var(--control-height);
+  height: var(--control-height);
+  border-radius: var(--radius-s);
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+}
+
+.page:hover,
+.step:hover {
+  background: var(--color-surface-sunken);
+}
+
+.page[aria-current='page'] {
+  background: var(--color-pine);
+  color: var(--color-on-pine);
+}
+
+.gap {
+  display: grid;
+  place-items: center;
+  min-width: var(--space-6);
+  color: var(--color-ink-faint);
+}

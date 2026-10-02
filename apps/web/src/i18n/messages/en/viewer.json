@@ -1,0 +1,10 @@
+{
+  "label": "3D model of the “{project}” project",
+  "unsupported": "This browser cannot show 3D. Renders and the floor plan are below.",
+  "views": {
+    "label": "View",
+    "front": "Front",
+    "corner": "Corner",
+    "aerial": "Above"
+  }
+}

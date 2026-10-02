@@ -1,0 +1,36 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+  font-size: var(--text-s);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.separator {
+  color: var(--color-ink-faint);
+}
+
+.link {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.current {
+  overflow: hidden;
+  color: var(--color-ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

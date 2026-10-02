@@ -1,0 +1,28 @@
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-7);
+}
+
+.text {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 46rem;
+}
+
+.title {
+  font-size: var(--display-m);
+  line-height: var(--leading-display);
+}
+
+.lead {
+  color: var(--color-ink-muted);
+  font-size: var(--text-l);
+}
+
+.aside {
+  flex: none;
+}

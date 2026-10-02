@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-gap);
+}
+
+.paper {
+  background: var(--color-paper);
+}
+
+.sunken {
+  background: var(--color-surface-sunken);
+}
+
+.pine {
+  background: var(--color-pine);
+  color: var(--color-on-pine);
+}

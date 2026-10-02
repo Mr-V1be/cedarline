@@ -1,0 +1,58 @@
+{
+  "breadcrumbs": {
+    "label": "Вы здесь",
+    "catalog": "Проекты"
+  },
+  "facts": {
+    "area": "Общая площадь",
+    "dimensions": "Габариты",
+    "storeys": "Этажность",
+    "bedrooms": "Спальни",
+    "wetZones": "Санузлы",
+    "terrace": "Терраса",
+    "ridge": "Высота в коньке"
+  },
+  "price": {
+    "from": "Цена от",
+    "completeness": "Комплектация «{name}»",
+    "duration": "Срок строительства"
+  },
+  "gallery": {
+    "region": "Изображения проекта",
+    "previous": "Предыдущее изображение",
+    "next": "Следующее изображение",
+    "model": "3D-модель"
+  },
+  "plan": {
+    "title": "Планировка",
+    "levels": "Уровень",
+    "level": "{level, select, 0 {Первый этаж} 1 {Второй этаж} 2 {Третий этаж} other {Этаж}}",
+    "attic": "Мансарда",
+    "rooms": "Помещения",
+    "total": "Итого по помещениям",
+    "scale": "М 1:100",
+    "drawing": "План: {level}. Размеры в миллиметрах."
+  },
+  "completeness": {
+    "title": "Комплектации",
+    "lead": "Цены с материалами, доставкой и монтажом. Срок — от договора до сдачи.",
+    "includes": "Что входит"
+  },
+  "specs": {
+    "title": "Характеристики",
+    "wall": "Наружная стена",
+    "wallValue": "каркас с утеплителем {insulation, number, integer} мм, всего {total, number, integer} мм",
+    "thermal": "Сопротивление теплопередаче стены",
+    "thermalValue": "{value, number, ::.##} м²·°C/Вт",
+    "roof": "Кровля",
+    "roofValue": "{kind}, уклон {pitch, number, integer}°",
+    "facade": "Фасад",
+    "windows": "Окна",
+    "ceiling": "Высота потолков",
+    "foundation": "Фундамент",
+    "foundationValue": "винтовые сваи, {count, number, integer} шт."
+  },
+  "similar": {
+    "title": "Похожие проекты"
+  }
+}

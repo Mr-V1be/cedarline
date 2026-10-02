@@ -1,0 +1,78 @@
+{
+  "roofKind": { "gable": "Двускатная", "shed": "Односкатная", "gambrel": "Ломаная" },
+  "facadeFinish": {
+    "timber-imitation": "Имитация бруса",
+    "planken": "Планкен",
+    "fiber-cement": "Фиброцемент"
+  },
+  "windowStyle": { "standard": "Обычные", "panoramic": "Панорамные" },
+  "wallSide": {
+    "front": "Главный фасад",
+    "right": "Правый фасад",
+    "back": "Задний фасад",
+    "left": "Левый фасад"
+  },
+  "openingType": { "window": "Окно", "door": "Дверь" },
+  "windowRole": { "view": "Видовое", "standard": "Обычное" },
+  "ridgeAxis": { "x": "Конёк вдоль ширины", "y": "Конёк вдоль глубины" },
+  "doorOrientation": { "horizontal": "В горизонтальной стене", "vertical": "В вертикальной стене" },
+  "galleryView": {
+    "front": "Фасад",
+    "back": "Вид сзади",
+    "side": "Сбоку",
+    "aerial": "Сверху",
+    "detail": "Деталь"
+  },
+  "layerRole": {
+    "cladding": "Наружная отделка",
+    "air-gap": "Вентилируемый зазор",
+    "membrane": "Мембрана",
+    "insulation": "Каркас и утеплитель",
+    "batten": "Инсталляционный зазор",
+    "lining": "Внутренняя отделка"
+  },
+  "quantityUnit": { "m2": "м²", "m": "м", "pcs": "шт.", "set": "компл." },
+  "quantityDriver": {
+    "lumpSum": "Комплект",
+    "totalArea": "Общая площадь",
+    "footprintArea": "Площадь застройки",
+    "groundFloorArea": "Площадь пола первого этажа",
+    "slabArea": "Площадь перекрытий",
+    "ceilingArea": "Площадь утепляемого потолка",
+    "wallArea": "Площадь наружных стен",
+    "facadeArea": "Площадь фасада без проёмов",
+    "roofArea": "Площадь кровли",
+    "roofInsulationArea": "Площадь утепляемых скатов",
+    "windowArea": "Площадь окон",
+    "panoramicWindowArea": "Площадь панорамного остекления",
+    "windowCount": "Количество окон",
+    "exteriorDoorCount": "Наружные двери",
+    "interiorDoorCount": "Межкомнатные двери",
+    "terraceArea": "Площадь террасы",
+    "pileCount": "Количество свай",
+    "perimeter": "Периметр дома",
+    "wetZoneCount": "Мокрые зоны",
+    "chimneyCount": "Дымоходы"
+  },
+  "selectionOption": {
+    "roof": "Кровля",
+    "facade": "Фасад",
+    "windows": "Окна",
+    "insulation": "Утепление, мм",
+    "engineering": "Инженерные системы"
+  },
+  "catalogSort": {
+    "recommended": "Сначала рекомендуемые",
+    "price-asc": "Сначала дешевле",
+    "price-desc": "Сначала дороже",
+    "area-asc": "Сначала меньше",
+    "area-desc": "Сначала больше"
+  },
+  "storeyType": {
+    "1": "Одноэтажный",
+    "1-attic": "С мансардой",
+    "2": "Двухэтажный",
+    "2-attic": "Два этажа и мансарда",
+    "3": "Трёхэтажный"
+  }
+}

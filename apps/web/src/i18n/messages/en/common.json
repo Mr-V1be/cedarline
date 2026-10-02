@@ -1,0 +1,60 @@
+{
+  "brand": {
+    "name": "Kedrovnik",
+    "tagline": "Timber-frame houses and saunas from our own factory"
+  },
+  "meta": {
+    "title": "Kedrovnik — timber-frame houses and saunas from the manufacturer",
+    "description": "Catalogue of timber-frame houses, saunas and guest houses built in our own factory: floor plans, specifications, price and construction time for every project."
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "projects": "Projects",
+    "technology": "Technology",
+    "process": "Stages and timing",
+    "built": "Built houses"
+  },
+  "actions": {
+    "chooseProject": "Choose a project",
+    "openMenu": "Open menu",
+    "menu": "Menu",
+    "close": "Close",
+    "retry": "Try again",
+    "allProjects": "Full catalogue",
+    "toCatalog": "Go to the catalogue",
+    "toHome": "Back to home",
+    "open3d": "Open the 3D model",
+    "viewProject": "View project"
+  },
+  "theme": {
+    "label": "Dark theme"
+  },
+  "locale": {
+    "label": "Site language"
+  },
+  "footer": {
+    "contacts": "Contacts",
+    "sections": "Sections",
+    "copyright": "© {year} Kedrovnik",
+    "demo": "Demo version. The company and all data are fictional."
+  },
+  "units": {
+    "area": "{value, number, ::.##} m²",
+    "metres": "{value, number, ::.##} m",
+    "millimetres": "{value, number, integer} mm",
+    "dimensions": "{width, number, ::.##} × {depth, number, ::.##} m",
+    "weeks": "{count, plural, one {# week} other {# weeks}}",
+    "bedrooms": "{count, plural, one {# bedroom} other {# bedrooms}}",
+    "priceFrom": "from {price}"
+  },
+  "states": {
+    "errorTitle": "The page did not load",
+    "errorDescription": "The server did not respond in time. Try again — your filters and choices are kept.",
+    "notFoundTitle": "This page does not exist",
+    "notFoundDescription": "The project may have been unpublished, or the address has a typo."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content"
+  }
+}

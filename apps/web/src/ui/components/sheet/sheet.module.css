@@ -1,0 +1,85 @@
+.sheet {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 88dvh;
+  margin: auto 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-overlay);
+  translate: 0 100%;
+  transition:
+    translate var(--duration-base) var(--ease-out),
+    overlay var(--duration-base) allow-discrete,
+    display var(--duration-base) allow-discrete;
+}
+
+.sheet[open] {
+  translate: 0 0;
+}
+
+@starting-style {
+  .sheet[open] {
+    translate: 0 100%;
+  }
+}
+
+.sheet::backdrop {
+  background: var(--color-scrim);
+}
+
+@media (width >= 768px) {
+  .sheet {
+    width: min(440px, 100%);
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    border-radius: 0;
+    translate: 100% 0;
+  }
+
+  @starting-style {
+    .sheet[open] {
+      translate: 100% 0;
+    }
+  }
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  max-height: inherit;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.title {
+  font-size: var(--display-xs);
+}
+
+.body {
+  overflow-y: auto;
+  padding: var(--space-5);
+  overscroll-behavior: contain;
+}
+
+.footer {
+  padding: var(--space-4) var(--space-5) calc(var(--space-4) + env(safe-area-inset-bottom));
+  border-top: var(--hairline) solid var(--color-line);
+  background: var(--color-surface);
+}
+
+:global(html:has(dialog[open])) {
+  overflow: hidden;
+}

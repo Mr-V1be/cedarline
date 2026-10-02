@@ -1,0 +1,43 @@
+{
+  "hero": {
+    "title": "Timber-frame houses and saunas from our own factory",
+    "lead": "Choose a project, look at it in 3D and get an itemised estimate and construction time straight away.",
+    "drawing": "Project “{project}”",
+    "area": "Total area",
+    "dimensions": "Dimensions",
+    "price": "Price"
+  },
+  "featured": {
+    "title": "Selected projects",
+    "lead": "Prices are for the base specification with materials, delivery and assembly."
+  },
+  "technology": {
+    "title": "The wall in section",
+    "lead": "Every house in the catalogue is built from these layers. You choose the insulation thickness.",
+    "insulation": "Insulation",
+    "insulationOption": "{value, number, integer} mm",
+    "thickness": "Wall thickness",
+    "resistance": "Thermal resistance",
+    "resistanceValue": "{value, number, ::.##} m²·°C/W",
+    "drawing": "Section of the exterior wall with {value, number, integer} mm insulation",
+    "outside": "Outside",
+    "inside": "Inside"
+  },
+  "process": {
+    "title": "Stages and timing",
+    "lead": "Schedule of the “{project}” project, “{completeness}” specification. The kit is made in the factory while piles go in on site.",
+    "total": "Start to finish",
+    "weekRange": "wk {from, number, integer}–{to, number, integer}",
+    "weekSingle": "wk {week, number, integer}",
+    "axis": "Weeks"
+  },
+  "built": {
+    "title": "Built houses",
+    "place": "{settlement}, {region}",
+    "year": "Completed in {year, number, ::group-off}"
+  },
+  "cta": {
+    "title": "Every project in 3D",
+    "lead": "The model is built from the same data as the estimate: dimensions, roof, windows, terrace."
+  }
+}

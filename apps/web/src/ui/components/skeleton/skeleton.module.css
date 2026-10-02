@@ -1,0 +1,36 @@
+.skeleton {
+  display: block;
+  background: linear-gradient(
+    100deg,
+    var(--color-surface-sunken) 30%,
+    var(--color-line) 50%,
+    var(--color-surface-sunken) 70%
+  );
+  background-size: 300% 100%;
+  animation: shimmer 1.6s var(--ease-in-out) infinite;
+}
+
+.block {
+  border-radius: var(--radius-m);
+}
+
+.line {
+  height: 1em;
+  border-radius: var(--radius-s);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

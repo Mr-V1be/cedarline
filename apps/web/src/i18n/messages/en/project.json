@@ -1,0 +1,58 @@
+{
+  "breadcrumbs": {
+    "label": "You are here",
+    "catalog": "Projects"
+  },
+  "facts": {
+    "area": "Total area",
+    "dimensions": "Dimensions",
+    "storeys": "Storeys",
+    "bedrooms": "Bedrooms",
+    "wetZones": "Bathrooms",
+    "terrace": "Terrace",
+    "ridge": "Ridge height"
+  },
+  "price": {
+    "from": "Price from",
+    "completeness": "“{name}” specification",
+    "duration": "Construction time"
+  },
+  "gallery": {
+    "region": "Project images",
+    "previous": "Previous image",
+    "next": "Next image",
+    "model": "3D model"
+  },
+  "plan": {
+    "title": "Floor plan",
+    "levels": "Level",
+    "level": "{level, select, 0 {Ground floor} 1 {First floor} 2 {Second floor} other {Floor}}",
+    "attic": "Attic floor",
+    "rooms": "Rooms",
+    "total": "Total of rooms",
+    "scale": "Scale 1:100",
+    "drawing": "Plan: {level}. Dimensions in millimetres."
+  },
+  "completeness": {
+    "title": "Specifications",
+    "lead": "Prices include materials, delivery and assembly. Time runs from contract to handover.",
+    "includes": "Included"
+  },
+  "specs": {
+    "title": "Characteristics",
+    "wall": "Exterior wall",
+    "wallValue": "frame with {insulation, number, integer} mm insulation, {total, number, integer} mm overall",
+    "thermal": "Wall thermal resistance",
+    "thermalValue": "{value, number, ::.##} m²·°C/W",
+    "roof": "Roof",
+    "roofValue": "{kind}, {pitch, number, integer}° pitch",
+    "facade": "Facade",
+    "windows": "Windows",
+    "ceiling": "Ceiling height",
+    "foundation": "Foundation",
+    "foundationValue": "screw piles, {count, number, integer} pcs"
+  },
+  "similar": {
+    "title": "Similar projects"
+  }
+}

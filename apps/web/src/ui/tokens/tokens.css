@@ -1,0 +1,204 @@
+/*
+ * Design tokens. Components use only these custom properties; colour literals live here and
+ * nowhere else. Light theme by default, dark via prefers-color-scheme or an explicit choice.
+ */
+:root {
+  color-scheme: light;
+
+  /* Palette: drafting paper, graphite, pine, pale larch, resin amber. */
+  --color-paper: #f3f3ee;
+  --color-surface: #fafaf7;
+  --color-surface-sunken: #e9eae3;
+  --color-ink: #1f2421;
+  --color-ink-muted: #59605c;
+  --color-ink-faint: #858b87;
+  --color-line: #d7d9d1;
+  --color-line-strong: #b4b8ae;
+  --color-pine: #1e3b2f;
+  --color-pine-hover: #2a4d3e;
+  --color-on-pine: #f3f3ee;
+  --color-pine-soft: #dbe5dd;
+  --color-wood: #d8be94;
+  --color-wood-strong: #a8875a;
+  --color-wood-soft: #efe4d1;
+  --color-accent: #a9661a;
+  --color-accent-soft: #f1e1c8;
+  --color-danger: #a23b2c;
+  --color-scrim: rgb(20 24 22 / 48%);
+  --color-glass-pane: rgb(250 250 247 / 84%);
+
+  /* Drawing palette for plans, sections and charts. */
+  --drawing-wall: #2b312d;
+  --drawing-partition: #59605c;
+  --drawing-room: #fafaf7;
+  --drawing-wet: #e3ebe6;
+  --drawing-terrace: #efe4d1;
+  --drawing-dimension: #6f7671;
+  --drawing-insulation: #e6cf9f;
+  --drawing-membrane: #3f6f55;
+  --drawing-air: #f3f3ee;
+
+  /* 3D scene background must match the surface the canvas sits on. */
+  --scene-background: #e9eae3;
+
+  /* Typography. */
+  --font-ui: var(--font-manrope-latin), var(--font-manrope-cyrillic), system-ui, sans-serif;
+  --font-display: var(--font-literata-latin), var(--font-literata-cyrillic), georgia, serif;
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-s: 0.875rem;
+  --text-m: 1rem;
+  --text-l: 1.125rem;
+  --text-xl: 1.375rem;
+  --display-xs: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --display-s: clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem);
+  --display-m: clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem);
+  --display-l: clamp(2.5rem, 1.9rem + 2.6vw, 4.25rem);
+  --leading-display: 1.04;
+  --leading-tight: 1.2;
+  --leading-body: 1.55;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --tracking-display: -0.015em;
+  --tracking-tight: -0.01em;
+  --measure: 62ch;
+
+  /* Spacing: 4 px base. */
+  --space-0: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --section-gap: clamp(var(--space-8), 6vw + var(--space-4), var(--space-10));
+
+  /* Layout. */
+  --container: 1360px;
+  --gutter: clamp(16px, 3.6vw, 48px);
+  --header-height: 64px;
+  --control-height: 44px;
+  --control-height-s: 36px;
+  --icon-s: 16px;
+  --icon-m: 20px;
+  --icon-l: 24px;
+  --hairline: 1px;
+  --stroke: 1.5px;
+
+  /* Shape and depth. */
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 14px;
+  --radius-pill: 999px;
+  --shadow-raised: 0 1px 2px rgb(31 36 33 / 6%), 0 8px 24px -12px rgb(31 36 33 / 18%);
+  --shadow-overlay: 0 24px 64px -16px rgb(31 36 33 / 32%);
+
+  /* Motion. */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 140ms;
+  --duration-base: 240ms;
+  --duration-slow: 520ms;
+
+  /* Stacking. */
+  --z-sticky: 20;
+  --z-header: 50;
+  --z-sheet: 80;
+}
+
+@media (width < 768px) {
+  :root {
+    --header-height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}
+
+/* Dark theme: system preference unless the visitor chose light, or an explicit dark choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --color-paper: #131715;
+    --color-surface: #1a1f1c;
+    --color-surface-sunken: #0f1311;
+    --color-ink: #e8e9e3;
+    --color-ink-muted: #a3aaa5;
+    --color-ink-faint: #737a76;
+    --color-line: #2b322e;
+    --color-line-strong: #434c47;
+    --color-pine: #a7cbb4;
+    --color-pine-hover: #bcd8c6;
+    --color-on-pine: #10241a;
+    --color-pine-soft: #23342b;
+    --color-wood: #c9ab80;
+    --color-wood-strong: #d9be95;
+    --color-wood-soft: #2d271e;
+    --color-accent: #e2a04a;
+    --color-accent-soft: #3a2c19;
+    --color-danger: #e08473;
+    --color-scrim: rgb(0 0 0 / 60%);
+    --color-glass-pane: rgb(26 31 28 / 86%);
+    --drawing-wall: #d3d6cf;
+    --drawing-partition: #9aa19c;
+    --drawing-room: #1a1f1c;
+    --drawing-wet: #1f2b25;
+    --drawing-terrace: #2d271e;
+    --drawing-dimension: #8b928d;
+    --drawing-insulation: #6b5a37;
+    --drawing-membrane: #7fb294;
+    --drawing-air: #131715;
+    --scene-background: #0f1311;
+    --shadow-raised: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px -12px rgb(0 0 0 / 60%);
+    --shadow-overlay: 0 24px 64px -16px rgb(0 0 0 / 70%);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-paper: #131715;
+  --color-surface: #1a1f1c;
+  --color-surface-sunken: #0f1311;
+  --color-ink: #e8e9e3;
+  --color-ink-muted: #a3aaa5;
+  --color-ink-faint: #737a76;
+  --color-line: #2b322e;
+  --color-line-strong: #434c47;
+  --color-pine: #a7cbb4;
+  --color-pine-hover: #bcd8c6;
+  --color-on-pine: #10241a;
+  --color-pine-soft: #23342b;
+  --color-wood: #c9ab80;
+  --color-wood-strong: #d9be95;
+  --color-wood-soft: #2d271e;
+  --color-accent: #e2a04a;
+  --color-accent-soft: #3a2c19;
+  --color-danger: #e08473;
+  --color-scrim: rgb(0 0 0 / 60%);
+  --color-glass-pane: rgb(26 31 28 / 86%);
+  --drawing-wall: #d3d6cf;
+  --drawing-partition: #9aa19c;
+  --drawing-room: #1a1f1c;
+  --drawing-wet: #1f2b25;
+  --drawing-terrace: #2d271e;
+  --drawing-dimension: #8b928d;
+  --drawing-insulation: #6b5a37;
+  --drawing-membrane: #7fb294;
+  --drawing-air: #131715;
+  --scene-background: #0f1311;
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px -12px rgb(0 0 0 / 60%);
+  --shadow-overlay: 0 24px 64px -16px rgb(0 0 0 / 70%);
+}

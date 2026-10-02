@@ -1,0 +1,73 @@
+{
+  "roofKind": { "gable": "Gable", "shed": "Shed", "gambrel": "Gambrel" },
+  "facadeFinish": {
+    "timber-imitation": "Timber imitation",
+    "planken": "Planken boards",
+    "fiber-cement": "Fibre cement"
+  },
+  "windowStyle": { "standard": "Standard", "panoramic": "Panoramic" },
+  "wallSide": { "front": "Front", "right": "Right", "back": "Rear", "left": "Left" },
+  "openingType": { "window": "Window", "door": "Door" },
+  "windowRole": { "view": "View window", "standard": "Standard window" },
+  "ridgeAxis": { "x": "Ridge along the width", "y": "Ridge along the depth" },
+  "doorOrientation": { "horizontal": "In a horizontal wall", "vertical": "In a vertical wall" },
+  "galleryView": {
+    "front": "Front",
+    "back": "Rear",
+    "side": "Side",
+    "aerial": "Aerial",
+    "detail": "Detail"
+  },
+  "layerRole": {
+    "cladding": "Cladding",
+    "air-gap": "Ventilated gap",
+    "membrane": "Membrane",
+    "insulation": "Frame and insulation",
+    "batten": "Service void",
+    "lining": "Interior lining"
+  },
+  "quantityUnit": { "m2": "m²", "m": "m", "pcs": "pcs", "set": "set" },
+  "quantityDriver": {
+    "lumpSum": "Lump sum",
+    "totalArea": "Total floor area",
+    "footprintArea": "Footprint area",
+    "groundFloorArea": "Ground floor area",
+    "slabArea": "Floor slab area",
+    "ceilingArea": "Insulated ceiling area",
+    "wallArea": "Exterior wall area",
+    "facadeArea": "Facade area net of openings",
+    "roofArea": "Roof area",
+    "roofInsulationArea": "Insulated slope area",
+    "windowArea": "Window area",
+    "panoramicWindowArea": "Panoramic glazing area",
+    "windowCount": "Window count",
+    "exteriorDoorCount": "Exterior doors",
+    "interiorDoorCount": "Interior doors",
+    "terraceArea": "Terrace area",
+    "pileCount": "Pile count",
+    "perimeter": "House perimeter",
+    "wetZoneCount": "Wet rooms",
+    "chimneyCount": "Chimneys"
+  },
+  "selectionOption": {
+    "roof": "Roof",
+    "facade": "Facade",
+    "windows": "Windows",
+    "insulation": "Insulation, mm",
+    "engineering": "Building services"
+  },
+  "catalogSort": {
+    "recommended": "Recommended first",
+    "price-asc": "Price: low to high",
+    "price-desc": "Price: high to low",
+    "area-asc": "Area: small to large",
+    "area-desc": "Area: large to small"
+  },
+  "storeyType": {
+    "1": "Single storey",
+    "1-attic": "With attic floor",
+    "2": "Two storeys",
+    "2-attic": "Two storeys and attic",
+    "3": "Three storeys"
+  }
+}

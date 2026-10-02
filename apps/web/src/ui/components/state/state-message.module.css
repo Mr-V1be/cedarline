@@ -1,0 +1,40 @@
+.state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: calc(var(--control-height) + var(--space-3));
+  height: calc(var(--control-height) + var(--space-3));
+  border-radius: var(--radius-pill);
+}
+
+.neutral {
+  background: var(--color-surface-sunken);
+  color: var(--color-ink-muted);
+}
+
+.error {
+  background: var(--color-accent-soft);
+  color: var(--color-danger);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  line-height: var(--leading-tight);
+}
+
+.description {
+  max-width: 44ch;
+  color: var(--color-ink-muted);
+}
+
+.action {
+  margin-top: var(--space-3);
+}

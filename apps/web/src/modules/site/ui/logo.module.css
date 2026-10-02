@@ -1,0 +1,21 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.mark {
+  width: calc(var(--icon-l) + var(--space-2));
+  height: calc(var(--icon-l) + var(--space-2));
+  color: var(--color-pine);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+}
