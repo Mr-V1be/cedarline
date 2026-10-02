@@ -55,6 +55,12 @@ jobs:
       DATABASE_URL: postgres://kedrovnik:ci-only-password@localhost:5432/kedrovnik
       PAYLOAD_SECRET: ci-only-secret-that-is-at-least-32-characters
       SITE_URL: http://localhost:46100
+      # No mail is sent in CI; the transport only has to be configured.
+      SMTP_HOST: localhost
+      SMTP_PORT: '1025'
+      MAIL_FROM_ADDRESS: ci@kedrovnik.example
+      MAIL_FROM_NAME: Kedrovnik CI
+      LEAD_SINKS: cms
       NEXT_TELEMETRY_DISABLED: '1'
     steps:
       - uses: actions/checkout@v7

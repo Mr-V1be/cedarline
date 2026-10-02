@@ -9,6 +9,12 @@
 
 Шрифты хранятся на собственном сервере (self-hosted), сторонние CDN не используются.
 
+Для КП в PDF (`apps/web/assets/fonts`) — статические начертания тех же шрифтов: Manrope 400 и
+600, Literata 500. Они получены из вариативных файлов репозитория Google Fonts
+(`ofl/manrope/Manrope[wght].ttf`, `ofl/literata/Literata[opsz,wght].ttf`) инструментом
+`fontTools varLib.instancer`; лицензия SIL OFL 1.1 сохранена, её тексты лежат рядом
+(`OFL-Manrope.txt`, `OFL-Literata.txt`).
+
 ## Иконки
 
 | Ассет          | Источник                                      | Лицензия |
