@@ -1,0 +1,216 @@
+import { t } from '../localized'
+import { plan, type ProjectSeed } from './builder'
+
+const olkha = plan(6000, 4000)
+const bereza = plan(7000, 6000)
+const juniper = plan(7000, 5000)
+const rowan = plan(6000, 6000)
+
+/** Sauna joinery: low doors and windows placed high for privacy. */
+const SAUNA_DOOR_HEIGHT = 2000
+
+export const SMALL_BUILDINGS: readonly ProjectSeed[] = [
+  {
+    slug: 'olkha',
+    type: 'sauna',
+    sortOrder: 60,
+    title: t('Ольха', 'Alder'),
+    summary: t(
+      'Баня 6 × 4 м: парная, моечная и комната отдыха с выходом на террасу.',
+      'A 6 × 4 m sauna: steam room, washing room and a lounge that opens onto the terrace.',
+    ),
+    design: {
+      width: 6000,
+      depth: 4000,
+      storeys: 1,
+      attic: false,
+      storeyHeight: 2300,
+      ridgeAxis: 'y',
+      rooms: [
+        olkha.room('lounge', 'lounge', 0, 0, 3400, 4000),
+        olkha.room('steam', 'steam', 3400, 0, 6000, 2200),
+        olkha.room('wash', 'wash', 3400, 2200, 6000, 4000),
+      ],
+      openings: [
+        olkha.window('w-lounge', 'front', 400, 1200, { height: 1200, sill: 900 }),
+        olkha.entrance('entrance', 'front', 2100, SAUNA_DOOR_HEIGHT),
+        olkha.window('w-wash', 'front', 4600, 600, { height: 600, sill: 1300 }),
+        olkha.window('w-steam', 'back', 4400, 500, { height: 400, sill: 1400 }),
+        olkha.window('w-lounge-side', 'left', 1200, 1200, { height: 1200, sill: 900 }),
+      ],
+      doors: [
+        olkha.door('d-wash', 3400, 3100, 'vertical', 700),
+        olkha.door('d-steam', 4700, 2200, 'horizontal', 700),
+      ],
+      terrace: { side: 'front', offset: 0, length: 6000, depth: 2000 },
+      chimney: { x: 3900, y: 900 },
+    },
+    defaults: {
+      roofKind: 'gable',
+      roofPitch: 30,
+      facadeFinish: 'timber-imitation',
+      facadeColor: '#6e4a2e',
+      windowStyle: 'standard',
+      insulation: 150,
+      engineering: ['electrics', 'water'],
+    },
+  },
+  {
+    slug: 'bereza',
+    type: 'sauna',
+    sortOrder: 70,
+    title: t('Берёза', 'Birch'),
+    summary: t(
+      'Банный дом с гостевой спальней и отдельным санузлом — можно остаться на ночь.',
+      'Sauna house with a guest bedroom and a separate bathroom, so guests can stay the night.',
+    ),
+    design: {
+      width: 7000,
+      depth: 6000,
+      storeys: 1,
+      attic: false,
+      storeyHeight: 2400,
+      ridgeAxis: 'x',
+      rooms: [
+        bereza.room('steam', 'steam', 0, 0, 2600, 2400),
+        bereza.room('wash', 'wash', 2600, 0, 4600, 2400),
+        bereza.room('bedroom', 'bedroom', 4600, 0, 7000, 2400),
+        bereza.room('lounge', 'lounge', 0, 2400, 4200, 6000),
+        bereza.room('corridor', 'corridor', 4200, 2400, 5600, 4200),
+        bereza.room('bath', 'bathroom', 5600, 2400, 7000, 4200),
+        bereza.room('hall', 'hall', 4200, 4200, 7000, 6000),
+      ],
+      openings: [
+        bereza.window('w-lounge', 'front', 700, 1800, { role: 'view', height: 1400, sill: 800 }),
+        bereza.entrance('entrance', 'front', 5300, SAUNA_DOOR_HEIGHT),
+        bereza.window('w-steam', 'back', 900, 500, { height: 400, sill: 1400 }),
+        bereza.window('w-wash', 'back', 3300, 600, { height: 600, sill: 1300 }),
+        bereza.window('w-bedroom', 'back', 5300, 1200, { height: 1300, sill: 900 }),
+        bereza.window('w-lounge-side', 'left', 3400, 1600, {
+          role: 'view',
+          height: 1400,
+          sill: 800,
+        }),
+        bereza.small('w-bath', 'right', 3000),
+      ],
+      doors: [
+        bereza.door('d-lounge', 4200, 5100, 'vertical', 900),
+        bereza.door('d-corridor', 4900, 4200, 'horizontal', 800),
+        bereza.door('d-bath', 5600, 3300, 'vertical', 700),
+        bereza.door('d-bedroom', 5100, 2400, 'horizontal', 800),
+        bereza.door('d-wash', 3400, 2400, 'horizontal', 700),
+        bereza.door('d-steam', 2600, 1200, 'vertical', 700),
+      ],
+      terrace: { side: 'front', offset: 300, length: 4600, depth: 2400 },
+      chimney: { x: 1900, y: 1600 },
+    },
+    defaults: {
+      roofKind: 'gable',
+      roofPitch: 28,
+      facadeFinish: 'planken',
+      facadeColor: '#5e6650',
+      windowStyle: 'standard',
+      insulation: 150,
+      engineering: ['electrics', 'water'],
+    },
+  },
+  {
+    slug: 'mozhzhevelnik',
+    type: 'guest-house',
+    sortOrder: 80,
+    title: t('Можжевельник', 'Juniper'),
+    summary: t(
+      'Гостевой дом с панорамным фасадом: гостиная с кухней, спальня и душевая.',
+      'Guest house with a glazed front: living room with kitchenette, bedroom and shower room.',
+    ),
+    design: {
+      width: 7000,
+      depth: 5000,
+      storeys: 1,
+      attic: false,
+      storeyHeight: 2700,
+      ridgeAxis: 'x',
+      rooms: [
+        juniper.room('living', 'kitchen-living', 0, 0, 4400, 5000),
+        juniper.room('bath', 'bathroom', 4400, 0, 7000, 1800),
+        juniper.room('bedroom', 'bedroom', 4400, 1800, 7000, 5000),
+      ],
+      openings: [
+        juniper.window('w-living', 'front', 600, 3200, { role: 'view' }),
+        juniper.window('w-bedroom', 'front', 4900, 1600, { role: 'view' }),
+        juniper.small('w-bath', 'back', 5400),
+        juniper.window('w-living-back', 'back', 1800, 1200),
+        juniper.entrance('entrance', 'left', 600),
+        juniper.window('w-bedroom-side', 'right', 2600, 1200),
+      ],
+      doors: [
+        juniper.door('d-bedroom', 4400, 3000, 'vertical'),
+        juniper.door('d-bath', 4400, 900, 'vertical', 700),
+      ],
+      terrace: { side: 'front', offset: 0, length: 7000, depth: 2400 },
+      chimney: null,
+    },
+    defaults: {
+      roofKind: 'shed',
+      roofPitch: 12,
+      facadeFinish: 'fiber-cement',
+      facadeColor: '#2f3331',
+      windowStyle: 'panoramic',
+      insulation: 150,
+      engineering: ['electrics', 'water', 'heating'],
+    },
+  },
+  {
+    slug: 'ryabina',
+    type: 'guest-house',
+    sortOrder: 90,
+    title: t('Рябина', 'Rowan'),
+    summary: t(
+      'Гостевой дом с мансардной спальней под крутой двускатной кровлей.',
+      'Guest house with an attic bedroom under a steep gable roof.',
+    ),
+    design: {
+      width: 6000,
+      depth: 6000,
+      storeys: 1,
+      attic: true,
+      storeyHeight: 2600,
+      ridgeAxis: 'y',
+      rooms: [
+        rowan.room('stair', 'stair', 0, 0, 1200, 2400),
+        rowan.room('bath', 'bathroom', 1200, 0, 3600, 2400),
+        rowan.room('plant', 'plant', 3600, 0, 6000, 2400),
+        rowan.room('living', 'kitchen-living', 0, 2400, 6000, 6000),
+        rowan.room('stair-2', 'stair', 0, 0, 1200, 2400, 1),
+        rowan.room('landing', 'corridor', 0, 2400, 1200, 6000, 1),
+        rowan.room('bedroom', 'bedroom', 1200, 0, 6000, 6000, 1),
+      ],
+      openings: [
+        rowan.window('w-living', 'front', 600, 1800, { role: 'view' }),
+        rowan.entrance('entrance', 'front', 3000),
+        rowan.window('w-living-2', 'front', 4500, 1000),
+        rowan.small('w-bath', 'back', 2100),
+        rowan.window('w-living-left', 'left', 3200, 1600, { role: 'view' }),
+        rowan.window('w-living-right', 'right', 3200, 1600, { role: 'view' }),
+        rowan.window('w-bedroom-front', 'front', 2400, 1200, { level: 1 }),
+        rowan.window('w-bedroom-back', 'back', 2400, 1200, { level: 1 }),
+      ],
+      doors: [
+        rowan.door('d-bath', 2400, 2400, 'horizontal', 700),
+        rowan.door('d-plant', 4800, 2400, 'horizontal', 700),
+        rowan.door('d-bedroom', 1200, 3600, 'vertical', 800, 1),
+      ],
+      terrace: { side: 'front', offset: 0, length: 6000, depth: 1800 },
+      chimney: null,
+    },
+    defaults: {
+      roofKind: 'gable',
+      roofPitch: 40,
+      facadeFinish: 'timber-imitation',
+      facadeColor: '#7b3226',
+      windowStyle: 'standard',
+      insulation: 150,
+      engineering: ['electrics', 'water', 'heating'],
+    },
+  },
+]
