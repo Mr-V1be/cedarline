@@ -1,0 +1,77 @@
+{
+  "skies": {
+    "day": {
+      "source": "polyhaven",
+      "id": "kloofendal_48d_partly_cloudy_puresky"
+    },
+    "evening": {
+      "source": "polyhaven",
+      "id": "qwantani_dusk_2_puresky"
+    }
+  },
+  "materials": {
+    "grass": {
+      "source": "ambientcg",
+      "id": "Grass001",
+      "tile": 1.4,
+      "neutral": true,
+      "size": 512
+    },
+    "gravel": {
+      "source": "polyhaven",
+      "id": "gravel_floor",
+      "tile": 2.25,
+      "neutral": true,
+      "size": 512
+    },
+    "paving": {
+      "source": "polyhaven",
+      "id": "grey_stone_path",
+      "tile": 1.8,
+      "neutral": false,
+      "size": 512
+    },
+    "deck": {
+      "source": "polyhaven",
+      "id": "oak_wood_planks",
+      "tile": 1.2,
+      "neutral": true,
+      "size": 1024
+    },
+    "concrete": {
+      "source": "polyhaven",
+      "id": "brushed_concrete",
+      "tile": 2.5,
+      "neutral": false,
+      "size": 512
+    },
+    "planken": {
+      "source": "polyhaven",
+      "id": "brown_planks_05",
+      "tile": 1,
+      "neutral": true,
+      "size": 1024
+    },
+    "timber": {
+      "source": "polyhaven",
+      "id": "weathered_plank_siding",
+      "tile": 1.57,
+      "neutral": true,
+      "size": 1024
+    },
+    "plaster": {
+      "source": "polyhaven",
+      "id": "grey_plaster",
+      "tile": 1,
+      "neutral": true,
+      "size": 1024
+    },
+    "roofMetal": {
+      "source": "polyhaven",
+      "id": "box_profile_metal_sheet",
+      "tile": 2,
+      "neutral": true,
+      "size": 1024
+    }
+  }
+}

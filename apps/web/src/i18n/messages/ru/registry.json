@@ -37,6 +37,7 @@
   },
   "galleryView": {
     "front": "Фасад",
+    "evening": "Вечер",
     "back": "Вид сзади",
     "side": "Сбоку",
     "aerial": "Сверху",

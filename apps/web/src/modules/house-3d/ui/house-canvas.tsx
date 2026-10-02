@@ -1,24 +1,25 @@
 'use client'
 
-import { Canvas, useFrame } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
-import { PCFShadowMap } from 'three'
+import { PerformanceMonitor } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import { useEffect, useRef, useState } from 'react'
+import { ACESFilmicToneMapping, NoToneMapping, PCFShadowMap } from 'three'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'
 
 import type { CameraPreset } from '../domain/camera-presets'
-import { CameraRig } from './camera-rig'
-import { HouseModel, useHouseMesh } from './house-model'
-import { SceneEnvironment } from './scene-environment'
+import { HouseScene } from '../scene/house-scene'
+import type { ScenePresetKey } from '../scene/presets'
+import { QUALITY_TIERS, type QualityKey } from '../scene/quality'
 
 /** Vertical field of view: long-lens architectural perspective with little distortion. */
 const FIELD_OF_VIEW = 28
-/** Frames rendered before the scene counts as ready (shadows and environment settle). */
-const READY_AFTER_FRAMES = 3
 
 export interface HouseCanvasProps {
   readonly input: HouseViewerInput
   readonly preset: CameraPreset
+  readonly scene: ScenePresetKey
+  readonly quality: QualityKey
   readonly label: string
   /** Orbit controls and camera flights; off for still renders. */
   readonly interactive: boolean
@@ -28,56 +29,56 @@ export interface HouseCanvasProps {
   readonly onReady?: () => void
 }
 
-function ReadySignal({ onReady }: { readonly onReady: () => void }) {
-  const framesRef = useRef(0)
-  const doneRef = useRef(false)
-  useFrame(({ invalidate }) => {
-    if (doneRef.current) return
-    framesRef.current += 1
-    if (framesRef.current >= READY_AFTER_FRAMES) {
-      doneRef.current = true
-      onReady()
-    } else {
-      invalidate()
-    }
-  })
-  return null
-}
-
 export default function HouseCanvas({
   input,
   preset,
+  scene,
+  quality: initialQuality,
   label,
   interactive,
   animate,
   capture = false,
   onReady,
 }: HouseCanvasProps) {
-  const mesh = useHouseMesh(input)
-  const readyHandlerRef = useRef(onReady)
+  const [qualityKey, setQualityKey] = useState<QualityKey>(initialQuality)
+  const quality = QUALITY_TIERS[qualityKey]
+  const readyRef = useRef(onReady)
   useEffect(() => {
-    readyHandlerRef.current = onReady
+    readyRef.current = onReady
   }, [onReady])
+  const composed = quality.ambientOcclusion
 
   return (
     <Canvas
       shadows={{ type: PCFShadowMap }}
       frameloop="demand"
-      dpr={capture ? 1 : [1, 2]}
-      camera={{ fov: FIELD_OF_VIEW, near: 0.1, far: 500 }}
+      dpr={quality.dpr as number | [number, number]}
+      camera={{ fov: FIELD_OF_VIEW, near: 0.1, far: 1200 }}
       gl={{
-        antialias: true,
-        alpha: true,
+        antialias: !composed,
+        alpha: false,
         preserveDrawingBuffer: capture,
-        toneMappingExposure: 1.15,
+        toneMapping: composed ? NoToneMapping : ACESFilmicToneMapping,
       }}
       role="img"
       aria-label={label}
     >
-      <SceneEnvironment bounds={mesh.bounds} />
-      <HouseModel mesh={mesh} input={input} />
-      <CameraRig bounds={mesh.bounds} preset={preset} interactive={interactive} animate={animate} />
-      <ReadySignal onReady={() => readyHandlerRef.current?.()} />
+      {qualityKey === 'still' ? null : (
+        <PerformanceMonitor
+          onDecline={() => {
+            setQualityKey('low')
+          }}
+        />
+      )}
+      <HouseScene
+        input={input}
+        presetKey={scene}
+        quality={quality}
+        cameraPreset={preset}
+        interactive={interactive}
+        animate={animate}
+        onReady={() => readyRef.current?.()}
+      />
     </Canvas>
   )
 }

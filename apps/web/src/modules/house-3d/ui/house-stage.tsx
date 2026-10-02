@@ -11,6 +11,8 @@ import { Button } from '@/ui/components/button/button'
 import { SegmentedControl } from '@/ui/components/segmented/segmented-control'
 
 import { VIEWER_PRESETS, type ViewerPreset } from '../domain/camera-presets'
+import type { ScenePresetKey } from '../scene/presets'
+import { detectQuality } from '../scene/quality'
 import styles from './house-stage.module.css'
 
 const HouseCanvas = dynamic(() => import('./house-canvas'), { ssr: false })
@@ -56,13 +58,22 @@ interface HouseStageProps {
   /** The page's largest image: load the poster eagerly. */
   readonly priority?: boolean
   readonly sizes: string
+  /** Lighting preset of the live scene; matches the poster's. */
+  readonly scene?: ScenePresetKey
 }
 
 /**
  * A render of the house that turns into the live 3D model. The poster is shown at once; the
  * scene loads when the stage is visible and the browser is idle, or when asked to.
  */
-export function HouseStage({ input, poster, labels, priority = false, sizes }: HouseStageProps) {
+export function HouseStage({
+  input,
+  poster,
+  labels,
+  priority = false,
+  sizes,
+  scene = 'day',
+}: HouseStageProps) {
   const stageRef = useRef<HTMLDivElement>(null)
   const autoload = useMediaQuery(AUTOLOAD_QUERY) || poster === null
   const reducedMotion = useMediaQuery(REDUCED_MOTION_QUERY)
@@ -126,6 +137,8 @@ export function HouseStage({ input, poster, labels, priority = false, sizes }: H
             <HouseCanvas
               input={input}
               preset={preset}
+              scene={scene}
+              quality={detectQuality()}
               label={labels.model}
               interactive
               animate={!reducedMotion}

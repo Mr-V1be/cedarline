@@ -46,6 +46,12 @@ export function buildFloors(builder: MeshBuilder, mapping: WorldMapping, frame: 
   }
 }
 
+/** Steps down from a deck: as many as needed to keep each riser under the maximum. */
+export function terraceSteps(deckTop: number): { steps: number; riser: number; run: number } {
+  const steps = Math.max(0, Math.ceil(deckTop / STEP.maxRiser) - 1)
+  return { steps, riser: deckTop / (steps + 1), run: steps * STEP.tread }
+}
+
 /** Open deck with a skirt and steps centred on its outer edge. */
 export function buildTerrace(builder: MeshBuilder, mapping: WorldMapping, frame: HouseFrame) {
   const { terrace } = frame
@@ -68,8 +74,7 @@ export function buildTerrace(builder: MeshBuilder, mapping: WorldMapping, frame:
     [m(DECK_SKIRT_INSET), m(depth - DECK_SKIRT_INSET)],
   )
 
-  const steps = Math.max(0, Math.ceil(deckTop / STEP.maxRiser) - 1)
-  const riser = deckTop / (steps + 1)
+  const { steps, riser } = terraceSteps(deckTop)
   const stepWidth = Math.min(length, STEP.maxWidth)
   const centre = offset + length / 2
   for (let index = 1; index <= steps; index += 1) {

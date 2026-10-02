@@ -5,6 +5,8 @@
  */
 export const CAMERA_PRESETS = {
   corner: { azimuth: 34, elevation: 13 },
+  /** Eye level: more sky and forest behind the house, for evening views. */
+  eye: { azimuth: 30, elevation: 5 },
   front: { azimuth: 0, elevation: 7 },
   back: { azimuth: 214, elevation: 15 },
   side: { azimuth: -90, elevation: 8 },

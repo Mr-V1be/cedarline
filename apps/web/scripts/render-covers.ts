@@ -14,8 +14,8 @@ import { GALLERY_RENDERS, RENDER_SIZE, projectRenderName } from '@/seed/data/ren
 import { RENDER_DIRECTORY, renderFile } from '@/seed/steps/media'
 import { PROJECTS } from '@/seed/steps/projects'
 
-const WEBP = { quality: 86, alphaQuality: 92, effort: 5 } as const
-const READY_TIMEOUT_MS = 180_000
+const WEBP = { quality: 84, effort: 5 } as const
+const READY_TIMEOUT_MS = 600_000
 
 interface RenderJob {
   readonly name: string
@@ -24,9 +24,9 @@ interface RenderJob {
 
 const jobs: RenderJob[] = [
   ...PROJECTS.flatMap((project) =>
-    GALLERY_RENDERS.map(({ view, camera }) => ({
+    GALLERY_RENDERS.map(({ view, camera, scene }) => ({
       name: projectRenderName(project.slug, view),
-      path: `/render/${project.slug}?view=${camera}`,
+      path: `/render/${project.slug}?view=${camera}&scene=${scene}`,
     })),
   ),
   ...BUILT_OBJECTS.map((object) => ({
@@ -48,17 +48,28 @@ const browser = await chromium.launch({
 })
 try {
   const context = await browser.newContext({ viewport: RENDER_SIZE, deviceScaleFactor: 1 })
+  // A render can fail while the dev server recompiles; one retry keeps a long batch going.
+  const ATTEMPTS = 2
   for (const job of selected) {
-    const started = Date.now()
-    const page = await context.newPage()
-    await page.goto(new URL(job.path, base).toString(), { waitUntil: 'domcontentloaded' })
-    await page.waitForSelector(`html[${RENDER_READY_ATTRIBUTE}="true"]`, {
-      timeout: READY_TIMEOUT_MS,
-    })
-    const png = await page.screenshot({ omitBackground: true, type: 'png' })
-    await sharp(png).webp(WEBP).toFile(renderFile(job.name))
-    console.log(`${job.name} (${Math.round((Date.now() - started) / 1000)} s)`)
-    await page.close()
+    for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
+      const started = Date.now()
+      const page = await context.newPage()
+      try {
+        await page.goto(new URL(job.path, base).toString(), { waitUntil: 'domcontentloaded' })
+        await page.waitForSelector(`html[${RENDER_READY_ATTRIBUTE}="true"]`, {
+          timeout: READY_TIMEOUT_MS,
+        })
+        const png = await page.screenshot({ type: 'png' })
+        await sharp(png).webp(WEBP).toFile(renderFile(job.name))
+        console.log(`${job.name} (${Math.round((Date.now() - started) / 1000)} s)`)
+        break
+      } catch (error) {
+        if (attempt === ATTEMPTS) throw error
+        console.warn(`${job.name}: retrying after ${String(error)}`)
+      } finally {
+        await page.close()
+      }
+    }
   }
 } finally {
   await browser.close()

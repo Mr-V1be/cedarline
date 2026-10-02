@@ -3,8 +3,8 @@ import type { Bounds } from '@kedrovnik/house'
 import { CAMERA_PRESETS, type CameraPreset } from '../domain/camera-presets'
 
 const DEG = Math.PI / 180
-/** Share of the frame the house may fill, leaving a margin on the tightest side. */
-const FILL = 0.86
+/** Share of the frame the house may fill: the rest shows its plot, trees and sky. */
+const FILL = 0.74
 
 type Vector = readonly [number, number, number]
 

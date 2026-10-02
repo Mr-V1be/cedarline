@@ -31,7 +31,11 @@ export async function HeroSection({ hero }: { readonly hero: ProjectOverview | n
           <figure className={styles.visual}>
             <HouseStage
               input={hero.viewer}
-              poster={hero.project.cover}
+              scene="evening"
+              poster={
+                hero.project.gallery.find((item) => item.view === 'evening')?.image ??
+                hero.project.cover
+              }
               priority
               sizes="(min-width: 1100px) 56vw, 100vw"
               labels={{

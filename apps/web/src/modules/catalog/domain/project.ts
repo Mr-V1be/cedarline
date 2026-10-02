@@ -36,7 +36,7 @@ export interface ProjectPricing {
   readonly tariffRevision: number
 }
 
-export const GALLERY_VIEWS = ['front', 'back', 'side', 'aerial', 'detail'] as const
+export const GALLERY_VIEWS = ['front', 'evening', 'back', 'side', 'aerial', 'detail'] as const
 export type GalleryView = (typeof GALLERY_VIEWS)[number]
 
 export interface GalleryItem {

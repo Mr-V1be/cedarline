@@ -1,4 +1,6 @@
-import { existsSync } from 'node:fs'
+import { createHash } from 'node:crypto'
+import { copyFileSync, existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import path from 'node:path'
 
 import type { Payload } from 'payload'
@@ -12,34 +14,76 @@ const RENDER_SOURCE = 'Рендер 3D-сцены сайта / render of the sit
 
 export const renderFile = (name: string) => path.join(RENDER_DIRECTORY, `${name}.webp`)
 
-/** Uploads a render once; returns its id, or null when the render has not been produced yet. */
+/**
+ * Uploads a render and returns its id, or null when the render has not been produced yet.
+ * Renders are found by their import key; a re-produced render (another checksum) replaces the
+ * file of the same media document, so every page that shows it keeps its link.
+ */
 export async function seedRender(
   payload: Payload,
   name: string,
   alt: Localized,
 ): Promise<number | null> {
-  const filePath = renderFile(name)
-  if (!existsSync(filePath)) return null
-  const filename = path.basename(filePath)
+  const source = renderFile(name)
+  if (!existsSync(source)) return null
+  const key = `render:${name}`
+  const checksum = createHash('sha256').update(readFileSync(source)).digest('hex')
   const existing = await payload.find({
     ...SEED,
     collection: 'media',
-    where: { filename: { equals: filename } },
+    where: { 'origin.key': { equals: key } },
     limit: 1,
   })
-  let id = existing.docs[0]?.id
-  if (id === undefined) {
+  const stored = existing.docs[0]
+  const origin = { key, checksum }
+  let id: number
+  if (stored === undefined) {
     const created = await payload.create({
       ...SEED,
       collection: 'media',
       locale: 'ru',
-      data: { alt: alt.ru, source: RENDER_SOURCE },
-      filePath,
+      data: { alt: alt.ru, source: RENDER_SOURCE, origin },
+      filePath: source,
     })
     id = created.id
   } else {
-    await payload.update({ ...SEED, collection: 'media', id, locale: 'ru', data: { alt: alt.ru } })
+    id = stored.id
+    const changed = stored.origin?.checksum !== checksum
+    await withVersionedName(source, checksum, changed, (filePath) =>
+      payload.update({
+        ...SEED,
+        collection: 'media',
+        id,
+        locale: 'ru',
+        data: { alt: alt.ru, origin },
+        ...(filePath === undefined ? {} : { filePath }),
+      }),
+    )
   }
   await payload.update({ ...SEED, collection: 'media', id, locale: 'en', data: { alt: alt.en } })
   return id
+}
+
+/**
+ * Runs `upload` with a copy of the source named after its checksum when the file changed: the
+ * stored file gets a fresh name instead of colliding with the one it replaces.
+ */
+async function withVersionedName<T>(
+  source: string,
+  checksum: string,
+  changed: boolean,
+  upload: (filePath: string | undefined) => Promise<T>,
+): Promise<T> {
+  if (!changed) return upload(undefined)
+  const directory = mkdtempSync(path.join(tmpdir(), 'kedrovnik-render-'))
+  const versioned = path.join(
+    directory,
+    `${path.basename(source, '.webp')}-${checksum.slice(0, 8)}.webp`,
+  )
+  copyFileSync(source, versioned)
+  try {
+    return await upload(versioned)
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
 }

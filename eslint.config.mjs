@@ -32,6 +32,8 @@ export default tseslint.config(
       `${WEB}/cms/generated/**`,
       `${WEB}/migrations/**`,
       `${WEB}/app/(payload)/**`,
+      // Vendored Basis Universal transcoder, copied verbatim from the three package.
+      `apps/web/public/scene/basis/**`,
       'docs/**',
     ],
   },

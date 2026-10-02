@@ -176,6 +176,13 @@ export interface Media {
    * E.g. render of the project 3D scene
    */
   source: string;
+  /**
+   * Set by import scripts: asset key and checksum of the source file
+   */
+  origin?: {
+    key?: string | null;
+    checksum?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -239,7 +246,7 @@ export interface Project {
   gallery?:
     | {
         image: number | Media;
-        view: 'front' | 'back' | 'side' | 'aerial' | 'detail';
+        view: 'front' | 'evening' | 'back' | 'side' | 'aerial' | 'detail';
         id?: string | null;
       }[]
     | null;
@@ -483,6 +490,12 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   source?: T;
+  origin?:
+    | T
+    | {
+        key?: T;
+        checksum?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   url?: T;

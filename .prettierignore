@@ -5,3 +5,4 @@ apps/web/src/cms/generated/
 apps/web/src/migrations/
 apps/web/src/app/(payload)/
 docs/screenshots/
+apps/web/public/scene/basis/

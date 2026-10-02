@@ -56,5 +56,39 @@ export const Media: CollectionConfig = {
         ),
       },
     },
+    {
+      name: 'origin',
+      type: 'group',
+      label: label('Импорт', 'Import'),
+      admin: {
+        readOnly: true,
+        condition: (data) => Boolean((data as { origin?: { key?: string } }).origin?.key),
+        description: label(
+          'Заполняется скриптами импорта: ключ ассета и контрольная сумма исходного файла',
+          'Set by import scripts: asset key and checksum of the source file',
+        ),
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'key',
+              type: 'text',
+              label: label('Ключ', 'Key'),
+              unique: true,
+              index: true,
+              admin: { width: '40%' },
+            },
+            {
+              name: 'checksum',
+              type: 'text',
+              label: label('SHA-256 исходника', 'Source SHA-256'),
+              admin: { width: '60%' },
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

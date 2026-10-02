@@ -1,32 +1,32 @@
 'use client'
 
-import { houseModel, measureHouse, type HouseModel as HouseMesh } from '@kedrovnik/house'
+import type { HouseModel } from '@kedrovnik/house'
 import { useEffect, useMemo } from 'react'
 import { BufferAttribute, BufferGeometry } from 'three'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'
 
-import { SHADOW_CASTERS, createMaterials } from './materials'
+import { SHADOW_CASTERS, createHouseMaterials } from './house-materials'
+import type { ScenePreset } from './presets'
+import type { SceneTextures } from './use-scene-textures'
 
-/** Builds the mesh from the same domain model that measures and prices the house. */
-export function useHouseMesh(input: HouseViewerInput): HouseMesh {
-  return useMemo(() => houseModel(measureHouse(input)), [input])
+interface HouseMeshProps {
+  readonly mesh: HouseModel
+  readonly input: HouseViewerInput
+  readonly textures: SceneTextures
+  readonly preset: ScenePreset
 }
 
-export function HouseModel({
-  mesh,
-  input,
-}: {
-  readonly mesh: HouseMesh
-  readonly input: HouseViewerInput
-}) {
+/** The domain mesh as three.js objects: one geometry and one material per slot. */
+export function HouseMesh({ mesh, input, textures, preset }: HouseMeshProps) {
   const materials = useMemo(
     () =>
-      createMaterials({
+      createHouseMaterials(textures, {
         finish: input.options.facadeFinish,
         facadeColor: input.options.facadeColor,
+        glow: preset.windowGlow,
       }),
-    [input.options.facadeFinish, input.options.facadeColor],
+    [input.options.facadeColor, input.options.facadeFinish, preset.windowGlow, textures],
   )
   const geometries = useMemo(
     () =>

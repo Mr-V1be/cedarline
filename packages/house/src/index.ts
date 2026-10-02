@@ -56,6 +56,7 @@ export type {
 export { MATERIAL_SLOTS, type MaterialSlot } from './geometry/slots'
 export type { MeshPart } from './geometry/mesh-builder'
 export { buildHouseModel, type HouseModel, type Bounds } from './geometry/model'
+export type { Approach } from './geometry/anchors'
 
 export {
   QUANTITY_DRIVERS,

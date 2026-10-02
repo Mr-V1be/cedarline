@@ -65,3 +65,21 @@ describe('floor plans', () => {
     ])
   })
 })
+
+describe('approach', () => {
+  it('starts at the foot of the terrace steps when the terrace covers the entrance', () => {
+    const { approach } = houseModel(house)
+    expect(approach).not.toBeNull()
+    // Terrace centre along the front wall (x = 3 m from the left corner) and in front of it.
+    expect(approach?.start[0]).toBeCloseTo(0, 6)
+    expect(approach?.start[2]).toBeGreaterThan(3 + 2)
+    expect(approach?.direction).toEqual([0, 0, 1])
+  })
+
+  it('starts at the door without a terrace', () => {
+    const bare = measureHouse({ design: cabin, options: { ...options, terraceDepth: null }, rooms })
+    const { approach } = houseModel(bare)
+    expect(approach?.start[0]).toBeCloseTo(4.25 - 3, 6)
+    expect(approach?.start[2]).toBeCloseTo(3, 6)
+  })
+})

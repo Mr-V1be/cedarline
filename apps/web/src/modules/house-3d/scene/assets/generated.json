@@ -1,0 +1,43 @@
+{
+  "skies": {
+    "day": {
+      "authors": ["Greg Zaal", "Jarod Guest"],
+      "sun": [0.563, 0.728, 0.391],
+      "horizon": "#727e9a"
+    },
+    "evening": {
+      "authors": ["Greg Zaal", "Jarod Guest"],
+      "sun": [0.831, 0.308, 0.464],
+      "horizon": "#807d99"
+    }
+  },
+  "materials": {
+    "grass": {
+      "authors": ["ambientCG"]
+    },
+    "gravel": {
+      "authors": ["Jenelle van Heerden", "Matterfield"]
+    },
+    "paving": {
+      "authors": ["Amal Kumar"]
+    },
+    "deck": {
+      "authors": ["Dimitrios Savva"]
+    },
+    "concrete": {
+      "authors": ["Dario Barresi", "Dimitrios Savva"]
+    },
+    "planken": {
+      "authors": ["Rob Tuytel"]
+    },
+    "timber": {
+      "authors": ["Dimitrios Savva"]
+    },
+    "plaster": {
+      "authors": ["Rob Tuytel"]
+    },
+    "roofMetal": {
+      "authors": ["Amal Kumar"]
+    }
+  }
+}
