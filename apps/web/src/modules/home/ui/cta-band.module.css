@@ -1,0 +1,39 @@
+.grid {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+@media (width >= 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.title {
+  font-size: var(--display-m);
+  line-height: var(--leading-display);
+}
+
+.lead {
+  max-width: 40ch;
+  font-size: var(--text-l);
+  opacity: 0.85;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+}
+
+.image {
+  object-fit: cover;
+}

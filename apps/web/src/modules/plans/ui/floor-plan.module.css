@@ -1,0 +1,203 @@
+.layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (width >= 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    gap: var(--space-8);
+  }
+}
+
+.sheet {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+}
+
+@media (width >= 768px) {
+  .sheet {
+    padding: var(--space-6);
+  }
+}
+
+.switch {
+  display: flex;
+}
+
+.drawing {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+}
+
+.scale {
+  color: var(--color-ink-muted);
+  font-size: var(--text-xs);
+}
+
+.legend {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.legendTitle {
+  font-size: var(--text-xl);
+}
+
+.rooms {
+  display: grid;
+  list-style: none;
+}
+
+.roomRow {
+  display: grid;
+  grid-template-columns: var(--space-6) 1fr auto;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-2);
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.roomNumber {
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+  font-variant-numeric: tabular-nums;
+}
+
+.roomName {
+  min-width: 0;
+}
+
+.roomArea {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Drawing: strokes keep their screen width at any scale. */
+.drawing * {
+  vector-effect: non-scaling-stroke;
+}
+
+.room {
+  fill: var(--drawing-room);
+}
+
+.wetRoom {
+  fill: var(--drawing-wet);
+}
+
+.terrace {
+  fill: var(--drawing-terrace);
+  stroke: var(--drawing-partition);
+  stroke-width: 1;
+}
+
+.deckLine {
+  stroke: var(--drawing-partition);
+  stroke-width: 0.5;
+  opacity: 0.5;
+}
+
+.wall {
+  fill: var(--drawing-wall);
+}
+
+.partition {
+  fill: var(--drawing-partition);
+}
+
+.opening {
+  fill: var(--drawing-room);
+}
+
+.frameLine {
+  stroke: var(--drawing-wall);
+  stroke-width: 1;
+}
+
+.glass {
+  stroke: var(--drawing-dimension);
+  stroke-width: 1;
+}
+
+.glassPanoramic {
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+.leaf {
+  stroke: var(--drawing-wall);
+  stroke-width: 1.5;
+}
+
+.swing {
+  fill: none;
+  stroke: var(--drawing-dimension);
+  stroke-width: 0.75;
+  stroke-dasharray: 3 3;
+}
+
+.tread {
+  stroke: var(--drawing-partition);
+  stroke-width: 0.75;
+}
+
+.chimney {
+  fill: var(--drawing-wall);
+}
+
+.marker circle {
+  fill: var(--color-surface);
+  stroke: var(--drawing-wall);
+  stroke-width: 1;
+}
+
+.marker text {
+  fill: var(--color-ink);
+  font-size: 320px;
+  font-weight: var(--weight-semibold);
+  text-anchor: middle;
+}
+
+.dimension line {
+  stroke: var(--drawing-dimension);
+  stroke-width: 0.75;
+}
+
+.dimension .tick {
+  stroke: var(--drawing-wall);
+  stroke-width: 1.25;
+}
+
+.dimensionText {
+  fill: var(--color-ink-muted);
+  font-size: 250px;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+@media (width < 768px) {
+  .innerChain {
+    display: none;
+  }
+
+  .dimensionText {
+    font-size: 400px;
+  }
+
+  .marker text {
+    font-size: 380px;
+  }
+}

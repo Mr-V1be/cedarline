@@ -1,0 +1,143 @@
+.block {
+  display: grid;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+@media (width >= 1024px) {
+  .block {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-8);
+  }
+}
+
+.figure {
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+}
+
+.drawing {
+  width: 100%;
+  height: auto;
+  max-height: 34rem;
+  margin-inline: auto;
+}
+
+.details {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.layers {
+  display: grid;
+  list-style: none;
+  counter-reset: none;
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: var(--space-6) 1fr auto;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-2);
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.number {
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+  font-variant-numeric: tabular-nums;
+}
+
+.layerName {
+  min-width: 0;
+}
+
+.layerThickness {
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Drawing fills: materials as on a construction drawing. */
+.cladding {
+  fill: var(--color-wood);
+}
+
+.lining {
+  fill: var(--color-wood-soft);
+}
+
+.insulation {
+  fill: var(--drawing-insulation);
+}
+
+.air {
+  fill: var(--drawing-air);
+}
+
+.timber {
+  fill: var(--color-wood-strong);
+  stroke: var(--drawing-wall);
+  stroke-width: 0.8;
+}
+
+.membrane {
+  fill: var(--drawing-membrane);
+}
+
+.membraneLine {
+  stroke: var(--drawing-membrane);
+  stroke-width: 2.4;
+  stroke-dasharray: 10 4;
+}
+
+.woolLine {
+  fill: none;
+  stroke: var(--drawing-wall);
+  stroke-width: 0.8;
+  opacity: 0.45;
+}
+
+.grainLine {
+  stroke: var(--drawing-wall);
+  stroke-width: 0.6;
+  opacity: 0.35;
+}
+
+.callout line {
+  stroke: var(--drawing-dimension);
+  stroke-width: 0.8;
+}
+
+.callout circle {
+  fill: var(--color-surface);
+  stroke: var(--drawing-dimension);
+  stroke-width: 1;
+}
+
+.callout text {
+  fill: var(--color-ink);
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+  text-anchor: middle;
+}
+
+.dimension line {
+  stroke: var(--drawing-dimension);
+  stroke-width: 1;
+}
+
+.dimension text {
+  fill: var(--color-ink);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+.sideLabel {
+  fill: var(--color-ink-muted);
+  font-size: 14px;
+}

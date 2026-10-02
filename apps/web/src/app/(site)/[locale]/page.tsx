@@ -1,0 +1,128 @@
+import { getTranslations } from 'next-intl/server'
+
+import { getServices } from '@/composition/services'
+import type { Locale } from '@/i18n/locales'
+import { BuiltGallery } from '@/modules/built-objects/ui/built-gallery'
+import { ProjectCard } from '@/modules/catalog/ui/project-card'
+import { loadHomeOverview } from '@/modules/home/application/home-overview'
+import { CtaBand } from '@/modules/home/ui/cta-band'
+import { HeroSection } from '@/modules/home/ui/hero-section'
+import { SectionHeading } from '@/ui/components/section-heading/section-heading'
+import { ScheduleChart } from '@/modules/pricing/ui/schedule-chart'
+import { WallSection } from '@/modules/technology/ui/wall-section'
+import { ButtonLink } from '@/ui/components/button/button'
+import { Container, Section } from '@/ui/components/layout/container'
+
+import styles from './home.module.css'
+
+/** Every request reads current catalog data; caching belongs to the repositories. */
+export const dynamic = 'force-dynamic'
+
+export default async function HomePage({
+  params,
+}: {
+  readonly params: Promise<{ locale: Locale }>
+}) {
+  const { locale } = await params
+  const [services, t, common] = await Promise.all([
+    getServices(locale),
+    getTranslations('home'),
+    getTranslations('common'),
+  ])
+  const { hero, featured, builtObjects, technology } = await loadHomeOverview(services, locale)
+  const fullest = hero?.offers[hero.offers.length - 1]
+  const ctaImage =
+    hero?.project.gallery.find((item) => item.view === 'aerial')?.image ??
+    hero?.project.cover ??
+    null
+
+  return (
+    <>
+      <HeroSection hero={hero} />
+
+      {featured.length > 0 ? (
+        <Section aria-labelledby="featured">
+          <Container>
+            <SectionHeading
+              id="featured"
+              title={t('featured.title')}
+              lead={t('featured.lead')}
+              aside={
+                <ButtonLink href="/projects" variant="secondary">
+                  {common('actions.allProjects')}
+                </ButtonLink>
+              }
+            />
+            <ul className={styles.cards}>
+              {featured.map((project) => (
+                <li key={project.id}>
+                  <ProjectCard
+                    project={project}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section tone="sunken" id="technology" aria-labelledby="technology-title">
+        <Container>
+          <SectionHeading
+            id="technology-title"
+            title={t('technology.title')}
+            lead={t('technology.lead')}
+          />
+          <WallSection
+            layers={technology.layers}
+            insulationOptions={technology.insulationOptions}
+          />
+        </Container>
+      </Section>
+
+      {hero !== null && fullest !== undefined ? (
+        <Section id="process" aria-labelledby="process-title">
+          <Container>
+            <SectionHeading
+              id="process-title"
+              title={t('process.title')}
+              lead={t('process.lead', { project: hero.project.title, completeness: fullest.name })}
+            />
+            <ScheduleChart
+              schedule={fullest.schedule}
+              labels={{
+                axis: t('process.axis'),
+                total: t('process.total'),
+                totalValue: common('units.weeks', { count: fullest.schedule.totalWeeks }),
+                range: (from, to) =>
+                  from === to
+                    ? t('process.weekSingle', { week: from })
+                    : t('process.weekRange', { from, to }),
+              }}
+            />
+          </Container>
+        </Section>
+      ) : null}
+
+      {builtObjects.length > 0 ? (
+        <Section id="built" aria-labelledby="built-title">
+          <Container>
+            <SectionHeading id="built-title" title={t('built.title')} />
+            <BuiltGallery objects={builtObjects} />
+          </Container>
+        </Section>
+      ) : null}
+
+      {hero === null ? null : (
+        <CtaBand
+          title={t('cta.title')}
+          lead={t('cta.lead')}
+          action={common('actions.open3d')}
+          href={`/projects/${hero.project.slug}#model`}
+          image={ctaImage}
+        />
+      )}
+    </>
+  )
+}

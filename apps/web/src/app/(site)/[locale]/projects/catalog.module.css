@@ -1,0 +1,21 @@
+.page {
+  padding-block: var(--space-7) var(--section-gap);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--display-m);
+  line-height: var(--leading-display);
+}
+
+.pagination {
+  margin-top: var(--space-8);
+}
+
+.skeletonTitle {
+  width: min(16rem, 60%);
+  height: var(--display-m);
+}
