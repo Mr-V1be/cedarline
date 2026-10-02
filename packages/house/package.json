@@ -1,0 +1,17 @@
+{
+  "name": "@kedrovnik/house",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Parametric house domain: specification, derived frame, mesh geometry, quantity takeoff and floor plans.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "earcut": "3.2.4"
+  }
+}

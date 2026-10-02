@@ -1,0 +1,77 @@
+import type { RoofKind } from '../roof/kinds'
+import type { RoofProfile } from '../roof/profile'
+import type { RidgeAxis, WallSide } from '../spec/design'
+import type { HouseSpec, ResolvedOpening } from '../spec/house-spec'
+import type { Vec2 } from '../units'
+import type { WallPlacement } from './placement'
+
+export interface LevelFrame {
+  readonly index: number
+  readonly attic: boolean
+  /** Finished floor elevation above grade, mm. */
+  readonly floor: number
+  /** Ceiling elevation; for the attic level it is the ridge. */
+  readonly ceiling: number
+}
+
+export interface OpeningFrame {
+  readonly opening: ResolvedOpening
+  readonly u0: number
+  readonly u1: number
+  readonly v0: number
+  readonly v1: number
+}
+
+export interface WallFrame extends WallPlacement {
+  /** Outer face outline in (u, v): v is the absolute elevation, counter-clockwise. */
+  readonly polygon: readonly Vec2[]
+  readonly openings: readonly OpeningFrame[]
+  /** The wall runs across the roof span, so its top follows the roof profile (a gable). */
+  readonly gable: boolean
+}
+
+export interface RoofFrame {
+  readonly kind: RoofKind
+  readonly pitch: number
+  readonly ridgeAxis: RidgeAxis
+  readonly span: number
+  readonly length: number
+  readonly profile: RoofProfile
+  /** Elevation of the wall tops where the roof underside starts. */
+  readonly eaveBase: number
+  readonly ridgeElevation: number
+  readonly eaveOverhang: number
+  readonly gableOverhang: number
+  readonly thickness: number
+}
+
+export interface TerraceFrame {
+  readonly side: WallSide
+  readonly offset: number
+  readonly length: number
+  readonly depth: number
+  /** Plan rectangle of the deck. */
+  readonly x0: number
+  readonly y0: number
+  readonly x1: number
+  readonly y1: number
+  readonly deckTop: number
+}
+
+export interface ChimneyFrame {
+  readonly x: number
+  readonly y: number
+  readonly base: number
+  readonly top: number
+  readonly diameter: number
+}
+
+/** Analytic shapes derived from a spec; geometry, takeoff and plans are computed from it. */
+export interface HouseFrame {
+  readonly spec: HouseSpec
+  readonly levels: readonly LevelFrame[]
+  readonly walls: readonly WallFrame[]
+  readonly roof: RoofFrame
+  readonly terrace: TerraceFrame | null
+  readonly chimney: ChimneyFrame | null
+}
