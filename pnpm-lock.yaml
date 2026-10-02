@@ -148,6 +148,15 @@ importers:
         specifier: 1.63.0
         version: 1.63.0
 
+  packages/configurator:
+    dependencies:
+      '@kedrovnik/house':
+        specifier: workspace:*
+        version: link:../house
+      '@kedrovnik/pricing':
+        specifier: workspace:*
+        version: link:../pricing
+
   packages/house:
     dependencies:
       earcut:

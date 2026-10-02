@@ -28,6 +28,12 @@ describe('Money', () => {
     expect(() => Money.multiply(Money.ofRubles(1), Number.NaN)).toThrow(PricingError)
   })
 
+  it('subtracts into signed differences', () => {
+    const delta = Money.subtract(Money.ofRubles(100), Money.ofRubles(250))
+    expect(delta).toBe(-15_000)
+    expect(Money.add(delta, Money.ofRubles(150))).toBe(Money.zero)
+  })
+
   it('presents whole rubles rounded half-up', () => {
     expect(Money.toWholeRubles(Money.ofKopecks(149))).toBe(1)
     expect(Money.toWholeRubles(Money.ofKopecks(150))).toBe(2)

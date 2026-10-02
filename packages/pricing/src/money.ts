@@ -42,6 +42,10 @@ export const Money = {
     return assertMoney(left + right)
   },
 
+  subtract(left: Money, right: Money): Money {
+    return assertMoney(left - right)
+  },
+
   sum(amounts: readonly Money[]): Money {
     return amounts.reduce<Money>((total, amount) => Money.add(total, amount), Money.zero)
   },

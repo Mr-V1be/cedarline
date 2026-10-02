@@ -32,6 +32,7 @@ export { DEFAULT_STANDARDS, type ConstructionStandards } from './spec/standards'
 export { traitsOf, type RoomKindCatalog, type RoomKindTraits } from './spec/room-traits'
 export { levelCount, type HouseSpec, type ResolvedOpening } from './spec/house-spec'
 export { resolveHouse } from './spec/resolve'
+export { resizeDesign, mirrorDesign } from './spec/transform'
 export { validateDesign, MAX_STOREYS } from './spec/validate-design'
 
 export {
