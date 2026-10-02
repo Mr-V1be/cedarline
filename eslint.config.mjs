@@ -83,6 +83,11 @@ export default tseslint.config(
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
       ...jsxA11y.configs.recommended.rules,
+      // Scrollable regions must be keyboard-reachable (WCAG 2.1.1), so a region may take focus.
+      'jsx-a11y-x/no-noninteractive-tabindex': [
+        'error',
+        { tags: [], roles: ['tabpanel', 'region'] },
+      ],
     },
     settings: { next: { rootDir: 'apps/web' } },
   },
