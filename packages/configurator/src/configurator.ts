@@ -81,8 +81,15 @@ export class Configurator {
     return measurement.ok ? compatibility : [...compatibility, measurement.restriction]
   }
 
-  /** Full state of a buildable configuration; throws when the house cannot be built. */
-  evaluate(configuration: Configuration): ConfigurationState {
+  /**
+   * Full state of a buildable configuration; throws when the house cannot be built. Choice
+   * states are worked out for `groups` only (all by default): an interface showing one step
+   * at a time asks for that step's groups and stays instant on a phone.
+   */
+  evaluate(
+    configuration: Configuration,
+    groups: readonly OptionGroup[] = OPTION_GROUPS,
+  ): ConfigurationState {
     const measurement = this.measure(configuration)
     if (!measurement.ok) {
       throw new ConfiguratorError('INVALID_CONFIGURATION', 'The house cannot be built', {
@@ -91,15 +98,14 @@ export class Configurator {
     }
     const current = compatibilityRestrictions(this.model, configuration)
     const currentQuote = this.quoteOf(configuration, measurement.measured)
-    const groups = OPTION_GROUPS.map((group) =>
-      this.groupState(group, configuration, current, measurement.measured, currentQuote),
-    )
     return {
       configuration,
       house: measurement.house,
       measured: measurement.measured,
       quote: currentQuote,
-      groups,
+      groups: groups.map((group) =>
+        this.groupState(group, configuration, current, measurement.measured, currentQuote),
+      ),
     }
   }
 

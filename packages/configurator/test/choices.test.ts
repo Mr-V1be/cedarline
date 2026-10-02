@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest'
 
-import { applyChoice, choicesOf, houseInputOf, initialConfiguration } from '../src'
-import { model } from './fixtures'
+import {
+  applyChoice,
+  choicesOf,
+  designSelections,
+  houseInputOf,
+  initialConfiguration,
+  selectionsOf,
+  unofferedGroups,
+} from '../src'
+import { model, pineBlueprint } from './fixtures'
 
 const initial = initialConfiguration(model)
 
@@ -54,5 +62,29 @@ describe('choices', () => {
     expect(input.design.openings.map((opening) => opening.offset)).toEqual([4680, 1320])
     expect(input.options.terraceDepth).toBeNull()
     expect(input.options.roofPitch).toBeUndefined()
+  })
+})
+
+describe('selections', () => {
+  it('describe a configuration and the project as designed alike', () => {
+    const { design, defaults } = pineBlueprint
+    expect(selectionsOf(initial, design)).toEqual(
+      designSelections(design, defaults.options, initial.engineering),
+    )
+    expect(selectionsOf({ ...initial, mirrored: true, terrace: 0 }, design)).toMatchObject({
+      layout: 'mirrored',
+      terrace: '0',
+      storeys: '1',
+    })
+  })
+})
+
+describe('unofferedGroups', () => {
+  it('finds values the offer no longer has', () => {
+    expect(unofferedGroups(model, initial)).toEqual([])
+    expect(
+      unofferedGroups(model, { ...initial, colour: '#123456', engineering: ['sauna-stove'] }),
+    ).toEqual(['colour', 'engineering'])
+    expect(unofferedGroups(model, { ...initial, project: 'gone' })).toEqual(['project'])
   })
 })

@@ -128,3 +128,11 @@ describe('configurator state', () => {
     ).toThrow(ConfiguratorError)
   })
 })
+
+describe('partial evaluation', () => {
+  it('works out only the requested groups', () => {
+    const state = configurator.evaluate(initial, ['roof', 'windows'])
+    expect(state.groups.map((item) => item.group)).toEqual(['roof', 'windows'])
+    expect(state.quote.estimate.total).toBe(configurator.evaluate(initial).quote.estimate.total)
+  })
+})

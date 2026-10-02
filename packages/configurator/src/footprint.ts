@@ -24,6 +24,6 @@ export function footprintsOf(blueprint: ProjectBlueprint): readonly Footprint[] 
   )
 }
 
-/** Storey layout key used by rules and labels: `1`, `1+attic`, `2`. */
-export const storeyKey = (design: HouseDesign): string =>
-  `${design.storeys}${design.attic ? '+attic' : ''}`
+/** Storey layout key used by rules and labels, as in the catalog: `1`, `1-attic`, `2`. */
+export const storeyKey = (design: Pick<HouseDesign, 'storeys' | 'attic'>): string =>
+  `${design.storeys}${design.attic ? '-attic' : ''}`

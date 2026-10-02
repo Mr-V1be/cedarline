@@ -1,6 +1,6 @@
 import { isFacadeFinish, isRoofKindKey, isWindowStyle } from '@kedrovnik/house'
 
-import type { Choice, Configuration, OptionGroup } from './configuration'
+import { OPTION_GROUPS, type Choice, type Configuration, type OptionGroup } from './configuration'
 import { ConfiguratorError } from './errors'
 import { footprintKey, footprintOf, footprintsOf, sameFootprint } from './footprint'
 import type { ConfiguratorModel, ProjectBlueprint } from './model'
@@ -209,4 +209,19 @@ export function applyChoice(
     case 'completeness':
       return { ...configuration, completeness: value }
   }
+}
+
+/** Groups whose value is not among the offered choices: such a configuration is stale. */
+export function unofferedGroups(
+  model: ConfiguratorModel,
+  configuration: Configuration,
+): readonly OptionGroup[] {
+  if (!model.family.some((member) => member.slug === configuration.project)) return ['project']
+  return OPTION_GROUPS.filter((group) => {
+    const offered = choicesOf(model, configuration, group)
+    if (group === 'engineering') {
+      return configuration.engineering.some((system) => !offered.includes(system))
+    }
+    return !offered.some((value) => isChosen(configuration, { group, value }))
+  })
 }

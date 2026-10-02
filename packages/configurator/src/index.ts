@@ -21,7 +21,12 @@ export {
   type OptionGroup,
 } from './configuration'
 export { footprintKey, footprintOf, footprintsOf, sameFootprint, storeyKey } from './footprint'
-export { SELECTION_OPTIONS, selectionsOf, type SelectionOption } from './selections'
+export {
+  SELECTION_OPTIONS,
+  designSelections,
+  selectionsOf,
+  type SelectionOption,
+} from './selections'
 export {
   applyChoice,
   blueprintOf,
@@ -29,6 +34,7 @@ export {
   initialConfiguration,
   isChosen,
   terraceDepthsOf,
+  unofferedGroups,
 } from './choices'
 export { houseInputOf } from './house-input'
 export {
@@ -46,4 +52,4 @@ export {
 } from './configurator'
 export { parseConfiguration } from './parse'
 export { SHARE_CODE_ALPHABET, SHARE_CODE_LENGTH, isShareCode, shareCodeFrom } from './share-code'
-export { blueprintIssues, validateOffer, type BlueprintIssue } from './validate'
+export { blueprintIssues, validateOffer, type BlueprintIssue, type OfferField } from './validate'

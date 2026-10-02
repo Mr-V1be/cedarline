@@ -17,6 +17,8 @@ next-env.d.ts
 
 # runtime data
 /apps/web/media/
+# customer files (renders, proposals): private uploads, never in the repository
+/apps/web/documents/
 /apps/web/.render-cache/
 /apps/web/.scene-cache/
 coverage/
