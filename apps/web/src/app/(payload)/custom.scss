@@ -1,1 +1,8 @@
-/* Admin panel tweaks live here; the site's design system does not apply to the CMS. */
+/* Admin panel tweaks; the site's design system does not apply to the CMS. */
+.kedrovnik-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--base) / 2);
+  font-size: calc(var(--base) * 1.4);
+  font-weight: 600;
+}

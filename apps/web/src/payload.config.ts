@@ -30,7 +30,10 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: { baseDir: dirname },
-    meta: { titleSuffix: ' · CMS' },
+    meta: { titleSuffix: ' · Кедровник' },
+    components: {
+      graphics: { Icon: '/cms/admin/brand#Icon', Logo: '/cms/admin/brand#Logo' },
+    },
   },
   i18n: { supportedLanguages: { ru, en }, fallbackLanguage: DEFAULT_LOCALE },
   localization: {

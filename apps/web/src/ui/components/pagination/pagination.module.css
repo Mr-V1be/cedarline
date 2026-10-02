@@ -36,5 +36,5 @@
   display: grid;
   place-items: center;
   min-width: var(--space-6);
-  color: var(--color-ink-faint);
+  color: var(--color-ink-muted);
 }

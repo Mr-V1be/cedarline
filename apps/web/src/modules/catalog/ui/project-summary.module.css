@@ -43,3 +43,13 @@
   color: var(--color-ink-muted);
   font-size: var(--text-s);
 }
+
+.action {
+  display: none;
+}
+
+@media (width >= 1024px) {
+  .action {
+    display: block;
+  }
+}

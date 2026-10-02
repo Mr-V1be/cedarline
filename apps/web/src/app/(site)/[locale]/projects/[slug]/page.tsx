@@ -71,7 +71,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const cheapest = offers.find((offer) => offer.key === project.pricing?.fromCompleteness) ?? null
 
   return (
-    <div className={styles.page}>
+    <div>
       <Container className={styles.top}>
         <Breadcrumbs
           label={t('breadcrumbs.label')}

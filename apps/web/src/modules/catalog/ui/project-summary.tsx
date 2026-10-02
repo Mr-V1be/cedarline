@@ -98,9 +98,12 @@ export async function ProjectSummary({ project, completenessName }: ProjectSumma
           </p>
         </div>
       )}
-      <ButtonLink href="#model" icon={CubeIcon} stretch>
-        {common('actions.open3d')}
-      </ButtonLink>
+      {/* Phones and tablets have the same action in the sticky bar at the bottom. */}
+      <div className={styles.action}>
+        <ButtonLink href="#model" icon={CubeIcon} stretch>
+          {common('actions.open3d')}
+        </ButtonLink>
+      </div>
     </div>
   )
 }

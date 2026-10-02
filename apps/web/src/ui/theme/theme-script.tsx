@@ -1,3 +1,5 @@
+'use client'
+
 import { THEME_ATTRIBUTE, THEME_STORAGE_KEY, THEMES } from './theme'
 
 /*
@@ -7,8 +9,18 @@ import { THEME_ATTRIBUTE, THEME_STORAGE_KEY, THEMES } from './theme'
  */
 const script = `(function(){try{var t=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});if(${JSON.stringify(THEMES)}.indexOf(t)>-1){document.documentElement.setAttribute(${JSON.stringify(THEME_ATTRIBUTE)},t)}}catch(e){}})()`
 
+/**
+ * Inline script as recommended by Next.js for pre-hydration fixes: executable in the server
+ * HTML, inert (`text/plain`) when React renders it on the client, so it runs exactly once.
+ */
 export function ThemeScript() {
-  // A static string built from constants above: no user input reaches it.
-  // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
-  return <script dangerouslySetInnerHTML={{ __html: script }} />
+  return (
+    <script
+      type={typeof window === 'undefined' ? 'text/javascript' : 'text/plain'}
+      suppressHydrationWarning
+      // A static string built from constants above: no user input reaches it.
+      // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
+      dangerouslySetInnerHTML={{ __html: script }}
+    />
+  )
 }
