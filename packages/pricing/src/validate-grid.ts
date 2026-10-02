@@ -1,4 +1,5 @@
 import { PricingError } from './errors'
+import { validateRoundingRule } from './rounding'
 import type { StageNorm, TariffGrid } from './tariff'
 
 const MAX_WORKING_DAYS_PER_WEEK = 7
@@ -116,6 +117,7 @@ export function validateTariffGrid(grid: TariffGrid): TariffGrid {
     assertNonNegativeNumber(stage.daysPerUnit, 'daysPerUnit', owner)
   }
   assertAcyclic(schedule.stages)
+  validateRoundingRule(grid.advertisedRounding)
 
   return grid
 }

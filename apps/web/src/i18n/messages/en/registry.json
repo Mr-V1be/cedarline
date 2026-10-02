@@ -98,5 +98,10 @@
     "2": "Two storeys",
     "2-attic": "Two storeys and attic",
     "3": "Three storeys"
+  },
+  "roundingMode": {
+    "up": "Up",
+    "down": "Down",
+    "nearest": "To nearest"
   }
 }

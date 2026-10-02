@@ -32,4 +32,18 @@ export {
   type ScheduleInput,
   type ScheduledStage,
 } from './schedule'
-export { quote, quoteEveryCompleteness, lowestQuote, type Quote, type QuoteInput } from './quote'
+export {
+  quote,
+  quoteEveryCompleteness,
+  lowestQuote,
+  advertisedPrice,
+  type Quote,
+  type QuoteInput,
+} from './quote'
+export {
+  ROUNDING_MODES,
+  roundMoney,
+  validateRoundingRule,
+  type RoundingMode,
+  type RoundingRule,
+} from './rounding'

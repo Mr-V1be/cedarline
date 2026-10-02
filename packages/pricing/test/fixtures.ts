@@ -3,6 +3,7 @@ import { Money, type TariffGrid } from '../src'
 /** A compact grid with every feature the calculations rely on. */
 export const grid: TariffGrid = {
   revision: 7,
+  advertisedRounding: { step: Money.ofRubles(1_000), mode: 'up' },
   sections: [
     { key: 'foundation' },
     { key: 'frame' },

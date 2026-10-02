@@ -299,6 +299,9 @@ export const COMPLETENESS: ReadonlyArray<{
 
 export const WORKING_DAYS_PER_WEEK = 5
 
+/** Advertised «price from» is rounded up to whole thousands; estimates stay exact. */
+export const ADVERTISED_ROUNDING = { step: 1_000, mode: 'up' } as const
+
 export const PHASES: ReadonlyArray<{ key: string; name: Localized }> = [
   { key: 'production', name: t('Проект и производство', 'Design and production') },
   { key: 'site', name: t('Работы на участке', 'On-site works') },

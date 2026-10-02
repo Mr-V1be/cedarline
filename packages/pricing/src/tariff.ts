@@ -1,4 +1,5 @@
 import type { Money } from './money'
+import type { RoundingRule } from './rounding'
 import type { Condition } from './selection'
 
 /** Estimate section (статья сметы). Keys and order are tariff data, labels live in the CMS. */
@@ -48,6 +49,8 @@ export interface ScheduleNorms {
 /** The whole tariff grid. `revision` changes on every edit and keys caches and projections. */
 export interface TariffGrid {
   readonly revision: number
+  /** Rounding of advertised «price from» figures; estimates themselves stay exact. */
+  readonly advertisedRounding: RoundingRule
   readonly sections: readonly SectionDefinition[]
   readonly rates: readonly RateLine[]
   readonly completeness: readonly CompletenessLevel[]

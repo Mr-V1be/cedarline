@@ -48,6 +48,7 @@ export function tariffSubstance(document: Partial<TariffData>): unknown {
     )
   return {
     workingDaysPerWeek: document.workingDaysPerWeek,
+    advertisedRounding: document.advertisedRounding,
     sections: withoutIds(document.sections),
     rates: (document.rates ?? []).map((rate) => ({
       ...rate,

@@ -12,7 +12,14 @@ import type { TariffNames } from '../ports/tariff-repository'
 
 export type TariffData = Pick<
   TariffDocument,
-  'revision' | 'sections' | 'rates' | 'completeness' | 'workingDaysPerWeek' | 'phases' | 'stages'
+  | 'revision'
+  | 'advertisedRounding'
+  | 'sections'
+  | 'rates'
+  | 'completeness'
+  | 'workingDaysPerWeek'
+  | 'phases'
+  | 'stages'
 >
 
 type ConditionRows = NonNullable<NonNullable<TariffDocument['rates']>[number]['conditions']>
@@ -34,6 +41,10 @@ export function toTariffGrid(document: TariffData): TariffGrid {
   }))
   return validateTariffGrid({
     revision: document.revision ?? 0,
+    advertisedRounding: {
+      step: Money.ofRubles(document.advertisedRounding.step),
+      mode: document.advertisedRounding.mode,
+    },
     sections: (document.sections ?? []).map((section) => ({ key: section.key })),
     rates: (document.rates ?? []).map((rate) => ({
       code: rate.code,

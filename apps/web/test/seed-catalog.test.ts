@@ -7,6 +7,7 @@ import { standardsFor } from '@/modules/technology/application/standards'
 import { ROOM_KINDS } from '@/seed/data/dictionaries'
 import { WALL_LAYERS } from '@/seed/data/technology'
 import {
+  ADVERTISED_ROUNDING,
   COMPLETENESS,
   PHASES,
   RATES,
@@ -27,6 +28,10 @@ const rooms: RoomKindCatalog = Object.fromEntries(
 
 const grid: TariffGrid = validateTariffGrid({
   revision: 1,
+  advertisedRounding: {
+    step: Money.ofRubles(ADVERTISED_ROUNDING.step),
+    mode: ADVERTISED_ROUNDING.mode,
+  },
   sections: SECTIONS.map(({ key }) => ({ key })),
   rates: RATES.map((rate) => ({
     code: rate.code,

@@ -769,6 +769,13 @@ export interface Tariff {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Detailed estimates stay exact; the rule applies only to the advertised “price from”.
+   */
+  advertisedRounding: {
+    step: number;
+    mode: 'up' | 'down' | 'nearest';
+  };
   workingDaysPerWeek: number;
   phases?:
     | {
@@ -940,6 +947,12 @@ export interface TariffSelect<T extends boolean = true> {
         name?: T;
         sections?: T;
         id?: T;
+      };
+  advertisedRounding?:
+    | T
+    | {
+        step?: T;
+        mode?: T;
       };
   workingDaysPerWeek?: T;
   phases?:

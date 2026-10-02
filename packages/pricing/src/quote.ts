@@ -1,5 +1,6 @@
 import { buildEstimate, type Estimate } from './estimate'
 import { Money } from './money'
+import { roundMoney } from './rounding'
 import { planSchedule, type Schedule } from './schedule'
 import type { Selections } from './selection'
 import type { Quantities, TariffGrid } from './tariff'
@@ -28,7 +29,7 @@ export function quoteEveryCompleteness(
   return grid.completeness.map((level) => quote(grid, { ...input, completeness: level.key }))
 }
 
-/** The lowest total among completeness levels — the catalog's «цена от». */
+/** The lowest total among completeness levels — the quote behind the catalog's «цена от». */
 export function lowestQuote(quotes: readonly Quote[]): Quote | undefined {
   return quotes.reduce<Quote | undefined>(
     (lowest, candidate) =>
@@ -37,4 +38,15 @@ export function lowestQuote(quotes: readonly Quote[]): Quote | undefined {
         : lowest,
     undefined,
   )
+}
+
+/**
+ * The advertised «price from»: the cheapest quote rounded by the grid's display rule.
+ * Rounding up keeps the advertised figure at or above every price a customer can be quoted.
+ */
+export function advertisedPrice(grid: TariffGrid, quotes: readonly Quote[]): Money | undefined {
+  const lowest = lowestQuote(quotes)
+  return lowest === undefined
+    ? undefined
+    : roundMoney(lowest.estimate.total, grid.advertisedRounding)
 }

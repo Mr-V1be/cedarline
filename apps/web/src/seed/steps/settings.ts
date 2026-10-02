@@ -3,6 +3,7 @@ import type { Payload } from 'payload'
 import { ENGINEERING_SYSTEMS, FACADE_PALETTES } from '../data/catalog-options'
 import { INSULATION_OPTIONS, WALL_LAYERS } from '../data/technology'
 import {
+  ADVERTISED_ROUNDING,
   COMPLETENESS,
   PHASES,
   RATES,
@@ -84,6 +85,7 @@ export async function seedTariff(payload: Payload) {
     locale: 'ru',
     data: {
       workingDaysPerWeek: WORKING_DAYS_PER_WEEK,
+      advertisedRounding: { ...ADVERTISED_ROUNDING },
       sections: SECTIONS.map((section) => ({ key: section.key, name: section.name.ru })),
       rates: RATES.map((rate) => ({
         code: rate.code,

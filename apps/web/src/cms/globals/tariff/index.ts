@@ -1,4 +1,5 @@
 import { QUANTITY_DRIVER_KEYS } from '@kedrovnik/house'
+import { ROUNDING_MODES } from '@kedrovnik/pricing'
 import type { GlobalConfig, TextField } from 'payload'
 
 import { anyone, requireCapability } from '../../access/policies'
@@ -147,6 +148,47 @@ export const Tariff: GlobalConfig = {
                   ],
                 },
                 keyList('sections', label('Статьи в объёме (ключи)', 'Sections in scope (keys)')),
+              ],
+            },
+          ],
+        },
+        {
+          label: label('Витрина', 'Storefront'),
+          fields: [
+            {
+              name: 'advertisedRounding',
+              type: 'group',
+              label: label('Округление «цены от»', 'Rounding of “price from”'),
+              admin: {
+                description: label(
+                  'Подробные сметы всегда точные; правило действует только на рекламную цену «от».',
+                  'Detailed estimates stay exact; the rule applies only to the advertised “price from”.',
+                ),
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'step',
+                      type: 'number',
+                      label: label('Шаг, ₽', 'Step, ₽'),
+                      required: true,
+                      min: 1,
+                      defaultValue: 1000,
+                      admin: { width: '50%' },
+                    },
+                    {
+                      name: 'mode',
+                      type: 'select',
+                      label: label('Направление', 'Direction'),
+                      required: true,
+                      defaultValue: 'up',
+                      options: registryOptions('roundingMode', ROUNDING_MODES),
+                      admin: { width: '50%' },
+                    },
+                  ],
+                },
               ],
             },
           ],
