@@ -1,0 +1,40 @@
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.lead {
+  color: var(--color-ink-muted);
+}
+
+.trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.alert {
+  color: var(--color-danger);
+  font-size: var(--text-s);
+}
+
+.alert:empty {
+  display: none;
+}
+
+.success {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.successIcon {
+  color: var(--color-pine);
+}
+
+.successTitle {
+  font-size: var(--display-xs);
+}

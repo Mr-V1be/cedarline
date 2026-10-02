@@ -1,0 +1,44 @@
+{
+  "title": "Building request",
+  "lead": "A manager will call to discuss the plot and the schedule. The configuration and the commercial proposal will arrive by email.",
+  "fields": {
+    "name": "Name",
+    "phone": "Phone",
+    "phoneHint": "For example, +7 999 123-45-67",
+    "email": "Email",
+    "comment": "Comment",
+    "commentHint": "Where the plot is, when to call — optional",
+    "consent": "I agree to the processing of my personal data to answer this request",
+    "trap": "Leave this field empty"
+  },
+  "errors": {
+    "name": {
+      "required": "How should we address you?",
+      "tooLong": "80 characters at most"
+    },
+    "phone": {
+      "required": "We need a phone number to call you",
+      "invalid": "Check the number, e.g. +7 999 123-45-67"
+    },
+    "email": {
+      "required": "We need an email for the proposal",
+      "invalid": "Check the email address"
+    },
+    "comment": {
+      "tooLong": "1000 characters at most"
+    },
+    "consent": {
+      "required": "We cannot answer the request without your consent"
+    },
+    "summary": "Check the form: {count, plural, one {# error} other {# errors}}."
+  },
+  "submit": "Send the request",
+  "sending": "Sending…",
+  "success": {
+    "title": "Request #{reference} received",
+    "text": "An email with the configuration and the proposal is on its way to {email}. A manager will call during working hours."
+  },
+  "failure": "Could not send the request. Try again — what you typed is kept.",
+  "limited": "Too many requests in a row. Call us: {phone}.",
+  "unknown": "Configuration not found. Save it again and retry."
+}

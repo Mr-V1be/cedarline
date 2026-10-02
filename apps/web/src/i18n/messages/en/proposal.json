@@ -1,0 +1,31 @@
+{
+  "title": "Commercial proposal",
+  "number": "No. {code}",
+  "date": "dated {date}",
+  "project": "{name} project",
+  "facts": {
+    "total": "Price",
+    "completeness": "Completeness",
+    "term": "Build time",
+    "termValue": "{weeks} from contract to handover",
+    "area": "Total area",
+    "footprint": "Footprint"
+  },
+  "configuration": "Configuration",
+  "estimate": "Itemised estimate",
+  "columns": {
+    "item": "Item",
+    "quantity": "Quantity",
+    "price": "Price",
+    "amount": "Amount"
+  },
+  "total": "Total",
+  "schedule": "Construction schedule",
+  "weeks": "Weeks",
+  "phase": "{name} — {weeks}",
+  "link": "Configuration online",
+  "linkNote": "Point a phone camera at the QR code to open the 3D model of exactly this configuration.",
+  "terms": "Prices are fixed on {date} under tariff revision {revision} and include materials, delivery and assembly. The final estimate follows a visit to the plot.",
+  "noRender": "No render was saved: the configuration was saved without 3D.",
+  "page": "Page {page} of {total}"
+}

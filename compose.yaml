@@ -29,8 +29,30 @@ services:
       - '127.0.0.1:46125:1025'
       - '127.0.0.1:46180:8025'
 
+  # CRM mock in the Bitrix24 REST dialect (tools/crm-mock): the `bitrix24` lead sink talks to it
+  # locally; its page on http://localhost:46140 lists the leads it received.
+  crm-mock:
+    image: node:24-alpine
+    restart: unless-stopped
+    command: ['node', '/app/server.mjs']
+    environment:
+      CRM_MOCK_TOKEN: ${CRM_MOCK_TOKEN:?set CRM_MOCK_TOKEN in .env}
+      CRM_MOCK_STORE: /data/leads.json
+      PORT: '8080'
+    ports:
+      - '127.0.0.1:46140:8080'
+    volumes:
+      - ./tools/crm-mock/server.mjs:/app/server.mjs:ro
+      - crm-mock-data:/data
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:8080/health']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
 volumes:
   postgres-data:
+  crm-mock-data:
 
 # The host's default address pools are exhausted, so the project network gets an explicit,
 # otherwise unused subnet.

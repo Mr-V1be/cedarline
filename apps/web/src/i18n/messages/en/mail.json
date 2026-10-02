@@ -1,0 +1,33 @@
+{
+  "client": {
+    "subject": "Your {project} configuration and commercial proposal",
+    "preheader": "Your {project} configuration, estimate and schedule are in the attached PDF",
+    "greeting": "Hello, {name}!",
+    "intro": "Thank you for your request. A manager will call you during working hours to discuss the plot, the schedule and the details. The commercial proposal with the render, estimate and schedule is attached.",
+    "keep": "The link opens the configuration exactly as you saved it, at the price of the day it was saved.",
+    "open": "Open the configuration",
+    "contacts": "Questions: call {phone} or write to {email}.",
+    "signature": "The Kedrovnik team"
+  },
+  "manager": {
+    "subject": "Lead #{reference}: {project}, {total}",
+    "heading": "New lead #{reference}",
+    "intro": "A configurator lead has arrived from the site. The proposal is attached.",
+    "open": "Open the lead in the CMS",
+    "crmLead": "{channel}: lead {reference}",
+    "footer": "Customer language: {language}. Total and schedule come from the saved configuration."
+  },
+  "rows": {
+    "project": "Project",
+    "configuration": "Configuration",
+    "total": "Estimate total",
+    "term": "Contract to handover",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "comment": "Comment",
+    "link": "Link",
+    "crm": "CRM"
+  },
+  "summary": "{project} · {width, number, ::.#} × {depth, number, ::.#} m · {completeness}"
+}
