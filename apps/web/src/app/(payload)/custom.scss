@@ -6,3 +6,22 @@
   font-size: calc(var(--base) * 1.4);
   font-weight: 600;
 }
+
+/* «No access» page for sections closed to the signed-in role (cms/admin/access-denied.tsx). */
+.access-denied {
+  display: grid;
+  gap: calc(var(--base) * 0.75);
+  justify-items: start;
+  max-width: 40rem;
+  margin-top: calc(var(--base) * 3);
+}
+
+.access-denied__title {
+  margin: 0;
+}
+
+.access-denied__lead,
+.access-denied__roles,
+.access-denied__user {
+  margin: 0;
+}

@@ -1,6 +1,6 @@
 import type { Access, CollectionConfig } from 'payload'
 
-import { ROLE_KEYS, type Role } from '@/modules/access/domain/roles'
+import { ROLE_KEYS } from '@/modules/access/domain/roles'
 
 import {
   canOpenAdmin,
@@ -8,13 +8,8 @@ import {
   requireFieldCapability,
   userCan,
 } from '../access/policies'
-import { label, type Labels } from '../fields/labels'
-
-const ROLE_LABELS: Record<Role, Labels> = {
-  admin: label('Администратор', 'Administrator'),
-  'content-manager': label('Контент-менеджер', 'Content manager'),
-  'sales-manager': label('Менеджер продаж', 'Sales manager'),
-}
+import { label } from '../fields/labels'
+import { ROLE_LABELS } from '../fields/role-labels'
 
 /** Managers of users see everyone; everybody else sees only themselves. */
 const selfOrManager: Access = ({ req }) =>

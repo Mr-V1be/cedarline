@@ -3,9 +3,11 @@ import type { CollectionConfig, Field } from 'payload'
 import { LOCALES } from '@/i18n/locales'
 import { LEAD_STATUSES } from '@/modules/leads/domain/lead'
 
-import { requireCapability } from '../access/policies'
+import { declareReadCapability, requireCapability } from '../access/policies'
 import { label } from '../fields/labels'
 import { registryOptions } from '../fields/registry-labels'
+
+const SALES_READ = 'leads.read'
 
 /** What the customer sent stays as sent: staff change only the status and their notes. */
 const sent = (field: Field): Field =>
@@ -28,8 +30,9 @@ export const Leads: CollectionConfig = {
     defaultColumns: ['id', 'name', 'phone', 'summary', 'total', 'status', 'createdAt'],
   },
   defaultSort: '-createdAt',
+  custom: declareReadCapability(SALES_READ),
   access: {
-    read: requireCapability('leads.read'),
+    read: requireCapability(SALES_READ),
     create: () => false,
     update: requireCapability('leads.write'),
     delete: requireCapability('leads.write'),

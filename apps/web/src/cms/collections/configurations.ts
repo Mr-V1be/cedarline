@@ -2,8 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 import { LOCALES } from '@/i18n/locales'
 
-import { requireCapability } from '../access/policies'
+import { declareReadCapability, requireCapability } from '../access/policies'
 import { label } from '../fields/labels'
+
+const SALES_READ = 'leads.read'
 
 /**
  * Configurations saved by customers. The short code is the only key a customer knows; the
@@ -22,8 +24,9 @@ export const Configurations: CollectionConfig = {
     defaultColumns: ['code', 'project', 'total', 'tariffRevision', 'createdAt'],
   },
   defaultSort: '-createdAt',
+  custom: declareReadCapability(SALES_READ),
   access: {
-    read: requireCapability('leads.read'),
+    read: requireCapability(SALES_READ),
     create: () => false,
     update: () => false,
     delete: requireCapability('leads.write'),

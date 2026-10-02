@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
-import { requireCapability } from '../access/policies'
+import { declareReadCapability, requireCapability } from '../access/policies'
 import { label } from '../fields/labels'
+
+const SALES_READ = 'leads.read'
 
 export const DOCUMENT_KINDS = ['render', 'proposal'] as const
 
@@ -17,8 +19,9 @@ export const Documents: CollectionConfig = {
     useAsTitle: 'filename',
     defaultColumns: ['filename', 'kind', 'createdAt'],
   },
+  custom: declareReadCapability(SALES_READ),
   access: {
-    read: requireCapability('leads.read'),
+    read: requireCapability(SALES_READ),
     create: () => false,
     update: () => false,
     delete: requireCapability('leads.write'),
