@@ -11,6 +11,7 @@
     "label": "Main navigation",
     "home": "Home",
     "projects": "Projects",
+    "configurator": "Configurator",
     "technology": "Technology",
     "process": "Stages and timing",
     "built": "Built houses"
@@ -25,7 +26,8 @@
     "toCatalog": "Go to the catalogue",
     "toHome": "Back to home",
     "open3d": "Open the 3D model",
-    "viewProject": "View project"
+    "viewProject": "View project",
+    "configure": "Configure in 3D"
   },
   "theme": {
     "label": "Dark theme"
@@ -56,5 +58,11 @@
   },
   "a11y": {
     "skipToContent": "Skip to content"
+  },
+  "schedule": {
+    "axis": "Weeks",
+    "total": "Start to finish",
+    "weekRange": "wk {from, number, integer}–{to, number, integer}",
+    "weekSingle": "wk {week, number, integer}"
   }
 }

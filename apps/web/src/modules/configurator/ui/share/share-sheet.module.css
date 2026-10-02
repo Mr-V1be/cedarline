@@ -1,0 +1,14 @@
+.body {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.lead {
+  color: var(--color-ink-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}

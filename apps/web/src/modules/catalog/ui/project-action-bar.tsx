@@ -9,10 +9,12 @@ export function ProjectActionBar({
   price,
   priceLabel,
   action,
+  href,
 }: {
   readonly price: string
   readonly priceLabel: string
   readonly action: string
+  readonly href: string
 }) {
   return (
     <div className={styles.bar}>
@@ -20,7 +22,7 @@ export function ProjectActionBar({
         <span className={styles.label}>{priceLabel}</span>
         <span className={styles.value}>{price}</span>
       </p>
-      <ButtonLink href="#model" icon={CubeIcon}>
+      <ButtonLink href={href} icon={CubeIcon}>
         {action}
       </ButtonLink>
     </div>

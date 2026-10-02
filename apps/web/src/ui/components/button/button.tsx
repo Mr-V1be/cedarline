@@ -79,3 +79,24 @@ export function ButtonLink({
     </Link>
   )
 }
+
+type ButtonAnchorProps = ButtonLook & Omit<ComponentProps<'a'>, 'children'>
+
+/** A plain anchor styled as a button, for files and other non-page addresses. */
+export function ButtonAnchor({
+  variant,
+  icon,
+  iconPosition,
+  stretch,
+  children,
+  className,
+  ...rest
+}: ButtonAnchorProps) {
+  return (
+    <a className={classNameFor({ variant, stretch }, className)} {...rest}>
+      <Content icon={icon} iconPosition={iconPosition}>
+        {children}
+      </Content>
+    </a>
+  )
+}

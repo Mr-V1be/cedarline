@@ -19,5 +19,5 @@ export default function proxy(request: NextRequest) {
 
 export const config = {
   // Everything except the CMS (/admin, /api), internal render endpoints, Next internals and files.
-  matcher: ['/((?!api|admin|render|proposal|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|admin|render|files|_next|_vercel|.*\\..*).*)'],
 }

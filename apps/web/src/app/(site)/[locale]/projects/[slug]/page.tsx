@@ -217,7 +217,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <ProjectActionBar
           priceLabel={t('price.from')}
           price={formatRubles(format, project.pricing.fromPrice)}
-          action={t('gallery.model')}
+          action={common('actions.configure')}
+          href={`/configurator/${project.slug}`}
         />
       )}
     </div>

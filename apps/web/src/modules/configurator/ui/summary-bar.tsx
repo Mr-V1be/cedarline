@@ -1,0 +1,47 @@
+'use client'
+
+import { Money, type Quote } from '@kedrovnik/pricing'
+import { useFormatter, useTranslations } from 'next-intl'
+import type { ReactNode } from 'react'
+
+import { formatRubles } from '@/modules/pricing/ui/money'
+
+import styles from './summary-bar.module.css'
+
+interface SummaryBarProps {
+  readonly quote: Quote
+  readonly completeness: string
+  readonly actions: ReactNode
+}
+
+/** The running total and the build time, with the actions of the moment next to them. */
+export function SummaryBar({ quote, completeness, actions }: SummaryBarProps) {
+  const t = useTranslations('configurator')
+  const common = useTranslations('common')
+  const format = useFormatter()
+  return (
+    <div className={styles.bar}>
+      <dl className={styles.figures}>
+        <div className={styles.figure}>
+          <dt className={styles.label}>
+            {completeness}
+            <span className={styles.inlineWeeks}>
+              {' · '}
+              {common('units.weeks', { count: quote.schedule.totalWeeks })}
+            </span>
+          </dt>
+          <dd className={styles.total} aria-live="polite">
+            {formatRubles(format, Money.toWholeRubles(quote.estimate.total))}
+          </dd>
+        </div>
+        <div className={styles.figure}>
+          <dt className={styles.label}>{t('summary.weeks')}</dt>
+          <dd className={styles.weeks}>
+            {common('units.weeks', { count: quote.schedule.totalWeeks })}
+          </dd>
+        </div>
+      </dl>
+      <div className={styles.actions}>{actions}</div>
+    </div>
+  )
+}

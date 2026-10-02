@@ -1,0 +1,152 @@
+.configurator {
+  --panel-width: 460px;
+
+  position: relative;
+}
+
+.stage {
+  position: sticky;
+  z-index: 1;
+  top: var(--header-height);
+  height: 42svh;
+  min-height: 260px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-inline: var(--gutter);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+}
+
+.header .back {
+  display: none;
+  justify-self: start;
+  margin-left: calc(var(--space-3) * -1);
+}
+
+.title {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--display-xs);
+}
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-s);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0;
+  color: var(--color-ink-muted);
+}
+
+.stepNav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stepSelect {
+  flex: 1 1 auto;
+}
+
+.notice {
+  padding: var(--space-3);
+  border-radius: var(--radius-m);
+  background: var(--color-accent-soft);
+  font-size: var(--text-s);
+}
+
+.steps {
+  display: grid;
+}
+
+.summary {
+  position: fixed;
+  z-index: var(--z-sticky);
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.phoneOnly {
+  display: contents;
+}
+
+/* Room for the fixed summary bar under the last step on phones and tablets. */
+.steps::after {
+  content: '';
+  display: block;
+  height: 96px;
+}
+
+@media (width >= 768px) and (width < 1024px) {
+  .stage {
+    height: 46svh;
+  }
+}
+
+@media (width >= 1024px) {
+  .configurator {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--panel-width);
+    align-items: start;
+  }
+
+  .stage {
+    height: calc(100svh - var(--header-height));
+  }
+
+  .panel {
+    min-height: calc(100svh - var(--header-height));
+    padding-inline: 0;
+    border-left: var(--hairline) solid var(--color-line);
+    background: var(--color-surface);
+  }
+
+  .header,
+  .steps {
+    padding-inline: var(--space-5);
+  }
+
+  .header .back {
+    display: inline-flex;
+  }
+
+  .title {
+    font-size: var(--display-s);
+  }
+
+  .stepNav {
+    display: none;
+  }
+
+  .steps::after {
+    height: var(--space-5);
+  }
+
+  .summary {
+    position: sticky;
+    right: auto;
+    bottom: 0;
+    left: auto;
+    margin-top: auto;
+  }
+
+  .desktopOnly {
+    display: contents;
+  }
+
+  .phoneOnly {
+    display: none;
+  }
+}

@@ -22,3 +22,12 @@ export class PayloadTariffRepository implements TariffRepository {
     return { grid: toTariffGrid(document), names: toTariffNames(document) }
   }
 }
+
+/** Tariff repositories per language over one Payload instance. */
+export class PayloadPricingRepositoryFactory {
+  constructor(private readonly payload: Payload) {}
+
+  forLocale(locale: Locale): TariffRepository {
+    return new PayloadTariffRepository(this.payload, locale)
+  }
+}

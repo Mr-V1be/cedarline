@@ -1,6 +1,7 @@
 /** Primary sections of the site; header, menu and footer render this list. */
 export const SITE_NAVIGATION = [
   { key: 'projects', href: '/projects' },
+  { key: 'configurator', href: '/configurator' },
   { key: 'technology', href: '/#technology' },
   { key: 'process', href: '/#process' },
   { key: 'built', href: '/#built' },

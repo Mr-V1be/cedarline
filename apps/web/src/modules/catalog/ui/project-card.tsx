@@ -14,6 +14,8 @@ interface ProjectCardProps {
   readonly sizes: string
   readonly priority?: boolean
   readonly headingLevel?: 'h2' | 'h3'
+  /** Where the card leads; the project page by default. */
+  readonly href?: string
 }
 
 /** Catalog entry: the render, the name and the three numbers people compare. */
@@ -22,6 +24,7 @@ export async function ProjectCard({
   sizes,
   priority = false,
   headingLevel: Heading = 'h3',
+  href,
 }: ProjectCardProps) {
   const [t, format] = await Promise.all([getTranslations('common'), getFormatter()])
   const { metrics, pricing } = project
@@ -47,7 +50,7 @@ export async function ProjectCard({
       <div className={styles.body}>
         <p className={styles.type}>{project.type.title}</p>
         <Heading className={styles.title}>
-          <Link href={`/projects/${project.slug}`} className={styles.link}>
+          <Link href={href ?? `/projects/${project.slug}`} className={styles.link}>
             {project.title}
           </Link>
         </Heading>

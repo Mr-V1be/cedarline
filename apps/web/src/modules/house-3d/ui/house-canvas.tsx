@@ -2,12 +2,13 @@
 
 import { PerformanceMonitor } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import { ACESFilmicToneMapping, NoToneMapping, PCFShadowMap } from 'three'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'
 
 import type { CameraPreset } from '../domain/camera-presets'
+import type { SceneCapture } from '../domain/capture'
 import { HouseScene } from '../scene/house-scene'
 import type { ScenePresetKey } from '../scene/presets'
 import { QUALITY_TIERS, type QualityKey } from '../scene/quality'
@@ -27,6 +28,8 @@ export interface HouseCanvasProps {
   /** Keeps the drawing buffer so the frame can be captured as an image. */
   readonly capture?: boolean
   readonly onReady?: () => void
+  /** Receives a function that takes a still of the live scene. */
+  readonly captureRef?: RefObject<SceneCapture | null>
 }
 
 export default function HouseCanvas({
@@ -39,6 +42,7 @@ export default function HouseCanvas({
   animate,
   capture = false,
   onReady,
+  captureRef,
 }: HouseCanvasProps) {
   const [qualityKey, setQualityKey] = useState<QualityKey>(initialQuality)
   const quality = QUALITY_TIERS[qualityKey]
@@ -78,6 +82,7 @@ export default function HouseCanvas({
         interactive={interactive}
         animate={animate}
         onReady={() => readyRef.current?.()}
+        {...(captureRef === undefined ? {} : { captureRef })}
       />
     </Canvas>
   )

@@ -1,0 +1,35 @@
+.frame {
+  display: grid;
+}
+
+.stage {
+  height: 42svh;
+  min-height: 260px;
+  border-radius: 0;
+}
+
+.panel {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--gutter);
+}
+
+.option {
+  height: var(--control-height);
+}
+
+@media (width >= 1024px) {
+  .frame {
+    grid-template-columns: minmax(0, 1fr) 460px;
+  }
+
+  .stage {
+    height: calc(100svh - var(--header-height));
+  }
+
+  .panel {
+    padding: var(--space-5);
+    border-left: var(--hairline) solid var(--color-line);
+  }
+}

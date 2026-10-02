@@ -11,6 +11,7 @@
     "label": "Основная навигация",
     "home": "Главная",
     "projects": "Проекты",
+    "configurator": "Конфигуратор",
     "technology": "Технология",
     "process": "Этапы и сроки",
     "built": "Построенные дома"
@@ -25,7 +26,8 @@
     "toCatalog": "Перейти в каталог",
     "toHome": "На главную",
     "open3d": "Открыть 3D-модель",
-    "viewProject": "Смотреть проект"
+    "viewProject": "Смотреть проект",
+    "configure": "Настроить в 3D"
   },
   "theme": {
     "label": "Тёмная тема"
@@ -56,5 +58,11 @@
   },
   "a11y": {
     "skipToContent": "Перейти к содержимому"
+  },
+  "schedule": {
+    "axis": "Недели",
+    "total": "Весь путь",
+    "weekRange": "{from, number, integer}–{to, number, integer} нед.",
+    "weekSingle": "{week, number, integer} нед."
   }
 }

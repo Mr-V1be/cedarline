@@ -2,12 +2,14 @@
 
 import { ContactShadows } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useLayoutEffect, useRef } from 'react'
+import { Suspense, useLayoutEffect, useRef, type RefObject } from 'react'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'
 
 import type { CameraPreset } from '../domain/camera-presets'
+import type { SceneCapture } from '../domain/capture'
 import { CameraRig } from '../ui/camera-rig'
+import { SceneCaptureBridge } from '../ui/scene-capture'
 import { useHouseModel } from '../ui/use-house-model'
 import { SceneEffects } from './effects'
 import { SceneEnvironment } from './environment'
@@ -97,6 +99,8 @@ export interface HouseSceneProps {
   readonly interactive: boolean
   readonly animate: boolean
   readonly onReady?: () => void
+  /** Receives a function that takes a still of the scene (configuration renders). */
+  readonly captureRef?: RefObject<SceneCapture | null>
 }
 
 /**
@@ -111,6 +115,7 @@ export function HouseScene({
   interactive,
   animate,
   onReady,
+  captureRef,
 }: HouseSceneProps) {
   const mesh = useHouseModel(input)
   const preset = SCENE_PRESETS[presetKey]
@@ -133,6 +138,9 @@ export function HouseScene({
         animate={animate}
       />
       <SceneEffects quality={quality} preset={preset} />
+      {captureRef === undefined ? null : (
+        <SceneCaptureBridge captureRef={captureRef} bounds={mesh.bounds} />
+      )}
     </>
   )
 }

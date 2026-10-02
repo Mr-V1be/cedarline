@@ -100,8 +100,8 @@ export async function ProjectSummary({ project, completenessName }: ProjectSumma
       )}
       {/* Phones and tablets have the same action in the sticky bar at the bottom. */}
       <div className={styles.action}>
-        <ButtonLink href="#model" icon={CubeIcon} stretch>
-          {common('actions.open3d')}
+        <ButtonLink href={`/configurator/${project.slug}`} icon={CubeIcon} stretch>
+          {common('actions.configure')}
         </ButtonLink>
       </div>
     </div>

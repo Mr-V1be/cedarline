@@ -25,11 +25,7 @@
   },
   "process": {
     "title": "Stages and timing",
-    "lead": "Schedule of the “{project}” project, “{completeness}” specification. The kit is made in the factory while piles go in on site.",
-    "total": "Start to finish",
-    "weekRange": "wk {from, number, integer}–{to, number, integer}",
-    "weekSingle": "wk {week, number, integer}",
-    "axis": "Weeks"
+    "lead": "Schedule of the “{project}” project, “{completeness}” specification. The kit is made in the factory while piles go in on site."
   },
   "built": {
     "title": "Built houses",
@@ -38,6 +34,6 @@
   },
   "cta": {
     "title": "Every project in 3D",
-    "lead": "The model is built from the same data as the estimate: dimensions, roof, windows, terrace."
+    "lead": "Configure any project: footprint, storeys, roof, facade, windows and services. The itemised estimate and build time update at once."
   }
 }

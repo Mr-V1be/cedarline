@@ -92,13 +92,13 @@ export default async function HomePage({
             <ScheduleChart
               schedule={fullest.schedule}
               labels={{
-                axis: t('process.axis'),
-                total: t('process.total'),
+                axis: common('schedule.axis'),
+                total: common('schedule.total'),
                 totalValue: common('units.weeks', { count: fullest.schedule.totalWeeks }),
                 range: (from, to) =>
                   from === to
-                    ? t('process.weekSingle', { week: from })
-                    : t('process.weekRange', { from, to }),
+                    ? common('schedule.weekSingle', { week: from })
+                    : common('schedule.weekRange', { from, to }),
               }}
             />
           </Container>
@@ -118,8 +118,8 @@ export default async function HomePage({
         <CtaBand
           title={t('cta.title')}
           lead={t('cta.lead')}
-          action={common('actions.open3d')}
-          href={`/projects/${hero.project.slug}#model`}
+          action={common('actions.configure')}
+          href={`/configurator/${hero.project.slug}`}
           image={ctaImage}
         />
       )}

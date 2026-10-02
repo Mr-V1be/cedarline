@@ -97,7 +97,8 @@ export function createHouseMaterials(
       ...emissive,
     }),
     floor: pbr(textures.deck, SCENE_PALETTE.plain, emissive),
-    roof: pbr(textures.roofMetal, SCENE_PALETTE.roof, { metalness: 0.55 }),
+    // Painted steel: a little metal, a dulled sky reflection, so the roof reads dark from above.
+    roof: pbr(textures.roofMetal, SCENE_PALETTE.roof, { metalness: 0.3, envMapIntensity: 0.55 }),
     roofTrim: plain(SCENE_PALETTE.roofTrim, 0.6, 0.3),
     plinth: pbr(textures.concrete, SCENE_PALETTE.plain),
     frame: plain(SCENE_PALETTE.frame, 0.45, 0.2),

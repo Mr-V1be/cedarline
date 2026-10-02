@@ -1,0 +1,132 @@
+.estimate {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.heading {
+  margin-top: var(--space-3);
+  font-size: var(--text-xl);
+}
+
+.heading:first-child {
+  margin-top: 0;
+}
+
+.sections,
+.lines,
+.phases {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sections {
+  display: grid;
+  border-top: var(--hairline) solid var(--color-line);
+}
+
+.section {
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--control-height);
+  padding-block: var(--space-2);
+  list-style: none;
+  cursor: pointer;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.sectionName {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  font-weight: var(--weight-semibold);
+}
+
+.caret {
+  flex: none;
+  color: var(--color-ink-muted);
+  transition: rotate var(--duration-fast) var(--ease-out);
+}
+
+.section[open] .caret {
+  rotate: 180deg;
+}
+
+.amount {
+  flex: none;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lines {
+  display: grid;
+  gap: var(--space-2);
+  padding-bottom: var(--space-3);
+  padding-left: calc(var(--icon-s) + var(--space-2));
+}
+
+.line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-3);
+  font-size: var(--text-s);
+}
+
+.lineName {
+  grid-column: 1 / -1;
+}
+
+.lineMath {
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.line .amount {
+  font-weight: var(--weight-medium);
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  font-size: var(--text-l);
+}
+
+.total strong {
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.phases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}
+
+.note {
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
