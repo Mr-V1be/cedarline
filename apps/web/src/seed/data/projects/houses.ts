@@ -1,5 +1,5 @@
 import { t } from '../localized'
-import { plan, type ProjectSeed } from './builder'
+import { plan, sizes, type ProjectSeed } from './builder'
 
 const ALL_SYSTEMS = ['electrics', 'water', 'heating', 'ventilation']
 const BASIC_SYSTEMS = ['electrics', 'water', 'heating']
@@ -61,6 +61,7 @@ export const HOUSES: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 600, length: 10800, depth: 2200 },
       chimney: null,
     },
+    sizes: sizes([11, 9], [13, 9], [12, 10]),
     defaults: {
       roofKind: 'gable',
       roofPitch: 30,
@@ -134,6 +135,7 @@ export const HOUSES: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 400, length: 5400, depth: 2000 },
       chimney: null,
     },
+    sizes: sizes([9, 9], [11, 9], [10, 10]),
     defaults: {
       roofKind: 'gable',
       roofPitch: 30,
@@ -206,6 +208,7 @@ export const HOUSES: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 300, length: 5400, depth: 2000 },
       chimney: null,
     },
+    sizes: sizes([10, 8], [9, 9]),
     defaults: {
       roofKind: 'gambrel',
       roofPitch: 25,
@@ -266,6 +269,7 @@ export const HOUSES: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 300, length: 8000, depth: 3000 },
       chimney: null,
     },
+    sizes: sizes([12, 7], [16, 7], [14, 8]),
     defaults: {
       roofKind: 'shed',
       roofPitch: 10,
@@ -317,6 +321,7 @@ export const HOUSES: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 300, length: 4800, depth: 1800 },
       chimney: null,
     },
+    sizes: sizes([7, 6], [9, 6], [8, 7], [9, 7]),
     defaults: {
       roofKind: 'gable',
       roofPitch: 35,

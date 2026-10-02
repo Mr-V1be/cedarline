@@ -66,6 +66,7 @@ export async function loadProjectOverview(
   const house = measureHouse(viewer)
   const quotes: readonly Quote[] = quoteHouse(
     house,
+    project.design,
     project.options,
     project.engineering,
     tariff.grid,

@@ -1,5 +1,5 @@
 import { t } from '../localized'
-import { plan, type ProjectSeed } from './builder'
+import { plan, sizes, type ProjectSeed } from './builder'
 
 const olkha = plan(6000, 4000)
 const bereza = plan(7000, 6000)
@@ -45,6 +45,7 @@ export const SMALL_BUILDINGS: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 0, length: 6000, depth: 2000 },
       chimney: { x: 3900, y: 900 },
     },
+    sizes: sizes([6, 5], [7, 4]),
     defaults: {
       roofKind: 'gable',
       roofPitch: 30,
@@ -104,6 +105,7 @@ export const SMALL_BUILDINGS: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 300, length: 4600, depth: 2400 },
       chimney: { x: 1900, y: 1600 },
     },
+    sizes: sizes([8, 6], [7, 7]),
     defaults: {
       roofKind: 'gable',
       roofPitch: 28,
@@ -150,13 +152,14 @@ export const SMALL_BUILDINGS: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 0, length: 7000, depth: 2400 },
       chimney: null,
     },
+    sizes: sizes([8, 5], [7, 6]),
     defaults: {
       roofKind: 'shed',
       roofPitch: 12,
       facadeFinish: 'fiber-cement',
       facadeColor: '#2f3331',
       windowStyle: 'panoramic',
-      insulation: 150,
+      insulation: 200,
       engineering: ['electrics', 'water', 'heating'],
     },
   },
@@ -203,6 +206,7 @@ export const SMALL_BUILDINGS: readonly ProjectSeed[] = [
       terrace: { side: 'front', offset: 0, length: 6000, depth: 1800 },
       chimney: null,
     },
+    sizes: sizes([7, 6], [6, 7]),
     defaults: {
       roofKind: 'gable',
       roofPitch: 40,

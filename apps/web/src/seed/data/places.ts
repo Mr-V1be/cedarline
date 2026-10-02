@@ -74,6 +74,7 @@ export const BUILT_OBJECTS: ReadonlyArray<{
 export const SITE = {
   phone: '+7 (812) 000-46-10',
   email: 'hello@kedrovnik.example',
+  leadsEmail: 'sales@kedrovnik.example',
   address: t(
     'Ленинградская область, Тосненский район, производственная зона «Северная», 4',
     'Leningrad Oblast, Tosno District, Severnaya industrial zone, 4',

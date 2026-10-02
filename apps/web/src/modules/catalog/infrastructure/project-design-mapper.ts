@@ -9,7 +9,8 @@ type Relation<T extends { id: number }> = number | T
 export const relationId = <T extends { id: number }>(value: Relation<T>): number =>
   typeof value === 'number' ? value : value.id
 
-export type ProjectSource = Pick<Project, 'design' | 'defaults'>
+export type ProjectSource = Pick<Project, 'design' | 'defaults'> &
+  Partial<Pick<Project, 'slug' | 'configurator'>>
 
 /** CMS design group → house domain design. Room kinds are referenced by stable keys. */
 export function toHouseDesign(

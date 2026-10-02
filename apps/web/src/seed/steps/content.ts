@@ -76,6 +76,7 @@ export async function seedPages(
     data: {
       phone: SITE.phone,
       email: SITE.email,
+      leadsEmail: SITE.leadsEmail,
       address: SITE.address.ru,
       hours: SITE.hours.ru,
       region: SITE.region.ru,

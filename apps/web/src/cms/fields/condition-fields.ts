@@ -1,17 +1,29 @@
+import { SELECTION_OPTIONS } from '@kedrovnik/configurator'
 import type { ArrayField } from 'payload'
 
-import { SELECTION_OPTIONS } from '@/modules/pricing/domain/selections'
+import { label, type Labels } from './labels'
+import { registryOptions } from './registry-labels'
 
-import { label } from '../../fields/labels'
-import { registryOptions } from '../../fields/registry-labels'
+const VALUES_HELP = label(
+  'Значения: этажность — 1, 1-attic, 2; планировка — base, mirrored; кровля — gable, shed, gambrel; ' +
+    'фасад — timber-imitation, planken, fiber-cement; окна — standard, panoramic; терраса — глубина в мм ' +
+    '(0 — без террасы); утепление — толщина в мм; инженерия — ключи систем.',
+  'Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — ' +
+    'timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm ' +
+    '(0 — none); insulation — thickness in mm; building services — system keys.',
+)
 
-/** Applicability conditions: the line applies when every condition holds. */
-export const conditionsField: ArrayField = {
+/** Conditions on the configuration: all of them hold when the option has any of the values. */
+export const conditionsField = (
+  labels: Labels = label('Условия применения', 'Applies when'),
+  minRows = 0,
+): ArrayField => ({
   name: 'conditions',
   type: 'array',
-  label: label('Условия применения', 'Applies when'),
+  label: labels,
   labels: { singular: label('Условие', 'Condition'), plural: label('Условия', 'Conditions') },
-  admin: { initCollapsed: true },
+  minRows,
+  admin: { initCollapsed: minRows === 0, description: VALUES_HELP },
   fields: [
     {
       type: 'row',
@@ -35,4 +47,4 @@ export const conditionsField: ArrayField = {
       ],
     },
   ],
-}
+})

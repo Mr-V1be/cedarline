@@ -1,6 +1,15 @@
 import type { Payload } from 'payload'
 
-import { ENGINEERING_SYSTEMS, FACADE_PALETTES } from '../data/catalog-options'
+import { DEFER_PROJECT_CHECKS } from '@/cms/hooks/catalog-options-hooks'
+
+import {
+  COMPATIBILITY_RULES,
+  ENGINEERING_SYSTEMS,
+  FACADE_PALETTES,
+  OFFERED_ROOFS,
+  OFFERED_WINDOWS,
+  TERRACE_DEPTHS,
+} from '../data/catalog-options'
 import { INSULATION_OPTIONS, WALL_LAYERS } from '../data/technology'
 import {
   ADVERTISED_ROUNDING,
@@ -50,14 +59,29 @@ export async function seedCatalogOptions(payload: Payload) {
     ...SEED,
     slug: 'catalog-options',
     locale: 'ru',
+    // Projects are seeded next and each is checked against this offer on its own save.
+    context: { [DEFER_PROJECT_CHECKS]: true },
     data: {
       facadePalettes: FACADE_PALETTES.map((palette) => ({
         finish: palette.finish,
         colors: palette.colors.map((color) => ({ name: color.name.ru, hex: color.hex })),
       })),
+      roofKinds: [...OFFERED_ROOFS],
+      windowStyles: [...OFFERED_WINDOWS],
+      terraceDepths: [...TERRACE_DEPTHS],
+      terraceRemovable: true,
       engineeringSystems: ENGINEERING_SYSTEMS.map((system) => ({
         key: system.key,
         name: system.name.ru,
+        requires: [...system.requires],
+      })),
+      rules: COMPATIBILITY_RULES.map((rule) => ({
+        key: rule.key,
+        conditions: rule.when.map((condition) => ({
+          option: condition.option,
+          values: [...condition.values],
+        })),
+        message: rule.message.ru,
       })),
     },
   })
@@ -65,6 +89,7 @@ export async function seedCatalogOptions(payload: Payload) {
     ...SEED,
     slug: 'catalog-options',
     locale: 'en',
+    context: { [DEFER_PROJECT_CHECKS]: true },
     data: {
       facadePalettes: englishRows(saved.facadePalettes, (palette, index) => ({
         colors: englishRows(palette.colors, (_, colorIndex) => ({
@@ -73,6 +98,9 @@ export async function seedCatalogOptions(payload: Payload) {
       })),
       engineeringSystems: englishRows(saved.engineeringSystems, (_, index) => ({
         name: at(ENGINEERING_SYSTEMS, index).name.en,
+      })),
+      rules: englishRows(saved.rules, (_, index) => ({
+        message: at(COMPATIBILITY_RULES, index).message.en,
       })),
     },
   })

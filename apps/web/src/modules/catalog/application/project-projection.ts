@@ -34,7 +34,7 @@ export function projectProject(
     rooms: context.rooms,
     standards: context.standards,
   })
-  const quotes = quoteHouse(house, input.options, input.engineering, grid)
+  const quotes = quoteHouse(house, input.design, input.options, input.engineering, grid)
   const lowest = lowestQuote(quotes)
   const advertised = advertisedPrice(grid, quotes)
   if (lowest === undefined || advertised === undefined)

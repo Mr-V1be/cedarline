@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { anyone, requireCapability } from '../access/policies'
+import { anyone, requireCapability, userCan } from '../access/policies'
 import { label } from '../fields/labels'
 
 /** Company details shown in the footer and, later, on the contacts page. */
@@ -16,6 +16,22 @@ export const Site: GlobalConfig = {
         { name: 'phone', type: 'text', label: label('Телефон', 'Phone'), required: true },
         { name: 'email', type: 'email', label: label('Почта', 'Email'), required: true },
       ],
+    },
+    {
+      name: 'leadsEmail',
+      type: 'email',
+      required: true,
+      label: label('Почта для заявок', 'Leads inbox'),
+      // Internal address: the public site never shows it, staff and the server read it.
+      access: {
+        read: ({ req }) => userCan(req.user, 'content.write') || userCan(req.user, 'leads.read'),
+      },
+      admin: {
+        description: label(
+          'Сюда приходят уведомления о новых заявках с конфигурацией и КП',
+          'New leads with their configuration and proposal are sent here',
+        ),
+      },
     },
     {
       name: 'address',

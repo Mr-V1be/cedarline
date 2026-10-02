@@ -1,6 +1,6 @@
 import type { QuantityDriver } from '@kedrovnik/house'
 
-import type { SelectionOption } from '@/modules/pricing/domain/selections'
+import type { SelectionOption } from '@kedrovnik/configurator'
 
 import { t, type Localized } from './localized'
 

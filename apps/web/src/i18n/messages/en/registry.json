@@ -80,9 +80,12 @@
     "chimneyCount": "Chimneys"
   },
   "selectionOption": {
+    "storeys": "Storeys",
+    "layout": "Plan",
     "roof": "Roof",
     "facade": "Facade",
     "windows": "Windows",
+    "terrace": "Terrace, depth mm",
     "insulation": "Insulation, mm",
     "engineering": "Building services"
   },
@@ -104,5 +107,11 @@
     "up": "Up",
     "down": "Down",
     "nearest": "To nearest"
+  },
+  "leadStatus": {
+    "new": "New",
+    "in-progress": "In progress",
+    "won": "Contract",
+    "lost": "Lost"
   }
 }

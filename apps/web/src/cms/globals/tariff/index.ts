@@ -9,7 +9,7 @@ import { registryOptions } from '../../fields/registry-labels'
 import type { Tariff as TariffDocument } from '../../generated/payload-types'
 import { refreshProjectionsOnChange } from '../../hooks/refresh-projections'
 import { bumpTariffRevision, tariffSubstance, validateTariff } from '../../hooks/tariff-hooks'
-import { conditionsField } from './condition-fields'
+import { conditionsField } from '../../fields/condition-fields'
 
 const name = (labels = label('Название', 'Name')): TextField => ({
   name: 'name',
@@ -122,7 +122,7 @@ export const Tariff: GlobalConfig = {
                     },
                   ],
                 },
-                conditionsField,
+                conditionsField(),
               ],
             },
           ],
@@ -287,7 +287,7 @@ export const Tariff: GlobalConfig = {
                     },
                   ],
                 },
-                conditionsField,
+                conditionsField(),
               ],
             },
           ],

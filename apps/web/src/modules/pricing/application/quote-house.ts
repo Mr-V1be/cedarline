@@ -1,17 +1,17 @@
-import type { HouseOptions, MeasuredHouse } from '@kedrovnik/house'
+import { designSelections } from '@kedrovnik/configurator'
+import type { HouseDesign, HouseOptions, MeasuredHouse } from '@kedrovnik/house'
 import { quoteEveryCompleteness, type Quote, type TariffGrid } from '@kedrovnik/pricing'
 
-import { selectionsOf } from '../domain/selections'
-
-/** Quotes of a measured house for every completeness level, in grid order. */
+/** Quotes of a catalog project as designed, for every completeness level, in grid order. */
 export function quoteHouse(
   house: MeasuredHouse,
+  design: HouseDesign,
   options: HouseOptions,
   engineering: readonly string[],
   grid: TariffGrid,
 ): readonly Quote[] {
   return quoteEveryCompleteness(grid, {
     quantities: house.takeoff,
-    selections: selectionsOf(options, engineering),
+    selections: designSelections(design, options, engineering),
   })
 }

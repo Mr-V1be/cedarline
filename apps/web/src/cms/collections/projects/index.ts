@@ -6,6 +6,7 @@ import { publicationStatusField, slugField, titleField } from '../../fields/comm
 import { label } from '../../fields/labels'
 import { registryOptions } from '../../fields/registry-labels'
 import { applyProjectProjection } from '../../hooks/project-projection'
+import { configuratorField } from './configurator-fields'
 import { designField } from './design-fields'
 import { defaultsField } from './option-fields'
 import { metricsField, pricingField } from './projection-fields'
@@ -98,6 +99,7 @@ export const Projects: CollectionConfig = {
         },
         { label: label('Конструкция', 'Structure'), fields: [designField] },
         { label: label('Комплектация', 'Configuration'), fields: [defaultsField] },
+        { label: label('Конфигуратор', 'Configurator'), fields: [configuratorField] },
         { label: label('Расчёт', 'Computed'), fields: [metricsField, pricingField] },
       ],
     },

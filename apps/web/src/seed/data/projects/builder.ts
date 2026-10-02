@@ -65,6 +65,10 @@ export interface ProjectSeed {
     } | null
     readonly chimney: { readonly x: number; readonly y: number } | null
   }
+  /** Storey variant of another project of the series (its slug). */
+  readonly variantOf?: string
+  /** Footprints the configurator offers besides the design's own, mm. */
+  readonly sizes: ReadonlyArray<{ readonly width: number; readonly depth: number }>
   readonly defaults: {
     readonly roofKind: RoofKindKey
     readonly roofPitch: number
@@ -75,6 +79,10 @@ export interface ProjectSeed {
     readonly engineering: readonly string[]
   }
 }
+
+/** Footprint alternatives: width × depth in metres, for readable seed data. */
+export const sizes = (...metres: ReadonlyArray<readonly [number, number]>) =>
+  metres.map(([width, depth]) => ({ width: width * 1000, depth: depth * 1000 }))
 
 /** Joinery sizes used across the catalog, mm. */
 const SIZES = {

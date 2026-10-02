@@ -73,6 +73,10 @@ export interface Config {
     'room-kinds': RoomKind;
     projects: Project;
     'built-objects': BuiltObject;
+    leads: Lead;
+    configurations: Configuration;
+    documents: Document;
+    'rate-limit-hits': RateLimitHit;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +90,10 @@ export interface Config {
     'room-kinds': RoomKindsSelect<false> | RoomKindsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'built-objects': BuiltObjectsSelect<false> | BuiltObjectsSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
+    configurations: ConfigurationsSelect<false> | ConfigurationsSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    'rate-limit-hits': RateLimitHitsSelect<false> | RateLimitHitsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -320,6 +328,23 @@ export interface Project {
      */
     engineering?: string[] | null;
   };
+  configurator?: {
+    /**
+     * Projects of one series with other storeys: the configurator switches between them in the “Storeys” step. Point to the main project of the series.
+     */
+    variantOf?: (number | null) | Project;
+    mirrorable?: boolean | null;
+    /**
+     * Rooms scale on the axis grid, windows and doors keep their size. Every footprint is checked on save.
+     */
+    sizes?:
+      | {
+          width: number;
+          depth: number;
+          id?: string | null;
+        }[]
+      | null;
+  };
   /**
    * Computed from the design on save
    */
@@ -370,6 +395,102 @@ export interface BuiltObject {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  status: 'new' | 'in-progress' | 'won' | 'lost';
+  notes?: string | null;
+  name: string;
+  phone: string;
+  email: string;
+  comment?: string | null;
+  summary?: string | null;
+  total?: number | null;
+  locale?: ('ru' | 'en') | null;
+  configuration?: (number | null) | Configuration;
+  project?: (number | null) | Project;
+  proposal?: (number | null) | Document;
+  consentAt?: string | null;
+  deliveries?:
+    | {
+        channel: string;
+        status: 'delivered' | 'failed';
+        reference?: string | null;
+        at: string;
+        error?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "configurations".
+ */
+export interface Configuration {
+  id: number;
+  code: string;
+  project?: (number | null) | Project;
+  total?: number | null;
+  tariffRevision?: number | null;
+  locale?: ('ru' | 'en') | null;
+  render?: (number | null) | Document;
+  proposal?: (number | null) | Document;
+  configuration:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  snapshot:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  kind: 'render' | 'proposal';
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rate-limit-hits".
+ */
+export interface RateLimitHit {
+  id: number;
+  bucket: string;
+  key: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -415,6 +536,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'built-objects';
         value: number | BuiltObject;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'configurations';
+        value: number | Configuration;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'rate-limit-hits';
+        value: number | RateLimitHit;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -639,6 +776,19 @@ export interface ProjectsSelect<T extends boolean = true> {
         windowStyle?: T;
         engineering?: T;
       };
+  configurator?:
+    | T
+    | {
+        variantOf?: T;
+        mirrorable?: T;
+        sizes?:
+          | T
+          | {
+              width?: T;
+              depth?: T;
+              id?: T;
+            };
+      };
   metrics?:
     | T
     | {
@@ -680,6 +830,82 @@ export interface BuiltObjectsSelect<T extends boolean = true> {
   area?: T;
   location?: T;
   cover?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  status?: T;
+  notes?: T;
+  name?: T;
+  phone?: T;
+  email?: T;
+  comment?: T;
+  summary?: T;
+  total?: T;
+  locale?: T;
+  configuration?: T;
+  project?: T;
+  proposal?: T;
+  consentAt?: T;
+  deliveries?:
+    | T
+    | {
+        channel?: T;
+        status?: T;
+        reference?: T;
+        at?: T;
+        error?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "configurations_select".
+ */
+export interface ConfigurationsSelect<T extends boolean = true> {
+  code?: T;
+  project?: T;
+  total?: T;
+  tariffRevision?: T;
+  locale?: T;
+  render?: T;
+  proposal?: T;
+  configuration?: T;
+  snapshot?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  kind?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rate-limit-hits_select".
+ */
+export interface RateLimitHitsSelect<T extends boolean = true> {
+  bucket?: T;
+  key?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -764,9 +990,12 @@ export interface Tariff {
           | 'wetZoneCount'
           | 'chimneyCount';
         unitPrice: number;
+        /**
+         * Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm (0 — none); insulation — thickness in mm; building services — system keys.
+         */
         conditions?:
           | {
-              option: 'roof' | 'facade' | 'windows' | 'insulation' | 'engineering';
+              option: 'storeys' | 'layout' | 'roof' | 'facade' | 'windows' | 'terrace' | 'insulation' | 'engineering';
               values: string[];
               id?: string | null;
             }[]
@@ -830,9 +1059,12 @@ export interface Tariff {
         baseDays: number;
         daysPerUnit: number;
         dependsOn?: string[] | null;
+        /**
+         * Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm (0 — none); insulation — thickness in mm; building services — system keys.
+         */
         conditions?:
           | {
-              option: 'roof' | 'facade' | 'windows' | 'insulation' | 'engineering';
+              option: 'storeys' | 'layout' | 'roof' | 'facade' | 'windows' | 'terrace' | 'insulation' | 'engineering';
               values: string[];
               id?: string | null;
             }[]
@@ -862,10 +1094,35 @@ export interface CatalogOption {
         id?: string | null;
       }[]
     | null;
+  roofKinds: ('gable' | 'shed' | 'gambrel')[];
+  windowStyles: ('standard' | 'panoramic')[];
+  /**
+   * The project’s own terrace depth is always offered
+   */
+  terraceDepths?: number[] | null;
+  terraceRemovable?: boolean | null;
   engineeringSystems?:
     | {
         key: string;
         name: string;
+        requires?: string[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  rules?:
+    | {
+        key: string;
+        /**
+         * Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm (0 — none); insulation — thickness in mm; building services — system keys.
+         */
+        conditions?:
+          | {
+              option: 'storeys' | 'layout' | 'roof' | 'facade' | 'windows' | 'terrace' | 'insulation' | 'engineering';
+              values: string[];
+              id?: string | null;
+            }[]
+          | null;
+        message: string;
         id?: string | null;
       }[]
     | null;
@@ -917,6 +1174,10 @@ export interface Site {
   id: number;
   phone: string;
   email: string;
+  /**
+   * New leads with their configuration and proposal are sent here
+   */
+  leadsEmail: string;
   address: string;
   hours: string;
   region: string;
@@ -1017,11 +1278,30 @@ export interface CatalogOptionsSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  roofKinds?: T;
+  windowStyles?: T;
+  terraceDepths?: T;
+  terraceRemovable?: T;
   engineeringSystems?:
     | T
     | {
         key?: T;
         name?: T;
+        requires?: T;
+        id?: T;
+      };
+  rules?:
+    | T
+    | {
+        key?: T;
+        conditions?:
+          | T
+          | {
+              option?: T;
+              values?: T;
+              id?: T;
+            };
+        message?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1072,6 +1352,7 @@ export interface HomeSelect<T extends boolean = true> {
 export interface SiteSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
+  leadsEmail?: T;
   address?: T;
   hours?: T;
   region?: T;

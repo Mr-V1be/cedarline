@@ -8,10 +8,12 @@ import { GALLERY_RENDERS, projectRenderName } from '../data/renders'
 import type { ProjectSeed } from '../data/projects/builder'
 import { HOUSES } from '../data/projects/houses'
 import { SMALL_BUILDINGS } from '../data/projects/small-buildings'
+import { STOREY_VARIANTS } from '../data/projects/variants'
 import { seedRender } from './media'
 import { translate, upsert } from './upsert'
 
-export const PROJECTS: readonly ProjectSeed[] = [...HOUSES, ...SMALL_BUILDINGS]
+/** Main projects first: a storey variant refers to the project of its series. */
+export const PROJECTS: readonly ProjectSeed[] = [...HOUSES, ...SMALL_BUILDINGS, ...STOREY_VARIANTS]
 
 async function gallery(payload: Payload, project: ProjectSeed) {
   const items: Array<{ image: number; view: (typeof GALLERY_RENDERS)[number]['view'] }> = []
@@ -31,6 +33,11 @@ export async function seedProjects(
   ids: { types: Map<string, number>; roomKinds: Map<string, number> },
 ) {
   const projects = new Map<string, number>()
+  const seriesRoot = (slug: string) => {
+    const id = projects.get(slug)
+    if (id === undefined) throw new Error(`Series root ${slug} must be seeded first`)
+    return id
+  }
   for (const project of PROJECTS) {
     const type = ids.types.get(project.type)
     if (type === undefined) throw new Error(`Unknown project type ${project.type}`)
@@ -68,6 +75,11 @@ export async function seedProjects(
             design.chimney === null ? { enabled: false } : { enabled: true, ...design.chimney },
         },
         defaults: { ...project.defaults, engineering: [...project.defaults.engineering] },
+        configurator: {
+          variantOf: project.variantOf === undefined ? null : seriesRoot(project.variantOf),
+          mirrorable: true,
+          sizes: project.sizes.map((size) => ({ ...size })),
+        },
       },
     )
     await translate(payload, 'projects', id, {

@@ -80,9 +80,12 @@
     "chimneyCount": "Дымоходы"
   },
   "selectionOption": {
+    "storeys": "Этажность",
+    "layout": "Планировка",
     "roof": "Кровля",
     "facade": "Фасад",
     "windows": "Окна",
+    "terrace": "Терраса, глубина мм",
     "insulation": "Утепление, мм",
     "engineering": "Инженерные системы"
   },
@@ -104,5 +107,11 @@
     "up": "Вверх",
     "down": "Вниз",
     "nearest": "До ближайшего"
+  },
+  "leadStatus": {
+    "new": "Новая",
+    "in-progress": "В работе",
+    "won": "Договор",
+    "lost": "Отказ"
   }
 }
