@@ -140,17 +140,17 @@ export function Configurator({ view, save, submitLead, companyPhone }: Configura
     if ((await ensureSaved()) !== null) setSheet('lead')
   }
 
-  const saveActions = (
+  const saveActions = (compact: boolean) => (
     <>
       <Button
-        variant="secondary"
+        variant={compact ? 'quiet' : 'secondary'}
         icon={ShareNetworkIcon}
         disabled={saving}
         onClick={() => {
           void share()
         }}
       >
-        {saving ? t('actions.saving') : t('actions.save')}
+        {saving ? t('actions.saving') : compact ? t('actions.share') : t('actions.save')}
       </Button>
       <Button
         variant="quiet"
@@ -260,7 +260,7 @@ export function Configurator({ view, save, submitLead, companyPhone }: Configura
                   names={view.names}
                   actions={
                     <>
-                      {saveActions}
+                      {saveActions(false)}
                       {leadButton}
                     </>
                   }
@@ -275,9 +275,8 @@ export function Configurator({ view, save, submitLead, companyPhone }: Configura
           <SummaryBar
             quote={state.quote}
             completeness={completeness}
-            actions={
+            primary={
               <>
-                <span className={styles.desktopOnly}>{saveActions}</span>
                 <span className={styles.desktopOnly}>{leadButton}</span>
                 <span className={styles.phoneOnly}>
                   {nextStep === undefined ? (
@@ -297,6 +296,7 @@ export function Configurator({ view, save, submitLead, companyPhone }: Configura
                 </span>
               </>
             }
+            secondary={saveActions(true)}
           />
         </div>
       </div>

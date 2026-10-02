@@ -45,10 +45,16 @@
   white-space: nowrap;
 }
 
-.actions {
+.primary {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
+}
+
+.secondary {
+  display: none;
+  flex-basis: 100%;
+  gap: var(--space-2);
+  margin-top: calc(var(--space-2) * -1);
 }
 
 .inlineWeeks {
@@ -73,15 +79,15 @@
   .inlineWeeks {
     display: inline;
   }
-
-  .actions {
-    flex-wrap: nowrap;
-  }
 }
 
 @media (width >= 1024px) {
   .bar {
     padding-inline: var(--space-5);
     box-shadow: none;
+  }
+
+  .secondary {
+    display: flex;
   }
 }

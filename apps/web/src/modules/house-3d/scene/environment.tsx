@@ -15,6 +15,7 @@ import { skyHdrUrl, skyImageUrl } from './assets'
 import { skyLighting, type ScenePreset } from './presets'
 
 const HAZE_WHITE = new Color('#ffffff')
+const NORMAL_BIAS_TEXELS = 1.5
 /** The porch lamp hangs above the door side of the path, metres. */
 const PORCH = { height: 2.5, setBack: 1.6, distance: 9 } as const
 
@@ -58,7 +59,9 @@ function Sun({
       ]}
       shadow-mapSize={[shadowMapSize, shadowMapSize]}
       shadow-bias={-0.0002}
-      shadow-normalBias={0.03}
+      // Offset by about a texel and a half of the shadow map: smaller maps (phones) cover the
+      // same area with coarser texels and would otherwise shade the ground with acne.
+      shadow-normalBias={Math.max(0.03, ((2 * reach) / shadowMapSize) * NORMAL_BIAS_TEXELS)}
       shadow-radius={5}
     />
   )

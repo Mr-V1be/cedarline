@@ -11,11 +11,14 @@ import styles from './summary-bar.module.css'
 interface SummaryBarProps {
   readonly quote: Quote
   readonly completeness: string
-  readonly actions: ReactNode
+  /** The main action of the moment, next to the total. */
+  readonly primary: ReactNode
+  /** Quieter actions on a row of their own; desktops only. */
+  readonly secondary?: ReactNode
 }
 
 /** The running total and the build time, with the actions of the moment next to them. */
-export function SummaryBar({ quote, completeness, actions }: SummaryBarProps) {
+export function SummaryBar({ quote, completeness, primary, secondary }: SummaryBarProps) {
   const t = useTranslations('configurator')
   const common = useTranslations('common')
   const format = useFormatter()
@@ -41,7 +44,8 @@ export function SummaryBar({ quote, completeness, actions }: SummaryBarProps) {
           </dd>
         </div>
       </dl>
-      <div className={styles.actions}>{actions}</div>
+      <div className={styles.primary}>{primary}</div>
+      {secondary === undefined ? null : <div className={styles.secondary}>{secondary}</div>}
     </div>
   )
 }

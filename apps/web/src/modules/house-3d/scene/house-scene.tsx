@@ -40,13 +40,19 @@ function ReadySignal({ onReady }: { readonly onReady: () => void }) {
   return null
 }
 
-function Exposure({ value }: { readonly value: number }) {
+/**
+ * Renderer settings of the preset. The clear alpha is zero even though the canvas is opaque:
+ * contact shadows render into a texture with the renderer's clear colour, and an opaque clear
+ * would shade their whole plane.
+ */
+function RendererSettings({ exposure }: { readonly exposure: number }) {
   const get = useThree((state) => state.get)
   useLayoutEffect(() => {
     const { gl, invalidate } = get()
-    gl.toneMappingExposure = value
+    gl.toneMappingExposure = exposure
+    gl.setClearAlpha(0)
     invalidate()
-  }, [get, value])
+  }, [get, exposure])
   return null
 }
 
@@ -121,7 +127,7 @@ export function HouseScene({
   const preset = SCENE_PRESETS[presetKey]
   return (
     <>
-      <Exposure value={preset.exposure} />
+      <RendererSettings exposure={preset.exposure} />
       <Suspense fallback={null}>
         <Dressing input={input} presetKey={presetKey} quality={quality} />
         {onReady === undefined ? null : <ReadySignal onReady={onReady} />}
