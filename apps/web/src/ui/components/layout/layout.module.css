@@ -18,6 +18,6 @@
 }
 
 .pine {
-  background: var(--color-pine);
-  color: var(--color-on-pine);
+  background: var(--color-band);
+  color: var(--color-on-band);
 }

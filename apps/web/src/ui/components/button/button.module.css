@@ -63,10 +63,10 @@
 }
 
 .inverse {
-  background: var(--color-on-pine);
-  color: var(--color-pine);
+  background: var(--color-on-band);
+  color: var(--color-band);
 }
 
 .inverse:hover:not(:disabled) {
-  background: var(--color-surface);
+  background: var(--color-on-band-hover);
 }

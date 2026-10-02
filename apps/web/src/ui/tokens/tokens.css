@@ -18,6 +18,11 @@
   --color-pine-hover: #2a4d3e;
   --color-on-pine: #f3f3ee;
   --color-pine-soft: #dbe5dd;
+
+  /* Brand band: deep pine in both themes, never the lighter interactive pine of the dark theme. */
+  --color-band: #1e3b2f;
+  --color-on-band: #f3f3ee;
+  --color-on-band-hover: #fff;
   --color-wood: #d8be94;
   --color-wood-strong: #a8875a;
   --color-wood-soft: #efe4d1;
@@ -147,6 +152,9 @@
     --color-pine-hover: #bcd8c6;
     --color-on-pine: #10241a;
     --color-pine-soft: #23342b;
+    --color-band: #17312a;
+    --color-on-band: #e8ede6;
+    --color-on-band-hover: #fff;
     --color-wood: #c9ab80;
     --color-wood-strong: #d9be95;
     --color-wood-soft: #2d271e;
@@ -187,6 +195,9 @@
   --color-pine-hover: #bcd8c6;
   --color-on-pine: #10241a;
   --color-pine-soft: #23342b;
+  --color-band: #17312a;
+  --color-on-band: #e8ede6;
+  --color-on-band-hover: #fff;
   --color-wood: #c9ab80;
   --color-wood-strong: #d9be95;
   --color-wood-soft: #2d271e;
