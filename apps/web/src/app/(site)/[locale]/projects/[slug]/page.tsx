@@ -2,11 +2,9 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getFormatter, getTranslations } from 'next-intl/server'
-import { cache } from 'react'
 
 import { getServices } from '@/composition/services'
 import type { Locale } from '@/i18n/locales'
-import { loadProjectOverview } from '@/modules/catalog/application/project-overview'
 import { ProjectActionBar } from '@/modules/catalog/ui/project-action-bar'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'
 import { ProjectSummary } from '@/modules/catalog/ui/project-summary'
@@ -21,6 +19,7 @@ import { Gallery } from '@/ui/components/gallery/gallery'
 import { Container, Section } from '@/ui/components/layout/container'
 import { SectionHeading } from '@/ui/components/section-heading/section-heading'
 
+import { loadOverview } from './load-overview'
 import styles from './project.module.css'
 
 /** Every request reads current catalog data; caching belongs to the repositories. */
@@ -31,11 +30,6 @@ interface ProjectPageProps {
 }
 
 const SIMILAR_COUNT = 3
-
-/** Metadata and page share one load per request. */
-const loadOverview = cache(async (slug: string, locale: Locale) =>
-  loadProjectOverview(await getServices(locale), slug, locale),
-)
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { locale, slug } = await params
