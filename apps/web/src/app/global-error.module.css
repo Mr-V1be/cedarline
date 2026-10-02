@@ -1,0 +1,9 @@
+.body {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+}
+
+.main {
+  padding: var(--gutter);
+}
