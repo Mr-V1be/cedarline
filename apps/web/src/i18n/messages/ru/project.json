@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "title": "{type} «{name}»"
+  },
   "breadcrumbs": {
     "label": "Вы здесь",
     "catalog": "Проекты"

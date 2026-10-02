@@ -1,6 +1,8 @@
 .main {
   display: block;
-  min-height: 60dvh;
+
+  /* While a page streams in behind its skeleton, the footer stays below the first screen. */
+  min-height: 100dvh;
 }
 
 .skip {

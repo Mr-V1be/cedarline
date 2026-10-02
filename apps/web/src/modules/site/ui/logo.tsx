@@ -3,9 +3,10 @@ import { Link } from '@/i18n/navigation'
 import styles from './logo.module.css'
 
 /** Wordmark with a gable-and-ridge mark drawn in the line weight of the site's drawings. */
-export function Logo({ name, homeLabel }: { readonly name: string; readonly homeLabel: string }) {
+/** Links home; the visible brand name is the link's accessible name. */
+export function Logo({ name }: { readonly name: string }) {
   return (
-    <Link href="/" className={styles.logo} aria-label={homeLabel}>
+    <Link href="/" className={styles.logo}>
       <svg className={styles.mark} viewBox="0 0 32 32" aria-hidden focusable="false">
         <path
           d="M4 15 16 5l12 10"

@@ -15,7 +15,7 @@ export async function SiteFooter({ site }: { readonly site: SiteContent }) {
     <footer className={styles.footer}>
       <Container className={styles.grid}>
         <div className={styles.brand}>
-          <Logo name={t('brand.name')} homeLabel={t('nav.home')} />
+          <Logo name={t('brand.name')} />
           <p className={styles.tagline}>{t('brand.tagline')}</p>
           <p className={styles.muted}>{site.region}</p>
         </div>

@@ -42,8 +42,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const overview = await loadOverview(slug, locale)
   if (overview === null) return {}
   const { project } = overview
+  const t = await getTranslations({ locale, namespace: 'project.meta' })
   return {
-    title: `${project.type.title} «${project.title}»`,
+    title: t('title', { type: project.type.title, name: project.title }),
     description: project.summary,
     openGraph:
       project.cover === null
@@ -95,7 +96,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     alt={item.image.alt}
                     fill
                     sizes="(min-width: 1024px) 60vw, 100vw"
-                    priority={index === 0}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
                   />
                 ),
                 thumbnail: (

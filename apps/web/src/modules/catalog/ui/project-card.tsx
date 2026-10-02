@@ -39,7 +39,8 @@ export async function ProjectCard({
             alt={project.cover.alt}
             fill
             sizes={sizes}
-            priority={priority}
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : 'auto'}
           />
         )}
       </div>

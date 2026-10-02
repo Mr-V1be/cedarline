@@ -117,7 +117,8 @@ export function HouseStage({ input, poster, labels, priority = false, sizes }: H
             alt={poster.alt}
             fill
             sizes={sizes}
-            priority={priority}
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : 'auto'}
           />
         )}
         {active ? (

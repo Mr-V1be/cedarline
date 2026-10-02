@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "title": "{type} “{name}”"
+  },
   "breadcrumbs": {
     "label": "You are here",
     "catalog": "Projects"
