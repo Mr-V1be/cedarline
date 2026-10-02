@@ -32,6 +32,7 @@ export class CmsLeadSink implements LeadSink {
         email: lead.contact.email,
         comment: lead.contact.comment,
         summary: lead.summary.description,
+        link: lead.summary.link,
         total: lead.summary.total,
         locale: lead.locale,
         configuration: lead.configurationId,

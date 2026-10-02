@@ -405,6 +405,10 @@ export interface Lead {
   phone: string;
   email: string;
   comment?: string | null;
+  /**
+   * Opens the configuration exactly as the customer saw it
+   */
+  link?: string | null;
   summary?: string | null;
   total?: number | null;
   locale?: ('ru' | 'en') | null;
@@ -844,6 +848,7 @@ export interface LeadsSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
   comment?: T;
+  link?: T;
   summary?: T;
   total?: T;
   locale?: T;

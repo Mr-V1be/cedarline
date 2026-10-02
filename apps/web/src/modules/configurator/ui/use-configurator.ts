@@ -22,7 +22,6 @@ export interface ConfiguratorController {
   readonly revision: number
   readonly choose: (choice: Choice) => void
   readonly goTo: (step: StepKey) => void
-  readonly reset: () => void
 }
 
 /**
@@ -64,10 +63,6 @@ export function useConfigurator(view: ConfiguratorView): ConfiguratorController 
       if (target === undefined) return
       setStepKey(target.key)
       setCamera(target.camera)
-    },
-    reset: () => {
-      setConfiguration(view.initial)
-      setRevision((value) => value + 1)
     },
   }
 }

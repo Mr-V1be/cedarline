@@ -60,6 +60,17 @@ export const Leads: CollectionConfig = {
       ],
     },
     sent({ name: 'comment', type: 'textarea', label: label('Комментарий', 'Comment') }),
+    sent({
+      name: 'link',
+      type: 'text',
+      label: label('Конфигурация на сайте', 'Configuration on the site'),
+      admin: {
+        description: label(
+          'Открывает конфигурацию такой, какой её видел клиент',
+          'Opens the configuration exactly as the customer saw it',
+        ),
+      },
+    }),
     {
       type: 'row',
       fields: [

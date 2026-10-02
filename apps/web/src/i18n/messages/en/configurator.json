@@ -8,8 +8,7 @@
   },
   "picker": {
     "title": "Configurator",
-    "lead": "Choose a project, then do everything in 3D: footprint and plan, storeys, roof, facade, windows, terrace, insulation and building services. The estimate and the build time update at every step.",
-    "configure": "Configure {name}"
+    "lead": "Choose a project, then do everything in 3D: footprint and plan, storeys, roof, facade, windows, terrace, insulation and building services. The estimate and the build time update at every step."
   },
   "header": {
     "back": "To the project"
@@ -17,7 +16,6 @@
   "steps": {
     "label": "Configurator steps",
     "progress": "Step {current} of {total}",
-    "next": "Next: {step}",
     "previous": "Back",
     "size": "Footprint",
     "storeys": "Storeys",
@@ -51,15 +49,11 @@
     "terrace": "{depth, number, ::.#} m",
     "noTerrace": "No terrace",
     "insulation": "{value, number, integer} mm",
-    "noSystems": "None selected",
-    "pitch": "{value, number, integer}° pitch"
+    "noSystems": "None selected"
   },
   "choice": {
-    "selected": "Selected",
-    "same": "No change in price",
     "delta": "{sign}{amount}",
-    "blocked": "Unavailable",
-    "why": "Why it is unavailable"
+    "blocked": "Unavailable"
   },
   "restrictions": {
     "rule": "This combination is not built.",
@@ -78,14 +72,8 @@
     "title": "Estimate",
     "total": "Total",
     "completeness": "“{name}” completeness",
-    "details": "Itemised estimate",
-    "hideDetails": "Collapse the estimate",
     "line": "{quantity} × {price}",
-    "section": "{name}: {amount}",
     "schedule": "Build time",
-    "scheduleValue": "{weeks} from contract to handover",
-    "production": "Production",
-    "installation": "On site",
     "phase": "{name}: {weeks}",
     "area": "Total area",
     "note": "Prices include materials, delivery and assembly. Item amounts are exact; the catalog’s “from” price is rounded."
@@ -98,15 +86,12 @@
     "edit": "Change the configuration",
     "copy": "Copy link",
     "copied": "Link copied",
-    "share": "Share",
-    "reset": "Back to the project defaults",
-    "open3d": "Show 3D"
+    "share": "Share"
   },
   "share": {
     "title": "Configuration saved",
     "lead": "The link opens exactly this configuration at today’s price, even if the tariff changes later.",
     "link": "Configuration link",
-    "qr": "QR code of the link",
     "error": "Could not save. Check the connection and try again.",
     "limited": "Too many saves in a row. Try again in a few minutes."
   },
@@ -114,7 +99,6 @@
     "eyebrow": "Saved configuration",
     "savedAt": "Saved on {date}, prices under tariff revision {revision}",
     "changed": "Prices have changed since: today this configuration costs {amount}.",
-    "unchanged": "The price under today’s tariff is the same.",
     "unavailable": "This configuration cannot be repeated exactly today: the catalog has changed. The estimate below is as it was saved.",
     "options": "Configuration",
     "restored": "The saved configuration cannot be opened as it was because the catalog has changed. The project opens with its defaults."
@@ -122,12 +106,9 @@
   "stage": {
     "label": "3D model: {project}",
     "loading": "Loading the 3D model",
-    "unsupported": "This browser cannot show 3D. The estimate and every option still work.",
-    "views": "View"
+    "unsupported": "This browser cannot show 3D. The estimate and every option still work."
   },
   "summary": {
-    "total": "Estimate total",
     "weeks": "Build time"
-  },
-  "notFound": "Configuration not found. The link may have been copied incompletely."
+  }
 }
