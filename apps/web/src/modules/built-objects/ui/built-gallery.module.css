@@ -46,7 +46,8 @@
 }
 
 .image {
-  object-fit: cover;
+  /* Renders are cut-outs on a transparent ground: show the whole house, never crop it. */
+  object-fit: contain;
 }
 
 .caption {

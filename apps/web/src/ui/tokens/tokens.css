@@ -41,6 +41,10 @@
   /* 3D scene background must match the surface the canvas sits on. */
   --scene-background: #e9eae3;
 
+  /* Loading placeholders. */
+  --skeleton-base: #e6e7e0;
+  --skeleton-shine: #d4d6ce;
+
   /* Typography. */
   --font-ui: var(--font-manrope-latin), var(--font-manrope-cyrillic), system-ui, sans-serif;
   --font-display: var(--font-literata-latin), var(--font-literata-cyrillic), georgia, serif;
@@ -161,6 +165,8 @@
     --drawing-membrane: #7fb294;
     --drawing-air: #131715;
     --scene-background: #0f1311;
+    --skeleton-base: #1f2522;
+    --skeleton-shine: #2e3632;
     --shadow-raised: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px -12px rgb(0 0 0 / 60%);
     --shadow-overlay: 0 24px 64px -16px rgb(0 0 0 / 70%);
   }
@@ -199,6 +205,8 @@
   --drawing-membrane: #7fb294;
   --drawing-air: #131715;
   --scene-background: #0f1311;
+  --skeleton-base: #1f2522;
+  --skeleton-shine: #2e3632;
   --shadow-raised: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px -12px rgb(0 0 0 / 60%);
   --shadow-overlay: 0 24px 64px -16px rgb(0 0 0 / 70%);
 }

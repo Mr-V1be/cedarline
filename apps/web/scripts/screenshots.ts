@@ -25,7 +25,9 @@ mkdirSync(output, { recursive: true })
 const browser = await chromium.launch({ args: ['--mute-audio'] })
 try {
   for (const page of pages) {
-    const [name, route] = page.split('=') as [string, string]
+    const separator = page.indexOf('=')
+    const name = page.slice(0, separator)
+    const route = page.slice(separator + 1)
     for (const viewport of VIEWPORTS) {
       for (const scheme of SCHEMES) {
         const context = await browser.newContext({

@@ -1,4 +1,4 @@
-import { ProjectGridSkeleton } from '@/modules/catalog/ui/project-grid-skeleton'
+import { CatalogSkeleton } from '@/modules/catalog/ui/catalog-skeleton'
 import { Container } from '@/ui/components/layout/container'
 import { Skeleton } from '@/ui/components/skeleton/skeleton'
 
@@ -10,7 +10,7 @@ export default function CatalogLoading() {
       <header className={styles.header}>
         <Skeleton className={styles.skeletonTitle} />
       </header>
-      <ProjectGridSkeleton />
+      <CatalogSkeleton />
     </Container>
   )
 }

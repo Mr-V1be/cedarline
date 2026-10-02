@@ -1,16 +1,40 @@
 {
-  "roofKind": { "gable": "Gable", "shed": "Shed", "gambrel": "Gambrel" },
+  "roofKind": {
+    "gable": "Gable",
+    "shed": "Shed",
+    "gambrel": "Gambrel"
+  },
   "facadeFinish": {
     "timber-imitation": "Timber imitation",
     "planken": "Planken boards",
     "fiber-cement": "Fibre cement"
   },
-  "windowStyle": { "standard": "Standard", "panoramic": "Panoramic" },
-  "wallSide": { "front": "Front", "right": "Right", "back": "Rear", "left": "Left" },
-  "openingType": { "window": "Window", "door": "Door" },
-  "windowRole": { "view": "View window", "standard": "Standard window" },
-  "ridgeAxis": { "x": "Ridge along the width", "y": "Ridge along the depth" },
-  "doorOrientation": { "horizontal": "In a horizontal wall", "vertical": "In a vertical wall" },
+  "windowStyle": {
+    "standard": "Standard",
+    "panoramic": "Panoramic"
+  },
+  "wallSide": {
+    "front": "Front",
+    "right": "Right",
+    "back": "Rear",
+    "left": "Left"
+  },
+  "openingType": {
+    "window": "Window",
+    "door": "Door"
+  },
+  "windowRole": {
+    "view": "View window",
+    "standard": "Standard window"
+  },
+  "ridgeAxis": {
+    "x": "Ridge along the width",
+    "y": "Ridge along the depth"
+  },
+  "doorOrientation": {
+    "horizontal": "In a horizontal wall",
+    "vertical": "In a vertical wall"
+  },
   "galleryView": {
     "front": "Front",
     "back": "Rear",
@@ -26,7 +50,12 @@
     "batten": "Service void",
     "lining": "Interior lining"
   },
-  "quantityUnit": { "m2": "m²", "m": "m", "pcs": "pcs", "set": "set" },
+  "quantityUnit": {
+    "m2": "m²",
+    "m": "m",
+    "pcs": "pcs",
+    "set": "set"
+  },
   "quantityDriver": {
     "lumpSum": "Lump sum",
     "totalArea": "Total floor area",
@@ -57,11 +86,11 @@
     "engineering": "Building services"
   },
   "catalogSort": {
-    "recommended": "Recommended first",
-    "price-asc": "Price: low to high",
-    "price-desc": "Price: high to low",
-    "area-asc": "Area: small to large",
-    "area-desc": "Area: large to small"
+    "recommended": "Recommended",
+    "price-asc": "Lowest price",
+    "price-desc": "Highest price",
+    "area-asc": "Smallest area",
+    "area-desc": "Largest area"
   },
   "storeyType": {
     "1": "Single storey",
