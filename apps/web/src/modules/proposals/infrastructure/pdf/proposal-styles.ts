@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   subheading: { color: PDF_COLOURS.muted, fontSize: 10.5, marginTop: 4 },
-  render: { marginTop: 14, width: '100%', height: 280, objectFit: 'cover', borderRadius: 4 },
+  render: { marginTop: 12, width: '100%', height: 250, objectFit: 'cover', borderRadius: 4 },
   noRender: {
     marginTop: 14,
     height: 60,
@@ -91,7 +91,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: PDF_COLOURS.line,
-    paddingVertical: 4.5,
+    paddingVertical: 3.5,
   },
   rowLabel: { width: '38%', color: PDF_COLOURS.muted },
   rowValue: { width: '62%', fontWeight: 600, flexDirection: 'row', alignItems: 'center', gap: 5 },
@@ -179,5 +179,8 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: PDF_COLOURS.line,
     paddingTop: 6,
+    gap: 12,
   },
+  footerCompany: { flexShrink: 1 },
+  footerPage: { flexShrink: 0 },
 })

@@ -176,12 +176,7 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
     linkNote: t('linkNote'),
     terms: t('terms', { date, revision: snapshot.tariffRevision }),
     footer: {
-      company: [
-        common('brand.name'),
-        input.company.phone,
-        input.company.email,
-        input.company.address,
-      ].join(' · '),
+      company: [common('brand.name'), input.company.phone, input.company.email].join(' · '),
       demo: common('footer.demo'),
     },
     pageLabel: (page, total) => t('page', { page, total }),

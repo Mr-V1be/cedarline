@@ -26,8 +26,11 @@ function Mark() {
 function Footer({ view }: { view: ProposalView }) {
   return (
     <View style={styles.footer} fixed>
-      <Text>{view.footer.company}</Text>
-      <Text render={({ pageNumber, totalPages }) => view.pageLabel(pageNumber, totalPages)} />
+      <Text style={styles.footerCompany}>{view.footer.company}</Text>
+      <Text
+        style={styles.footerPage}
+        render={({ pageNumber, totalPages }) => view.pageLabel(pageNumber, totalPages)}
+      />
     </View>
   )
 }
