@@ -136,3 +136,13 @@ describe('partial evaluation', () => {
     expect(state.quote.estimate.total).toBe(configurator.evaluate(initial).quote.estimate.total)
   })
 })
+
+describe('house of a state', () => {
+  it('follows finishes and colours that share a measurement', () => {
+    const red = configurator.apply(initial, { group: 'colour', value: '#b98b5a' })
+    configurator.evaluate(initial)
+    expect(configurator.evaluate(red).house.options.facadeColor).toBe('#b98b5a')
+    const fibre = configurator.apply(initial, { group: 'facade', value: 'fiber-cement' })
+    expect(configurator.evaluate(fibre).house.options.facadeFinish).toBe('fiber-cement')
+  })
+})

@@ -9,26 +9,13 @@ import type { ImageAsset } from '@/modules/catalog/domain/project'
 import type { CameraPreset } from '@/modules/house-3d/domain/camera-presets'
 import type { SceneCapture } from '@/modules/house-3d/domain/capture'
 import { detectQuality } from '@/modules/house-3d/scene/quality'
+import { useWebglSupport } from '@/modules/house-3d/ui/webgl-support'
 
 import styles from './configurator-stage.module.css'
 
 const HouseCanvas = dynamic(() => import('@/modules/house-3d/ui/house-canvas'), { ssr: false })
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
-
-const subscribeNever = () => () => undefined
-
-function webglAvailable() {
-  try {
-    return document.createElement('canvas').getContext('webgl2') !== null
-  } catch {
-    return false
-  }
-}
-
-/** Whether this browser can draw the scene; the page explains the fallback next to it. */
-export const useWebglSupport = () =>
-  useSyncExternalStore(subscribeNever, webglAvailable, () => true)
 
 function useReducedMotion() {
   return useSyncExternalStore(

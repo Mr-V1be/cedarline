@@ -43,8 +43,9 @@ export interface ConfigurationState {
   readonly groups: readonly GroupState[]
 }
 
+/** Measuring depends only on the geometry, so finishes and colours share one measurement. */
 type Measurement =
-  | { readonly ok: true; readonly house: HouseInput; readonly measured: MeasuredHouse }
+  | { readonly ok: true; readonly measured: MeasuredHouse }
   | { readonly ok: false; readonly restriction: Restriction }
 
 /** Measured houses kept per geometry; a session rarely visits more than a few dozen. */
@@ -100,7 +101,8 @@ export class Configurator {
     const currentQuote = this.quoteOf(configuration, measurement.measured)
     return {
       configuration,
-      house: measurement.house,
+      // Built per configuration: the cached measurement is shared by every finish and colour.
+      house: houseInputOf(this.model, configuration),
       measured: measurement.measured,
       quote: currentQuote,
       groups: groups.map((group) =>
@@ -184,10 +186,9 @@ export class Configurator {
     const key = geometryKey(configuration)
     const cached = this.measurements.get(key)
     if (cached !== undefined) return cached
-    const house = houseInputOf(this.model, configuration)
     let measurement: Measurement
     try {
-      measurement = { ok: true, house, measured: measureHouse(house) }
+      measurement = { ok: true, measured: measureHouse(houseInputOf(this.model, configuration)) }
     } catch (error) {
       if (!(error instanceof HouseError)) throw error
       measurement = { ok: false, restriction: { kind: 'geometry', code: error.code } }

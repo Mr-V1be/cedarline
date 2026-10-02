@@ -14,6 +14,7 @@ import { VIEWER_PRESETS, type ViewerPreset } from '../domain/camera-presets'
 import type { ScenePresetKey } from '../scene/presets'
 import { detectQuality } from '../scene/quality'
 import styles from './house-stage.module.css'
+import { useWebglSupport } from './webgl-support'
 
 const HouseCanvas = dynamic(() => import('./house-canvas'), { ssr: false })
 
@@ -33,14 +34,6 @@ function useMediaQuery(query: string): boolean {
     () => window.matchMedia(query).matches,
     () => false,
   )
-}
-
-const webglAvailable = () => {
-  try {
-    return document.createElement('canvas').getContext('webgl2') !== null
-  } catch {
-    return false
-  }
 }
 
 export interface HouseStageLabels {
@@ -81,11 +74,7 @@ export function HouseStage({
   const [visible, setVisible] = useState(false)
   const [ready, setReady] = useState(false)
   const [preset, setPreset] = useState<ViewerPreset>('corner')
-  const supported = useSyncExternalStore(
-    () => () => undefined,
-    webglAvailable,
-    () => true,
-  )
+  const supported = useWebglSupport()
 
   useEffect(() => {
     const element = stageRef.current

@@ -76,6 +76,10 @@
     display: none;
   }
 
+  .label {
+    white-space: normal;
+  }
+
   .inlineWeeks {
     display: inline;
   }
