@@ -1,0 +1,22 @@
+{
+  "maxFileLines": 700,
+  "maxSourceFilesPerFolder": 15,
+  "sourceExtensions": [
+    ".ts",
+    ".tsx",
+    ".mts",
+    ".cts",
+    ".js",
+    ".jsx",
+    ".mjs",
+    ".cjs",
+    ".css",
+    ".scss"
+  ],
+  "sourceGlobs": ["**/messages/**/*.json"],
+  "generated": [
+    "apps/web/src/cms/generated/**",
+    "apps/web/src/migrations/**",
+    "apps/web/src/app/(payload)/admin/importMap.js"
+  ]
+}

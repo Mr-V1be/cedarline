@@ -1,0 +1,41 @@
+name: kedrovnik
+
+services:
+  postgres:
+    # PostGIS: built houses carry geographic points (map, distance queries).
+    image: postgis/postgis:18-3.6
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?set POSTGRES_DB in .env}
+      POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - '127.0.0.1:46132:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mailpit:
+    image: axllent/mailpit:v1.31.3
+    restart: unless-stopped
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 'true'
+      MP_SMTP_AUTH_ALLOW_INSECURE: 'true'
+    ports:
+      - '127.0.0.1:46125:1025'
+      - '127.0.0.1:46180:8025'
+
+volumes:
+  postgres-data:
+
+# The host's default address pools are exhausted, so the project network gets an explicit,
+# otherwise unused subnet.
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.239.146.0/27
