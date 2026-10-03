@@ -249,7 +249,7 @@ export function MapView({
       map?.remove()
       mapRef.current = null
     }
-  }, [visible, allowed, themeKnown, attempt])
+  }, [visible, allowed, themeKnown, drawable, attempt])
 
   // Theme switch: swap the base style, the layers come back on style.load.
   useEffect(() => {
