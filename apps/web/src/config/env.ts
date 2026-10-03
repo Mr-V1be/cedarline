@@ -17,6 +17,8 @@ const withDefault = <T extends z.ZodType>(type: T) =>
 const schema = z
   .object({
     DATABASE_URL: z.url({ protocol: /^postgres(ql)?$/ }),
+    // Connections the server process keeps to PostgreSQL; a shared database server needs less.
+    DATABASE_POOL_MAX: withDefault(z.coerce.number().int().min(1).max(100).default(10)),
     PAYLOAD_SECRET: z.string().min(32, 'must be at least 32 characters'),
     SITE_URL: z.url(),
     MAIL_MODE: withDefault(z.enum(MAIL_MODES).default('demo')),

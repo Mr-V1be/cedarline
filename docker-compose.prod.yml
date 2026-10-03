@@ -59,6 +59,10 @@ services:
       context: .
       target: runner
     <<: *app-env
+    environment:
+      TZ: ${TZ:-Europe/Moscow}
+      # Heap cap of the server only, not of the one-off jobs (docs/deploy.md, «Память»).
+      NODE_OPTIONS: ${WEB_NODE_OPTIONS:-}
     restart: unless-stopped
     depends_on:
       migrate:

@@ -132,7 +132,7 @@ export default buildConfig({
   graphQL: { disable: true },
   endpoints: [health],
   db: postgresAdapter({
-    pool: { connectionString: env.DATABASE_URL },
+    pool: { connectionString: env.DATABASE_URL, max: env.DATABASE_POOL_MAX },
     // Schema changes go through committed migrations only, never through dev-time push.
     push: false,
     migrationDir: path.resolve(dirname, 'migrations'),
