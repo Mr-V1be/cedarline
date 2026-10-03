@@ -61,18 +61,18 @@ export default async function LetterPage({ params }: LetterPageProps) {
         <section aria-label={t('attachments')}>
           <ul className={styles.attachments}>
             {letter.attachments.map((attachment, index) => (
-              <li key={attachment.filename}>
+              <li key={attachment.filename} className={styles.attachment}>
                 <ButtonAnchor
                   href={`/files/mail/${key}/${index}`}
                   download={attachment.filename}
                   variant="secondary"
                   icon={FileArrowDownIcon}
                 >
-                  {attachment.filename}{' '}
-                  <span className={styles.size}>
-                    {format.number(attachment.size / 1024, { maximumFractionDigits: 0 })} KB
-                  </span>
+                  {attachment.filename}
                 </ButtonAnchor>
+                <span className={styles.size}>
+                  {format.number(attachment.size / 1024, { maximumFractionDigits: 0 })} KB
+                </span>
               </li>
             ))}
           </ul>
