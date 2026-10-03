@@ -23,5 +23,10 @@
     "title": "No articles on this topic yet",
     "description": "Have a look at other topics, or at the project catalog.",
     "action": "All articles"
+  },
+  "notFound": {
+    "title": "This article does not exist",
+    "description": "The article may have been unpublished, or the address has a typo.",
+    "action": "All articles"
   }
 }

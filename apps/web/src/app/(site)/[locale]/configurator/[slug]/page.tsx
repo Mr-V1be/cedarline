@@ -12,6 +12,7 @@ import { ClientMessages } from '@/i18n/client-messages'
 import { CONFIGURATOR_MESSAGES } from '@/modules/configurator/ui/client-messages'
 
 import { saveConfigurationAction, submitLeadAction } from '../actions'
+import { loadMember } from './load-member'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,13 +24,11 @@ interface ConfiguratorPageProps {
 
 export async function generateMetadata({ params }: ConfiguratorPageProps): Promise<Metadata> {
   const { locale, slug } = await params
-  const services = await getServices(locale)
-  const family = await services.configurator.families.findFamily(slug, locale)
-  const member = family?.members.find((candidate) => candidate.blueprint.slug === slug)
-  if (member === undefined) return {}
+  const member = await loadMember(slug, locale)
+  if (member === null) return {}
   const [t, project] = await Promise.all([
     getTranslations({ locale, namespace: 'configurator.meta' }),
-    services.projects.findBySlug(slug, locale),
+    getServices(locale).then((services) => services.projects.findBySlug(slug, locale)),
   ])
   return pageMetadata({
     locale,

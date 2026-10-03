@@ -58,7 +58,7 @@
     "errorTitle": "The page did not load",
     "errorDescription": "The server did not respond in time. Try again — your filters and choices are kept.",
     "notFoundTitle": "This page does not exist",
-    "notFoundDescription": "The project may have been unpublished, or the address has a typo."
+    "notFoundDescription": "The page may have been removed or renamed, or the address has a typo."
   },
   "a11y": {
     "skipToContent": "Skip to content"

@@ -3,7 +3,6 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getFormatter, getTranslations } from 'next-intl/server'
-import { cache } from 'react'
 
 import { getServices } from '@/composition/services'
 import { env } from '@/config/env'
@@ -20,6 +19,7 @@ import { Container, Section } from '@/ui/components/layout/container'
 import { SectionHeading } from '@/ui/components/section-heading/section-heading'
 
 import styles from './article.module.css'
+import { loadArticle } from './load-article'
 
 /** Every request reads current content; caching belongs to the repositories. */
 export const dynamic = 'force-dynamic'
@@ -29,11 +29,6 @@ interface ArticlePageProps {
 }
 
 const MORE_COUNT = 3
-
-/** Metadata and the page read the same article once per request. */
-const loadArticle = cache(async (slug: string, locale: Locale) =>
-  (await getServices(locale)).articles.findBySlug(slug, locale),
-)
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { locale, slug } = await params
