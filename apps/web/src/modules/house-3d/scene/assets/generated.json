@@ -6,9 +6,9 @@
       "horizon": "#727e9a"
     },
     "evening": {
-      "authors": ["Greg Zaal", "Jarod Guest"],
-      "sun": [0.831, 0.308, 0.464],
-      "horizon": "#807d99"
+      "authors": ["Jarod Guest", "Sergej Majboroda"],
+      "sun": [0.785, 0.32, 0.531],
+      "horizon": "#686d75"
     }
   },
   "materials": {
@@ -16,10 +16,7 @@
       "authors": ["ambientCG"]
     },
     "gravel": {
-      "authors": ["Jenelle van Heerden", "Matterfield"]
-    },
-    "paving": {
-      "authors": ["Amal Kumar"]
+      "authors": ["Jenelle van Heerden", "Dimitrios Savva"]
     },
     "deck": {
       "authors": ["Dimitrios Savva"]
@@ -38,6 +35,38 @@
     },
     "roofMetal": {
       "authors": ["Amal Kumar"]
+    },
+    "blindArea": {
+      "authors": ["Charlotte Baglioni"]
+    },
+    "forestFloor": {
+      "authors": ["Rob Tuytel"]
+    }
+  },
+  "trees": {
+    "firA": {
+      "height": 8.826,
+      "radius": 5.244,
+      "centreY": 4.413,
+      "authors": ["Rob Tuytel", "Rico Cilliers"]
+    },
+    "firB": {
+      "height": 7.795,
+      "radius": 4.533,
+      "centreY": 3.898,
+      "authors": ["Rob Tuytel", "Rico Cilliers"]
+    },
+    "pineA": {
+      "height": 11.493,
+      "radius": 6.429,
+      "centreY": 5.747,
+      "authors": ["Rob Tuytel", "Rico Cilliers"]
+    },
+    "pineB": {
+      "height": 9.116,
+      "radius": 5.406,
+      "centreY": 4.558,
+      "authors": ["Rob Tuytel", "Rico Cilliers"]
     }
   }
 }

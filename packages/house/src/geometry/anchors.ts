@@ -1,4 +1,4 @@
-import { planPointOnWall } from '../frame/placement'
+import { planPointOnWall, wallPlacement } from '../frame/placement'
 import type { HouseFrame } from '../frame/types'
 import { toMetres, type Vec3 } from '../units'
 import { terraceSteps } from './details'
@@ -45,4 +45,38 @@ export function approachOf(frame: HouseFrame, mapping: WorldMapping): Approach |
     direction: mapping.direction(wall.outward),
     width: toMetres(PATH_WIDTH),
   }
+}
+
+/** Axis-aligned rectangle on the ground, world metres: [x, z] corners. */
+export interface GroundRect {
+  readonly min: readonly [number, number]
+  readonly max: readonly [number, number]
+}
+
+/** Where the house meets the ground, for site dressing (blind area, lawn, paths). */
+export interface SiteAnchors {
+  /** Outer faces of the walls. */
+  readonly footprint: GroundRect
+  /** Ground under the terrace deck and its steps; no blind area is laid there. */
+  readonly terrace: GroundRect | null
+}
+
+function rectOf(points: ReadonlyArray<readonly [number, number, number]>): GroundRect {
+  const xs = points.map(([x]) => x)
+  const zs = points.map(([, , z]) => z)
+  return { min: [Math.min(...xs), Math.min(...zs)], max: [Math.max(...xs), Math.max(...zs)] }
+}
+
+export function siteAnchorsOf(frame: HouseFrame, mapping: WorldMapping): SiteAnchors {
+  const { width, depth } = frame.spec
+  const footprint = rectOf([mapping.point(0, 0, 0), mapping.point(width, depth, 0)])
+  const { terrace } = frame
+  if (terrace === null) return { footprint, terrace: null }
+  const wall = wallPlacement(frame.spec, terrace.side)
+  const reach = terrace.depth + terraceSteps(terrace.deckTop).run
+  const corners = [
+    planPointOnWall(wall, terrace.offset, 0),
+    planPointOnWall(wall, terrace.offset + terrace.length, reach),
+  ].map(([x, y]) => mapping.point(x, y, 0))
+  return { footprint, terrace: rectOf(corners) }
 }

@@ -13,11 +13,11 @@ import { SceneCaptureBridge } from '../ui/scene-capture'
 import { useHouseModel } from '../ui/use-house-model'
 import { SceneEffects } from './effects'
 import { SceneEnvironment } from './environment'
-import { Forest } from './forest'
+import { Forest } from './site/forest'
 import { HouseMesh } from './house-mesh'
 import { SCENE_PRESETS, type ScenePresetKey } from './presets'
 import type { QualityTier } from './quality'
-import { Site } from './site'
+import { Site } from './site/site'
 import { useSceneTextures } from './use-scene-textures'
 
 /** Frames rendered after everything has loaded before the scene counts as ready. */
@@ -66,7 +66,7 @@ function Dressing({
   readonly quality: QualityTier
 }) {
   const mesh = useHouseModel(input)
-  const textures = useSceneTextures()
+  const textures = useSceneTextures(quality.textures)
   const preset = SCENE_PRESETS[presetKey]
   return (
     <>
@@ -76,8 +76,19 @@ function Dressing({
         approach={mesh.approach}
         shadowMapSize={quality.shadowMapSize}
       />
-      <HouseMesh mesh={mesh} input={input} textures={textures} preset={preset} />
-      <Site bounds={mesh.bounds} approach={mesh.approach} textures={textures} />
+      <HouseMesh mesh={mesh} input={input} textures={textures.materials} preset={preset} />
+      <Site
+        bounds={mesh.bounds}
+        approach={mesh.approach}
+        site={mesh.site}
+        textures={textures.materials}
+      />
+      <Forest
+        bounds={mesh.bounds}
+        count={quality.trees}
+        castShadow={quality.treeShadows}
+        textures={textures.trees}
+      />
       {quality.ambientOcclusion ? null : (
         <ContactShadows
           position={[0, 0.02, 0]}
@@ -132,11 +143,6 @@ export function HouseScene({
         <Dressing input={input} presetKey={presetKey} quality={quality} />
         {onReady === undefined ? null : <ReadySignal onReady={onReady} />}
       </Suspense>
-      <Forest
-        bounds={mesh.bounds}
-        count={quality.trees}
-        castShadow={quality.shadowMapSize > 2048}
-      />
       <CameraRig
         bounds={mesh.bounds}
         preset={cameraPreset}

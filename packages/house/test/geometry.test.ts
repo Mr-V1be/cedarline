@@ -83,3 +83,20 @@ describe('approach', () => {
     expect(approach?.start[2]).toBeCloseTo(3, 6)
   })
 })
+
+describe('site anchors', () => {
+  it('report the wall footprint and the ground under the terrace and its steps', () => {
+    const { site } = houseModel(house)
+    expect(site.footprint).toEqual({ min: [-3, -3], max: [3, 3] })
+    // Cabin terrace: front side, 0.5–5.5 m along the wall, 2 m deep plus its steps.
+    expect(site.terrace?.min[0]).toBeCloseTo(-2.5, 6)
+    expect(site.terrace?.max[0]).toBeCloseTo(2.5, 6)
+    expect(site.terrace?.min[1]).toBeCloseTo(3, 6)
+    expect(site.terrace?.max[1]).toBeGreaterThan(3 + 2)
+  })
+
+  it('have no terrace when it is removed', () => {
+    const bare = measureHouse({ design: cabin, options: { ...options, terraceDepth: null }, rooms })
+    expect(houseModel(bare).site.terrace).toBeNull()
+  })
+})

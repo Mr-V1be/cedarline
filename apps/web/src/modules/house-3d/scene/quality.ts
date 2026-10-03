@@ -2,8 +2,13 @@
  * Rendering budgets. `still` renders catalog images offline; `high` and `low` are chosen for the
  * visitor's device and `low` is also the fallback when frame rate drops.
  */
+import type { TextureTier } from './assets'
+
 export interface QualityTier {
   readonly dpr: number | readonly [number, number]
+  readonly textures: TextureTier
+  /** Trees throw shadows (cheap proxies, but one more shadow pass per tree kind). */
+  readonly treeShadows: boolean
   readonly shadowMapSize: number
   readonly ambientOcclusion: boolean
   readonly bloom: boolean
@@ -14,27 +19,33 @@ export interface QualityTier {
 export const QUALITY_TIERS = {
   still: {
     dpr: 1,
+    textures: 'still',
+    treeShadows: true,
     shadowMapSize: 4096,
     ambientOcclusion: true,
     bloom: true,
     multisampling: 8,
-    trees: 170,
+    trees: 620,
   },
   high: {
     dpr: [1, 1.75],
+    textures: 'high',
+    treeShadows: true,
     shadowMapSize: 2048,
     ambientOcclusion: true,
     bloom: true,
     multisampling: 4,
-    trees: 120,
+    trees: 380,
   },
   low: {
     dpr: [1, 1.25],
+    textures: 'low',
+    treeShadows: false,
     shadowMapSize: 1024,
     ambientOcclusion: false,
     bloom: false,
     multisampling: 0,
-    trees: 45,
+    trees: 170,
   },
 } as const satisfies Record<string, QualityTier>
 

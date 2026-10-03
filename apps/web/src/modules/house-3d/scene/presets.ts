@@ -14,6 +14,7 @@ export interface ScenePreset {
   readonly sun: { readonly color: string; readonly intensity: number }
   /** Fog density relative to the scene size: distant trees fade into the horizon colour. */
   readonly haze: { readonly near: number; readonly far: number; readonly tint: number }
+  /** Light from the rooms in HDR units (above 1.0 blooms), or none in daylight. */
   readonly windowGlow: { readonly color: string; readonly intensity: number } | null
   readonly porchLight: { readonly color: string; readonly intensity: number } | null
 }
@@ -21,20 +22,20 @@ export interface ScenePreset {
 export const SCENE_PRESETS = {
   day: {
     sky: 'day',
-    environmentIntensity: 1.15,
-    exposure: 1.3,
+    environmentIntensity: 1.1,
+    exposure: 1.2,
     sun: { color: '#fff3e0', intensity: 3.4 },
-    haze: { near: 4, far: 26, tint: 0.15 },
+    haze: { near: 5.5, far: 32, tint: 0.1 },
     windowGlow: null,
     porchLight: null,
   },
   evening: {
     sky: 'evening',
-    environmentIntensity: 0.55,
-    exposure: 1.05,
-    sun: { color: '#ffb98a', intensity: 0.7 },
+    environmentIntensity: 0.35,
+    exposure: 1.1,
+    sun: { color: '#ffae70', intensity: 1.5 },
     haze: { near: 3.5, far: 20, tint: 0 },
-    windowGlow: { color: '#ffc685', intensity: 2.4 },
+    windowGlow: { color: '#ffc27a', intensity: 2.2 },
     porchLight: { color: '#ffb36b', intensity: 14 },
   },
 } as const satisfies Record<string, ScenePreset>

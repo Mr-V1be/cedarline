@@ -3,7 +3,7 @@
 import { PerformanceMonitor } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useEffect, useRef, useState, type RefObject } from 'react'
-import { ACESFilmicToneMapping, NoToneMapping, PCFShadowMap } from 'three'
+import { AgXToneMapping, NoToneMapping, PCFShadowMap } from 'three'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'
 
@@ -62,7 +62,7 @@ export default function HouseCanvas({
         antialias: !composed,
         alpha: false,
         preserveDrawingBuffer: capture,
-        toneMapping: composed ? NoToneMapping : ACESFilmicToneMapping,
+        toneMapping: composed ? NoToneMapping : AgXToneMapping,
       }}
       role="img"
       aria-label={label}

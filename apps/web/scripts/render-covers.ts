@@ -4,7 +4,7 @@
  */
 import { mkdirSync } from 'node:fs'
 
-import { chromium } from 'playwright'
+import { type Browser, chromium } from 'playwright'
 import sharp from 'sharp'
 
 import { env } from '@/config/env'
@@ -43,31 +43,48 @@ const selected =
 const base = process.env.RENDER_BASE_URL ?? env.SITE_URL
 
 mkdirSync(RENDER_DIRECTORY, { recursive: true })
-const browser = await chromium.launch({
-  args: ['--mute-audio', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
-})
-try {
+
+const LAUNCH_ARGS = ['--mute-audio', '--use-angle=swiftshader', '--enable-unsafe-swiftshader']
+// A render can fail while the server recompiles or the browser runs out of memory; one retry
+// with a fresh browser keeps a batch going.
+const ATTEMPTS = 2
+// A frame whose channels barely vary is a blank canvas, not a render.
+const MIN_CHANNEL_DEVIATION = 6
+
+const isBlank = async (png: Buffer) => {
+  const { channels } = await sharp(png).stats()
+  return channels.slice(0, 3).every((channel) => channel.stdev < MIN_CHANNEL_DEVIATION)
+}
+
+const renderJob = async (browser: Browser, job: RenderJob) => {
   const context = await browser.newContext({ viewport: RENDER_SIZE, deviceScaleFactor: 1 })
-  // A render can fail while the dev server recompiles; one retry keeps a long batch going.
-  const ATTEMPTS = 2
+  try {
+    const page = await context.newPage()
+    await page.goto(new URL(job.path, base).toString(), { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector(`html[${RENDER_READY_ATTRIBUTE}="true"]`, {
+      timeout: READY_TIMEOUT_MS,
+    })
+    const png = await page.screenshot({ type: 'png' })
+    if (await isBlank(png)) throw new Error('the captured frame is blank')
+    await sharp(png).webp(WEBP).toFile(renderFile(job.name))
+  } finally {
+    await context.close().catch(() => undefined)
+  }
+}
+
+let browser = await chromium.launch({ args: LAUNCH_ARGS })
+try {
   for (const job of selected) {
     for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
       const started = Date.now()
-      const page = await context.newPage()
       try {
-        await page.goto(new URL(job.path, base).toString(), { waitUntil: 'domcontentloaded' })
-        await page.waitForSelector(`html[${RENDER_READY_ATTRIBUTE}="true"]`, {
-          timeout: READY_TIMEOUT_MS,
-        })
-        const png = await page.screenshot({ type: 'png' })
-        await sharp(png).webp(WEBP).toFile(renderFile(job.name))
+        if (!browser.isConnected()) browser = await chromium.launch({ args: LAUNCH_ARGS })
+        await renderJob(browser, job)
         console.log(`${job.name} (${Math.round((Date.now() - started) / 1000)} s)`)
         break
       } catch (error) {
         if (attempt === ATTEMPTS) throw error
         console.warn(`${job.name}: retrying after ${String(error)}`)
-      } finally {
-        await page.close()
       }
     }
   }

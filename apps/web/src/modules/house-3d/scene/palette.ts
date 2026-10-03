@@ -15,19 +15,18 @@ export const SCENE_PALETTE = {
   door: '#4a362a',
   metal: '#5a605c',
   plain: '#ffffff',
-  needlesDark: '#112017',
-  needlesLight: '#26402c',
-  trunk: '#3f3126',
+  edging: '#3c403d',
 } as const
 
 /**
  * Multipliers over the natural textures of the plot, so the lawn reads as a northern
- * meadow rather than turf, the gravel as granite and the path as grey stone.
+ * meadow rather than turf, the forest floor as needle litter and the paving as light concrete.
  */
 export const GROUND_TINTS = {
-  grass: '#596648',
-  gravel: '#aeaba3',
-  paving: '#d6d4cd',
+  grass: '#55683a',
+  forestFloor: '#5f6550',
+  gravel: '#b5afa3',
+  blindArea: '#d9d6cf',
   deck: '#a8906f',
 } as const
 

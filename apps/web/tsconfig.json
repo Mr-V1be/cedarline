@@ -4,6 +4,8 @@
     "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "jsx": "react-jsx",
     "allowJs": true,
+    // Build scripts run directly on Node, which needs explicit .ts extensions in their imports.
+    "allowImportingTsExtensions": true,
     "incremental": true,
     "types": ["node"],
     "plugins": [{ "name": "next" }],

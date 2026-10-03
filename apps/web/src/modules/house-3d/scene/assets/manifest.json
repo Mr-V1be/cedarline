@@ -6,7 +6,12 @@
     },
     "evening": {
       "source": "polyhaven",
-      "id": "qwantani_dusk_2_puresky"
+      "id": "industrial_sunset_02_puresky",
+      "grade": {
+        "exposure": 0.92,
+        "horizon": [1.45, 1.04, 0.7],
+        "zenith": [0.95, 0.8, 0.86]
+      }
     }
   },
   "materials": {
@@ -19,15 +24,8 @@
     },
     "gravel": {
       "source": "polyhaven",
-      "id": "gravel_floor",
-      "tile": 2.25,
-      "neutral": true,
-      "size": 512
-    },
-    "paving": {
-      "source": "polyhaven",
-      "id": "grey_stone_path",
-      "tile": 1.8,
+      "id": "gravel_floor_02",
+      "tile": 1.6,
       "neutral": false,
       "size": 512
     },
@@ -72,6 +70,46 @@
       "tile": 2,
       "neutral": true,
       "size": 1024
+    },
+    "blindArea": {
+      "source": "polyhaven",
+      "id": "concrete_pavement",
+      "tile": 2.0,
+      "neutral": false,
+      "size": 512
+    },
+    "forestFloor": {
+      "source": "polyhaven",
+      "id": "forest_leaves_04",
+      "tile": 2.2,
+      "neutral": false,
+      "size": 512
     }
+  },
+  "trees": {
+    "firA": {
+      "source": "polyhaven",
+      "id": "fir_sapling_medium",
+      "node": "fir_sapling_medium_a_LOD0"
+    },
+    "firB": {
+      "source": "polyhaven",
+      "id": "fir_sapling_medium",
+      "node": "fir_sapling_medium_b_LOD0"
+    },
+    "pineA": {
+      "source": "polyhaven",
+      "id": "pine_sapling_medium",
+      "node": "pine_sapling_medium_a_LOD0"
+    },
+    "pineB": {
+      "source": "polyhaven",
+      "id": "pine_sapling_medium",
+      "node": "pine_sapling_medium_b_LOD0"
+    }
+  },
+  "impostor": {
+    "grid": 8,
+    "cell": 512
   }
 }

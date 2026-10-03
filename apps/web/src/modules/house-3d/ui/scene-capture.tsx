@@ -3,7 +3,7 @@
 import type { Bounds } from '@kedrovnik/house'
 import { useThree } from '@react-three/fiber'
 import { useEffect, type RefObject } from 'react'
-import { ACESFilmicToneMapping, type PerspectiveCamera, Vector2 } from 'three'
+import { AgXToneMapping, type PerspectiveCamera, Vector2 } from 'three'
 
 import type { SceneCapture } from '../domain/capture'
 import { fitDistance, frameModel, presetPosition } from './framing'
@@ -49,7 +49,7 @@ export function SceneCaptureBridge({
 
       gl.setPixelRatio(1)
       gl.setSize(width, height, false)
-      gl.toneMapping = ACESFilmicToneMapping
+      gl.toneMapping = AgXToneMapping
       perspective.aspect = width / height
       perspective.position.set(...presetPosition(framing, preset, distance))
       perspective.lookAt(...framing.target)

@@ -13,7 +13,7 @@ import type { SceneTextures } from './use-scene-textures'
 interface HouseMeshProps {
   readonly mesh: HouseModel
   readonly input: HouseViewerInput
-  readonly textures: SceneTextures
+  readonly textures: SceneTextures['materials']
   readonly preset: ScenePreset
 }
 

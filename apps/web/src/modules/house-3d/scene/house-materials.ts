@@ -6,6 +6,8 @@ import { FINISH_LOOKS, GROUND_TINTS, SCENE_PALETTE } from './palette'
 import type { ScenePreset } from './presets'
 import type { SceneTextures, TextureSet } from './use-scene-textures'
 
+type MaterialTextures = SceneTextures['materials']
+
 export interface HouseMaterialSettings {
   readonly finish: FacadeFinish
   readonly facadeColor: string
@@ -16,6 +18,12 @@ const NORMAL_STRENGTH = 1
 const SEAM_WIDTH = 0.006
 const SEAM_DARKENING = 0.5
 const ROOF_ROUGHNESS = 0.62
+/**
+ * Share of the preset's window glow given to the rooms and to the glass. The glow is in HDR
+ * units: lit rooms exceed 1.0, so they are the only surfaces the bloom picks up.
+ */
+const INTERIOR_GLOW = 1
+const GLASS_GLOW = 0.18
 
 /** Full PBR material from a texture set; colourable sets are multiplied by `color`. */
 function pbr(
@@ -76,7 +84,7 @@ const plain = (color: string, roughness: number, metalness = 0) =>
  * new slot cannot be rendered without deciding how it looks.
  */
 export function createHouseMaterials(
-  textures: SceneTextures,
+  textures: MaterialTextures,
   { finish, facadeColor, glow }: HouseMaterialSettings,
 ): Record<MaterialSlot, Material> {
   const look = FINISH_LOOKS[finish]
@@ -87,7 +95,7 @@ export function createHouseMaterials(
   const emissive =
     glow === null
       ? {}
-      : { emissive: new Color(glow.color), emissiveIntensity: glow.intensity * 0.35 }
+      : { emissive: new Color(glow.color), emissiveIntensity: glow.intensity * INTERIOR_GLOW }
 
   return {
     facade,
@@ -119,7 +127,7 @@ export function createHouseMaterials(
       side: DoubleSide,
       ...(glow === null
         ? {}
-        : { emissive: new Color(glow.color), emissiveIntensity: glow.intensity * 0.12 }),
+        : { emissive: new Color(glow.color), emissiveIntensity: glow.intensity * GLASS_GLOW }),
     }),
     door: pbr(textures.timber, SCENE_PALETTE.door),
     metal: plain(SCENE_PALETTE.metal, 0.35, 0.7),

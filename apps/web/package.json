@@ -15,7 +15,8 @@
     "migrate:create": "payload migrate:create",
     "seed": "payload run src/seed/run.ts",
     "render:covers": "payload run scripts/render-covers.ts",
-    "scene:assets": "node scripts/build-scene-assets.ts"
+    "scene:assets": "node scripts/scene-assets/build.ts",
+    "perf:scene": "node scripts/measure-scene.mjs"
   },
   "dependencies": {
     "@fontsource-variable/literata": "5.3.0",
@@ -47,6 +48,9 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
     "@types/qrcode": "1.5.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

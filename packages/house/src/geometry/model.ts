@@ -1,6 +1,6 @@
 import type { HouseFrame } from '../frame/types'
 import { toMetres, type Vec3 } from '../units'
-import { approachOf, type Approach } from './anchors'
+import { approachOf, siteAnchorsOf, type Approach, type SiteAnchors } from './anchors'
 import { buildChimney, buildFloors, buildPlinth, buildTerrace } from './details'
 import { MeshBuilder, type MeshPart } from './mesh-builder'
 import { buildOpenings } from './openings'
@@ -21,6 +21,7 @@ export interface HouseModel {
   readonly ridgeHeight: number
   /** Entrance path anchor for site dressing; null for a house without an exterior door. */
   readonly approach: Approach | null
+  readonly site: SiteAnchors
 }
 
 function boundsOf(parts: readonly MeshPart[]): Bounds {
@@ -60,5 +61,6 @@ export function buildHouseModel(frame: HouseFrame): HouseModel {
     eaveHeight: toMetres(frame.roof.eaveBase),
     ridgeHeight: toMetres(frame.roof.ridgeElevation + frame.roof.thickness),
     approach: approachOf(frame, mapping),
+    site: siteAnchorsOf(frame, mapping),
   }
 }
