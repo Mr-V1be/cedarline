@@ -4,6 +4,7 @@ import { ROLE_KEYS } from '@/modules/access/domain/roles'
 
 import {
   canOpenAdmin,
+  exceptDemoAccounts,
   requireCapability,
   requireFieldCapability,
   userCan,
@@ -37,8 +38,8 @@ export const Users: CollectionConfig = {
     admin: canOpenAdmin,
     read: selfOrManager,
     create: requireCapability('users.manage'),
-    update: selfOrManager,
-    delete: requireCapability('users.manage'),
+    update: exceptDemoAccounts(selfOrManager),
+    delete: exceptDemoAccounts(requireCapability('users.manage')),
   },
   fields: [
     { name: 'name', type: 'text', label: label('Имя', 'Name'), required: true },

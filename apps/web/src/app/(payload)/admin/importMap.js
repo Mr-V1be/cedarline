@@ -17,6 +17,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { LeadDeliveries as LeadDeliveries_135c890ec9df67d6bad129dc3ef103f2 } from '../../../cms/admin/lead-deliveries'
 import { Icon as Icon_d123741fd6da47b78c20b0d1b7ca61a9 } from '../../../cms/admin/brand'
 import { Logo as Logo_d123741fd6da47b78c20b0d1b7ca61a9 } from '../../../cms/admin/brand'
+import { DemoSignIn as DemoSignIn_9887e9c0f8c5287dad2aabca0fb0e002 } from '../../../cms/admin/demo-sign-in'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -56,5 +57,6 @@ export const importMap = {
   '/cms/admin/lead-deliveries#LeadDeliveries': LeadDeliveries_135c890ec9df67d6bad129dc3ef103f2,
   '/cms/admin/brand#Icon': Icon_d123741fd6da47b78c20b0d1b7ca61a9,
   '/cms/admin/brand#Logo': Logo_d123741fd6da47b78c20b0d1b7ca61a9,
+  '/cms/admin/demo-sign-in#DemoSignIn': DemoSignIn_9887e9c0f8c5287dad2aabca0fb0e002,
   '@payloadcms/next/rsc#CollectionCards': CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
 }

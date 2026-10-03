@@ -77,6 +77,18 @@ export const Site: GlobalConfig = {
           localized: true,
         },
         {
+          name: 'demoDetails',
+          type: 'checkbox',
+          label: label('Демо-реквизиты (вымышленные)', 'Demo details (fictional)'),
+          defaultValue: false,
+          admin: {
+            description: label(
+              'Сайт помечает реквизиты как демонстрационные — в подвале, на контактах и в политике',
+              'The site marks the details as demo ones: in the footer, on contacts and in the policy',
+            ),
+          },
+        },
+        {
           type: 'row',
           fields: [
             { name: 'taxId', type: 'text', label: label('ИНН', 'Taxpayer number'), required: true },

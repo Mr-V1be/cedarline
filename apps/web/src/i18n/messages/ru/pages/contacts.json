@@ -16,6 +16,7 @@
   "openMap": "Открыть в OpenStreetMap",
   "legal": {
     "title": "Реквизиты",
+    "titleDemo": "Демо-реквизиты",
     "taxId": "ИНН {value}",
     "registrationNumber": "ОГРН {value}"
   },

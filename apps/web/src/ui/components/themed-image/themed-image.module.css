@@ -1,0 +1,28 @@
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dark {
+  display: none;
+}
+
+/* Same selectors as the theme tokens: the system setting unless the visitor chose a theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .light {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .dark {
+    display: block;
+  }
+}
+
+:root[data-theme='dark'] .light {
+  display: none;
+}
+
+:root[data-theme='dark'] .dark {
+  display: block;
+}

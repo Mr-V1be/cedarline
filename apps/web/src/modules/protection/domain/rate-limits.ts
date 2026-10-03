@@ -14,6 +14,8 @@ export const RATE_LIMITS = {
   saveConfiguration: { limit: 30, windowMs: HOUR },
   submitLead: { limit: 5, windowMs: HOUR },
   proposal: { limit: 30, windowMs: HOUR },
+  // One-click sign-in on the demo stand: every click opens a session on a shared account.
+  demoSession: { limit: 30, windowMs: HOUR },
 } as const satisfies Record<string, RateLimit>
 
 export type RateLimitBucket = keyof typeof RATE_LIMITS

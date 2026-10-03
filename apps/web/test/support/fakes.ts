@@ -133,6 +133,7 @@ export function proposalDeps(saved: MemorySavedConfigurations, documents: Memory
           region: 'СПб',
           location: [30.87, 59.55],
           legal: {
+            demo: true,
             name: 'ООО «Кедровник»',
             taxId: '0000000000',
             registrationNumber: '0000000000000',

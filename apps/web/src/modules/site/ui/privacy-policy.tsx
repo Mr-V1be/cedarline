@@ -7,6 +7,7 @@ import { Icon } from '@/ui/components/icon/icon'
 import { Container } from '@/ui/components/layout/container'
 
 import type { SiteContent } from '../domain/site'
+import { legalDetailsLine } from './legal-details'
 import styles from './privacy-policy.module.css'
 
 /**
@@ -14,15 +15,15 @@ import styles from './privacy-policy.module.css'
  * lives in the translations; operator details come from the company settings.
  */
 export async function PrivacyPolicy({ site }: { readonly site: SiteContent }) {
-  const [t, messages, format] = await Promise.all([
+  const [t, common, messages, format] = await Promise.all([
     getTranslations('privacy'),
+    getTranslations('common'),
     getMessages(),
     getFormatter(),
   ])
   const values = {
     operator: site.legal.name,
-    taxId: site.legal.taxId,
-    registrationNumber: site.legal.registrationNumber,
+    details: legalDetailsLine(common, site.legal),
     privacyEmail: site.legal.privacyEmail,
     address: site.address,
     mailboxDays: DEMO_MAILBOX_RETENTION_DAYS,

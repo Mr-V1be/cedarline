@@ -43,7 +43,8 @@
     "sections": "Разделы",
     "copyright": "© {year} Кедровник",
     "demo": "Демо-версия. Компания и данные вымышленные.",
-    "legal": "Документы"
+    "legal": "Документы",
+    "demoAccess": "Войти в CMS как…"
   },
   "units": {
     "area": "{value, number, ::.##} м²",
@@ -70,7 +71,9 @@
     "weekSingle": "{week, number, integer} нед."
   },
   "legal": {
-    "privacy": "Политика обработки персональных данных"
+    "privacy": "Политика обработки персональных данных",
+    "details": "{name}, ИНН {taxId}, ОГРН {registrationNumber}",
+    "demoDetails": "Демо-реквизиты: {name}, ИНН {taxId}, ОГРН {registrationNumber}"
   },
   "map": {
     "title": "Карта",

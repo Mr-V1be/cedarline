@@ -83,6 +83,7 @@ export async function seedPages(
       region: SITE.region.ru,
       location: SITE.location,
       legalName: SITE.legalName.ru,
+      demoDetails: true,
       taxId: SITE.taxId,
       registrationNumber: SITE.registrationNumber,
       privacyEmail: SITE.privacyEmail,

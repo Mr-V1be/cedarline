@@ -60,6 +60,8 @@ export default buildConfig({
     meta: { titleSuffix: ' · Кедровник' },
     components: {
       graphics: { Icon: '/cms/admin/brand#Icon', Logo: '/cms/admin/brand#Logo' },
+      // Renders only on a demo stand: one-click sign-in by role.
+      beforeLogin: ['/cms/admin/demo-sign-in#DemoSignIn'],
     },
   },
   i18n: { supportedLanguages: { ru, en }, fallbackLanguage: DEFAULT_LOCALE },

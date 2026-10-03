@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "Demo access to the CMS",
+    "description": "Sign in to the Kedrovnik CMS as a sales manager, content manager or administrator in one click."
+  },
+  "title": "Inside the CMS",
+  "lead": "The same CMS the team works in. Sign in with any role in one click, no password.",
+  "reset": "Every night the stand returns to its original data: leads, configurations, emails and content edits.",
+  "screen": "A lead in the CMS: configuration, total, PDF proposal and delivery",
+  "lookAt": "What to look at",
+  "pending": "Opening the CMS…",
+  "errors": {
+    "limited": "Too many sign-ins in a row. Try again in an hour.",
+    "unavailable": "Demo sign-in is not available right now."
+  },
+  "roles": {
+    "sales-manager": {
+      "title": "Sales manager",
+      "summary": "Leads from the site with their configuration, estimate and proposal.",
+      "enter": "Sign in as a sales manager"
+    },
+    "content-manager": {
+      "title": "Content manager",
+      "summary": "Catalog, prices and articles, no developer needed.",
+      "enter": "Sign in as a content manager"
+    },
+    "admin": {
+      "title": "Administrator",
+      "summary": "Every section, plus users and roles.",
+      "enter": "Sign in as an administrator"
+    }
+  },
+  "stops": {
+    "leads": {
+      "title": "Leads",
+      "hint": "Configuration, total, PDF proposal and delivery status"
+    },
+    "mailbox": {
+      "title": "Demo mailbox",
+      "hint": "Emails to the customer and to sales, with attachments"
+    },
+    "configurations": {
+      "title": "Saved configurations",
+      "hint": "Everything shared by link"
+    },
+    "projects": {
+      "title": "Projects",
+      "hint": "Sizes, floor plans, series and options"
+    },
+    "rules": {
+      "title": "Compatibility rules",
+      "hint": "Which options cannot be combined, and why"
+    },
+    "tariff": {
+      "title": "Tariff",
+      "hint": "The rates the estimate is calculated from"
+    },
+    "articles": {
+      "title": "Articles",
+      "hint": "Editor with headings, lists and illustrations"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "hint": "Every section of the CMS"
+    },
+    "users": {
+      "title": "Users and roles",
+      "hint": "Who can do what in the CMS"
+    },
+    "company": {
+      "title": "Company",
+      "hint": "Contacts, legal details and the map pin"
+    }
+  }
+}

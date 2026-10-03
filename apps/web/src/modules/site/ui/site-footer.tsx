@@ -5,10 +5,17 @@ import { Container } from '@/ui/components/layout/container'
 
 import { LEGAL_LINKS, SITE_NAVIGATION } from '../domain/navigation'
 import type { SiteContent } from '../domain/site'
+import { legalDetailsLine } from './legal-details'
 import { Logo } from './logo'
 import styles from './site-footer.module.css'
 
-export async function SiteFooter({ site }: { readonly site: SiteContent }) {
+interface SiteFooterProps {
+  readonly site: SiteContent
+  /** The stand is a demo: the footer leads to the one-click CMS sign-in. */
+  readonly demoAccess: boolean
+}
+
+export async function SiteFooter({ site, demoAccess }: SiteFooterProps) {
   const t = await getTranslations('common')
   const year = new Date().getFullYear()
   return (
@@ -44,7 +51,10 @@ export async function SiteFooter({ site }: { readonly site: SiteContent }) {
         </address>
       </Container>
       <Container className={styles.legal}>
-        <p>{t('footer.copyright', { year })}</p>
+        <div className={styles.company}>
+          <p>{t('footer.copyright', { year })}</p>
+          <p className={styles.numeric}>{legalDetailsLine(t, site.legal)}</p>
+        </div>
         <nav aria-label={t('footer.legal')}>
           <ul className={styles.legalLinks}>
             {LEGAL_LINKS.map((item) => (
@@ -54,6 +64,13 @@ export async function SiteFooter({ site }: { readonly site: SiteContent }) {
                 </Link>
               </li>
             ))}
+            {demoAccess ? (
+              <li>
+                <Link href="/demo" className={styles.link}>
+                  {t('footer.demoAccess')}
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </nav>
         <p>{t('footer.demo')}</p>

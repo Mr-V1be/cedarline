@@ -78,6 +78,15 @@
   font-size: var(--text-xs);
 }
 
+.company {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
 .legalLinks {
   display: flex;
   flex-wrap: wrap;

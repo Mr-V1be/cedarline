@@ -19,7 +19,7 @@
     "operator": {
       "title": "Operator",
       "paragraphs": {
-        "1": "{operator}, taxpayer number {taxId}, registration number {registrationNumber}.",
+        "1": "{details}.",
         "2": "Address: {address}.",
         "3": "A person responsible for personal data processing has been appointed by order of the operator; write to them at {privacyEmail}."
       }

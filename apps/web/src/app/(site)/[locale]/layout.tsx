@@ -7,6 +7,7 @@ import { hasLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
 
+import { isDemoStand } from '@/composition/demo'
 import { getServices } from '@/composition/services'
 import { env } from '@/config/env'
 import { ClientMessages } from '@/i18n/client-messages'
@@ -69,7 +70,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
           <main id="content" className={styles.main}>
             {children}
           </main>
-          <SiteFooter site={site} />
+          <SiteFooter site={site} demoAccess={isDemoStand()} />
         </ClientMessages>
       </body>
     </html>

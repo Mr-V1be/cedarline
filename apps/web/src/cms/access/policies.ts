@@ -1,6 +1,8 @@
 import type { Access, FieldAccess, PayloadRequest, Where } from 'payload'
 
+import { isDemoStand } from '@/composition/demo'
 import { CAPABILITIES, rolesGrant, type Capability } from '@/modules/access/domain/roles'
+import { DEMO_ACCOUNT_EMAILS } from '@/modules/demo/domain/demo-tours'
 
 /** Roles of the signed-in CMS user; anonymous visitors have none. */
 export function rolesOf(user: PayloadRequest['user']): readonly string[] {
@@ -55,3 +57,16 @@ export const readCapabilityOf = (
 
 /** `custom` settings of a collection that is read with a capability (see `readCapabilityOf`). */
 export const declareReadCapability = (capability: Capability) => ({ [READ_CAPABILITY]: capability })
+
+/**
+ * On a demo stand the demo accounts are shared by every visitor: nobody may change or delete
+ * them, or the next visitor would find a role locked out. Elsewhere the access is unchanged.
+ */
+export const exceptDemoAccounts =
+  (access: Access): Access =>
+  async (args) => {
+    const granted = await access(args)
+    if (!isDemoStand() || granted === false) return granted
+    const others: Where = { email: { not_in: DEMO_ACCOUNT_EMAILS } }
+    return granted === true ? others : { and: [granted, others] }
+  }

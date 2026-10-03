@@ -47,6 +47,8 @@ const schema = z
     CBR_DAILY_INFO_URL: withDefault(
       z.url().default('https://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx'),
     ),
+    // Demo stand: one-click CMS sign-in by role and the nightly reset to the seed content.
+    DEMO_MODE: withDefault(z.stringbool().default(false)),
   })
   .refine((value) => !value.LEAD_SINKS.includes('bitrix24') || value.BITRIX24_WEBHOOK_URL !== '', {
     message: 'BITRIX24_WEBHOOK_URL is required when LEAD_SINKS includes bitrix24',

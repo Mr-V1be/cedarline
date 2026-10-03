@@ -16,6 +16,7 @@
   "openMap": "Open in OpenStreetMap",
   "legal": {
     "title": "Legal details",
+    "titleDemo": "Demo details",
     "taxId": "Taxpayer number {value}",
     "registrationNumber": "Registration number {value}"
   },

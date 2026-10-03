@@ -43,7 +43,8 @@
     "sections": "Sections",
     "copyright": "© {year} Kedrovnik",
     "demo": "Demo version. The company and all data are fictional.",
-    "legal": "Documents"
+    "legal": "Documents",
+    "demoAccess": "Sign in to the CMS as…"
   },
   "units": {
     "area": "{value, number, ::.##} m²",
@@ -70,7 +71,9 @@
     "weekSingle": "wk {week, number, integer}"
   },
   "legal": {
-    "privacy": "Personal data policy"
+    "privacy": "Personal data policy",
+    "details": "{name}, taxpayer number {taxId}, registration number {registrationNumber}",
+    "demoDetails": "Demo details: {name}, taxpayer number {taxId}, registration number {registrationNumber}"
   },
   "map": {
     "title": "Map",

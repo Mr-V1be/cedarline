@@ -103,7 +103,7 @@ export async function ContactsView({ site, map }: ContactsViewProps) {
         </div>
         <section className={styles.legal} aria-labelledby="legal-title">
           <h2 id="legal-title" className={styles.legalTitle}>
-            {t('legal.title')}
+            {site.legal.demo ? t('legal.titleDemo') : t('legal.title')}
           </h2>
           <p>{site.legal.name}</p>
           <p className={styles.numeric}>{t('legal.taxId', { value: site.legal.taxId })}</p>

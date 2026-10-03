@@ -24,6 +24,7 @@ export class PayloadSiteRepository implements SiteRepository {
       location: site.location ?? null,
       legal: {
         name: site.legalName,
+        demo: site.demoDetails ?? false,
         taxId: site.taxId,
         registrationNumber: site.registrationNumber,
         privacyEmail: site.privacyEmail,
