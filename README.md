@@ -101,6 +101,16 @@ pnpm --filter @kedrovnik/web perf:scene http://localhost:46100 /configurator/sos
 sh tools/load/run.sh http://localhost:46100                            # нагрузка, k6 в Docker
 ```
 
+## Видео продукта
+
+Ролики в `docs/case/video` записаны с живого сайта: Playwright снимает короткие дубли (кадры
+экрана с отметками времени, видимый указатель), ffmpeg монтирует их в 1920×1080 и 1080×1920.
+
+```bash
+pnpm --filter @kedrovnik/web video:record landscape browse      # и configure; portrait — телефон
+pnpm --filter @kedrovnik/web video:assemble landscape
+```
+
 ## Продакшен
 
 Образы, стек с Caddy и бэкапами, пошаговая выкатка на чистый Ubuntu и проверка стека на своей
