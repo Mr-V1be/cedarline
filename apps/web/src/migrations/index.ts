@@ -9,6 +9,7 @@ import * as migration_20261003_083147_site_location_and_legal from './20261003_0
 import * as migration_20261003_085408_financing_and_key_rate from './20261003_085408_financing_and_key_rate'
 import * as migration_20261003_091553_articles from './20261003_091553_articles'
 import * as migration_20261003_091942_production_page from './20261003_091942_production_page'
+import * as migration_20261003_093631_mailbox_and_jobs from './20261003_093631_mailbox_and_jobs'
 
 export const migrations = [
   {
@@ -65,5 +66,10 @@ export const migrations = [
     up: migration_20261003_091942_production_page.up,
     down: migration_20261003_091942_production_page.down,
     name: '20261003_091942_production_page',
+  },
+  {
+    up: migration_20261003_093631_mailbox_and_jobs.up,
+    down: migration_20261003_093631_mailbox_and_jobs.down,
+    name: '20261003_093631_mailbox_and_jobs',
   },
 ]

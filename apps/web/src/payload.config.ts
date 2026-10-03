@@ -9,11 +9,14 @@ import { ru } from '@payloadcms/translations/languages/ru'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
+import { userCan } from './cms/access/policies'
 import { Articles } from './cms/collections/articles'
 import { BuiltObjects } from './cms/collections/built-objects'
 import { Configurations } from './cms/collections/configurations'
 import { Documents } from './cms/collections/documents'
 import { Leads } from './cms/collections/leads'
+import { Mailbox } from './cms/collections/mailbox'
+import { MailboxFiles } from './cms/collections/mailbox-files'
 import { Media } from './cms/collections/media'
 import { ProjectTypes } from './cms/collections/project-types'
 import { Projects } from './cms/collections/projects'
@@ -28,8 +31,10 @@ import { Production } from './cms/globals/production'
 import { Site } from './cms/globals/site'
 import { Tariff } from './cms/globals/tariff'
 import { Technology } from './cms/globals/technology'
+import { DELIVERY_QUEUE, MAINTENANCE_QUEUE, TASKS } from './cms/jobs/tasks'
 import { env } from './config/env'
 import { DEFAULT_LOCALE, LOCALE_DEFINITIONS, LOCALES } from './i18n/locales'
+import { demoMailboxEmailAdapter } from './modules/mail/infrastructure/demo-mailbox-email-adapter'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -74,21 +79,29 @@ export default buildConfig({
     Leads,
     Configurations,
     Documents,
+    Mailbox,
+    MailboxFiles,
     RateLimitHits,
   ],
   globals: [Tariff, CatalogOptions, Technology, Financing, KeyRate, Home, Production, Site],
-  // Mail goes over plain SMTP: Mailpit locally, the company's relay in production.
-  email: nodemailerAdapter({
-    defaultFromAddress: env.MAIL_FROM_ADDRESS,
-    defaultFromName: env.MAIL_FROM_NAME,
-    skipVerify: true,
-    transportOptions: {
-      host: env.SMTP_HOST,
-      port: env.SMTP_PORT,
-      secure: false,
-      ...(env.SMTP_USER === '' ? {} : { auth: { user: env.SMTP_USER, pass: env.SMTP_PASSWORD } }),
-    },
-  }),
+  // Demo: every letter stays in the site's demo mailbox. SMTP: Mailpit locally, the company's
+  // relay in production.
+  email:
+    env.MAIL_MODE === 'demo'
+      ? demoMailboxEmailAdapter({ address: env.MAIL_FROM_ADDRESS, name: env.MAIL_FROM_NAME })
+      : nodemailerAdapter({
+          defaultFromAddress: env.MAIL_FROM_ADDRESS,
+          defaultFromName: env.MAIL_FROM_NAME,
+          skipVerify: true,
+          transportOptions: {
+            host: env.SMTP_HOST,
+            port: env.SMTP_PORT,
+            secure: false,
+            ...(env.SMTP_USER === ''
+              ? {}
+              : { auth: { user: env.SMTP_USER, pass: env.SMTP_PASSWORD } }),
+          },
+        }),
   // Articles: prose with section headings, lists, quotes, links and images, nothing more.
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
@@ -96,6 +109,22 @@ export default buildConfig({
       HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
     ],
   }),
+  // Durable background work in the database: lead delivery retries, mailbox cleanup, the key
+  // rate refresh. Runs inside the web server; never during the build or in CLI scripts.
+  jobs: {
+    tasks: TASKS,
+    autoRun: [
+      { cron: '* * * * *', queue: DELIVERY_QUEUE, limit: 10 },
+      { cron: '*/5 * * * *', queue: MAINTENANCE_QUEUE, limit: 5 },
+    ],
+    shouldAutoRun: () =>
+      process.env.NEXT_RUNTIME === 'nodejs' && process.env.NEXT_PHASE !== 'phase-production-build',
+    access: {
+      queue: ({ req }) => userCan(req.user, 'users.manage'),
+      run: ({ req }) => userCan(req.user, 'users.manage'),
+      cancel: ({ req }) => userCan(req.user, 'users.manage'),
+    },
+  },
   // The site reads through the Local API; the REST API serves the admin panel.
   graphQL: { disable: true },
   db: postgresAdapter({

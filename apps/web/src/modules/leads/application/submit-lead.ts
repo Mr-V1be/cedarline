@@ -7,18 +7,24 @@ import { proposalFor, type ProposalDeps } from '@/modules/proposals/application/
 
 import { validateLeadForm, type LeadField, type LeadFieldError } from '../domain/lead'
 import type { DeliveryOutcome, Lead, LeadReceipt } from '../domain/lead-record'
+import type { DeliveryQueue } from '../ports/delivery-queue'
+import type { LeadDelivery } from '../ports/lead-delivery'
 import type { LeadJournal } from '../ports/lead-journal'
-import type { LeadNotifier } from '../ports/lead-notifier'
 import type { LeadSink } from '../ports/lead-sink'
+import { attemptDelivery } from './deliver'
 
 export interface SubmitLeadDeps {
   readonly saved: SavedConfigurationRepository
   readonly proposals: ProposalDeps
-  /** Ordered: the first sink is the system of record. */
-  readonly sinks: readonly [LeadSink, ...LeadSink[]]
-  readonly notifier: LeadNotifier
+  /** The system of record: it must take the lead, or the customer is asked to try again. */
+  readonly primary: LeadSink
+  /** Where the lead goes next, in order: other sinks, then the emails. */
+  readonly deliveries: readonly LeadDelivery[]
   readonly journal: LeadJournal
+  readonly queue: DeliveryQueue
   readonly describe: (lead: DescribeInput) => Promise<string>
+  /** Path of the page with the kept copy of the customer's letter (demo mailbox). */
+  readonly letterPath: (viewKey: string) => string
   readonly clock: () => Date
 }
 
@@ -40,7 +46,12 @@ export interface SubmitLeadRequest {
 }
 
 export type SubmitLeadResult =
-  | { readonly ok: true; readonly reference: string }
+  | {
+      readonly ok: true
+      readonly reference: string
+      /** Where the customer opens their letter when mail is kept in the demo mailbox. */
+      readonly letter: string | null
+    }
   | {
       readonly ok: false
       readonly reason: 'invalid'
@@ -51,37 +62,16 @@ export type SubmitLeadResult =
 /** A bot that filled the honeypot gets a believable answer and nothing is stored or sent. */
 const DECOY_REFERENCE = 'received'
 
-async function attempt(channel: string, at: () => Date, action: () => Promise<LeadReceipt>) {
-  try {
-    const receipt = await action()
-    const outcome: DeliveryOutcome = {
-      channel,
-      status: 'delivered',
-      reference: receipt.reference,
-      at: at(),
-    }
-    return { receipt, outcome }
-  } catch (error) {
-    const outcome: DeliveryOutcome = {
-      channel,
-      status: 'failed',
-      error: error instanceof Error ? error.message : String(error),
-      at: at(),
-    }
-    return { receipt: null, outcome }
-  }
-}
-
 /**
  * Takes a lead for a saved configuration: validates the contact, attaches the proposal,
- * stores the lead in the system of record, hands it to the other sinks, emails the customer
- * and the sales team, and logs every delivery next to the lead.
+ * stores the lead in the system of record, hands it to the other channels (CRM, emails), logs
+ * every delivery next to the lead and queues the failed ones for retries.
  */
 export async function submitLead(
   deps: SubmitLeadDeps,
   request: SubmitLeadRequest,
 ): Promise<SubmitLeadResult> {
-  if (request.trap.trim() !== '') return { ok: true, reference: DECOY_REFERENCE }
+  if (request.trap.trim() !== '') return { ok: true, reference: DECOY_REFERENCE, letter: null }
   const form = validateLeadForm(request.form)
   if (!form.ok) return { ok: false, reason: 'invalid', errors: form.errors }
 
@@ -121,16 +111,23 @@ export async function submitLead(
   }
 
   // The system of record must take the lead; if it cannot, the customer is told to retry.
-  const [primarySink, ...secondarySinks] = deps.sinks
-  const primary = await primarySink.submit(lead)
-  const outcomes: DeliveryOutcome[] = []
+  const primary = await deps.primary.submit(lead)
   const receipts: LeadReceipt[] = [primary]
-  for (const sink of secondarySinks) {
-    const { receipt, outcome } = await attempt(sink.channel, deps.clock, () => sink.submit(lead))
+  const outcomes: DeliveryOutcome[] = []
+  let letter: string | null = null
+  for (const delivery of deps.deliveries) {
+    const { outcome, receipt } = await attemptDelivery(delivery, lead, receipts, deps.clock)
     outcomes.push(outcome)
-    if (receipt !== null) receipts.push(receipt)
+    if (receipt?.reference !== undefined) {
+      receipts.push({ channel: delivery.channel, reference: receipt.reference })
+    }
+    if (delivery.audience === 'customer' && receipt?.viewKey !== undefined) {
+      letter = deps.letterPath(receipt.viewKey)
+    }
   }
-  outcomes.push(...(await deps.notifier.notify(lead, receipts)))
-  await deps.journal.record(primary, outcomes)
-  return { ok: true, reference: primary.reference }
+  await deps.journal.record(primary.reference, outcomes)
+  for (const outcome of outcomes.filter((item) => item.status === 'failed')) {
+    await deps.queue.retry(primary.reference, outcome.channel)
+  }
+  return { ok: true, reference: primary.reference, letter }
 }

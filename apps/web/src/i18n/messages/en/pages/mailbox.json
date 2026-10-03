@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "title": "Letter in the demo mailbox"
+  },
+  "notice": "Demo mailbox: on the live site this letter would have gone to {to}. In the demo, letters never leave the server and are kept for {days, plural, one {# day} other {# days}}.",
+  "from": "From",
+  "to": "To",
+  "sent": "Sent",
+  "attachments": "Attachments",
+  "body": "Letter text",
+  "notFound": {
+    "title": "Letter not found",
+    "description": "The link is incomplete, or the letter has been deleted: the demo mailbox keeps letters for {days, plural, one {# day} other {# days}}.",
+    "action": "Go to the home page"
+  }
+}

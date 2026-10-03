@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { MAIL_MODES } from '@/modules/mail/domain/mailbox'
+
 import { loadRootEnv } from './load-root-env'
 
 loadRootEnv()
@@ -17,8 +19,9 @@ const schema = z
     DATABASE_URL: z.url({ protocol: /^postgres(ql)?$/ }),
     PAYLOAD_SECRET: z.string().min(32, 'must be at least 32 characters'),
     SITE_URL: z.url(),
-    SMTP_HOST: z.string().min(1),
-    SMTP_PORT: z.coerce.number().int().positive(),
+    MAIL_MODE: withDefault(z.enum(MAIL_MODES).default('demo')),
+    SMTP_HOST: z.string().optional().default(''),
+    SMTP_PORT: withDefault(z.coerce.number().int().positive().optional()),
     SMTP_USER: z.string().optional().default(''),
     SMTP_PASSWORD: z.string().optional().default(''),
     MAIL_FROM_ADDRESS: z.email(),
@@ -49,6 +52,19 @@ const schema = z
     message: 'BITRIX24_WEBHOOK_URL is required when LEAD_SINKS includes bitrix24',
     path: ['BITRIX24_WEBHOOK_URL'],
   })
+  // Leads are retried and journalled in the CMS: it must be the system of record.
+  .refine((value) => value.LEAD_SINKS[0] === 'cms', {
+    message: 'LEAD_SINKS must start with cms',
+    path: ['LEAD_SINKS'],
+  })
+  .refine(
+    (value) =>
+      value.MAIL_MODE !== 'smtp' || (value.SMTP_HOST !== '' && value.SMTP_PORT !== undefined),
+    {
+      message: 'SMTP_HOST and SMTP_PORT are required when MAIL_MODE is smtp',
+      path: ['SMTP_HOST'],
+    },
+  )
 
 export type ServerEnv = z.infer<typeof schema>
 

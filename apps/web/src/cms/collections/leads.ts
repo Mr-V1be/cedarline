@@ -4,6 +4,7 @@ import { LOCALES } from '@/i18n/locales'
 import { LEAD_STATUSES } from '@/modules/leads/domain/lead'
 
 import { declareReadCapability, requireCapability } from '../access/policies'
+import { retryLeadDelivery } from '../endpoints/retry-lead-delivery'
 import { label } from '../fields/labels'
 import { registryOptions } from '../fields/registry-labels'
 
@@ -31,6 +32,7 @@ export const Leads: CollectionConfig = {
   },
   defaultSort: '-createdAt',
   custom: declareReadCapability(SALES_READ),
+  endpoints: [{ path: '/:id/deliveries/retry', method: 'post', handler: retryLeadDelivery }],
   access: {
     read: requireCapability(SALES_READ),
     create: () => false,
@@ -151,5 +153,14 @@ export const Leads: CollectionConfig = {
         { name: 'error', type: 'text', label: label('Ошибка', 'Error') },
       ],
     }),
+    {
+      // Channels the lead has not reached, with a manual retry, beside the status.
+      name: 'deliveryActions',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: { Field: '/cms/admin/lead-deliveries#LeadDeliveries' },
+      },
+    },
   ],
 }

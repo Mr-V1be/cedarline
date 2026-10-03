@@ -2,8 +2,11 @@ import { initialConfiguration } from '@kedrovnik/configurator'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { saveConfiguration } from '@/modules/configurator/application/save-configuration'
-import type { DeliveryOutcome, Lead, LeadReceipt } from '@/modules/leads/domain/lead-record'
+import { retryDelivery } from '@/modules/leads/application/retry-delivery'
 import { submitLead, type SubmitLeadDeps } from '@/modules/leads/application/submit-lead'
+import type { DeliveryOutcome, Lead, LeadReceipt } from '@/modules/leads/domain/lead-record'
+import { sinkDelivery } from '@/modules/leads/infrastructure/sink-delivery'
+import type { LeadDelivery } from '@/modules/leads/ports/lead-delivery'
 import type { LeadSink } from '@/modules/leads/ports/lead-sink'
 
 import {
@@ -41,36 +44,59 @@ class RecordingSink implements LeadSink {
   }
 }
 
+/** A letter channel that keeps a copy (the demo mailbox) and can be switched off. */
+class RecordingMail implements LeadDelivery {
+  readonly sent: Lead[] = []
+  failing = false
+  constructor(
+    readonly channel: string,
+    readonly audience: 'customer' | 'staff',
+  ) {}
+  deliver(lead: Lead) {
+    if (this.failing) return Promise.reject(new Error(`${this.channel} is down`))
+    this.sent.push(lead)
+    return Promise.resolve({ viewKey: `${this.channel}-key-${this.sent.length}` })
+  }
+}
+
 describe('submitLead', () => {
   let saved: MemorySavedConfigurations
-  let journal: Array<{ primary: LeadReceipt; outcomes: readonly DeliveryOutcome[] }>
+  let journal: Array<{ reference: string; outcomes: readonly DeliveryOutcome[] }>
+  let retries: Array<{ reference: string; channel: string }>
   let cms: RecordingSink
+  let customerMail: RecordingMail
+  let staffMail: RecordingMail
 
   const deps = (secondary: LeadSink[] = []): SubmitLeadDeps => ({
     saved,
     proposals: proposalDeps(saved, new MemoryDocuments()).deps,
-    sinks: [cms, ...secondary],
-    notifier: {
-      notify: () =>
-        Promise.resolve([
-          { channel: 'mail:client', status: 'delivered', at: new Date() },
-          { channel: 'mail:manager', status: 'delivered', at: new Date() },
-        ]),
-    },
+    primary: cms,
+    deliveries: [...secondary.map(sinkDelivery), customerMail, staffMail],
     journal: {
-      record: (primary, outcomes) => {
-        journal.push({ primary, outcomes })
+      record: (reference, outcomes) => {
+        journal.push({ reference, outcomes })
+        return Promise.resolve()
+      },
+      delivered: (reference) => Promise.resolve([{ channel: 'cms', reference }]),
+    },
+    queue: {
+      retry: (reference, channel) => {
+        retries.push({ reference, channel })
         return Promise.resolve()
       },
     },
     describe: (input) => Promise.resolve(`${input.projectTitle} · ${input.completeness}`),
+    letterPath: (key) => `/mail/${key}`,
     clock: () => new Date('2026-10-03T10:00:00Z'),
   })
 
   beforeEach(async () => {
     saved = new MemorySavedConfigurations()
     journal = []
+    retries = []
     cms = new RecordingSink('cms')
+    customerMail = new RecordingMail('mail:client', 'customer')
+    staffMail = new RecordingMail('mail:manager', 'staff')
     await saveConfiguration(
       {
         ...configuratorDeps(model, { sosny: 'Сосны' }),
@@ -87,7 +113,8 @@ describe('submitLead', () => {
   it('stores the lead with its proposal, hands it on and logs every delivery', async () => {
     const crm = new RecordingSink('bitrix24')
     const result = await submitLead(deps([crm]), { form, code: CODE, locale: 'ru', trap: '' })
-    expect(result).toEqual({ ok: true, reference: 'cms-1' })
+    // The customer is offered their own letter, never the staff copy.
+    expect(result).toEqual({ ok: true, reference: 'cms-1', letter: '/mail/mail:client-key-1' })
     const [lead] = cms.leads
     expect(lead?.contact.phone).toBe('+79210000000')
     expect(lead?.summary.description).toBe('Сосны · Тёплый контур')
@@ -99,6 +126,7 @@ describe('submitLead', () => {
       ['mail:client', 'delivered'],
       ['mail:manager', 'delivered'],
     ])
+    expect(retries).toEqual([])
   })
 
   it('keeps the lead when a secondary sink fails and records why', async () => {
@@ -114,11 +142,36 @@ describe('submitLead', () => {
       status: 'failed',
       error: 'bitrix24 is down',
     })
+    expect(retries).toEqual([{ reference: 'cms-1', channel: 'bitrix24' }])
+  })
+
+  it('queues a failed letter for retries and delivers it on the retry', async () => {
+    staffMail.failing = true
+    const result = await submitLead(deps(), { form, code: CODE, locale: 'ru', trap: '' })
+    expect(result.ok).toBe(true)
+    expect(retries).toEqual([{ reference: 'cms-1', channel: 'mail:manager' }])
+    const [lead] = cms.leads
+    if (lead === undefined) throw new Error('no lead')
+    staffMail.failing = false
+    const { journal: log } = deps()
+    const outcome = await retryDelivery(
+      {
+        archive: { load: () => Promise.resolve(lead) },
+        deliveries: deps().deliveries,
+        journal: log,
+        clock: () => new Date('2026-10-03T10:05:00Z'),
+      },
+      'cms-1',
+      'mail:manager',
+    )
+    expect(outcome).toMatchObject({ channel: 'mail:manager', status: 'delivered' })
+    expect(staffMail.sent).toHaveLength(1)
+    expect(journal.at(-1)?.outcomes).toEqual([outcome])
   })
 
   it('answers bots in kind and stores nothing', async () => {
     const result = await submitLead(deps(), { form, code: CODE, locale: 'ru', trap: 'http://spam' })
-    expect(result).toEqual({ ok: true, reference: 'received' })
+    expect(result).toEqual({ ok: true, reference: 'received', letter: null })
     expect(cms.leads).toHaveLength(0)
   })
 

@@ -4,7 +4,6 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-import { env } from '@/config/env'
 import type { Locale } from '@/i18n/locales'
 import { PayloadArticleRepository } from '@/modules/articles/infrastructure/payload-article-repository'
 import { PayloadBuiltObjectRepository } from '@/modules/built-objects/infrastructure/payload-built-object-repository'
@@ -17,20 +16,14 @@ import { PayloadDocumentStore } from '@/modules/configurator/infrastructure/payl
 import { PayloadProjectFamilyRepository } from '@/modules/configurator/infrastructure/payload-project-family-repository'
 import { PayloadSavedConfigurationRepository } from '@/modules/configurator/infrastructure/payload-saved-configuration-repository'
 import { SharpRenderImages } from '@/modules/configurator/infrastructure/sharp-render-images'
-import type { KeyRateDeps } from '@/modules/finance/application/key-rate-service'
-import { CbrKeyRateSource } from '@/modules/finance/infrastructure/cbr-key-rate-source'
-import { PayloadFinancingRepository } from '@/modules/finance/infrastructure/payload-financing-repository'
-import { PayloadKeyRateCache } from '@/modules/finance/infrastructure/payload-key-rate-cache'
 import { PayloadHomeRepository } from '@/modules/home/infrastructure/payload-home-repository'
 import { PayloadProductionRepository } from '@/modules/production/infrastructure/payload-production-repository'
 import { PayloadPricingRepositoryFactory } from '@/modules/pricing/infrastructure/payload-tariff-repository'
 import { PayloadSiteRepository } from '@/modules/site/infrastructure/payload-site-repository'
 import { PayloadTechnologyRepository } from '@/modules/technology/infrastructure/payload-technology-repository'
 
+import { financeServices } from './finance'
 import { leadServices } from './leads'
-
-/** The site asks the Bank of Russia again once its reading is this old. */
-const KEY_RATE_MAX_AGE_MS = 6 * 60 * 60 * 1000
 
 /**
  * Composition root of the site: binds every port to its adapter. Pages, layouts and server
@@ -49,15 +42,6 @@ export const getServices = cache(async (locale: Locale) => {
     tariff: (language) => tariffs.forLocale(language),
     technology,
   }
-  const keyRate: KeyRateDeps = {
-    source: new CbrKeyRateSource(env.CBR_DAILY_INFO_URL),
-    cache: new PayloadKeyRateCache(payload),
-    clock: () => new Date(),
-    maxAgeMs: KEY_RATE_MAX_AGE_MS,
-    onSourceError: (error) => {
-      payload.logger.warn({ err: error }, 'Key rate source is unavailable, using the cached rate')
-    },
-  }
   const saved = new PayloadSavedConfigurationRepository(payload)
   const documents = new PayloadDocumentStore(payload)
   return {
@@ -69,7 +53,7 @@ export const getServices = cache(async (locale: Locale) => {
     builtObjects: new PayloadBuiltObjectRepository(payload),
     articles: new PayloadArticleRepository(payload),
     production: new PayloadProductionRepository(payload),
-    finance: { terms: new PayloadFinancingRepository(payload), keyRate },
+    finance: financeServices(payload),
     site,
     configurator,
     saving: {

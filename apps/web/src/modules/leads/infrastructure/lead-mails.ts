@@ -4,8 +4,10 @@ import type { Payload } from 'payload'
 import type { Locale } from '@/i18n/locales'
 import { loadMessages } from '@/i18n/messages'
 
-import type { DeliveryOutcome, Lead, LeadReceipt } from '../domain/lead-record'
-import type { LeadNotifier } from '../ports/lead-notifier'
+import type { Mailer, OutgoingMail } from '@/modules/mail/ports/mailer'
+
+import type { Lead, LeadReceipt } from '../domain/lead-record'
+import type { LeadDelivery } from '../ports/lead-delivery'
 import { renderMailHtml, renderMailText, type MailContent } from './mail-layout'
 
 const SYSTEM = { overrideAccess: true, depth: 0 } as const
@@ -27,46 +29,40 @@ const rubles = (locale: Locale, amount: number) =>
     maximumFractionDigits: 0,
   }).format(amount)
 
-/** Emails through Payload's mail adapter (SMTP: Mailpit locally) with the proposal attached. */
-export class PayloadLeadNotifier implements LeadNotifier {
+/**
+ * The two letters about a new lead: the customer's, with the proposal attached, and the sales
+ * team's, with the contact and links to the lead. Composed in each reader's language.
+ */
+export class PayloadLeadMails {
   constructor(private readonly payload: Payload) {}
 
-  async notify(lead: Lead, receipts: readonly LeadReceipt[]): Promise<readonly DeliveryOutcome[]> {
-    const site = await this.payload.findGlobal({ ...SYSTEM, slug: 'site', locale: lead.locale })
-    const attachments = [
-      {
-        filename: lead.proposal.filename,
-        content: lead.proposal.data,
-        contentType: 'application/pdf',
-      },
-    ]
-    const send = async (channel: string, to: string, subject: string, content: MailContent) => {
-      const brand = (await translators(lead.locale)).common('brand.name')
-      try {
-        await this.payload.sendEmail({
-          to,
-          subject,
-          html: renderMailHtml(content, brand),
-          text: renderMailText(content),
-          attachments,
-        })
-        return { channel, status: 'delivered', at: new Date() } satisfies DeliveryOutcome
-      } catch (error) {
-        return {
-          channel,
-          status: 'failed',
-          error: error instanceof Error ? error.message : String(error),
-          at: new Date(),
-        } satisfies DeliveryOutcome
-      }
-    }
+  private async letter(lead: Lead, to: string, subject: string, content: MailContent) {
+    const brand = (await translators(lead.locale)).common('brand.name')
+    return {
+      to,
+      subject,
+      html: renderMailHtml(content, brand),
+      text: renderMailText(content),
+      attachments: [
+        {
+          filename: lead.proposal.filename,
+          content: lead.proposal.data,
+          contentType: 'application/pdf',
+        },
+      ],
+    } satisfies OutgoingMail
+  }
 
-    const client = await this.clientMail(lead, site)
-    const staff = await this.staffMail(lead, receipts)
-    return [
-      await send('mail:client', lead.contact.email, client.subject, client.content),
-      await send('mail:manager', site.leadsEmail, staff.subject, staff.content),
-    ]
+  async forCustomer(lead: Lead): Promise<OutgoingMail> {
+    const site = await this.payload.findGlobal({ ...SYSTEM, slug: 'site', locale: lead.locale })
+    const { subject, content } = await this.clientMail(lead, site)
+    return this.letter(lead, lead.contact.email, subject, content)
+  }
+
+  async forStaff(lead: Lead, receipts: readonly LeadReceipt[]): Promise<OutgoingMail> {
+    const site = await this.payload.findGlobal({ ...SYSTEM, slug: 'site', locale: lead.locale })
+    const { subject, content } = await this.staffMail(lead, receipts)
+    return this.letter(lead, site.leadsEmail, subject, content)
   }
 
   private async clientMail(lead: Lead, site: { phone: string; email: string }) {
@@ -132,4 +128,26 @@ export class PayloadLeadNotifier implements LeadNotifier {
       content,
     }
   }
+}
+
+/** The letters as delivery channels: each one is retried on its own when it fails. */
+export function mailDeliveries(mails: PayloadLeadMails, mailer: Mailer): LeadDelivery[] {
+  return [
+    {
+      channel: 'mail:client',
+      audience: 'customer',
+      deliver: async (lead) => {
+        const sent = await mailer.send(await mails.forCustomer(lead))
+        return sent.viewKey === null ? {} : { viewKey: sent.viewKey }
+      },
+    },
+    {
+      channel: 'mail:manager',
+      audience: 'staff',
+      deliver: async (lead, delivered) => {
+        await mailer.send(await mails.forStaff(lead, delivered))
+        return {}
+      },
+    },
+  ]
 }

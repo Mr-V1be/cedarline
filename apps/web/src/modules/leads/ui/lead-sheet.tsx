@@ -1,11 +1,11 @@
 'use client'
 
-import { CheckCircleIcon, PaperPlaneTiltIcon } from '@phosphor-icons/react/ssr'
+import { CheckCircleIcon, EnvelopeOpenIcon, PaperPlaneTiltIcon } from '@phosphor-icons/react/ssr'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRef, useState, type SubmitEvent } from 'react'
 
 import { Link } from '@/i18n/navigation'
-import { Button } from '@/ui/components/button/button'
+import { Button, ButtonLink } from '@/ui/components/button/button'
 import { CheckboxField } from '@/ui/components/checkbox/checkbox-field'
 import { Icon } from '@/ui/components/icon/icon'
 import { Sheet } from '@/ui/components/sheet/sheet'
@@ -30,7 +30,12 @@ type Errors = Partial<Record<LeadField, LeadFieldError>>
 type Outcome =
   | { readonly kind: 'idle' }
   | { readonly kind: 'sending' }
-  | { readonly kind: 'sent'; readonly reference: string; readonly email: string }
+  | {
+      readonly kind: 'sent'
+      readonly reference: string
+      readonly email: string
+      readonly letter: string | null
+    }
   | { readonly kind: 'refused'; readonly reason: 'limited' | 'unknown-configuration' | 'failed' }
 
 const EMPTY: Values = { name: '', phone: '', email: '', comment: '', consent: false }
@@ -80,7 +85,12 @@ export function LeadSheet({ open, onClose, code, submit, phone }: LeadSheetProps
     try {
       const result = await submit(form)
       if (result.ok) {
-        setOutcome({ kind: 'sent', reference: result.reference, email: values.email })
+        setOutcome({
+          kind: 'sent',
+          reference: result.reference,
+          email: values.email,
+          letter: result.letter,
+        })
       } else if (result.reason === 'invalid') {
         setServerErrors(result.errors)
         setTouched(new Set())
@@ -124,7 +134,21 @@ export function LeadSheet({ open, onClose, code, submit, phone }: LeadSheetProps
           <h3 className={styles.successTitle}>
             {t('success.title', { reference: outcome.reference })}
           </h3>
-          <p>{t('success.text', { email: outcome.email })}</p>
+          {outcome.letter === null ? (
+            <p>{t('success.text', { email: outcome.email })}</p>
+          ) : (
+            <>
+              <p>{t('success.mailbox')}</p>
+              <ButtonLink
+                href={outcome.letter}
+                target="_blank"
+                variant="secondary"
+                icon={EnvelopeOpenIcon}
+              >
+                {t('success.openLetter')}
+              </ButtonLink>
+            </>
+          )}
         </div>
       ) : (
         <form

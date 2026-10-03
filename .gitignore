@@ -19,6 +19,8 @@ next-env.d.ts
 /apps/web/media/
 # customer files (renders, proposals): private uploads, never in the repository
 /apps/web/documents/
+# demo mailbox attachments: copies of letters sent by the site
+/apps/web/mailbox-files/
 /apps/web/.render-cache/
 /apps/web/.scene-cache/
 coverage/

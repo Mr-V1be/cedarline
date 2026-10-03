@@ -8,6 +8,7 @@ import mail from './mail.json'
 import articles from './pages/articles.json'
 import calculator from './pages/calculator.json'
 import contacts from './pages/contacts.json'
+import mailbox from './pages/mailbox.json'
 import objects from './pages/objects.json'
 import privacy from './pages/privacy.json'
 import production from './pages/production.json'
@@ -33,6 +34,7 @@ const messages: Messages = {
   calculator,
   articles,
   production,
+  mailbox,
 }
 
 export default messages

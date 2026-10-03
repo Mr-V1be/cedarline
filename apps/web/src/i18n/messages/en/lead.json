@@ -36,7 +36,9 @@
   "sending": "Sending…",
   "success": {
     "title": "Request #{reference} received",
-    "text": "An email with the configuration and the proposal is on its way to {email}. A manager will call during working hours."
+    "text": "An email with the configuration and the proposal is on its way to {email}. A manager will call during working hours.",
+    "mailbox": "In the demo, emails never go to real addresses: a copy of the letter with the configuration and the proposal is in the demo mailbox. A manager will call during working hours.",
+    "openLetter": "Open the letter"
   },
   "failure": "Could not send the request. Try again — what you typed is kept.",
   "limited": "Too many requests in a row. Call us: {phone}.",
