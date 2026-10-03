@@ -15,6 +15,7 @@ import {
 import { CatalogBrowser } from '@/modules/catalog/ui/catalog-browser'
 import { catalogFields, sortOptions } from '@/modules/catalog/ui/catalog-fields'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'
+import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Container } from '@/ui/components/layout/container'
 import { Pagination } from '@/ui/components/pagination/pagination'
@@ -33,7 +34,12 @@ interface CatalogPageProps {
 export async function generateMetadata({ params }: CatalogPageProps): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'catalog.meta' })
-  return { title: t('title'), description: t('description') }
+  return pageMetadata({
+    locale,
+    path: '/projects',
+    title: t('title'),
+    description: t('description'),
+  })
 }
 
 const hrefWith = (search: string) => (search === '' ? '/projects' : `/projects?${search}`)

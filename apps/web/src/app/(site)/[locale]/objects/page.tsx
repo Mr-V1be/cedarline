@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: ObjectsPageProps): Promise<Me
     path: '/objects',
     title: t('title'),
     description: t('description'),
-    image: first?.cover ?? null,
+    picture: first?.cover ?? null,
   })
 }
 

@@ -1,15 +1,29 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
 import { DEFAULT_LOCALE, LOCALES, LOCALE_DEFINITIONS, type Locale } from '@/i18n/locales'
 import { getPathname } from '@/i18n/navigation'
+import type { ImageAsset } from '@/modules/catalog/domain/project'
+
+import { PREVIEW_SIZE } from '../ports/preview-images'
+
+/** File name of the site-wide preview: the render of the project the home page leads with. */
+export const SITE_PREVIEW = 'site.jpg'
+const PREVIEW_PATH = '/files/og'
 
 /** An image for link previews: a render of our scene or a scheme, never a stock photo. */
 export interface PreviewImage {
   readonly url: string
   readonly alt: string
-  readonly width?: number
-  readonly height?: number
+  readonly width: number
+  readonly height: number
 }
+
+/** A preview cut from a render; pages without a picture of their own use the site's. */
+export const previewOf = (image: ImageAsset | null, siteAlt: string): PreviewImage =>
+  image === null
+    ? { url: `${PREVIEW_PATH}/${SITE_PREVIEW}`, alt: siteAlt, ...PREVIEW_SIZE }
+    : { url: `${PREVIEW_PATH}/${image.id}.jpg`, alt: image.alt, ...PREVIEW_SIZE }
 
 export interface PageMetadataInput {
   readonly locale: Locale
@@ -17,7 +31,8 @@ export interface PageMetadataInput {
   readonly path: string
   readonly title: string
   readonly description: string
-  readonly image?: PreviewImage | null
+  /** The page's own render; the site's preview is used without one. */
+  readonly picture?: ImageAsset | null
   readonly type?: 'website' | 'article'
   /** Pages people reach only by a private link stay out of search results. */
   readonly indexable?: boolean
@@ -31,7 +46,8 @@ export const localizedPath = (locale: Locale, path: string): string =>
  * Metadata every public page shares: canonical address, language alternates for search
  * engines, and Open Graph and Twitter previews with a render of the house.
  */
-export function pageMetadata(input: PageMetadataInput): Metadata {
+export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> {
+  const t = await getTranslations({ locale: input.locale, namespace: 'common' })
   const canonical = localizedPath(input.locale, input.path)
   const alternates: Array<[string, string]> = [
     ...LOCALES.map((locale): [string, string] => [
@@ -41,17 +57,7 @@ export function pageMetadata(input: PageMetadataInput): Metadata {
     ['x-default', localizedPath(DEFAULT_LOCALE, input.path)],
   ]
   const languages = Object.fromEntries(alternates)
-  const images =
-    input.image === undefined || input.image === null
-      ? undefined
-      : [
-          {
-            url: input.image.url,
-            alt: input.image.alt,
-            ...(input.image.width === undefined ? {} : { width: input.image.width }),
-            ...(input.image.height === undefined ? {} : { height: input.image.height }),
-          },
-        ]
+  const images = [previewOf(input.picture ?? null, t('meta.previewAlt'))]
   return {
     title: input.title,
     description: input.description,
@@ -60,15 +66,16 @@ export function pageMetadata(input: PageMetadataInput): Metadata {
       title: input.title,
       description: input.description,
       url: canonical,
+      siteName: t('brand.name'),
       type: input.type ?? 'website',
       locale: LOCALE_DEFINITIONS[input.locale].openGraph,
-      ...(images === undefined ? {} : { images }),
+      images,
     },
     twitter: {
-      card: images === undefined ? 'summary' : 'summary_large_image',
+      card: 'summary_large_image',
       title: input.title,
       description: input.description,
-      ...(images === undefined ? {} : { images: images.map((image) => image.url) }),
+      images: images.map((image) => image.url),
     },
     ...(input.indexable === false ? { robots: { index: false, follow: false } } : {}),
   }

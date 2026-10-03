@@ -1,11 +1,18 @@
 import type { HouseDesign, HouseOptions } from '@kedrovnik/house'
 
 /** A CMS image; responsive sizes are produced by the image optimizer on request. */
-export interface ImageAsset {
+/** An image the site can show: its address, intrinsic size and description. */
+export interface Picture {
   readonly url: string
   readonly width: number
   readonly height: number
   readonly alt: string
+}
+
+/** A picture from the media library. */
+export interface ImageAsset extends Picture {
+  /** The media document, for derived images such as link previews. */
+  readonly id: number
 }
 
 export interface ProjectTypeRef {

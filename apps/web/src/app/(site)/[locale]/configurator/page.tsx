@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { getServices } from '@/composition/services'
 import type { Locale } from '@/i18n/locales'
+import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { parseCatalogQuery, type SearchParams } from '@/modules/catalog/domain/catalog-query'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'
 import { Container } from '@/ui/components/layout/container'
@@ -20,7 +21,12 @@ interface PickerPageProps {
 export async function generateMetadata({ params }: PickerPageProps): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'configurator.meta' })
-  return { title: t('pickerTitle'), description: t('pickerDescription') }
+  return pageMetadata({
+    locale,
+    path: '/configurator',
+    title: t('pickerTitle'),
+    description: t('pickerDescription'),
+  })
 }
 
 /** Entry of the configurator: every published project, each opening in 3D. */

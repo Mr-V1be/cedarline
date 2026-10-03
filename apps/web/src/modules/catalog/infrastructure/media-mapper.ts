@@ -14,5 +14,11 @@ function sitePath(url: string): string {
 export function toImageAsset(media: number | Media | null | undefined): ImageAsset | null {
   if (media === null || media === undefined || typeof media === 'number') return null
   if (!media.url || !media.width || !media.height) return null
-  return { url: sitePath(media.url), width: media.width, height: media.height, alt: media.alt }
+  return {
+    id: media.id,
+    url: sitePath(media.url),
+    width: media.width,
+    height: media.height,
+    alt: media.alt,
+  }
 }

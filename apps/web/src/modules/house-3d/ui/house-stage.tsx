@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'
-import type { ImageAsset } from '@/modules/catalog/domain/project'
+import type { Picture } from '@/modules/catalog/domain/project'
 import { Button } from '@/ui/components/button/button'
 import { SegmentedControl } from '@/ui/components/segmented/segmented-control'
 
@@ -46,7 +46,7 @@ export interface HouseStageLabels {
 
 interface HouseStageProps {
   readonly input: HouseViewerInput
-  readonly poster: ImageAsset | null
+  readonly poster: Picture | null
   readonly labels: HouseStageLabels
   /** The page's largest image: load the poster eagerly. */
   readonly priority?: boolean

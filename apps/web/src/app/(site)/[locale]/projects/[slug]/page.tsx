@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getFormatter, getTranslations } from 'next-intl/server'
 
 import { getServices } from '@/composition/services'
+import { env } from '@/config/env'
 import type { Locale } from '@/i18n/locales'
 import { ProjectActionBar } from '@/modules/catalog/ui/project-action-bar'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'
@@ -12,6 +13,9 @@ import { HouseStage } from '@/modules/house-3d/ui/house-stage'
 import { FloorPlans } from '@/modules/plans/ui/floor-plans'
 import { formatRubles } from '@/modules/pricing/ui/money'
 import { Offers } from '@/modules/pricing/ui/offers'
+import { breadcrumbSchema, productSchema } from '@/modules/seo/application/structured-data'
+import { JsonLd } from '@/modules/seo/ui/json-ld'
+import { localizedPath, pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { resolveWall } from '@/modules/technology/domain/wall-assembly'
 import { Breadcrumbs } from '@/ui/components/breadcrumbs/breadcrumbs'
 import { Facts } from '@/ui/components/facts/facts'
@@ -37,14 +41,13 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   if (overview === null) return {}
   const { project } = overview
   const t = await getTranslations({ locale, namespace: 'project.meta' })
-  return {
+  return pageMetadata({
+    locale,
+    path: `/projects/${project.slug}`,
     title: t('title', { type: project.type.title, name: project.title }),
     description: project.summary,
-    openGraph:
-      project.cover === null
-        ? undefined
-        : { images: [{ url: project.cover.url, alt: project.cover.alt }] },
-  }
+    picture: project.cover,
+  })
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -65,8 +68,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const wall = resolveWall(technology.layers, project.options.insulation)
   const cheapest = offers.find((offer) => offer.key === project.pricing?.fromCompleteness) ?? null
 
+  const url = (path: string) => `${env.SITE_URL}${localizedPath(locale, path)}`
+
   return (
     <div>
+      <JsonLd
+        data={productSchema({
+          name: project.title,
+          description: project.summary,
+          url: url(`/projects/${project.slug}`),
+          image: project.cover === null ? null : `${env.SITE_URL}/files/og/${project.cover.id}.jpg`,
+          category: project.type.title,
+          priceFrom: project.pricing?.fromPrice ?? null,
+          packages: offers.length,
+          sellerUrl: url('/'),
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: t('breadcrumbs.catalog'), url: url('/projects') },
+          { name: project.title, url: url(`/projects/${project.slug}`) },
+        ])}
+      />
       <Container className={styles.top}>
         <Breadcrumbs
           label={t('breadcrumbs.label')}

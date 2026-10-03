@@ -188,4 +188,16 @@ export class PayloadProjectRepository implements ProjectRepository {
         : [],
     )
   }
+
+  async sitemap(): Promise<ReadonlyArray<{ readonly slug: string; readonly updatedAt: Date }>> {
+    const { docs } = await this.payload.find({
+      ...PUBLIC,
+      collection: 'projects',
+      depth: 0,
+      pagination: false,
+      where: PUBLISHED,
+      select: { slug: true, updatedAt: true },
+    })
+    return docs.map((doc) => ({ slug: doc.slug, updatedAt: new Date(doc.updatedAt) }))
+  }
 }

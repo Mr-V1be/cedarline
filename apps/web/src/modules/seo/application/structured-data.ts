@@ -91,3 +91,40 @@ export function articleSchema(input: ArticleInput): Schema {
     publisher: { '@id': `${input.publisherUrl}#organization` },
   }
 }
+
+export interface ProductInput {
+  readonly name: string
+  readonly description: string
+  readonly url: string
+  readonly image: string | null
+  readonly category: string
+  /** «Price from», whole rubles; null when the project is not priced. */
+  readonly priceFrom: number | null
+  readonly packages: number
+  readonly sellerUrl: string
+}
+
+/** A catalog project as a product with its «from» price over the offered packages. */
+export function productSchema(input: ProductInput): Schema {
+  return {
+    '@type': 'Product',
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    category: input.category,
+    ...(input.image === null ? {} : { image: [input.image] }),
+    brand: { '@id': `${input.sellerUrl}#organization` },
+    ...(input.priceFrom === null
+      ? {}
+      : {
+          offers: {
+            '@type': 'AggregateOffer',
+            lowPrice: input.priceFrom,
+            priceCurrency: 'RUB',
+            offerCount: input.packages,
+            url: input.url,
+            seller: { '@id': `${input.sellerUrl}#organization` },
+          },
+        }),
+  }
+}

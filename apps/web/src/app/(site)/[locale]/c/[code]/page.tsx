@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { getServices } from '@/composition/services'
 import type { Locale } from '@/i18n/locales'
+import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { openSaved } from '@/modules/configurator/application/open-saved'
 import { SavedConfiguration } from '@/modules/configurator/ui/share/saved-configuration'
 
@@ -26,11 +27,14 @@ export async function generateMetadata({ params }: SavedPageProps): Promise<Meta
   const t = await getTranslations({ locale, namespace: 'configurator.meta' })
   const name =
     view?.names.projects[view.saved.snapshot.configuration.project] ?? view?.saved.projectSlug
-  return {
-    ...(name === undefined ? {} : { title: t('savedTitle', { name }) }),
-    // A saved configuration belongs to whoever has the link; search engines do not need it.
-    robots: { index: false, follow: false },
-  }
+  // A saved configuration belongs to whoever has the link; search engines do not need it.
+  return pageMetadata({
+    locale,
+    path: `/c/${code}`,
+    title: name === undefined ? t('pickerTitle') : t('savedTitle', { name }),
+    description: t('pickerDescription'),
+    indexable: false,
+  })
 }
 
 export default async function SavedConfigurationPage({ params }: SavedPageProps) {

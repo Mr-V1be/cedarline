@@ -19,6 +19,7 @@ import { SharpRenderImages } from '@/modules/configurator/infrastructure/sharp-r
 import { PayloadHomeRepository } from '@/modules/home/infrastructure/payload-home-repository'
 import { PayloadProductionRepository } from '@/modules/production/infrastructure/payload-production-repository'
 import { PayloadPricingRepositoryFactory } from '@/modules/pricing/infrastructure/payload-tariff-repository'
+import { SharpPreviewImages } from '@/modules/seo/infrastructure/sharp-preview-images'
 import { PayloadSiteRepository } from '@/modules/site/infrastructure/payload-site-repository'
 import { PayloadTechnologyRepository } from '@/modules/technology/infrastructure/payload-technology-repository'
 
@@ -53,6 +54,7 @@ export const getServices = cache(async (locale: Locale) => {
     builtObjects: new PayloadBuiltObjectRepository(payload),
     articles: new PayloadArticleRepository(payload),
     production: new PayloadProductionRepository(payload),
+    previews: new SharpPreviewImages(payload),
     finance: financeServices(payload),
     site,
     configurator,

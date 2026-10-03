@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { getServices } from '@/composition/services'
 import type { Locale } from '@/i18n/locales'
+import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { openConfigurator } from '@/modules/configurator/application/open-configurator'
 import { Configurator } from '@/modules/configurator/ui/configurator'
 
@@ -24,11 +25,17 @@ export async function generateMetadata({ params }: ConfiguratorPageProps): Promi
   const family = await services.configurator.families.findFamily(slug, locale)
   const member = family?.members.find((candidate) => candidate.blueprint.slug === slug)
   if (member === undefined) return {}
-  const t = await getTranslations({ locale, namespace: 'configurator.meta' })
-  return {
+  const [t, project] = await Promise.all([
+    getTranslations({ locale, namespace: 'configurator.meta' }),
+    services.projects.findBySlug(slug, locale),
+  ])
+  return pageMetadata({
+    locale,
+    path: `/configurator/${slug}`,
     title: t('title', { name: member.title }),
     description: t('description', { name: member.title }),
-  }
+    picture: project?.cover ?? null,
+  })
 }
 
 export default async function ConfiguratorPage({ params, searchParams }: ConfiguratorPageProps) {

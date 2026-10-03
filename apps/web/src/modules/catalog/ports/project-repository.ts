@@ -22,6 +22,8 @@ export interface ProjectRepository {
   ): Promise<readonly ProjectSummary[]>
   /** Every published project with its «price from», in catalog order, for pickers. */
   priceList(locale: Locale): Promise<readonly ProjectPrice[]>
+  /** Slugs and update times of every published project, for the sitemap. */
+  sitemap(): Promise<ReadonlyArray<{ readonly slug: string; readonly updatedAt: Date }>>
 }
 
 export interface ProjectPrice {
