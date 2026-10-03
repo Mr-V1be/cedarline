@@ -18,7 +18,9 @@
     "render:covers": "payload run scripts/render-covers.ts",
     "scene:assets": "node scripts/scene-assets/build.ts",
     "perf:scene": "node scripts/measure-scene.mjs",
-    "perf:lighthouse": "node scripts/measure-lighthouse.mjs"
+    "perf:lighthouse": "node scripts/measure-lighthouse.mjs",
+    "video:record": "node scripts/video/record.mjs",
+    "video:assemble": "node scripts/video/assemble.mjs"
   },
   "dependencies": {
     "@fontsource-variable/literata": "5.3.0",

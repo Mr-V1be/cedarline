@@ -148,6 +148,11 @@ export default tseslint.config(
       ],
     },
   },
+  // Video takes drive a browser: parts of them run in the page.
+  {
+    files: ['apps/web/scripts/video/**/*.mjs'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+  },
   // k6 scripts run inside k6, which provides its own modules and the __ENV global.
   {
     files: ['tools/load/**/*.js'],
@@ -155,7 +160,12 @@ export default tseslint.config(
   },
   // Command-line tools report to the terminal.
   {
-    files: ['tools/**/*.mjs', 'apps/web/scripts/**/*.ts', 'apps/web/src/seed/**/*.ts'],
+    files: [
+      'tools/**/*.mjs',
+      'apps/web/scripts/**/*.ts',
+      'apps/web/scripts/**/*.mjs',
+      'apps/web/src/seed/**/*.ts',
+    ],
     rules: { 'no-console': 'off' },
   },
   {
