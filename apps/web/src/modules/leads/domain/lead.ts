@@ -5,7 +5,7 @@ export type LeadStatus = (typeof LEAD_STATUSES)[number]
 /** Contact details as the customer typed them, validated and normalised. */
 export interface LeadContact {
   readonly name: string
-  /** E.164: +79991234567. */
+  /** E.164: +70004123785. */
   readonly phone: string
   readonly email: string
   readonly comment: string

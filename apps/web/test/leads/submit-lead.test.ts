@@ -22,7 +22,7 @@ const model = seedModel('sosny')
 const CODE = 'snwsnwsnwsnw'
 const form = {
   name: 'Иван',
-  phone: '+7 921 000-00-00',
+  phone: '+7 000 000-00-00',
   email: 'ivan@example.ru',
   comment: 'Участок в Луге',
   consent: 'true',
@@ -116,7 +116,7 @@ describe('submitLead', () => {
     // The customer is offered their own letter, never the staff copy.
     expect(result).toEqual({ ok: true, reference: 'cms-1', letter: '/mail/mail:client-key-1' })
     const [lead] = cms.leads
-    expect(lead?.contact.phone).toBe('+79210000000')
+    expect(lead?.contact.phone).toBe('+70000000000')
     expect(lead?.summary.description).toBe('Сосны · Тёплый контур')
     expect(lead?.summary.link).toBe(`https://kedrovnik.example/c/${CODE}`)
     expect(lead?.proposal.data.toString()).toContain('%PDF')

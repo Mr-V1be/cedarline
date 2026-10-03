@@ -154,7 +154,7 @@ export function lead() {
     LEAD_ACTION,
     {
       name: 'Нагрузочный тест',
-      phone: '8 921 555-12-34',
+      phone: '+7 000 518-20-64',
       email: 'load@example.ru',
       comment: '',
       consent: 'true',

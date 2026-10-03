@@ -4,7 +4,7 @@
   "fields": {
     "name": "Name",
     "phone": "Phone",
-    "phoneHint": "For example, +7 999 123-45-67",
+    "phoneHint": "For example, +7 000 123-45-67",
     "email": "Email",
     "comment": "Comment",
     "commentHint": "Where the plot is, when to call — optional",
@@ -18,7 +18,7 @@
     },
     "phone": {
       "required": "We need a phone number to call you",
-      "invalid": "Check the number, e.g. +7 999 123-45-67"
+      "invalid": "Check the number, e.g. +7 000 123-45-67"
     },
     "email": {
       "required": "We need an email for the proposal",

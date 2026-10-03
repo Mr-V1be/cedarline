@@ -3,7 +3,8 @@ import type { LeadStatus } from '@/modules/leads/domain/lead'
 /**
  * Sample leads of the demo stand, so that the sales manager's view is never empty after the
  * nightly reset. Each starts from the project's default configuration with the listed changes
- * (kept to what the render shows: the package and the building services).
+ * (kept to what the render shows: the package and the building services). Phones are from the
+ * 0xx range, which no Russian number starts with, so none can belong to a real person.
  */
 export const DEMO_LEADS: ReadonlyArray<{
   readonly name: string
@@ -18,7 +19,7 @@ export const DEMO_LEADS: ReadonlyArray<{
 }> = [
   {
     name: 'Анна Смирнова',
-    phone: '+7 921 555-12-34',
+    phone: '+7 000 412-37-85',
     email: 'anna@example.ru',
     comment: 'Участок в Рощино, 12 соток, хотим заехать к лету.',
     project: 'pikhta',
@@ -29,7 +30,7 @@ export const DEMO_LEADS: ReadonlyArray<{
   },
   {
     name: 'Игорь Волков',
-    phone: '+7 911 204-77-18',
+    phone: '+7 000 518-20-64',
     email: 'igor.volkov@example.ru',
     comment: 'Нужен дом для постоянного проживания, удобно звонить после 18:00.',
     project: 'sosny',
@@ -40,7 +41,7 @@ export const DEMO_LEADS: ReadonlyArray<{
   },
   {
     name: 'Мария Лебедева',
-    phone: '+7 952 380-41-09',
+    phone: '+7 000 637-91-02',
     email: 'maria.lebedeva@example.ru',
     comment: 'Баня на даче в Сосново, рядом с прудом.',
     project: 'olkha',

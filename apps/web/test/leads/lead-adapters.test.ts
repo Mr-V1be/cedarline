@@ -7,7 +7,7 @@ import { escapeHtml, renderMailHtml } from '@/modules/leads/infrastructure/mail-
 const lead: Lead = {
   contact: {
     name: 'Анна',
-    phone: '+79215551234',
+    phone: '+70004123785',
     email: 'anna@example.ru',
     comment: 'После 18:00',
   },
@@ -42,7 +42,7 @@ describe('Bitrix24 lead sink', () => {
     expect(body.fields).toMatchObject({
       TITLE: 'Кедр · 10 × 9 м · Под ключ',
       NAME: 'Анна',
-      PHONE: [{ VALUE: '+79215551234', VALUE_TYPE: 'WORK' }],
+      PHONE: [{ VALUE: '+70004123785', VALUE_TYPE: 'WORK' }],
       OPPORTUNITY: 6_308_000,
       CURRENCY_ID: 'RUB',
     })

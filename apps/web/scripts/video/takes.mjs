@@ -130,7 +130,7 @@ async function proposalAndLead(page, take, { tap, downloads }) {
   await page.waitForSelector('#lead-form')
   await pause(page, 900)
   await typeInto(page, page.locator('input[name="name"]'), 'Анна Смирнова')
-  await typeInto(page, page.locator('input[name="phone"]'), '8 921 555-12-34')
+  await typeInto(page, page.locator('input[name="phone"]'), '+7 000 412-37-85')
   await typeInto(page, page.locator('input[name="email"]'), 'anna@example.ru')
   await press(page, page.locator('label:has(input[name="consent"])'), { edge: true })
   await pause(page, 500)
