@@ -115,16 +115,29 @@ export function LeadSheet({ open, onClose, code, submit, phone }: LeadSheetProps
       {...(outcome.kind === 'sent'
         ? {}
         : {
+            // The answer to a submission sits next to the button that sent it, always in view.
             footer: (
-              <Button
-                type="submit"
-                form="lead-form"
-                icon={PaperPlaneTiltIcon}
-                stretch
-                disabled={sending}
-              >
-                {sending ? t('sending') : t('submit')}
-              </Button>
+              <div className={styles.footer}>
+                <p className={styles.alert} role="alert">
+                  {errorCount > 0 ? t('errors.summary', { count: errorCount }) : null}
+                  {outcome.kind === 'refused'
+                    ? outcome.reason === 'limited'
+                      ? t('limited', { phone })
+                      : outcome.reason === 'unknown-configuration'
+                        ? t('unknown')
+                        : t('failure')
+                    : null}
+                </p>
+                <Button
+                  type="submit"
+                  form="lead-form"
+                  icon={PaperPlaneTiltIcon}
+                  stretch
+                  disabled={sending}
+                >
+                  {sending ? t('sending') : t('submit')}
+                </Button>
+              </div>
             ),
           })}
     >
@@ -250,16 +263,6 @@ export function LeadSheet({ open, onClose, code, submit, phone }: LeadSheetProps
               <input name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
             </label>
           </div>
-          <p className={styles.alert} role="alert">
-            {errorCount > 0 ? t('errors.summary', { count: errorCount }) : null}
-            {outcome.kind === 'refused'
-              ? outcome.reason === 'limited'
-                ? t('limited', { phone })
-                : outcome.reason === 'unknown-configuration'
-                  ? t('unknown')
-                  : t('failure')
-              : null}
-          </p>
         </form>
       )}
     </Sheet>

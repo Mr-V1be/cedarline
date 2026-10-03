@@ -16,7 +16,13 @@
   white-space: nowrap;
 }
 
+.footer {
+  display: grid;
+  gap: var(--space-2);
+}
+
 .alert {
+  margin: 0;
   color: var(--color-danger);
   font-size: var(--text-s);
 }
