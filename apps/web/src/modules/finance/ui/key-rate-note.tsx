@@ -16,10 +16,21 @@ export interface KeyRateView {
   readonly stale: boolean
 }
 
-/** Which key rate the calculation uses, since when, and whether the source is answering. */
-export function KeyRateNote({ keyRate }: { readonly keyRate: KeyRateView }) {
+/**
+ * Which key rate the calculation uses, since when, and whether the source is answering; without
+ * any rate, that only interest-free instalments are calculated.
+ */
+export function KeyRateNote({ keyRate }: { readonly keyRate: KeyRateView | null }) {
   const t = useTranslations('calculator')
   const format = useFormatter()
+  if (keyRate === null) {
+    return (
+      <p className={`${styles.keyRate} ${styles.keyRateStale}`}>
+        <Icon glyph={BankIcon} />
+        <span>{t('keyRate.missingNote')}</span>
+      </p>
+    )
+  }
   const day = (iso: string) => format.dateTime(new Date(iso), { dateStyle: 'long' })
   const rate = t('units.percent', { value: basisPointsToPercent(keyRate.rate) })
   return (

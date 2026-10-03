@@ -95,8 +95,10 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
     keyRate === null
       ? { rate: 0, effectiveFrom: new Date(0) }
       : { rate: keyRate.rate, effectiveFrom: new Date(keyRate.effectiveFrom) }
+  /** A mortgage is priced off the key rate; without one only interest-free instalments are. */
+  const mortgageUnavailable = keyRate === null && kind === 'mortgage'
   const plan: PaymentPlan | null =
-    priceValid && (keyRate !== null || kind === 'installment')
+    priceValid && !mortgageUnavailable
       ? PLANNERS[kind](
           {
             price: Money.ofRubles(price),
@@ -202,7 +204,7 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
           {t('result.title')}
         </h2>
         {plan === null ? (
-          keyRate === null && kind === 'mortgage' ? (
+          mortgageUnavailable ? (
             <StateMessage
               glyph={WarningCircleIcon}
               title={t('keyRate.missing')}
@@ -253,7 +255,7 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
             />
           </>
         )}
-        {keyRate === null ? null : <KeyRateNote keyRate={keyRate} />}
+        {mortgageUnavailable ? null : <KeyRateNote keyRate={keyRate} />}
         <p className={styles.note}>{t('note')}</p>
         <div className={styles.actions}>
           <ButtonLink

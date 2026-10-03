@@ -45,7 +45,8 @@
     "stale": "the Bank of Russia site is not responding — showing the rate as of {date}",
     "updated": "updated {date}",
     "missing": "The Bank of Russia rate is not available yet",
-    "missingHint": "The source did not answer and no value has been stored yet. Interest-free instalments are calculated without it."
+    "missingHint": "The source did not answer and no value has been stored yet. Interest-free instalments are calculated without it.",
+    "missingNote": "The Bank of Russia rate is not available yet — only interest-free instalments are calculated"
   },
   "note": "A preliminary estimate: the bank and the factory confirm the terms when you apply.",
   "actions": {
