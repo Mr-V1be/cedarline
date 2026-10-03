@@ -59,7 +59,7 @@ describe('choices', () => {
     )
     const input = houseInputOf(model, configuration)
     expect(input.design.width).toBe(7200)
-    expect(input.design.openings.map((opening) => opening.offset)).toEqual([4680, 1320])
+    expect(input.design.openings.map((opening) => opening.offset)).toEqual([4680, 3210, 1320])
     expect(input.options.terraceDepth).toBeNull()
     expect(input.options.roofPitch).toBeUndefined()
   })

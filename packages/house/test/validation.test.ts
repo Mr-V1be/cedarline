@@ -33,13 +33,13 @@ describe('house invariants', () => {
   })
 
   it('rejects openings that leave their wall or overlap', () => {
-    const [window] = cabin.openings
-    if (window === undefined) throw new Error('fixture')
-    const outside = { ...cabin, openings: [{ ...window, offset: 5500 }] }
+    const [window, door] = cabin.openings
+    if (window === undefined || door === undefined) throw new Error('fixture')
+    const outside = { ...cabin, openings: [{ ...window, offset: 5500 }, door] }
     expect(code(() => measure(outside))).toBe('OPENING_OUT_OF_WALL')
-    const tooTall = { ...cabin, openings: [{ ...window, height: 2500 }] }
+    const tooTall = { ...cabin, openings: [{ ...window, height: 2500 }, door] }
     expect(code(() => measure(tooTall))).toBe('OPENING_OUT_OF_WALL')
-    const overlap = { ...cabin, openings: [window, { ...window, id: 'w2', offset: 1500 }] }
+    const overlap = { ...cabin, openings: [window, { ...window, id: 'w2', offset: 1500 }, door] }
     expect(code(() => measure(overlap))).toBe('OPENINGS_OVERLAP')
   })
 
@@ -65,11 +65,31 @@ describe('house invariants', () => {
     expect(code(() => measure(upstairs))).toBe('UNKNOWN_LEVEL')
   })
 
-  it('rejects a terrace longer than its wall', () => {
-    const terrace = {
+  it('rejects a terrace longer than its wall or shorter than its door', () => {
+    const terrace = (length: number) => ({
       ...cabin,
-      terrace: { side: 'front' as const, offset: 2000, length: 5000, depth: 2000 },
+      terrace: { entrance: 'd1', length, depth: 2000, reach: 'left' as const },
+    })
+    expect(code(() => measure(terrace(6500)))).toBe('TERRACE_OUT_OF_WALL')
+    expect(code(() => measure(terrace(800)))).toBe('TERRACE_OUT_OF_WALL')
+  })
+
+  it('rejects a terrace that serves no exterior door', () => {
+    const atWindow = {
+      ...cabin,
+      terrace: { entrance: 'w1', length: 3000, depth: 2000, reach: 'both' as const },
     }
-    expect(code(() => measure(terrace))).toBe('TERRACE_OUT_OF_WALL')
+    expect(code(() => measure(atWindow))).toBe('TERRACE_ENTRANCE')
+  })
+
+  it('rejects an exterior door above the ground floor', () => {
+    const balcony = {
+      ...cabin,
+      attic: true,
+      openings: cabin.openings.map((opening) =>
+        opening.id === 'd1' ? { ...opening, level: 1 } : opening,
+      ),
+    }
+    expect(code(() => measure(balcony))).toBe('ENTRANCE_INVALID')
   })
 })

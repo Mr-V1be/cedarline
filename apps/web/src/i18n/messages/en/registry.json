@@ -19,6 +19,11 @@
     "back": "Rear",
     "left": "Left"
   },
+  "terraceReach": {
+    "left": "Left of the door",
+    "right": "Right of the door",
+    "both": "Both ways from the door"
+  },
   "openingType": {
     "window": "Window",
     "door": "Door"
@@ -74,6 +79,8 @@
     "exteriorDoorCount": "Exterior doors",
     "interiorDoorCount": "Interior doors",
     "terraceArea": "Terrace area",
+    "porchArea": "Porch area",
+    "stepCount": "Entrance steps",
     "pileCount": "Pile count",
     "perimeter": "House perimeter",
     "wetZoneCount": "Wet rooms",

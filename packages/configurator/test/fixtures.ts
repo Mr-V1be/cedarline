@@ -21,7 +21,19 @@ const window = (id: string, offset: number, level = 0) => ({
   sill: 900,
 })
 
-/** 6 × 6 m single-storey house with two front windows and a terrace. */
+const entrance = {
+  id: 'd1',
+  type: 'door' as const,
+  role: 'standard' as const,
+  side: 'front' as const,
+  level: 0,
+  offset: 2500,
+  width: 900,
+  height: 2100,
+  sill: 0,
+}
+
+/** 6 × 6 m single-storey house with two front windows and a door onto the terrace. */
 const pine: HouseDesign = {
   width: 6000,
   depth: 6000,
@@ -33,9 +45,9 @@ const pine: HouseDesign = {
     { id: 'living', kind: 'living', level: 0, x: 0, y: 0, width: 6000, depth: 3500 },
     { id: 'bedroom', kind: 'bedroom', level: 0, x: 0, y: 3500, width: 6000, depth: 2500 },
   ],
-  openings: [window('w1', 1000), window('w2', 3800)],
+  openings: [window('w1', 1000), entrance, window('w2', 3800)],
   doors: [],
-  terrace: { side: 'front', offset: 0, length: 6000, depth: 2000 },
+  terrace: { entrance: 'd1', length: 6000, depth: 2000, reach: 'both' },
   chimney: null,
 }
 

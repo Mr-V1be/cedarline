@@ -1,12 +1,20 @@
 import type { DoorOrientation, OpeningType, WallSide } from '../spec/design'
 import type { RoomKindTraits } from '../spec/room-traits'
+import type { LandingKind } from '../frame/types'
 import type { NetRect } from '../takeoff/rooms'
+import type { Rect } from '../units'
 
-export interface PlanRect {
-  readonly x0: number
-  readonly y0: number
-  readonly x1: number
-  readonly y1: number
+export type PlanRect = Rect
+
+/** Terrace or porch on the ground-floor plan, with its flight of steps. */
+export interface PlanDeck {
+  readonly kind: LandingKind
+  readonly rect: PlanRect
+  /** Flight of steps; null when the deck is low enough to need none. */
+  readonly stair: PlanRect | null
+  readonly steps: number
+  /** Which way the steps lead away from the house. */
+  readonly side: WallSide
 }
 
 export interface PlanRoom {
@@ -58,7 +66,8 @@ export interface FloorPlan {
   readonly rooms: readonly PlanRoom[]
   readonly openings: readonly PlanOpening[]
   readonly doors: readonly PlanDoor[]
-  readonly terrace: PlanRect | null
+  /** Terrace and porches; only the ground floor has them. */
+  readonly decks: readonly PlanDeck[]
   readonly chimney: { readonly x: number; readonly y: number; readonly diameter: number } | null
   readonly dimensions: readonly DimensionChain[]
   readonly totalArea: number

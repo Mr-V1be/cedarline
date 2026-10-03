@@ -19,6 +19,11 @@
     "back": "Задний фасад",
     "left": "Левый фасад"
   },
+  "terraceReach": {
+    "left": "Влево от двери",
+    "right": "Вправо от двери",
+    "both": "В обе стороны от двери"
+  },
   "openingType": {
     "window": "Окно",
     "door": "Дверь"
@@ -74,6 +79,8 @@
     "exteriorDoorCount": "Наружные двери",
     "interiorDoorCount": "Межкомнатные двери",
     "terraceArea": "Площадь террасы",
+    "porchArea": "Площадь крылец",
+    "stepCount": "Ступени входов",
     "pileCount": "Количество свай",
     "perimeter": "Периметр дома",
     "wetZoneCount": "Мокрые зоны",

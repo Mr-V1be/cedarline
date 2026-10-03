@@ -1,7 +1,7 @@
 import type { HouseFrame } from '../frame/types'
 import { toMetres, type Vec3 } from '../units'
 import { approachOf, siteAnchorsOf, type Approach, type SiteAnchors } from './anchors'
-import { buildChimney, buildFloors, buildPlinth, buildTerrace } from './details'
+import { buildChimney, buildFloors, buildLandings, buildPlinth } from './details'
 import { MeshBuilder, type MeshPart } from './mesh-builder'
 import { buildOpenings } from './openings'
 import { buildRoof } from './roof'
@@ -52,7 +52,7 @@ export function buildHouseModel(frame: HouseFrame): HouseModel {
   buildOpenings(builder, mapping, frame)
   buildFloors(builder, mapping, frame)
   buildRoof(builder, mapping, frame.roof)
-  buildTerrace(builder, mapping, frame)
+  buildLandings(builder, mapping, frame)
   buildChimney(builder, mapping, frame)
   const parts = builder.build()
   return {

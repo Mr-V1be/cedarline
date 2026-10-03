@@ -67,20 +67,19 @@ describe('floor plans', () => {
 })
 
 describe('approach', () => {
-  it('starts at the foot of the terrace steps when the terrace covers the entrance', () => {
+  // Door centre 4.25 m along the front (world x = 1.25 m); three 320 mm treads.
+  it('starts at the foot of the terrace steps in front of the door', () => {
     const { approach } = houseModel(house)
-    expect(approach).not.toBeNull()
-    // Terrace centre along the front wall (x = 3 m from the left corner) and in front of it.
-    expect(approach?.start[0]).toBeCloseTo(0, 6)
-    expect(approach?.start[2]).toBeGreaterThan(3 + 2)
+    expect(approach?.start[0]).toBeCloseTo(1.25, 6)
+    expect(approach?.start[2]).toBeCloseTo(3 + 2 + 0.96, 6)
     expect(approach?.direction).toEqual([0, 0, 1])
   })
 
-  it('starts at the door without a terrace', () => {
+  it('starts at the foot of the porch steps without a terrace', () => {
     const bare = measureHouse({ design: cabin, options: { ...options, terraceDepth: null }, rooms })
     const { approach } = houseModel(bare)
-    expect(approach?.start[0]).toBeCloseTo(4.25 - 3, 6)
-    expect(approach?.start[2]).toBeCloseTo(3, 6)
+    expect(approach?.start[0]).toBeCloseTo(1.25, 6)
+    expect(approach?.start[2]).toBeCloseTo(3 + 1.5 + 0.96, 6)
   })
 })
 
@@ -88,15 +87,22 @@ describe('site anchors', () => {
   it('report the wall footprint and the ground under the terrace and its steps', () => {
     const { site } = houseModel(house)
     expect(site.footprint).toEqual({ min: [-3, -3], max: [3, 3] })
-    // Cabin terrace: front side, 0.5–5.5 m along the wall, 2 m deep plus its steps.
-    expect(site.terrace?.min[0]).toBeCloseTo(-2.5, 6)
-    expect(site.terrace?.max[0]).toBeCloseTo(2.5, 6)
-    expect(site.terrace?.min[1]).toBeCloseTo(3, 6)
-    expect(site.terrace?.max[1]).toBeGreaterThan(3 + 2)
+    // Terrace 0.1–5.1 m along the front, 2 m deep; steps 1.6 m wide centred on the door.
+    const [terrace] = site.landings
+    expect(terrace?.deck.min[0]).toBeCloseTo(-2.9, 6)
+    expect(terrace?.deck.max[0]).toBeCloseTo(2.1, 6)
+    expect(terrace?.deck.max[1]).toBeCloseTo(5, 6)
+    expect(terrace?.stair.min[0]).toBeCloseTo(0.45, 6)
+    expect(terrace?.stair.max[0]).toBeCloseTo(2.05, 6)
+    expect(terrace?.stair.max[1]).toBeCloseTo(5.96, 6)
   })
 
-  it('have no terrace when it is removed', () => {
+  it('keep a porch at the door when the terrace is removed', () => {
     const bare = measureHouse({ design: cabin, options: { ...options, terraceDepth: null }, rooms })
-    expect(houseModel(bare).site.terrace).toBeNull()
+    const [porch, ...rest] = houseModel(bare).site.landings
+    expect(rest).toEqual([])
+    expect(porch?.deck.min[0]).toBeCloseTo(0.4, 6)
+    expect(porch?.deck.max[0]).toBeCloseTo(2.1, 6)
+    expect(porch?.deck.max[1]).toBeCloseTo(4.5, 6)
   })
 })

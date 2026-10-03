@@ -1,7 +1,7 @@
-import type { DimensionChain, FloorPlan, PlanDoor, PlanOpening } from '@kedrovnik/house'
+import type { DimensionChain, FloorPlan, PlanDeck, PlanDoor, PlanOpening } from '@kedrovnik/house'
 
 import styles from './floor-plan.module.css'
-import { drawingBounds, partitions, treads } from './plan-geometry'
+import { drawingBounds, entranceTreads, outdoorExtent, partitions, treads } from './plan-geometry'
 
 /** Drawing constants in millimetres of the real house. */
 const MARGINS = { near: 500, far: 1900 } as const
@@ -71,9 +71,8 @@ function Door({ door, thickness }: { readonly door: PlanDoor; readonly thickness
 
 function Dimension({ chain, plan }: { readonly chain: DimensionChain; readonly plan: FloorPlan }) {
   const bottom = chain.side === 'bottom'
-  const base = bottom
-    ? Math.max(plan.depth, plan.terrace?.y1 ?? 0)
-    : Math.max(plan.width, plan.terrace?.x1 ?? 0)
+  const extent = outdoorExtent(plan)
+  const base = bottom ? extent.y1 : extent.x1
   const line = base + DIMENSION_OFFSET + chain.tier * DIMENSION_STEP
   const point = (along: number, across: number) =>
     bottom ? { x: along, y: across } : { x: across, y: along }
@@ -125,6 +124,32 @@ function Dimension({ chain, plan }: { readonly chain: DimensionChain; readonly p
   )
 }
 
+/** Terrace or porch: a planked deck with its flight of steps. */
+function Deck({ deck, pattern }: { readonly deck: PlanDeck; readonly pattern: string }) {
+  const { rect, stair } = deck
+  const box = { x: rect.x0, y: rect.y0, width: rect.x1 - rect.x0, height: rect.y1 - rect.y0 }
+  return (
+    <g>
+      <rect {...box} className={styles.terrace} />
+      <rect {...box} fill={`url(#${pattern})`} />
+      {stair === null ? null : (
+        <g>
+          <rect
+            x={stair.x0}
+            y={stair.y0}
+            width={stair.x1 - stair.x0}
+            height={stair.y1 - stair.y0}
+            className={styles.terrace}
+          />
+          {entranceTreads(deck).map((tread) => (
+            <line key={`${tread.x1}-${tread.y1}`} {...tread} className={styles.tread} />
+          ))}
+        </g>
+      )}
+    </g>
+  )
+}
+
 interface FloorPlanDrawingProps {
   readonly plan: FloorPlan
   readonly label: string
@@ -148,24 +173,13 @@ export function FloorPlanDrawing({ plan, label }: FloorPlanDrawingProps) {
           <line x1="0" y1="0" x2="140" y2="0" className={styles.deckLine} />
         </pattern>
       </defs>
-      {plan.terrace === null ? null : (
-        <g>
-          <rect
-            x={plan.terrace.x0}
-            y={plan.terrace.y0}
-            width={plan.terrace.x1 - plan.terrace.x0}
-            height={plan.terrace.y1 - plan.terrace.y0}
-            className={styles.terrace}
-          />
-          <rect
-            x={plan.terrace.x0}
-            y={plan.terrace.y0}
-            width={plan.terrace.x1 - plan.terrace.x0}
-            height={plan.terrace.y1 - plan.terrace.y0}
-            fill={`url(#deck-${plan.level})`}
-          />
-        </g>
-      )}
+      {plan.decks.map((deck) => (
+        <Deck
+          key={`${deck.kind}-${deck.rect.x0}-${deck.rect.y0}`}
+          deck={deck}
+          pattern={`deck-${plan.level}`}
+        />
+      ))}
       {plan.rooms.map((room) => (
         <rect
           key={room.id}

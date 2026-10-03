@@ -28,8 +28,20 @@ export interface ConstructionStandards {
   readonly panoramicSill: number
   /** Gap between the top of panoramic glazing and the ceiling. */
   readonly panoramicHeadClearance: number
-  /** The deck sits this much below the finished ground floor. */
+  /**
+   * Drip step under the entrance threshold: decks and porches are flush with the finished
+   * ground floor apart from it.
+   */
   readonly deckDrop: number
+  /** Porch (крыльцо) of a door without a terrace: depth of its landing. */
+  readonly porchDepth: number
+  /** Landing on each side of a door leaf, on a porch and at the door end of a terrace. */
+  readonly landingSideClearance: number
+  /** Entrance steps: highest riser, tread run and flight width limits. */
+  readonly stairMaxRiser: number
+  readonly stairTread: number
+  readonly stairMinWidth: number
+  readonly stairMaxWidth: number
   readonly pileSpacing: number
   readonly chimneyClearance: number
   readonly chimneyDiameter: number
@@ -53,7 +65,13 @@ export const DEFAULT_STANDARDS: ConstructionStandards = {
   maxPaneWidth: 1400,
   panoramicSill: 100,
   panoramicHeadClearance: 250,
-  deckDrop: 150,
+  deckDrop: 20,
+  porchDepth: 1500,
+  landingSideClearance: 400,
+  stairMaxRiser: 180,
+  stairTread: 320,
+  stairMinWidth: 900,
+  stairMaxWidth: 1600,
   pileSpacing: 2000,
   chimneyClearance: 700,
   chimneyDiameter: 220,

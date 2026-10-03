@@ -28,6 +28,8 @@ const HOUSE_ERROR_PATHS: Partial<Record<HouseError['code'], string>> = {
   OPENING_OUT_OF_WALL: 'design.openings',
   OPENINGS_OVERLAP: 'design.openings',
   TERRACE_OUT_OF_WALL: 'design.terrace',
+  TERRACE_ENTRANCE: 'design.terrace',
+  ENTRANCE_INVALID: 'design.openings',
   UNKNOWN_OPTION: 'defaults',
 }
 

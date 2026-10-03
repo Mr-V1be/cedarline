@@ -49,8 +49,8 @@ const overlaps = (a: GroundRect, b: GroundRect) =>
   a.min[0] < b.max[0] && b.min[0] < a.max[0] && a.min[1] < b.max[1] && b.min[1] < a.max[1]
 
 /** Parts of a strip outside an obstacle, cut along the strip's long axis. */
-function cut(strip: GroundRect, obstacle: GroundRect | null): GroundRect[] {
-  if (obstacle === null || !overlaps(strip, obstacle)) return [strip]
+function cut(strip: GroundRect, obstacle: GroundRect): GroundRect[] {
+  if (!overlaps(strip, obstacle)) return [strip]
   const alongX = strip.max[0] - strip.min[0] >= strip.max[1] - strip.min[1]
   const axis = alongX ? 0 : 1
   const pieces: GroundRect[] = []
@@ -69,7 +69,7 @@ function cut(strip: GroundRect, obstacle: GroundRect | null): GroundRect[] {
 
 /**
  * The blind area (отмостка): a paved strip around the walls that sheds rain away from the
- * plinth, left out under the terrace, which has its own deck.
+ * plinth, left out under the terrace and porches, which have their own decks and steps.
  */
 export function blindAreaGeometry(
   site: SiteAnchors,
@@ -83,7 +83,11 @@ export function blindAreaGeometry(
     { min: [min[0] - width, min[1]], max: [min[0], max[1]] },
     { min: [max[0], min[1]], max: [max[0] + width, max[1]] },
   ]
-  const pieces = strips.flatMap((strip) => cut(strip, site.terrace))
+  const obstacles = site.landings.flatMap((landing) => [landing.deck, landing.stair])
+  const pieces = obstacles.reduce(
+    (remaining, obstacle) => remaining.flatMap((strip) => cut(strip, obstacle)),
+    strips,
+  )
   if (pieces.length === 0) return null
   const boxes = pieces.map((piece) => metricBox(piece, -height, height))
   const merged = mergeGeometries(boxes)

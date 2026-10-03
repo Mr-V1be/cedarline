@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { QUANTITY_DRIVER_KEYS, measureHouse } from '../src'
+import { QUANTITY_DRIVER_KEYS, measureHouse, terraceOf } from '../src'
 import { cabin, options, rooms } from './fixtures'
 
 describe('takeoff of a 6 × 6 m gable cabin', () => {
@@ -43,6 +43,9 @@ describe('takeoff of a 6 × 6 m gable cabin', () => {
     expect(takeoff.windowArea).toBeCloseTo(1.68, 2)
     expect(takeoff.panoramicWindowArea).toBe(0)
     expect(takeoff.terraceArea).toBe(10)
+    expect(takeoff.porchArea).toBe(0)
+    // 580 mm from the ground to the deck: three treads and four risers of 145 mm.
+    expect(takeoff.stepCount).toBe(3)
     expect(takeoff.pileCount).toBe(16 + 4 * 2)
     expect(takeoff.perimeter).toBe(24)
   })
@@ -75,6 +78,10 @@ describe('options change the measured house', () => {
     expect(deeper.takeoff.terraceArea).toBe(15)
     const none = measureHouse({ design: cabin, options: { ...options, terraceDepth: null }, rooms })
     expect(none.takeoff.terraceArea).toBe(0)
-    expect(none.frame.terrace).toBeNull()
+    expect(terraceOf(none.frame)).toBeNull()
+    // The door keeps a porch: 0.9 m leaf plus 0.4 m each side, 1.5 m deep, with its steps.
+    expect(none.takeoff.porchArea).toBe(2.55)
+    expect(none.takeoff.stepCount).toBe(3)
+    expect(none.takeoff.pileCount).toBe(16 + 2 * 2)
   })
 })

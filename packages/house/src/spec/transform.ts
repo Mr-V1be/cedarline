@@ -1,4 +1,4 @@
-import type { HouseDesign, OpeningDesign, WallSide } from './design'
+import type { HouseDesign, OpeningDesign, TerraceDesign, TerraceReach, WallSide } from './design'
 import { wallLength } from './house-spec'
 
 /** Lengths are rounded to the factory module after scaling. */
@@ -8,10 +8,24 @@ const snap = (value: number) => Math.round(value / MODULE) * MODULE
 
 const isAlongWidth = (side: WallSide) => side === 'front' || side === 'back'
 
+/** The terrace keeps its share of the entrance wall, within the wall's new length. */
+function resizeTerrace(
+  design: HouseDesign,
+  terrace: TerraceDesign,
+  footprint: Pick<HouseDesign, 'width' | 'depth'>,
+): TerraceDesign {
+  const side = design.openings.find((opening) => opening.id === terrace.entrance)?.side ?? 'front'
+  const ratio = wallLength(footprint, side) / wallLength(design, side)
+  return {
+    ...terrace,
+    length: Math.min(snap(terrace.length * ratio), wallLength(footprint, side)),
+  }
+}
+
 /**
  * Resizes a design to new outer dimensions. Rooms keep their proportions on the axis grid;
  * windows and doors keep their size and stay centred where they were along their wall; the
- * terrace and the chimney follow the walls they belong to.
+ * terrace follows its entrance and the chimney its place on the plan.
  */
 export function resizeDesign(design: HouseDesign, width: number, depth: number): HouseDesign {
   const sx = width / design.width
@@ -39,13 +53,7 @@ export function resizeDesign(design: HouseDesign, width: number, depth: number):
     openings: design.openings.map(moveOpening),
     doors: design.doors.map((door) => ({ ...door, x: snap(door.x * sx), y: snap(door.y * sy) })),
     terrace:
-      design.terrace === null
-        ? null
-        : {
-            ...design.terrace,
-            offset: snap(design.terrace.offset * ratio(design.terrace.side)),
-            length: snap(design.terrace.length * ratio(design.terrace.side)),
-          },
+      design.terrace === null ? null : resizeTerrace(design, design.terrace, { width, depth }),
     chimney:
       design.chimney === null
         ? null
@@ -60,6 +68,12 @@ const MIRRORED_SIDE: Readonly<Record<WallSide, WallSide>> = {
   right: 'left',
 }
 
+const MIRRORED_REACH: Readonly<Record<TerraceReach, TerraceReach>> = {
+  left: 'right',
+  right: 'left',
+  both: 'both',
+}
+
 /** Mirror image across the vertical axis of the front facade (зеркальная планировка). */
 export function mirrorDesign(design: HouseDesign): HouseDesign {
   return {
@@ -72,17 +86,11 @@ export function mirrorDesign(design: HouseDesign): HouseDesign {
       return { ...opening, side, offset: wallLength(design, side) - opening.offset - opening.width }
     }),
     doors: design.doors.map((door) => ({ ...door, x: design.width - door.x })),
+    // The terrace follows its door, which has moved; only the way it extends swaps.
     terrace:
       design.terrace === null
         ? null
-        : {
-            ...design.terrace,
-            side: MIRRORED_SIDE[design.terrace.side],
-            offset:
-              wallLength(design, design.terrace.side) -
-              design.terrace.offset -
-              design.terrace.length,
-          },
+        : { ...design.terrace, reach: MIRRORED_REACH[design.terrace.reach] },
     chimney:
       design.chimney === null ? null : { x: design.width - design.chimney.x, y: design.chimney.y },
   }

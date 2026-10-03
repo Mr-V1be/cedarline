@@ -2,7 +2,7 @@ import type { RoofKind } from '../roof/kinds'
 import type { RoofProfile } from '../roof/profile'
 import type { RidgeAxis, WallSide } from '../spec/design'
 import type { HouseSpec, ResolvedOpening } from '../spec/house-spec'
-import type { Vec2 } from '../units'
+import type { Rect, Vec2 } from '../units'
 import type { WallPlacement } from './placement'
 
 export interface LevelFrame {
@@ -45,17 +45,38 @@ export interface RoofFrame {
   readonly thickness: number
 }
 
-export interface TerraceFrame {
+/** Flight of steps from a landing's outer edge down to the ground. */
+export interface StairFrame {
+  /** Span along the wall's outer face, as for openings. */
+  readonly u0: number
+  readonly u1: number
+  /** Treads below the deck; the flight has one riser more. */
+  readonly steps: number
+  readonly riser: number
+  readonly tread: number
+  /** Distance from the wall face to the foot of the flight, where the path begins. */
+  readonly foot: number
+  /** Plan rectangle of the flight; empty along the depth when the deck needs no steps. */
+  readonly rect: Rect
+}
+
+export const LANDING_KINDS = ['terrace', 'porch'] as const
+export type LandingKind = (typeof LANDING_KINDS)[number]
+
+/** Deck an exterior door opens onto: the terrace or a porch (крыльцо), with its steps. */
+export interface LandingFrame {
+  readonly kind: LandingKind
   readonly side: WallSide
-  readonly offset: number
-  readonly length: number
+  /** Span along the wall's outer face, as for openings. */
+  readonly u0: number
+  readonly u1: number
   readonly depth: number
-  /** Plan rectangle of the deck. */
-  readonly x0: number
-  readonly y0: number
-  readonly x1: number
-  readonly y1: number
   readonly deckTop: number
+  /** Plan rectangle of the deck. */
+  readonly rect: Rect
+  /** Ids of the exterior doors that open onto the deck; the first one leads its steps. */
+  readonly doors: readonly string[]
+  readonly stair: StairFrame
 }
 
 export interface ChimneyFrame {
@@ -72,6 +93,10 @@ export interface HouseFrame {
   readonly levels: readonly LevelFrame[]
   readonly walls: readonly WallFrame[]
   readonly roof: RoofFrame
-  readonly terrace: TerraceFrame | null
+  /** Terrace and porches, one landing per entrance or group of entrances. */
+  readonly landings: readonly LandingFrame[]
   readonly chimney: ChimneyFrame | null
 }
+
+export const terraceOf = (frame: Pick<HouseFrame, 'landings'>): LandingFrame | null =>
+  frame.landings.find((landing) => landing.kind === 'terrace') ?? null

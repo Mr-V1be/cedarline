@@ -58,10 +58,10 @@ export function toHouseDesign(
     terrace:
       terrace?.enabled === true
         ? {
-            side: terrace.side ?? 'front',
-            offset: terrace.offset ?? 0,
+            entrance: terrace.entrance ?? '',
             length: terrace.length ?? 0,
             depth: terrace.depth ?? 0,
+            reach: terrace.reach ?? 'left',
           }
         : null,
     chimney: chimney?.enabled === true ? { x: chimney.x ?? 0, y: chimney.y ?? 0 } : null,

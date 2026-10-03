@@ -1,5 +1,5 @@
 export { HouseError, type HouseErrorCode } from './errors'
-export { MM_PER_METRE, toMetres, roundTo, type Vec2, type Vec3 } from './units'
+export { MM_PER_METRE, toMetres, roundTo, type Rect, type Vec2, type Vec3 } from './units'
 
 export {
   WALL_SIDES,
@@ -18,6 +18,8 @@ export {
   type InteriorDoorDesign,
   type TerraceDesign,
   type ChimneyDesign,
+  TERRACE_REACHES,
+  type TerraceReach,
 } from './spec/design'
 export {
   FACADE_FINISHES,
@@ -45,19 +47,31 @@ export {
 } from './roof/kinds'
 
 export { deriveFrame } from './frame/derive'
-export type {
-  HouseFrame,
-  WallFrame,
-  RoofFrame,
-  LevelFrame,
-  OpeningFrame,
-  TerraceFrame,
+export {
+  LANDING_KINDS,
+  terraceOf,
+  type HouseFrame,
+  type WallFrame,
+  type RoofFrame,
+  type LevelFrame,
+  type OpeningFrame,
+  type LandingFrame,
+  type LandingKind,
+  type StairFrame,
 } from './frame/types'
+export {
+  ENTRANCE_RULES,
+  MAX_THRESHOLD_STEP,
+  entranceViolations,
+  type EntranceRule,
+  type EntranceViolation,
+} from './frame/entrance-rules'
+export { entrancesOf, type Entrance } from './frame/landings'
 
 export { MATERIAL_SLOTS, type MaterialSlot } from './geometry/slots'
 export type { MeshPart } from './geometry/mesh-builder'
 export { buildHouseModel, type HouseModel, type Bounds } from './geometry/model'
-export type { Approach, GroundRect, SiteAnchors } from './geometry/anchors'
+export type { Approach, GroundLanding, GroundRect, SiteAnchors } from './geometry/anchors'
 
 export {
   QUANTITY_DRIVERS,
@@ -79,6 +93,7 @@ export type {
   PlanOpening,
   PlanDoor,
   PlanRect,
+  PlanDeck,
   DimensionChain,
   DimensionSide,
 } from './plan/types'

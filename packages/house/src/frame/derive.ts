@@ -9,9 +9,10 @@ import type {
   LevelFrame,
   OpeningFrame,
   RoofFrame,
-  TerraceFrame,
   WallFrame,
 } from './types'
+import { assertEntrances } from './entrance-rules'
+import { deriveLandings } from './landings'
 import { validateOpenings } from './validate-openings'
 
 function storeyLevels(spec: HouseSpec): LevelFrame[] {
@@ -68,25 +69,6 @@ function wallOutline(
   return { ...placement, polygon, gable }
 }
 
-function terraceFrame(spec: HouseSpec): TerraceFrame | null {
-  if (spec.terrace === null) return null
-  const { side, offset, length, depth } = spec.terrace
-  const placement = wallPlacement(spec, side)
-  const [ax, ay] = planPointOnWall(placement, offset, 0)
-  const [bx, by] = planPointOnWall(placement, offset + length, depth)
-  return {
-    side,
-    offset,
-    length,
-    depth,
-    x0: Math.min(ax, bx),
-    y0: Math.min(ay, by),
-    x1: Math.max(ax, bx),
-    y1: Math.max(ay, by),
-    deckTop: spec.standards.plinthHeight - spec.standards.deckDrop,
-  }
-}
-
 function chimneyFrame(spec: HouseSpec, roof: RoofFrame): ChimneyFrame | null {
   if (spec.chimney === null) return null
   const { x, y } = spec.chimney
@@ -138,12 +120,12 @@ export function deriveFrame(spec: HouseSpec): HouseFrame {
   })
   validateOpenings(walls, levels)
 
-  return {
+  return assertEntrances({
     spec,
     levels,
     walls,
     roof,
-    terrace: terraceFrame(spec),
+    landings: deriveLandings(spec, walls, levels[0]?.floor ?? spec.standards.plinthHeight),
     chimney: chimneyFrame(spec, roof),
-  }
+  })
 }

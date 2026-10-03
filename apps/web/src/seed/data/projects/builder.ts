@@ -3,6 +3,7 @@ import type {
   FacadeFinish,
   RidgeAxis,
   RoofKindKey,
+  TerraceReach,
   WallSide,
   WindowRole,
   WindowStyle,
@@ -57,11 +58,12 @@ export interface ProjectSeed {
     readonly rooms: readonly RoomSeed[]
     readonly openings: readonly OpeningSeed[]
     readonly doors: readonly DoorSeed[]
+    /** Laid at the entrance door, towards `reach` (seen from outside). */
     readonly terrace: {
-      readonly side: WallSide
-      readonly offset: number
+      readonly entrance: string
       readonly length: number
       readonly depth: number
+      readonly reach: TerraceReach
     } | null
     readonly chimney: { readonly x: number; readonly y: number } | null
   }

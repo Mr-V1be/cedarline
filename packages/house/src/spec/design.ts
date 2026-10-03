@@ -60,12 +60,21 @@ export interface InteriorDoorDesign {
   readonly orientation: DoorOrientation
 }
 
-/** Open deck along one wall; depth is the default that the configurator may change. */
+/** Which way a terrace extends from the door it serves, seen from outside. */
+export const TERRACE_REACHES = ['left', 'right', 'both'] as const
+export type TerraceReach = (typeof TERRACE_REACHES)[number]
+
+/**
+ * Open deck at an entrance. Its place is derived from the door it serves: the deck runs along
+ * the door's wall from the door towards `reach`, so the door always opens onto it. Depth is the
+ * default that the configurator may change.
+ */
 export interface TerraceDesign {
-  readonly side: WallSide
-  readonly offset: number
+  /** Id of the exterior door the terrace serves. */
+  readonly entrance: string
   readonly length: number
   readonly depth: number
+  readonly reach: TerraceReach
 }
 
 export interface ChimneyDesign {

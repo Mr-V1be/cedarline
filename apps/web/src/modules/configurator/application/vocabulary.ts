@@ -46,7 +46,13 @@ export interface Vocabulary {
 }
 
 const MM_PER_M = 1000
-const GEOMETRY_KEYS = new Set(['OPENING_OUT_OF_WALL', 'OPENINGS_OVERLAP', 'TERRACE_OUT_OF_WALL'])
+const GEOMETRY_KEYS = new Set([
+  'OPENING_OUT_OF_WALL',
+  'OPENINGS_OVERLAP',
+  'TERRACE_OUT_OF_WALL',
+  'TERRACE_ENTRANCE',
+  'ENTRANCE_INVALID',
+])
 
 /** Groups listed in a configuration summary, in reading order. */
 const SUMMARY_GROUPS: readonly OptionGroup[] = [

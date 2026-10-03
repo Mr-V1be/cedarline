@@ -1,5 +1,5 @@
 import { HouseError } from '../errors'
-import type { HouseDesign, RoomDesign } from './design'
+import { TERRACE_REACHES, type HouseDesign, type RoomDesign, type TerraceDesign } from './design'
 import { wallLength } from './house-spec'
 
 /** Building-code sanity bound: the factory produces houses of up to three storeys. */
@@ -33,6 +33,26 @@ const roomsOverlap = (a: RoomDesign, b: RoomDesign): boolean =>
   b.x < a.x + a.width &&
   a.y < b.y + b.depth &&
   b.y < a.y + a.depth
+
+function validateTerrace(design: HouseDesign, terrace: TerraceDesign) {
+  assertPositiveLength(terrace.length, 'terrace.length')
+  assertPositiveLength(terrace.depth, 'terrace.depth')
+  const door = design.openings.find((opening) => opening.id === terrace.entrance)
+  if (door?.type !== 'door' || !TERRACE_REACHES.includes(terrace.reach)) {
+    throw new HouseError(
+      'TERRACE_ENTRANCE',
+      `The terrace must serve an exterior door; "${terrace.entrance}" is not one`,
+      { entrance: terrace.entrance },
+    )
+  }
+  if (terrace.length < door.width || terrace.length > wallLength(design, door.side)) {
+    throw new HouseError(
+      'TERRACE_OUT_OF_WALL',
+      'The terrace must be at least as long as its door and fit along the wall',
+      { side: door.side },
+    )
+  }
+}
 
 /** Invariants of an authored design that do not depend on the selected options. */
 export function validateDesign(design: HouseDesign): HouseDesign {
@@ -91,18 +111,19 @@ export function validateDesign(design: HouseDesign): HouseDesign {
         id: opening.id,
       })
     }
-  }
-
-  if (design.terrace !== null) {
-    const { terrace } = design
-    assertPositiveLength(terrace.length, 'terrace.length')
-    assertPositiveLength(terrace.depth, 'terrace.depth')
-    if (terrace.offset < 0 || terrace.offset + terrace.length > wallLength(design, terrace.side)) {
-      throw new HouseError('TERRACE_OUT_OF_WALL', 'Terrace does not fit along its wall', {
-        side: terrace.side,
-      })
+    // An exterior door needs a porch or a terrace to open onto, and those stand on the ground.
+    if (opening.type === 'door' && opening.level !== 0) {
+      throw new HouseError(
+        'ENTRANCE_INVALID',
+        `Exterior door ${opening.id} is above the ground floor`,
+        {
+          id: opening.id,
+        },
+      )
     }
   }
+
+  if (design.terrace !== null) validateTerrace(design, design.terrace)
 
   if (design.chimney !== null) {
     const { x, y } = design.chimney

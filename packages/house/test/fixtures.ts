@@ -43,7 +43,8 @@ export const cabin: HouseDesign = {
     },
   ],
   doors: [{ id: 'id1', level: 0, x: 3000, y: 3500, width: 800, orientation: 'horizontal' }],
-  terrace: { side: 'front', offset: 500, length: 5000, depth: 2000 },
+  // The door is at 3.8–4.7 m; the terrace reaches left from it along the front.
+  terrace: { entrance: 'd1', length: 5000, depth: 2000, reach: 'left' },
   chimney: null,
 }
 

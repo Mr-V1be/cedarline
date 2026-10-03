@@ -64,6 +64,8 @@
       "OPENING_OUT_OF_WALL": "With this footprint the windows do not fit in the wall.",
       "OPENINGS_OVERLAP": "With this footprint windows and doors run into each other.",
       "TERRACE_OUT_OF_WALL": "The terrace does not fit along the wall.",
+      "TERRACE_ENTRANCE": "The terrace does not adjoin an entrance door.",
+      "ENTRANCE_INVALID": "With this footprint there is no room for a porch and steps at the entrance.",
       "other": "The house cannot be built like this: check the footprint and the windows."
     },
     "pricedIn": "Not counted in “{current}”: part of {levels}."

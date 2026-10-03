@@ -22,6 +22,8 @@ export const QUANTITY_DRIVERS = {
   exteriorDoorCount: { unit: 'pcs' },
   interiorDoorCount: { unit: 'pcs' },
   terraceArea: { unit: 'm2' },
+  porchArea: { unit: 'm2' },
+  stepCount: { unit: 'pcs' },
   pileCount: { unit: 'pcs' },
   perimeter: { unit: 'm' },
   wetZoneCount: { unit: 'pcs' },

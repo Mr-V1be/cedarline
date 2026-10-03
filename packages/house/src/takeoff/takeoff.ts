@@ -1,4 +1,4 @@
-import type { HouseFrame } from '../frame/types'
+import type { HouseFrame, LandingFrame, LandingKind } from '../frame/types'
 import { extendProfile, polylineLength } from '../roof/profile'
 import { traitsOf, type RoomKindCatalog } from '../spec/room-traits'
 import { roundTo, toMetres, toSquareMetres, type Vec2 } from '../units'
@@ -23,9 +23,16 @@ const gridPiles = (a: number, b: number, spacing: number) =>
 const squareMetres = (squareMillimetres: number) =>
   roundTo(toSquareMetres(squareMillimetres), AREA_DECIMALS)
 
+const deckArea = (landings: readonly LandingFrame[], kind: LandingKind) =>
+  squareMetres(
+    landings
+      .filter((landing) => landing.kind === kind)
+      .reduce((sum, landing) => sum + (landing.u1 - landing.u0) * landing.depth, 0),
+  )
+
 /** Measures every quantity driver of a house. */
 export function computeTakeoff(frame: HouseFrame, rooms: RoomKindCatalog): Takeoff {
-  const { spec, roof, walls, terrace } = frame
+  const { spec, roof, walls, landings } = frame
   const { standards } = spec
   const inner = (spec.width - 2 * spec.wallThickness) * (spec.depth - 2 * spec.wallThickness)
   const upperFloors = spec.storeys - 1 + (spec.attic ? 1 : 0)
@@ -62,10 +69,14 @@ export function computeTakeoff(frame: HouseFrame, rooms: RoomKindCatalog): Takeo
     windowCount: windows.length,
     exteriorDoorCount: openings.length - windows.length,
     interiorDoorCount: spec.doors.length,
-    terraceArea: terrace === null ? 0 : squareMetres(terrace.length * terrace.depth),
-    pileCount:
-      gridPiles(spec.width, spec.depth, standards.pileSpacing) +
-      (terrace === null ? 0 : gridPiles(terrace.length, terrace.depth, standards.pileSpacing)),
+    terraceArea: deckArea(landings, 'terrace'),
+    porchArea: deckArea(landings, 'porch'),
+    stepCount: landings.reduce((sum, landing) => sum + landing.stair.steps, 0),
+    pileCount: landings.reduce(
+      (sum, landing) =>
+        sum + gridPiles(landing.u1 - landing.u0, landing.depth, standards.pileSpacing),
+      gridPiles(spec.width, spec.depth, standards.pileSpacing),
+    ),
     perimeter: roundTo(toMetres(2 * (spec.width + spec.depth)), AREA_DECIMALS),
     wetZoneCount: spec.rooms.filter((room) => traitsOf(rooms, room.kind).wetZone).length,
     chimneyCount: frame.chimney === null ? 0 : 1,

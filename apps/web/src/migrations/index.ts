@@ -4,6 +4,7 @@ import * as migration_20261002_204453_gallery_evening_view from './20261002_2044
 import * as migration_20261002_210606_media_import_origin from './20261002_210606_media_import_origin';
 import * as migration_20261002_212717_configurator_leads from './20261002_212717_configurator_leads';
 import * as migration_20261002_222613_lead_link from './20261002_222613_lead_link';
+import * as migration_20261003_071441_entrance_landings from './20261003_071441_entrance_landings';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20261002_222613_lead_link.up,
     down: migration_20261002_222613_lead_link.down,
-    name: '20261002_222613_lead_link'
+    name: '20261002_222613_lead_link',
+  },
+  {
+    up: migration_20261003_071441_entrance_landings.up,
+    down: migration_20261003_071441_entrance_landings.down,
+    name: '20261003_071441_entrance_landings'
   },
 ];

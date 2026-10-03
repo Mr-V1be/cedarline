@@ -14,15 +14,13 @@ describe('design transforms', () => {
     const [window] = bigger.openings
     expect(window?.offset).toBe(1320)
     expect(house.takeoff.totalArea).toBeGreaterThan(measure(cabin).takeoff.totalArea)
+    expect(bigger.terrace?.length).toBe(6000)
   })
 
   it('mirrors rooms, openings, doors and the terrace', () => {
-    const mirrored = mirrorDesign({
-      ...cabin,
-      terrace: { side: 'front', offset: 0, length: 2000, depth: 2000 },
-    })
+    const mirrored = mirrorDesign(cabin)
     expect(mirrored.openings.find((opening) => opening.id === 'd1')?.offset).toBe(6000 - 3800 - 900)
-    expect(mirrored.terrace).toMatchObject({ side: 'front', offset: 4000 })
+    expect(mirrored.terrace).toMatchObject({ entrance: 'd1', reach: 'right' })
     expect(mirrorDesign(mirrorDesign(cabin))).toEqual(cabin)
     expect(measure(mirrored).takeoff.totalArea).toBe(measure(cabin).takeoff.totalArea)
   })
@@ -30,6 +28,7 @@ describe('design transforms', () => {
   it('moves side-wall openings to the opposite wall when mirrored', () => {
     const side = {
       ...cabin,
+      terrace: null,
       openings: [
         {
           id: 's1',

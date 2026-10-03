@@ -1,4 +1,4 @@
-import type { FloorPlan, PlanRect } from '@kedrovnik/house'
+import type { FloorPlan, PlanDeck, PlanRect } from '@kedrovnik/house'
 
 /** A partition strip on a room axis that is not part of the outer contour. */
 export interface PartitionSegment {
@@ -30,18 +30,50 @@ export function partitions(plan: FloorPlan): PartitionSegment[] {
   return [...segments.values()]
 }
 
-/** Drawing extent: the footprint, the terrace and room for the dimension chains. */
+/** The footprint with everything drawn outside the walls: decks and their steps. */
+export function outdoorExtent(plan: FloorPlan): PlanRect {
+  const rects = plan.decks.flatMap((deck) =>
+    deck.stair === null ? [deck.rect] : [deck.rect, deck.stair],
+  )
+  return rects.reduce<PlanRect>(
+    (extent, rect) => ({
+      x0: Math.min(extent.x0, rect.x0),
+      y0: Math.min(extent.y0, rect.y0),
+      x1: Math.max(extent.x1, rect.x1),
+      y1: Math.max(extent.y1, rect.y1),
+    }),
+    { x0: 0, y0: 0, x1: plan.width, y1: plan.depth },
+  )
+}
+
+/** Drawing extent: the footprint, decks, steps and room for the dimension chains. */
 export function drawingBounds(
   plan: FloorPlan,
   margins: { readonly near: number; readonly far: number },
 ): PlanRect {
-  const terrace = plan.terrace
+  const extent = outdoorExtent(plan)
   return {
-    x0: Math.min(0, terrace?.x0 ?? 0) - margins.near,
-    y0: Math.min(0, terrace?.y0 ?? 0) - margins.near,
-    x1: Math.max(plan.width, terrace?.x1 ?? 0) + margins.far,
-    y1: Math.max(plan.depth, terrace?.y1 ?? 0) + margins.far,
+    x0: extent.x0 - margins.near,
+    y0: extent.y0 - margins.near,
+    x1: extent.x1 + margins.far,
+    y1: extent.y1 + margins.far,
   }
+}
+
+/** Nosing lines of an entrance flight, parallel to the wall it leads away from. */
+export function entranceTreads(
+  deck: PlanDeck,
+): Array<{ x1: number; y1: number; x2: number; y2: number }> {
+  const { stair, steps } = deck
+  if (stair === null) return []
+  const alongX = deck.side === 'front' || deck.side === 'back'
+  const run = (alongX ? stair.y1 - stair.y0 : stair.x1 - stair.x0) / steps
+  return Array.from({ length: steps - 1 }, (_, index) => {
+    const offset = (index + 1) * run
+    return alongX
+      ? { x1: stair.x0, y1: stair.y0 + offset, x2: stair.x1, y2: stair.y0 + offset }
+      : { x1: stair.x0 + offset, y1: stair.y0, x2: stair.x0 + offset, y2: stair.y1 }
+  })
 }
 
 /** Treads of a straight flight across the longer side of a stair room, mm. */

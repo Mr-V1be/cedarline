@@ -7,6 +7,8 @@ export type HouseErrorCode =
   | 'OPENING_OUT_OF_WALL'
   | 'OPENINGS_OVERLAP'
   | 'TERRACE_OUT_OF_WALL'
+  | 'TERRACE_ENTRANCE'
+  | 'ENTRANCE_INVALID'
   | 'DUPLICATE_ID'
 
 /** Raised when a design or configuration violates a geometric invariant. */

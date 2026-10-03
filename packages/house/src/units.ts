@@ -8,6 +8,14 @@ export const toSquareMetres = (squareMillimetres: number): number => squareMilli
 export type Vec2 = readonly [number, number]
 export type Vec3 = readonly [number, number, number]
 
+/** Axis-aligned rectangle in plan coordinates, mm. */
+export interface Rect {
+  readonly x0: number
+  readonly y0: number
+  readonly x1: number
+  readonly y1: number
+}
+
 export const degreesToRadians = (degrees: number): number => (degrees * Math.PI) / 180
 
 /** Rounds to a fixed number of decimals without float noise (12.345 → 12.35 at 2). */

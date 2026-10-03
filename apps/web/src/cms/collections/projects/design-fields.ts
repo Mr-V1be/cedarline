@@ -3,6 +3,7 @@ import {
   MAX_STOREYS,
   OPENING_TYPES,
   RIDGE_AXES,
+  TERRACE_REACHES,
   WALL_SIDES,
   WINDOW_ROLES,
 } from '@kedrovnik/house'
@@ -172,15 +173,25 @@ const terrace: GroupField = {
       type: 'row',
       admin: { condition: enabledOnly },
       fields: [
+        keyField('entrance', {
+          required: false,
+          label: label('Ключ входной двери', 'Entrance door key'),
+          admin: {
+            width: '25%',
+            description: label(
+              'Терраса примыкает к этой двери; ступени — у неё',
+              'The terrace adjoins this door; its steps are at the door',
+            ),
+          },
+        }),
         {
-          name: 'side',
+          name: 'reach',
           type: 'select',
-          label: label('Стена', 'Wall'),
-          options: registryOptions('wallSide', WALL_SIDES),
-          defaultValue: 'front',
+          label: label('Направление от двери', 'Direction from the door'),
+          options: registryOptions('terraceReach', TERRACE_REACHES),
+          defaultValue: 'left',
           admin: { width: '25%' },
         },
-        millimetres('offset', label('Отступ, мм', 'Offset, mm'), { required: false }),
         millimetres('length', label('Длина, мм', 'Length, mm'), { required: false, min: 1 }),
         millimetres('depth', label('Глубина, мм', 'Depth, mm'), { required: false, min: 1 }),
       ],

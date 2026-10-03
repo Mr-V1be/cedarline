@@ -9,7 +9,6 @@ import { UP, basis } from './vector'
 const PLINTH_INSET = 25
 const DECK_THICKNESS = 45
 const DECK_SKIRT_INSET = 60
-const STEP = { maxRiser: 180, tread: 320, maxWidth: 1600 } as const
 const CHIMNEY = { segments: 20, capHeight: 120, capOverhang: 50 } as const
 const DOWN: Vec3 = [0, -1, 0]
 
@@ -46,45 +45,35 @@ export function buildFloors(builder: MeshBuilder, mapping: WorldMapping, frame: 
   }
 }
 
-/** Steps down from a deck: as many as needed to keep each riser under the maximum. */
-export function terraceSteps(deckTop: number): { steps: number; riser: number; run: number } {
-  const steps = Math.max(0, Math.ceil(deckTop / STEP.maxRiser) - 1)
-  return { steps, riser: deckTop / (steps + 1), run: steps * STEP.tread }
-}
-
-/** Open deck with a skirt and steps centred on its outer edge. */
-export function buildTerrace(builder: MeshBuilder, mapping: WorldMapping, frame: HouseFrame) {
-  const { terrace } = frame
-  if (terrace === null) return
-  const wall = wallBasis(mapping, wallPlacement(frame.spec, terrace.side))
+/** Decks of the terrace and porches with their skirts and steps, from the frame's landings. */
+export function buildLandings(builder: MeshBuilder, mapping: WorldMapping, frame: HouseFrame) {
   const m = toMetres
-  const { offset, length, depth, deckTop } = terrace
-  builder.box(
-    'deck',
-    wall,
-    [m(offset), m(offset + length)],
-    [m(deckTop - DECK_THICKNESS), m(deckTop)],
-    [0, m(depth)],
-  )
-  builder.box(
-    'plinth',
-    wall,
-    [m(offset + DECK_SKIRT_INSET), m(offset + length - DECK_SKIRT_INSET)],
-    [0, m(deckTop - DECK_THICKNESS)],
-    [m(DECK_SKIRT_INSET), m(depth - DECK_SKIRT_INSET)],
-  )
-
-  const { steps, riser } = terraceSteps(deckTop)
-  const stepWidth = Math.min(length, STEP.maxWidth)
-  const centre = offset + length / 2
-  for (let index = 1; index <= steps; index += 1) {
+  for (const landing of frame.landings) {
+    const wall = wallBasis(mapping, wallPlacement(frame.spec, landing.side))
+    const { u0, u1, depth, deckTop, stair } = landing
     builder.box(
       'deck',
       wall,
-      [m(centre - stepWidth / 2), m(centre + stepWidth / 2)],
-      [0, m(deckTop - index * riser)],
-      [m(depth + (index - 1) * STEP.tread), m(depth + index * STEP.tread)],
+      [m(u0), m(u1)],
+      [m(deckTop - DECK_THICKNESS), m(deckTop)],
+      [0, m(depth)],
     )
+    builder.box(
+      'plinth',
+      wall,
+      [m(u0 + DECK_SKIRT_INSET), m(u1 - DECK_SKIRT_INSET)],
+      [0, m(deckTop - DECK_THICKNESS)],
+      [m(DECK_SKIRT_INSET), m(depth - DECK_SKIRT_INSET)],
+    )
+    for (let index = 1; index <= stair.steps; index += 1) {
+      builder.box(
+        'deck',
+        wall,
+        [m(stair.u0), m(stair.u1)],
+        [0, m(deckTop - index * stair.riser)],
+        [m(depth + (index - 1) * stair.tread), m(depth + index * stair.tread)],
+      )
+    }
   }
 }
 

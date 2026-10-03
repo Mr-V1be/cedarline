@@ -3,7 +3,7 @@ import type { HouseFrame } from '../frame/types'
 import { traitsOf, type RoomKindCatalog } from '../spec/room-traits'
 import { netRoomArea, netRoomRect } from '../takeoff/rooms'
 import { roundTo } from '../units'
-import type { DimensionChain, FloorPlan, PlanOpening, PlanRect, PlanRoom } from './types'
+import type { DimensionChain, FloorPlan, PlanDeck, PlanOpening, PlanRect, PlanRoom } from './types'
 
 const uniqueSorted = (values: readonly number[]) =>
   [...new Set(values)].sort((left, right) => left - right)
@@ -66,10 +66,16 @@ export function buildFloorPlans(frame: HouseFrame, catalog: RoomKindCatalog): Fl
         })),
     )
 
-    const terrace =
-      level.index === 0 && frame.terrace !== null
-        ? { x0: frame.terrace.x0, y0: frame.terrace.y0, x1: frame.terrace.x1, y1: frame.terrace.y1 }
-        : null
+    const decks: PlanDeck[] =
+      level.index === 0
+        ? frame.landings.map((landing) => ({
+            kind: landing.kind,
+            rect: landing.rect,
+            stair: landing.stair.steps > 0 ? landing.stair.rect : null,
+            steps: landing.stair.steps,
+            side: landing.side,
+          }))
+        : []
 
     return {
       level: level.index,
@@ -81,7 +87,7 @@ export function buildFloorPlans(frame: HouseFrame, catalog: RoomKindCatalog): Fl
       rooms,
       openings,
       doors: spec.doors.filter((door) => door.level === level.index),
-      terrace,
+      decks,
       chimney:
         frame.chimney === null
           ? null

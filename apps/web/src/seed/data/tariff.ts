@@ -18,7 +18,7 @@ export const SECTIONS: ReadonlyArray<{ key: string; name: Localized }> = [
   { key: 'roof', name: t('Кровля', 'Roofing') },
   { key: 'windows', name: t('Окна и двери', 'Windows and doors') },
   { key: 'facade', name: t('Фасад', 'Facade') },
-  { key: 'terrace', name: t('Терраса', 'Terrace') },
+  { key: 'terrace', name: t('Терраса, крыльцо и ступени', 'Terrace, porch and steps') },
   { key: 'logistics', name: t('Доставка и организация стройки', 'Delivery and site set-up') },
   { key: 'engineering', name: t('Инженерные системы', 'Building services') },
   { key: 'interior', name: t('Внутренняя отделка', 'Interior finishing') },
@@ -198,6 +198,20 @@ export const RATES: ReadonlyArray<{
     section: 'terrace',
     driver: 'terraceArea',
     unitPrice: 11_500,
+  },
+  {
+    code: 'porch',
+    name: t('Крыльцо из лиственницы на сваях', 'Larch porch on piles'),
+    section: 'terrace',
+    driver: 'porchArea',
+    unitPrice: 12_500,
+  },
+  {
+    code: 'entrance-steps',
+    name: t('Ступени входа из лиственницы', 'Larch entrance steps'),
+    section: 'terrace',
+    driver: 'stepCount',
+    unitPrice: 7_800,
   },
   {
     code: 'delivery',
@@ -387,7 +401,7 @@ export const STAGES: ReadonlyArray<{
   },
   {
     key: 'terrace',
-    name: t('Терраса', 'Terrace'),
+    name: t('Терраса и крыльцо', 'Terrace and porch'),
     phase: 'site',
     section: 'terrace',
     driver: 'terraceArea',

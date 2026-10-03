@@ -305,8 +305,11 @@ export interface Project {
       | null;
     terrace?: {
       enabled?: boolean | null;
-      side?: ('front' | 'right' | 'back' | 'left') | null;
-      offset?: number | null;
+      /**
+       * The terrace adjoins this door; its steps are at the door
+       */
+      entrance?: string | null;
+      reach?: ('left' | 'right' | 'both') | null;
       length?: number | null;
       depth?: number | null;
     };
@@ -756,8 +759,8 @@ export interface ProjectsSelect<T extends boolean = true> {
           | T
           | {
               enabled?: T;
-              side?: T;
-              offset?: T;
+              entrance?: T;
+              reach?: T;
               length?: T;
               depth?: T;
             };
@@ -990,6 +993,8 @@ export interface Tariff {
           | 'exteriorDoorCount'
           | 'interiorDoorCount'
           | 'terraceArea'
+          | 'porchArea'
+          | 'stepCount'
           | 'pileCount'
           | 'perimeter'
           | 'wetZoneCount'
@@ -1055,6 +1060,8 @@ export interface Tariff {
               | 'exteriorDoorCount'
               | 'interiorDoorCount'
               | 'terraceArea'
+              | 'porchArea'
+              | 'stepCount'
               | 'pileCount'
               | 'perimeter'
               | 'wetZoneCount'
