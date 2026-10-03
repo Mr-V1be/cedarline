@@ -5,7 +5,7 @@ import type { Locale } from '@/i18n/locales'
 import { CATALOG_PAGE_SIZE, type CatalogQuery } from '../domain/catalog-query'
 import type { CatalogFacets, Range } from '../domain/facets'
 import type { ProjectDetails, ProjectSummary } from '../domain/project'
-import type { Page, ProjectRepository } from '../ports/project-repository'
+import type { Page, ProjectPrice, ProjectRepository } from '../ports/project-repository'
 import { CATALOG_SORT_FIELDS, PUBLISHED, catalogWhere } from './catalog-where'
 import { toHouseDesign, toHouseOptions } from './project-design-mapper'
 import { toGallery, toProjectSummary } from './project-read-mapper'
@@ -169,5 +169,23 @@ export class PayloadProjectRepository implements ProjectRepository {
       select: SUMMARY_SELECT,
     })
     return docs.map(toProjectSummary)
+  }
+
+  async priceList(locale: Locale): Promise<readonly ProjectPrice[]> {
+    const { docs } = await this.payload.find({
+      ...PUBLIC,
+      collection: 'projects',
+      locale,
+      depth: 0,
+      pagination: false,
+      where: PUBLISHED,
+      sort: CATALOG_SORT_FIELDS.recommended,
+      select: { slug: true, title: true, pricing: true },
+    })
+    return docs.flatMap((doc) =>
+      typeof doc.pricing?.fromPrice === 'number'
+        ? [{ slug: doc.slug, title: doc.title, fromPrice: doc.pricing.fromPrice }]
+        : [],
+    )
   }
 }

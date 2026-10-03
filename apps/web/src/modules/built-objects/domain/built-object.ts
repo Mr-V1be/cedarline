@@ -12,5 +12,6 @@ export interface BuiltObject {
   /** [longitude, latitude] */
   readonly location: readonly [number, number]
   readonly cover: ImageAsset | null
-  readonly projectSlug: string | null
+  /** The catalog project it was built from, when that project is still published. */
+  readonly project: { readonly slug: string; readonly title: string } | null
 }

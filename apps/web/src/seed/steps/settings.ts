@@ -21,6 +21,7 @@ import {
   WORKING_DAYS_PER_WEEK,
 } from '../data/tariff'
 import { englishRows, SEED } from './upsert'
+import { FINANCING } from '../data/financing'
 
 const at = <T>(items: readonly T[], index: number): T => {
   const item = items[index]
@@ -158,4 +159,8 @@ export async function seedTariff(payload: Payload) {
       stages: englishRows(saved.stages, (_, index) => ({ name: at(STAGES, index).name.en })),
     },
   })
+}
+
+export async function seedFinancing(payload: Payload) {
+  await payload.updateGlobal({ ...SEED, slug: 'financing', data: FINANCING })
 }

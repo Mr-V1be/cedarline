@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "Contacts",
+    "description": "Phone, email and the factory address of Kedrovnik in the Tosno District of Leningrad Oblast."
+  },
+  "title": "Contacts",
+  "lead": "Call or write — we answer during working hours. You are welcome at the factory by appointment.",
+  "channels": {
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Factory and office",
+    "hours": "Opening hours",
+    "region": "Where we build"
+  },
+  "map": "The factory on the map",
+  "openMap": "Open in OpenStreetMap",
+  "legal": {
+    "title": "Legal details",
+    "taxId": "Taxpayer number {value}",
+    "registrationNumber": "Registration number {value}"
+  },
+  "cta": {
+    "title": "Start with a project",
+    "lead": "Configure a house in 3D: the estimate and schedule are calculated at once, and you send the request from the configurator.",
+    "action": "Open the configurator"
+  }
+}

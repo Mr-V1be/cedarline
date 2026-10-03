@@ -15,7 +15,7 @@ import {
   layers,
   offer,
   rooms,
-} from './support/seed-model'
+} from '../support/seed-model'
 
 /** The demo catalog is content, but broken content is a regression people would see. */
 describe('demo catalog', () => {

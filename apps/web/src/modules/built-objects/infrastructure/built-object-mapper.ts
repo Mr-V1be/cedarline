@@ -3,8 +3,28 @@ import { toImageAsset } from '@/modules/catalog/infrastructure/media-mapper'
 
 import type { BuiltObject } from '../domain/built-object'
 
-export function toBuiltObject(document: BuiltObjectDocument): BuiltObject {
+/** The fields of a built house the site reads; listings select only these. */
+export type BuiltObjectFields = Pick<
+  BuiltObjectDocument,
+  | 'id'
+  | 'slug'
+  | 'title'
+  | 'settlement'
+  | 'region'
+  | 'year'
+  | 'area'
+  | 'location'
+  | 'cover'
+  | 'project'
+>
+
+export function toBuiltObject(document: BuiltObjectFields): BuiltObject {
   const project = document.project
+  const published =
+    project !== null &&
+    project !== undefined &&
+    typeof project !== 'number' &&
+    project.status === 'published'
   return {
     id: document.id,
     slug: document.slug,
@@ -15,9 +35,6 @@ export function toBuiltObject(document: BuiltObjectDocument): BuiltObject {
     area: document.area,
     location: document.location,
     cover: toImageAsset(document.cover),
-    projectSlug:
-      project !== null && project !== undefined && typeof project !== 'number'
-        ? project.slug
-        : null,
+    project: published ? { slug: project.slug, title: project.title } : null,
   }
 }

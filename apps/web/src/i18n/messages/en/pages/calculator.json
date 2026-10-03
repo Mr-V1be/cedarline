@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "title": "Mortgage and instalment calculator",
+    "description": "The monthly payment for a frame house on a mortgage or the factory instalment plan, based on the Bank of Russia key rate."
+  },
+  "title": "Mortgage and instalments",
+  "lead": "Your payment for a house at the Bank of Russia key rate — recalculated instantly.",
+  "kind": {
+    "label": "How to pay",
+    "mortgage": "Mortgage",
+    "installment": "Instalments"
+  },
+  "fields": {
+    "project": "Project",
+    "customProject": "My own amount",
+    "price": "House price, ₽",
+    "priceHint": "The “from” price of the chosen project; you can enter your own",
+    "down": "Down payment",
+    "term": "Term"
+  },
+  "units": {
+    "years": "{count, plural, one {# year} other {# years}}",
+    "months": "{count, plural, one {# month} other {# months}}",
+    "percent": "{value, number, ::.##}%"
+  },
+  "result": {
+    "title": "Estimate",
+    "monthly": "Monthly payment",
+    "monthlyFree": "Monthly payment, interest-free",
+    "loan": "Loan amount",
+    "loanInstallment": "Balance on instalments",
+    "rate": "Rate",
+    "rateMortgage": "key rate {key} + bank margin {margin}",
+    "rateInstallment": "{share, number, integer}% of the key rate {key}",
+    "rateFree": "0% — within {months}",
+    "overpayment": "Interest paid",
+    "total": "Total with the down payment",
+    "structure": "What the total is made of",
+    "downPart": "Down payment",
+    "loanPart": "Loan",
+    "interestPart": "Interest"
+  },
+  "keyRate": {
+    "current": "Bank of Russia key rate {rate} since {date}",
+    "stale": "the Bank of Russia site is not responding — showing the rate as of {date}",
+    "updated": "updated {date}",
+    "missing": "The Bank of Russia rate is not available yet",
+    "missingHint": "The source did not answer and no value has been stored yet. Interest-free instalments are calculated without it."
+  },
+  "note": "A preliminary estimate: the bank and the factory confirm the terms when you apply.",
+  "actions": {
+    "configure": "Configure a house in 3D",
+    "contacts": "Talk to a manager"
+  },
+  "errors": {
+    "price": "Enter a price of at least {min}"
+  },
+  "unavailable": {
+    "title": "The calculator is not available yet",
+    "description": "The instalment and mortgage terms have not been filled in. Call us and we will work out the payment together.",
+    "action": "Contacts"
+  }
+}

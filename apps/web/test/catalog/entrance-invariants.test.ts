@@ -24,7 +24,7 @@ import { describe, expect, it } from 'vitest'
 
 import { quoteHouse } from '@/modules/pricing/application/quote-house'
 
-import { PROJECTS, seedModel } from './support/seed-model'
+import { PROJECTS, seedModel } from '../support/seed-model'
 
 /** Every option that changes the shape of the house, besides the storey variant (project). */
 const SHAPE_GROUPS = [

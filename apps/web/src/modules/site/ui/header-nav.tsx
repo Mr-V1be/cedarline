@@ -17,14 +17,12 @@ export function HeaderNav({
   return (
     <nav aria-label={label}>
       <ul className={styles.navList}>
-        {SITE_NAVIGATION.map((item) => (
+        {SITE_NAVIGATION.filter((item) => item.header).map((item) => (
           <li key={item.key}>
             <Link
               href={item.href}
               className={styles.navLink}
-              aria-current={
-                !item.href.includes('#') && pathname.startsWith(item.href) ? 'page' : undefined
-              }
+              aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
             >
               {labels[item.key]}
             </Link>

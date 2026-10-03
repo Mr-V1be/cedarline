@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "title": "Built houses on the map",
+    "description": "Houses, saunas and guest houses handed over by Kedrovnik in St Petersburg and Leningrad Oblast: the project, year and area of each."
+  },
+  "title": "Built houses",
+  "lead": "Every point is a handed-over house: a catalog project, its year and area.",
+  "facts": {
+    "houses": "{count, plural, one {# house handed over} other {# houses handed over}}",
+    "settlements": "{count, plural, one {in # settlement} other {in # settlements}}",
+    "years": "{from}–{to}",
+    "area": "{value, number, integer} m² built"
+  },
+  "list": "List of houses",
+  "place": "{settlement}, {region}",
+  "year": "Handed over in {year}",
+  "builtFrom": "Built from the “{project}” project",
+  "showOnMap": "Show on the map",
+  "card": "House",
+  "actions": {
+    "project": "View the project",
+    "configure": "Configure the same"
+  },
+  "empty": {
+    "title": "Nothing to show yet",
+    "description": "Handed-over houses appear here once they are published.",
+    "action": "Go to the catalog"
+  },
+  "error": {
+    "title": "The houses did not load",
+    "description": "The server did not respond in time. Please try again."
+  }
+}

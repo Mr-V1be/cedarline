@@ -20,4 +20,13 @@ export interface ProjectRepository {
     limit: number,
     locale: Locale,
   ): Promise<readonly ProjectSummary[]>
+  /** Every published project with its «price from», in catalog order, for pickers. */
+  priceList(locale: Locale): Promise<readonly ProjectPrice[]>
+}
+
+export interface ProjectPrice {
+  readonly slug: string
+  readonly title: string
+  /** Whole rubles. */
+  readonly fromPrice: number
 }

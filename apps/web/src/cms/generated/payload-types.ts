@@ -59,923 +59,928 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | 'Pacific/Fiji'
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
-  };
-  blocks: {};
+    users: UserAuthOperations
+  }
+  blocks: {}
   collections: {
-    users: User;
-    media: Media;
-    'project-types': ProjectType;
-    'room-kinds': RoomKind;
-    projects: Project;
-    'built-objects': BuiltObject;
-    leads: Lead;
-    configurations: Configuration;
-    documents: Document;
-    'rate-limit-hits': RateLimitHit;
-    'payload-kv': PayloadKv;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
-  };
-  collectionsJoins: {};
+    users: User
+    media: Media
+    'project-types': ProjectType
+    'room-kinds': RoomKind
+    projects: Project
+    'built-objects': BuiltObject
+    leads: Lead
+    configurations: Configuration
+    documents: Document
+    'rate-limit-hits': RateLimitHit
+    'payload-kv': PayloadKv
+    'payload-locked-documents': PayloadLockedDocument
+    'payload-preferences': PayloadPreference
+    'payload-migrations': PayloadMigration
+  }
+  collectionsJoins: {}
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    'project-types': ProjectTypesSelect<false> | ProjectTypesSelect<true>;
-    'room-kinds': RoomKindsSelect<false> | RoomKindsSelect<true>;
-    projects: ProjectsSelect<false> | ProjectsSelect<true>;
-    'built-objects': BuiltObjectsSelect<false> | BuiltObjectsSelect<true>;
-    leads: LeadsSelect<false> | LeadsSelect<true>;
-    configurations: ConfigurationsSelect<false> | ConfigurationsSelect<true>;
-    documents: DocumentsSelect<false> | DocumentsSelect<true>;
-    'rate-limit-hits': RateLimitHitsSelect<false> | RateLimitHitsSelect<true>;
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
-  };
+    users: UsersSelect<false> | UsersSelect<true>
+    media: MediaSelect<false> | MediaSelect<true>
+    'project-types': ProjectTypesSelect<false> | ProjectTypesSelect<true>
+    'room-kinds': RoomKindsSelect<false> | RoomKindsSelect<true>
+    projects: ProjectsSelect<false> | ProjectsSelect<true>
+    'built-objects': BuiltObjectsSelect<false> | BuiltObjectsSelect<true>
+    leads: LeadsSelect<false> | LeadsSelect<true>
+    configurations: ConfigurationsSelect<false> | ConfigurationsSelect<true>
+    documents: DocumentsSelect<false> | DocumentsSelect<true>
+    'rate-limit-hits': RateLimitHitsSelect<false> | RateLimitHitsSelect<true>
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
+    'payload-locked-documents':
+      PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>
+  }
   db: {
-    defaultIDType: number;
-  };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('ru' | 'en') | ('ru' | 'en')[];
+    defaultIDType: number
+  }
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('ru' | 'en') | ('ru' | 'en')[]
   globals: {
-    tariff: Tariff;
-    'catalog-options': CatalogOption;
-    technology: Technology;
-    home: Home;
-    site: Site;
-  };
+    tariff: Tariff
+    'catalog-options': CatalogOption
+    technology: Technology
+    financing: Financing
+    'key-rate': KeyRate
+    home: Home
+    site: Site
+  }
   globalsSelect: {
-    tariff: TariffSelect<false> | TariffSelect<true>;
-    'catalog-options': CatalogOptionsSelect<false> | CatalogOptionsSelect<true>;
-    technology: TechnologySelect<false> | TechnologySelect<true>;
-    home: HomeSelect<false> | HomeSelect<true>;
-    site: SiteSelect<false> | SiteSelect<true>;
-  };
-  locale: 'ru' | 'en';
+    tariff: TariffSelect<false> | TariffSelect<true>
+    'catalog-options': CatalogOptionsSelect<false> | CatalogOptionsSelect<true>
+    technology: TechnologySelect<false> | TechnologySelect<true>
+    financing: FinancingSelect<false> | FinancingSelect<true>
+    'key-rate': KeyRateSelect<false> | KeyRateSelect<true>
+    home: HomeSelect<false> | HomeSelect<true>
+    site: SiteSelect<false> | SiteSelect<true>
+  }
+  locale: 'ru' | 'en'
   widgets: {
-    collections: CollectionsWidget;
-  };
-  user: User;
+    collections: CollectionsWidget
+  }
+  user: User
   jobs: {
-    tasks: unknown;
-    workflows: unknown;
-  };
+    tasks: unknown
+    workflows: unknown
+  }
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   login: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   registerFirstUser: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   unlock: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
-  name: string;
-  roles: ('admin' | 'content-manager' | 'sales-manager')[];
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
+  id: number
+  name: string
+  roles: ('admin' | 'content-manager' | 'sales-manager')[]
+  updatedAt: string
+  createdAt: string
+  email: string
+  resetPasswordToken?: string | null
+  resetPasswordExpiration?: string | null
+  salt?: string | null
+  hash?: string | null
+  resetPasswordRequestedAt?: string | null
+  loginAttempts?: number | null
+  lockUntil?: string | null
   sessions?:
     | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
+        id: string
+        createdAt?: string | null
+        expiresAt: string
       }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
+    | null
+  password?: string | null
+  collection: 'users'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
-  alt: string;
+  id: number
+  alt: string
   /**
    * E.g. render of the project 3D scene
    */
-  source: string;
+  source: string
   /**
    * Set by import scripts: asset key and checksum of the source file
    */
   origin?: {
-    key?: string | null;
-    checksum?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+    key?: string | null
+    checksum?: string | null
+  }
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
   sizes?: {
     thumb?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "project-types".
  */
 export interface ProjectType {
-  id: number;
-  title: string;
-  slug: string;
-  order: number;
-  updatedAt: string;
-  createdAt: string;
+  id: number
+  title: string
+  slug: string
+  order: number
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "room-kinds".
  */
 export interface RoomKind {
-  id: number;
-  title: string;
-  key: string;
-  bedroom?: boolean | null;
-  wetZone?: boolean | null;
-  stair?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
+  id: number
+  title: string
+  key: string
+  bedroom?: boolean | null
+  wetZone?: boolean | null
+  stair?: boolean | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
  */
 export interface Project {
-  id: number;
-  title: string;
-  slug: string;
-  status: 'draft' | 'published';
-  sortOrder: number;
-  type: number | ProjectType;
-  summary: string;
+  id: number
+  title: string
+  slug: string
+  status: 'draft' | 'published'
+  sortOrder: number
+  type: number | ProjectType
+  summary: string
   gallery?:
     | {
-        image: number | Media;
-        view: 'front' | 'evening' | 'back' | 'side' | 'aerial' | 'detail';
-        id?: string | null;
+        image: number | Media
+        view: 'front' | 'evening' | 'back' | 'side' | 'aerial' | 'detail'
+        id?: string | null
       }[]
-    | null;
+    | null
   design: {
-    width: number;
-    depth: number;
-    storeys: number;
-    storeyHeight: number;
-    attic?: boolean | null;
-    ridgeAxis: 'x' | 'y';
+    width: number
+    depth: number
+    storeys: number
+    storeyHeight: number
+    attic?: boolean | null
+    ridgeAxis: 'x' | 'y'
     rooms?:
       | {
-          key: string;
-          kind: number | RoomKind;
-          level: number;
-          x: number;
-          y: number;
-          width: number;
-          depth: number;
-          id?: string | null;
+          key: string
+          kind: number | RoomKind
+          level: number
+          x: number
+          y: number
+          width: number
+          depth: number
+          id?: string | null
         }[]
-      | null;
+      | null
     openings?:
       | {
-          key: string;
-          type: 'window' | 'door';
-          role: 'view' | 'standard';
-          level: number;
-          side: 'front' | 'right' | 'back' | 'left';
-          offset: number;
-          width: number;
-          height: number;
-          sill: number;
-          panoramicWidth?: number | null;
-          id?: string | null;
+          key: string
+          type: 'window' | 'door'
+          role: 'view' | 'standard'
+          level: number
+          side: 'front' | 'right' | 'back' | 'left'
+          offset: number
+          width: number
+          height: number
+          sill: number
+          panoramicWidth?: number | null
+          id?: string | null
         }[]
-      | null;
+      | null
     doors?:
       | {
-          key: string;
-          level: number;
-          orientation: 'horizontal' | 'vertical';
-          x: number;
-          y: number;
-          width: number;
-          id?: string | null;
+          key: string
+          level: number
+          orientation: 'horizontal' | 'vertical'
+          x: number
+          y: number
+          width: number
+          id?: string | null
         }[]
-      | null;
+      | null
     terrace?: {
-      enabled?: boolean | null;
+      enabled?: boolean | null
       /**
        * The terrace adjoins this door; its steps are at the door
        */
-      entrance?: string | null;
-      reach?: ('left' | 'right' | 'both') | null;
-      length?: number | null;
-      depth?: number | null;
-    };
+      entrance?: string | null
+      reach?: ('left' | 'right' | 'both') | null
+      length?: number | null
+      depth?: number | null
+    }
     chimney?: {
-      enabled?: boolean | null;
-      x?: number | null;
-      y?: number | null;
-    };
-  };
+      enabled?: boolean | null
+      x?: number | null
+      y?: number | null
+    }
+  }
   defaults: {
-    roofKind: 'gable' | 'shed' | 'gambrel';
-    roofPitch: number;
-    insulation: number;
-    facadeFinish: 'timber-imitation' | 'planken' | 'fiber-cement';
-    facadeColor: string;
-    windowStyle: 'standard' | 'panoramic';
+    roofKind: 'gable' | 'shed' | 'gambrel'
+    roofPitch: number
+    insulation: number
+    facadeFinish: 'timber-imitation' | 'planken' | 'fiber-cement'
+    facadeColor: string
+    windowStyle: 'standard' | 'panoramic'
     /**
      * System keys from “Catalog options”
      */
-    engineering?: string[] | null;
-  };
+    engineering?: string[] | null
+  }
   configurator?: {
     /**
      * Projects of one series with other storeys: the configurator switches between them in the “Storeys” step. Point to the main project of the series.
      */
-    variantOf?: (number | null) | Project;
-    mirrorable?: boolean | null;
+    variantOf?: (number | null) | Project
+    mirrorable?: boolean | null
     /**
      * Rooms scale on the axis grid, windows and doors keep their size. Every footprint is checked on save.
      */
     sizes?:
       | {
-          width: number;
-          depth: number;
-          id?: string | null;
+          width: number
+          depth: number
+          id?: string | null
         }[]
-      | null;
-  };
+      | null
+  }
   /**
    * Computed from the design on save
    */
   metrics?: {
-    totalArea?: number | null;
-    terraceArea?: number | null;
-    bedrooms?: number | null;
-    wetZones?: number | null;
-    levels?: number | null;
-    storeys?: number | null;
-    attic?: boolean | null;
-    storeyType?: string | null;
-    width?: number | null;
-    depth?: number | null;
-    ridgeHeight?: number | null;
-  };
+    totalArea?: number | null
+    terraceArea?: number | null
+    bedrooms?: number | null
+    wetZones?: number | null
+    levels?: number | null
+    storeys?: number | null
+    attic?: boolean | null
+    storeyType?: string | null
+    width?: number | null
+    depth?: number | null
+    ridgeHeight?: number | null
+  }
   pricing?: {
-    fromPrice?: number | null;
-    fromCompleteness?: string | null;
-    totalWeeks?: number | null;
-    tariffRevision?: number | null;
-  };
-  updatedAt: string;
-  createdAt: string;
+    fromPrice?: number | null
+    fromCompleteness?: string | null
+    totalWeeks?: number | null
+    tariffRevision?: number | null
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "built-objects".
  */
 export interface BuiltObject {
-  id: number;
-  title: string;
-  slug: string;
-  status: 'draft' | 'published';
-  project?: (number | null) | Project;
-  settlement: string;
-  region: string;
-  year: number;
-  area: number;
+  id: number
+  title: string
+  slug: string
+  status: 'draft' | 'published'
+  project?: (number | null) | Project
+  settlement: string
+  region: string
+  year: number
+  area: number
   /**
    * @minItems 2
    * @maxItems 2
    */
-  location: [number, number];
-  cover: number | Media;
-  updatedAt: string;
-  createdAt: string;
+  location: [number, number]
+  cover: number | Media
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "leads".
  */
 export interface Lead {
-  id: number;
-  status: 'new' | 'in-progress' | 'won' | 'lost';
-  notes?: string | null;
-  name: string;
-  phone: string;
-  email: string;
-  comment?: string | null;
+  id: number
+  status: 'new' | 'in-progress' | 'won' | 'lost'
+  notes?: string | null
+  name: string
+  phone: string
+  email: string
+  comment?: string | null
   /**
    * Opens the configuration exactly as the customer saw it
    */
-  link?: string | null;
-  summary?: string | null;
-  total?: number | null;
-  locale?: ('ru' | 'en') | null;
-  configuration?: (number | null) | Configuration;
-  project?: (number | null) | Project;
-  proposal?: (number | null) | Document;
-  consentAt?: string | null;
+  link?: string | null
+  summary?: string | null
+  total?: number | null
+  locale?: ('ru' | 'en') | null
+  configuration?: (number | null) | Configuration
+  project?: (number | null) | Project
+  proposal?: (number | null) | Document
+  consentAt?: string | null
   deliveries?:
     | {
-        channel: string;
-        status: 'delivered' | 'failed';
-        reference?: string | null;
-        at: string;
-        error?: string | null;
-        id?: string | null;
+        channel: string
+        status: 'delivered' | 'failed'
+        reference?: string | null
+        at: string
+        error?: string | null
+        id?: string | null
       }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
+    | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "configurations".
  */
 export interface Configuration {
-  id: number;
-  code: string;
-  project?: (number | null) | Project;
-  total?: number | null;
-  tariffRevision?: number | null;
-  locale?: ('ru' | 'en') | null;
-  render?: (number | null) | Document;
-  proposal?: (number | null) | Document;
+  id: number
+  code: string
+  project?: (number | null) | Project
+  total?: number | null
+  tariffRevision?: number | null
+  locale?: ('ru' | 'en') | null
+  render?: (number | null) | Document
+  proposal?: (number | null) | Document
   configuration:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
+    | null
   snapshot:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
+    | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
  */
 export interface Document {
-  id: number;
-  kind: 'render' | 'proposal';
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  id: number
+  kind: 'render' | 'proposal'
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rate-limit-hits".
  */
 export interface RateLimitHit {
-  id: number;
-  bucket: string;
-  key: string;
-  updatedAt: string;
-  createdAt: string;
+  id: number
+  bucket: string
+  key: string
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number;
-  key: string;
+  id: number
+  key: string
   data:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
+    | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: number
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'users'
+        value: number | User
       } | null)
     | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'media'
+        value: number | Media
       } | null)
     | ({
-        relationTo: 'project-types';
-        value: number | ProjectType;
+        relationTo: 'project-types'
+        value: number | ProjectType
       } | null)
     | ({
-        relationTo: 'room-kinds';
-        value: number | RoomKind;
+        relationTo: 'room-kinds'
+        value: number | RoomKind
       } | null)
     | ({
-        relationTo: 'projects';
-        value: number | Project;
+        relationTo: 'projects'
+        value: number | Project
       } | null)
     | ({
-        relationTo: 'built-objects';
-        value: number | BuiltObject;
+        relationTo: 'built-objects'
+        value: number | BuiltObject
       } | null)
     | ({
-        relationTo: 'leads';
-        value: number | Lead;
+        relationTo: 'leads'
+        value: number | Lead
       } | null)
     | ({
-        relationTo: 'configurations';
-        value: number | Configuration;
+        relationTo: 'configurations'
+        value: number | Configuration
       } | null)
     | ({
-        relationTo: 'documents';
-        value: number | Document;
+        relationTo: 'documents'
+        value: number | Document
       } | null)
     | ({
-        relationTo: 'rate-limit-hits';
-        value: number | RateLimitHit;
-      } | null);
-  globalSlug?: string | null;
+        relationTo: 'rate-limit-hits'
+        value: number | RateLimitHit
+      } | null)
+  globalSlug?: string | null
   user: {
-    relationTo: 'users';
-    value: number | User;
-  };
-  updatedAt: string;
-  createdAt: string;
+    relationTo: 'users'
+    value: number | User
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: number
   user: {
-    relationTo: 'users';
-    value: number | User;
-  };
-  key?: string | null;
+    relationTo: 'users'
+    value: number | User
+  }
+  key?: string | null
   value?:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
+    | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
-  name?: string | null;
-  batch?: number | null;
-  updatedAt: string;
-  createdAt: string;
+  id: number
+  name?: string | null
+  batch?: number | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  roles?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
+  name?: T
+  roles?: T
+  updatedAt?: T
+  createdAt?: T
+  email?: T
+  resetPasswordToken?: T
+  resetPasswordExpiration?: T
+  salt?: T
+  hash?: T
+  resetPasswordRequestedAt?: T
+  loginAttempts?: T
+  lockUntil?: T
   sessions?:
     | T
     | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+        id?: T
+        createdAt?: T
+        expiresAt?: T
+      }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  source?: T;
+  alt?: T
+  source?: T
   origin?:
     | T
     | {
-        key?: T;
-        checksum?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
+        key?: T
+        checksum?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  url?: T
+  thumbnailURL?: T
+  filename?: T
+  mimeType?: T
+  filesize?: T
+  width?: T
+  height?: T
+  focalX?: T
+  focalY?: T
   sizes?:
     | T
     | {
         thumb?:
           | T
           | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
+              url?: T
+              width?: T
+              height?: T
+              mimeType?: T
+              filesize?: T
+              filename?: T
+            }
+      }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "project-types_select".
  */
 export interface ProjectTypesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  title?: T
+  slug?: T
+  order?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "room-kinds_select".
  */
 export interface RoomKindsSelect<T extends boolean = true> {
-  title?: T;
-  key?: T;
-  bedroom?: T;
-  wetZone?: T;
-  stair?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  title?: T
+  key?: T
+  bedroom?: T
+  wetZone?: T
+  stair?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  status?: T;
-  sortOrder?: T;
-  type?: T;
-  summary?: T;
+  title?: T
+  slug?: T
+  status?: T
+  sortOrder?: T
+  type?: T
+  summary?: T
   gallery?:
     | T
     | {
-        image?: T;
-        view?: T;
-        id?: T;
-      };
+        image?: T
+        view?: T
+        id?: T
+      }
   design?:
     | T
     | {
-        width?: T;
-        depth?: T;
-        storeys?: T;
-        storeyHeight?: T;
-        attic?: T;
-        ridgeAxis?: T;
+        width?: T
+        depth?: T
+        storeys?: T
+        storeyHeight?: T
+        attic?: T
+        ridgeAxis?: T
         rooms?:
           | T
           | {
-              key?: T;
-              kind?: T;
-              level?: T;
-              x?: T;
-              y?: T;
-              width?: T;
-              depth?: T;
-              id?: T;
-            };
+              key?: T
+              kind?: T
+              level?: T
+              x?: T
+              y?: T
+              width?: T
+              depth?: T
+              id?: T
+            }
         openings?:
           | T
           | {
-              key?: T;
-              type?: T;
-              role?: T;
-              level?: T;
-              side?: T;
-              offset?: T;
-              width?: T;
-              height?: T;
-              sill?: T;
-              panoramicWidth?: T;
-              id?: T;
-            };
+              key?: T
+              type?: T
+              role?: T
+              level?: T
+              side?: T
+              offset?: T
+              width?: T
+              height?: T
+              sill?: T
+              panoramicWidth?: T
+              id?: T
+            }
         doors?:
           | T
           | {
-              key?: T;
-              level?: T;
-              orientation?: T;
-              x?: T;
-              y?: T;
-              width?: T;
-              id?: T;
-            };
+              key?: T
+              level?: T
+              orientation?: T
+              x?: T
+              y?: T
+              width?: T
+              id?: T
+            }
         terrace?:
           | T
           | {
-              enabled?: T;
-              entrance?: T;
-              reach?: T;
-              length?: T;
-              depth?: T;
-            };
+              enabled?: T
+              entrance?: T
+              reach?: T
+              length?: T
+              depth?: T
+            }
         chimney?:
           | T
           | {
-              enabled?: T;
-              x?: T;
-              y?: T;
-            };
-      };
+              enabled?: T
+              x?: T
+              y?: T
+            }
+      }
   defaults?:
     | T
     | {
-        roofKind?: T;
-        roofPitch?: T;
-        insulation?: T;
-        facadeFinish?: T;
-        facadeColor?: T;
-        windowStyle?: T;
-        engineering?: T;
-      };
+        roofKind?: T
+        roofPitch?: T
+        insulation?: T
+        facadeFinish?: T
+        facadeColor?: T
+        windowStyle?: T
+        engineering?: T
+      }
   configurator?:
     | T
     | {
-        variantOf?: T;
-        mirrorable?: T;
+        variantOf?: T
+        mirrorable?: T
         sizes?:
           | T
           | {
-              width?: T;
-              depth?: T;
-              id?: T;
-            };
-      };
+              width?: T
+              depth?: T
+              id?: T
+            }
+      }
   metrics?:
     | T
     | {
-        totalArea?: T;
-        terraceArea?: T;
-        bedrooms?: T;
-        wetZones?: T;
-        levels?: T;
-        storeys?: T;
-        attic?: T;
-        storeyType?: T;
-        width?: T;
-        depth?: T;
-        ridgeHeight?: T;
-      };
+        totalArea?: T
+        terraceArea?: T
+        bedrooms?: T
+        wetZones?: T
+        levels?: T
+        storeys?: T
+        attic?: T
+        storeyType?: T
+        width?: T
+        depth?: T
+        ridgeHeight?: T
+      }
   pricing?:
     | T
     | {
-        fromPrice?: T;
-        fromCompleteness?: T;
-        totalWeeks?: T;
-        tariffRevision?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+        fromPrice?: T
+        fromCompleteness?: T
+        totalWeeks?: T
+        tariffRevision?: T
+      }
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "built-objects_select".
  */
 export interface BuiltObjectsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  status?: T;
-  project?: T;
-  settlement?: T;
-  region?: T;
-  year?: T;
-  area?: T;
-  location?: T;
-  cover?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  title?: T
+  slug?: T
+  status?: T
+  project?: T
+  settlement?: T
+  region?: T
+  year?: T
+  area?: T
+  location?: T
+  cover?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "leads_select".
  */
 export interface LeadsSelect<T extends boolean = true> {
-  status?: T;
-  notes?: T;
-  name?: T;
-  phone?: T;
-  email?: T;
-  comment?: T;
-  link?: T;
-  summary?: T;
-  total?: T;
-  locale?: T;
-  configuration?: T;
-  project?: T;
-  proposal?: T;
-  consentAt?: T;
+  status?: T
+  notes?: T
+  name?: T
+  phone?: T
+  email?: T
+  comment?: T
+  link?: T
+  summary?: T
+  total?: T
+  locale?: T
+  configuration?: T
+  project?: T
+  proposal?: T
+  consentAt?: T
   deliveries?:
     | T
     | {
-        channel?: T;
-        status?: T;
-        reference?: T;
-        at?: T;
-        error?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+        channel?: T
+        status?: T
+        reference?: T
+        at?: T
+        error?: T
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "configurations_select".
  */
 export interface ConfigurationsSelect<T extends boolean = true> {
-  code?: T;
-  project?: T;
-  total?: T;
-  tariffRevision?: T;
-  locale?: T;
-  render?: T;
-  proposal?: T;
-  configuration?: T;
-  snapshot?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  code?: T
+  project?: T
+  total?: T
+  tariffRevision?: T
+  locale?: T
+  render?: T
+  proposal?: T
+  configuration?: T
+  snapshot?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents_select".
  */
 export interface DocumentsSelect<T extends boolean = true> {
-  kind?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
+  kind?: T
+  updatedAt?: T
+  createdAt?: T
+  url?: T
+  thumbnailURL?: T
+  filename?: T
+  mimeType?: T
+  filesize?: T
+  width?: T
+  height?: T
+  focalX?: T
+  focalY?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rate-limit-hits_select".
  */
 export interface RateLimitHitsSelect<T extends boolean = true> {
-  bucket?: T;
-  key?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  bucket?: T
+  key?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T;
-  data?: T;
+  key?: T
+  data?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T;
-  globalSlug?: T;
-  user?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  document?: T
+  globalSlug?: T
+  user?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T;
-  key?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  user?: T
+  key?: T
+  value?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T;
-  batch?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  batch?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tariff".
  */
 export interface Tariff {
-  id: number;
-  revision?: number | null;
+  id: number
+  revision?: number | null
   sections?:
     | {
-        key: string;
-        name: string;
-        id?: string | null;
+        key: string
+        name: string
+        id?: string | null
       }[]
-    | null;
+    | null
   rates?:
     | {
-        code: string;
-        name: string;
-        section: string;
+        code: string
+        name: string
+        section: string
         driver:
           | 'lumpSum'
           | 'totalArea'
@@ -998,50 +1003,58 @@ export interface Tariff {
           | 'pileCount'
           | 'perimeter'
           | 'wetZoneCount'
-          | 'chimneyCount';
-        unitPrice: number;
+          | 'chimneyCount'
+        unitPrice: number
         /**
          * Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm (0 — none); insulation — thickness in mm; building services — system keys.
          */
         conditions?:
           | {
-              option: 'storeys' | 'layout' | 'roof' | 'facade' | 'windows' | 'terrace' | 'insulation' | 'engineering';
-              values: string[];
-              id?: string | null;
+              option:
+                | 'storeys'
+                | 'layout'
+                | 'roof'
+                | 'facade'
+                | 'windows'
+                | 'terrace'
+                | 'insulation'
+                | 'engineering'
+              values: string[]
+              id?: string | null
             }[]
-          | null;
-        id?: string | null;
+          | null
+        id?: string | null
       }[]
-    | null;
+    | null
   completeness?:
     | {
-        key: string;
-        name: string;
-        sections: string[];
-        id?: string | null;
+        key: string
+        name: string
+        sections: string[]
+        id?: string | null
       }[]
-    | null;
+    | null
   /**
    * Detailed estimates stay exact; the rule applies only to the advertised “price from”.
    */
   advertisedRounding: {
-    step: number;
-    mode: 'up' | 'down' | 'nearest';
-  };
-  workingDaysPerWeek: number;
+    step: number
+    mode: 'up' | 'down' | 'nearest'
+  }
+  workingDaysPerWeek: number
   phases?:
     | {
-        key: string;
-        name: string;
-        id?: string | null;
+        key: string
+        name: string
+        id?: string | null
       }[]
-    | null;
+    | null
   stages?:
     | {
-        key: string;
-        name: string;
-        phase: string;
-        section?: string | null;
+        key: string
+        name: string
+        phase: string
+        section?: string | null
         driver?:
           | (
               | 'lumpSum'
@@ -1067,210 +1080,278 @@ export interface Tariff {
               | 'wetZoneCount'
               | 'chimneyCount'
             )
-          | null;
-        baseDays: number;
-        daysPerUnit: number;
-        dependsOn?: string[] | null;
+          | null
+        baseDays: number
+        daysPerUnit: number
+        dependsOn?: string[] | null
         /**
          * Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm (0 — none); insulation — thickness in mm; building services — system keys.
          */
         conditions?:
           | {
-              option: 'storeys' | 'layout' | 'roof' | 'facade' | 'windows' | 'terrace' | 'insulation' | 'engineering';
-              values: string[];
-              id?: string | null;
+              option:
+                | 'storeys'
+                | 'layout'
+                | 'roof'
+                | 'facade'
+                | 'windows'
+                | 'terrace'
+                | 'insulation'
+                | 'engineering'
+              values: string[]
+              id?: string | null
             }[]
-          | null;
-        id?: string | null;
+          | null
+        id?: string | null
       }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "catalog-options".
  */
 export interface CatalogOption {
-  id: number;
+  id: number
   facadePalettes?:
     | {
-        finish: 'timber-imitation' | 'planken' | 'fiber-cement';
+        finish: 'timber-imitation' | 'planken' | 'fiber-cement'
         colors?:
           | {
-              name: string;
-              hex: string;
-              id?: string | null;
+              name: string
+              hex: string
+              id?: string | null
             }[]
-          | null;
-        id?: string | null;
+          | null
+        id?: string | null
       }[]
-    | null;
-  roofKinds: ('gable' | 'shed' | 'gambrel')[];
-  windowStyles: ('standard' | 'panoramic')[];
+    | null
+  roofKinds: ('gable' | 'shed' | 'gambrel')[]
+  windowStyles: ('standard' | 'panoramic')[]
   /**
    * The project’s own terrace depth is always offered
    */
-  terraceDepths?: number[] | null;
-  terraceRemovable?: boolean | null;
+  terraceDepths?: number[] | null
+  terraceRemovable?: boolean | null
   engineeringSystems?:
     | {
-        key: string;
-        name: string;
-        requires?: string[] | null;
-        id?: string | null;
+        key: string
+        name: string
+        requires?: string[] | null
+        id?: string | null
       }[]
-    | null;
+    | null
   rules?:
     | {
-        key: string;
+        key: string
         /**
          * Values: storeys — 1, 1-attic, 2; plan — base, mirrored; roof — gable, shed, gambrel; facade — timber-imitation, planken, fiber-cement; windows — standard, panoramic; terrace — depth in mm (0 — none); insulation — thickness in mm; building services — system keys.
          */
         conditions?:
           | {
-              option: 'storeys' | 'layout' | 'roof' | 'facade' | 'windows' | 'terrace' | 'insulation' | 'engineering';
-              values: string[];
-              id?: string | null;
+              option:
+                | 'storeys'
+                | 'layout'
+                | 'roof'
+                | 'facade'
+                | 'windows'
+                | 'terrace'
+                | 'insulation'
+                | 'engineering'
+              values: string[]
+              id?: string | null
             }[]
-          | null;
-        message: string;
-        id?: string | null;
+          | null
+        message: string
+        id?: string | null
       }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "technology".
  */
 export interface Technology {
-  id: number;
+  id: number
   layers?:
     | {
-        key: string;
-        name: string;
-        role: 'cladding' | 'air-gap' | 'membrane' | 'insulation' | 'batten' | 'lining';
-        thickness: number;
-        conductivity?: number | null;
-        id?: string | null;
+        key: string
+        name: string
+        role: 'cladding' | 'air-gap' | 'membrane' | 'insulation' | 'batten' | 'lining'
+        thickness: number
+        conductivity?: number | null
+        id?: string | null
       }[]
-    | null;
+    | null
   insulationOptions?:
     | {
-        thickness: number;
-        id?: string | null;
+        thickness: number
+        id?: string | null
       }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    | null
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "financing".
+ */
+export interface Financing {
+  id: number
+  mortgage: {
+    margin: number
+    minDownPercent: number
+    defaultDownPercent: number
+    minYears: number
+    maxYears: number
+    defaultYears: number
+  }
+  installment: {
+    interestFreeMonths: number
+    maxMonths: number
+    defaultMonths: number
+    minDownPercent: number
+    defaultDownPercent: number
+    keyRateShare: number
+  }
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * Refreshed automatically from the Bank of Russia; while the source is down the site shows the last value
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "key-rate".
+ */
+export interface KeyRate {
+  id: number
+  rate?: number | null
+  effectiveFrom?: string | null
+  fetchedAt?: string | null
+  source?: string | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home".
  */
 export interface Home {
-  id: number;
-  heroProject: number | Project;
-  featuredProjects?: (number | Project)[] | null;
-  builtObjects?: (number | BuiltObject)[] | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+  id: number
+  heroProject: number | Project
+  featuredProjects?: (number | Project)[] | null
+  builtObjects?: (number | BuiltObject)[] | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site".
  */
 export interface Site {
-  id: number;
-  phone: string;
-  email: string;
+  id: number
+  phone: string
+  email: string
   /**
    * New leads with their configuration and proposal are sent here
    */
-  leadsEmail: string;
-  address: string;
-  hours: string;
-  region: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+  leadsEmail: string
+  address: string
+  hours: string
+  region: string
+  /**
+   * Without coordinates the contacts page shows no map
+   *
+   * @minItems 2
+   * @maxItems 2
+   */
+  location?: [number, number] | null
+  legalName: string
+  taxId: string
+  registrationNumber: string
+  privacyEmail: string
+  privacyEdition: string
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tariff_select".
  */
 export interface TariffSelect<T extends boolean = true> {
-  revision?: T;
+  revision?: T
   sections?:
     | T
     | {
-        key?: T;
-        name?: T;
-        id?: T;
-      };
+        key?: T
+        name?: T
+        id?: T
+      }
   rates?:
     | T
     | {
-        code?: T;
-        name?: T;
-        section?: T;
-        driver?: T;
-        unitPrice?: T;
+        code?: T
+        name?: T
+        section?: T
+        driver?: T
+        unitPrice?: T
         conditions?:
           | T
           | {
-              option?: T;
-              values?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+              option?: T
+              values?: T
+              id?: T
+            }
+        id?: T
+      }
   completeness?:
     | T
     | {
-        key?: T;
-        name?: T;
-        sections?: T;
-        id?: T;
-      };
+        key?: T
+        name?: T
+        sections?: T
+        id?: T
+      }
   advertisedRounding?:
     | T
     | {
-        step?: T;
-        mode?: T;
-      };
-  workingDaysPerWeek?: T;
+        step?: T
+        mode?: T
+      }
+  workingDaysPerWeek?: T
   phases?:
     | T
     | {
-        key?: T;
-        name?: T;
-        id?: T;
-      };
+        key?: T
+        name?: T
+        id?: T
+      }
   stages?:
     | T
     | {
-        key?: T;
-        name?: T;
-        phase?: T;
-        section?: T;
-        driver?: T;
-        baseDays?: T;
-        daysPerUnit?: T;
-        dependsOn?: T;
+        key?: T
+        name?: T
+        phase?: T
+        section?: T
+        driver?: T
+        baseDays?: T
+        daysPerUnit?: T
+        dependsOn?: T
         conditions?:
           | T
           | {
-              option?: T;
-              values?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+              option?: T
+              values?: T
+              id?: T
+            }
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1280,45 +1361,45 @@ export interface CatalogOptionsSelect<T extends boolean = true> {
   facadePalettes?:
     | T
     | {
-        finish?: T;
+        finish?: T
         colors?:
           | T
           | {
-              name?: T;
-              hex?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  roofKinds?: T;
-  windowStyles?: T;
-  terraceDepths?: T;
-  terraceRemovable?: T;
+              name?: T
+              hex?: T
+              id?: T
+            }
+        id?: T
+      }
+  roofKinds?: T
+  windowStyles?: T
+  terraceDepths?: T
+  terraceRemovable?: T
   engineeringSystems?:
     | T
     | {
-        key?: T;
-        name?: T;
-        requires?: T;
-        id?: T;
-      };
+        key?: T
+        name?: T
+        requires?: T
+        id?: T
+      }
   rules?:
     | T
     | {
-        key?: T;
+        key?: T
         conditions?:
           | T
           | {
-              option?: T;
-              values?: T;
-              id?: T;
-            };
-        message?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+              option?: T
+              values?: T
+              id?: T
+            }
+        message?: T
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1328,49 +1409,97 @@ export interface TechnologySelect<T extends boolean = true> {
   layers?:
     | T
     | {
-        key?: T;
-        name?: T;
-        role?: T;
-        thickness?: T;
-        conductivity?: T;
-        id?: T;
-      };
+        key?: T
+        name?: T
+        role?: T
+        thickness?: T
+        conductivity?: T
+        id?: T
+      }
   insulationOptions?:
     | T
     | {
-        thickness?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        thickness?: T
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "financing_select".
+ */
+export interface FinancingSelect<T extends boolean = true> {
+  mortgage?:
+    | T
+    | {
+        margin?: T
+        minDownPercent?: T
+        defaultDownPercent?: T
+        minYears?: T
+        maxYears?: T
+        defaultYears?: T
+      }
+  installment?:
+    | T
+    | {
+        interestFreeMonths?: T
+        maxMonths?: T
+        defaultMonths?: T
+        minDownPercent?: T
+        defaultDownPercent?: T
+        keyRateShare?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "key-rate_select".
+ */
+export interface KeyRateSelect<T extends boolean = true> {
+  rate?: T
+  effectiveFrom?: T
+  fetchedAt?: T
+  source?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
-  heroProject?: T;
-  featuredProjects?: T;
-  builtObjects?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+  heroProject?: T
+  featuredProjects?: T
+  builtObjects?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site_select".
  */
 export interface SiteSelect<T extends boolean = true> {
-  phone?: T;
-  email?: T;
-  leadsEmail?: T;
-  address?: T;
-  hours?: T;
-  region?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+  phone?: T
+  email?: T
+  leadsEmail?: T
+  address?: T
+  hours?: T
+  region?: T
+  location?: T
+  legalName?: T
+  taxId?: T
+  registrationNumber?: T
+  privacyEmail?: T
+  privacyEdition?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1378,18 +1507,17 @@ export interface SiteSelect<T extends boolean = true> {
  */
 export interface CollectionsWidget {
   data?: {
-    [k: string]: unknown;
-  };
-  width: 'full';
+    [k: string]: unknown
+  }
+  width: 'full'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown;
+  [k: string]: unknown
 }
-
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

@@ -9,7 +9,7 @@ import sharp from 'sharp'
 
 import { env } from '@/config/env'
 import { RENDER_READY_ATTRIBUTE } from '@/modules/house-3d/domain/render'
-import { BUILT_OBJECTS } from '@/seed/data/places'
+import { BUILT_OBJECTS } from '@/seed/data/built-objects'
 import { GALLERY_RENDERS, RENDER_SIZE, projectRenderName } from '@/seed/data/renders'
 import { RENDER_DIRECTORY, renderFile } from '@/seed/steps/media'
 import { PROJECTS } from '@/seed/steps/projects'

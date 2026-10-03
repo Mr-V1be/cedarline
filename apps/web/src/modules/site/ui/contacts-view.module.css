@@ -1,0 +1,152 @@
+.page {
+  display: grid;
+  gap: var(--space-7);
+  padding-block: var(--space-7) var(--section-gap);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--display-m);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.lead {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-l);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+@media (width >= 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+}
+
+.channels {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+}
+
+.channel {
+  display: grid;
+  gap: var(--space-1);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.channelLabel {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}
+
+.channelValue {
+  margin: 0;
+  font-size: var(--text-l);
+  line-height: var(--leading-tight);
+  overflow-wrap: anywhere;
+}
+
+.big {
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  text-decoration: none;
+}
+
+.big:hover {
+  color: var(--color-pine);
+  text-decoration: underline;
+}
+
+.mapColumn {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.map {
+  aspect-ratio: 4 / 3;
+}
+
+@media (width >= 1024px) {
+  .mapColumn {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+
+  .map {
+    aspect-ratio: auto;
+    height: 520px;
+  }
+}
+
+.osm {
+  justify-self: start;
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}
+
+.legal {
+  display: grid;
+  gap: var(--space-1);
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}
+
+.legal p {
+  margin: 0;
+}
+
+.legalTitle {
+  margin: 0 0 var(--space-2);
+  color: var(--color-ink);
+  font-size: var(--text-m);
+  font-weight: var(--weight-semibold);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+.cta {
+  display: grid;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+@media (width >= 768px) {
+  .cta {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.ctaTitle {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--display-s);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.ctaLead {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--color-ink-muted);
+}

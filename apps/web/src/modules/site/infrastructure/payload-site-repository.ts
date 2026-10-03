@@ -21,6 +21,14 @@ export class PayloadSiteRepository implements SiteRepository {
       address: site.address,
       hours: site.hours,
       region: site.region,
+      location: site.location ?? null,
+      legal: {
+        name: site.legalName,
+        taxId: site.taxId,
+        registrationNumber: site.registrationNumber,
+        privacyEmail: site.privacyEmail,
+        privacyEdition: new Date(site.privacyEdition),
+      },
     }
   }
 }

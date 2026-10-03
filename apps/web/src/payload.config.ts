@@ -19,7 +19,9 @@ import { RateLimitHits } from './cms/collections/rate-limit-hits'
 import { RoomKinds } from './cms/collections/room-kinds'
 import { Users } from './cms/collections/users'
 import { CatalogOptions } from './cms/globals/catalog-options'
+import { Financing } from './cms/globals/financing'
 import { Home } from './cms/globals/home'
+import { KeyRate } from './cms/globals/key-rate'
 import { Site } from './cms/globals/site'
 import { Tariff } from './cms/globals/tariff'
 import { Technology } from './cms/globals/technology'
@@ -58,7 +60,7 @@ export default buildConfig({
     Documents,
     RateLimitHits,
   ],
-  globals: [Tariff, CatalogOptions, Technology, Home, Site],
+  globals: [Tariff, CatalogOptions, Technology, Financing, KeyRate, Home, Site],
   // Mail goes over plain SMTP: Mailpit locally, the company's relay in production.
   email: nodemailerAdapter({
     defaultFromAddress: env.MAIL_FROM_ADDRESS,

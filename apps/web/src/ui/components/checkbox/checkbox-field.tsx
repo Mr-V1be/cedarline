@@ -1,13 +1,14 @@
 'use client'
 
 import { CheckIcon } from '@phosphor-icons/react/ssr'
-import { useId, type ComponentProps } from 'react'
+import { useId, type ComponentProps, type ReactNode } from 'react'
 
 import { Icon } from '../icon/icon'
 import styles from './checkbox-field.module.css'
 
 type CheckboxFieldProps = Omit<ComponentProps<'input'>, 'type' | 'id'> & {
-  readonly label: string
+  /** May hold a link, e.g. to the document the visitor agrees to. */
+  readonly label: ReactNode
   readonly error?: string
 }
 

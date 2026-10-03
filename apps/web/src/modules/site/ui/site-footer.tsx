@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { Container } from '@/ui/components/layout/container'
 
-import { SITE_NAVIGATION } from '../domain/navigation'
+import { LEGAL_LINKS, SITE_NAVIGATION } from '../domain/navigation'
 import type { SiteContent } from '../domain/site'
 import { Logo } from './logo'
 import styles from './site-footer.module.css'
@@ -45,6 +45,17 @@ export async function SiteFooter({ site }: { readonly site: SiteContent }) {
       </Container>
       <Container className={styles.legal}>
         <p>{t('footer.copyright', { year })}</p>
+        <nav aria-label={t('footer.legal')}>
+          <ul className={styles.legalLinks}>
+            {LEGAL_LINKS.map((item) => (
+              <li key={item.key}>
+                <Link href={item.href} className={styles.link}>
+                  {t(`legal.${item.key}`)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
         <p>{t('footer.demo')}</p>
       </Container>
     </footer>

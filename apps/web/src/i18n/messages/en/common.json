@@ -12,9 +12,11 @@
     "home": "Home",
     "projects": "Projects",
     "configurator": "Configurator",
-    "technology": "Technology",
-    "process": "Stages and timing",
-    "built": "Built houses"
+    "objects": "Built houses",
+    "production": "Production",
+    "calculator": "Calculator",
+    "articles": "Articles",
+    "contacts": "Contacts"
   },
   "actions": {
     "chooseProject": "Choose a project",
@@ -39,7 +41,8 @@
     "contacts": "Contacts",
     "sections": "Sections",
     "copyright": "© {year} Kedrovnik",
-    "demo": "Demo version. The company and all data are fictional."
+    "demo": "Demo version. The company and all data are fictional.",
+    "legal": "Documents"
   },
   "units": {
     "area": "{value, number, ::.##} m²",
@@ -64,5 +67,21 @@
     "total": "Start to finish",
     "weekRange": "wk {from, number, integer}–{to, number, integer}",
     "weekSingle": "wk {week, number, integer}"
+  },
+  "legal": {
+    "privacy": "Personal data policy"
+  },
+  "map": {
+    "title": "Map",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "attribution": "Map sources",
+    "gesturesDesktop": "Hold Ctrl and scroll to zoom the map",
+    "gesturesMac": "Hold ⌘ and scroll to zoom the map",
+    "gesturesMobile": "Use two fingers to move the map",
+    "loading": "Loading the map",
+    "error": "The map did not load",
+    "errorHint": "The map server did not respond. The list below works without it.",
+    "retry": "Load again"
   }
 }

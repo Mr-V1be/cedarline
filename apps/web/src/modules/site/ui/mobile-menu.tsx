@@ -78,6 +78,7 @@ export function MobileMenu({
                 <Link
                   href={item.href}
                   className={styles.menuLink}
+                  aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
                   onClick={() => {
                     setOpen(false)
                   }}

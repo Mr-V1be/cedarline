@@ -1,6 +1,7 @@
 import type { Payload } from 'payload'
 
-import { BUILT_OBJECTS, HOME, SITE } from '../data/places'
+import { BUILT_OBJECTS } from '../data/built-objects'
+import { HOME, SITE } from '../data/places'
 import { seedRender } from './media'
 import { SEED, translate, upsert } from './upsert'
 
@@ -80,12 +81,23 @@ export async function seedPages(
       address: SITE.address.ru,
       hours: SITE.hours.ru,
       region: SITE.region.ru,
+      location: SITE.location,
+      legalName: SITE.legalName.ru,
+      taxId: SITE.taxId,
+      registrationNumber: SITE.registrationNumber,
+      privacyEmail: SITE.privacyEmail,
+      privacyEdition: SITE.privacyEdition,
     },
   })
   await payload.updateGlobal({
     ...SEED,
     slug: 'site',
     locale: 'en',
-    data: { address: SITE.address.en, hours: SITE.hours.en, region: SITE.region.en },
+    data: {
+      address: SITE.address.en,
+      hours: SITE.hours.en,
+      region: SITE.region.en,
+      legalName: SITE.legalName.en,
+    },
   })
 }

@@ -131,6 +131,14 @@ export function proposalDeps(saved: MemorySavedConfigurations, documents: Memory
           address: 'Тосно',
           hours: '9–19',
           region: 'СПб',
+          location: [30.87, 59.55],
+          legal: {
+            name: 'ООО «Кедровник»',
+            taxId: '0000000000',
+            registrationNumber: '0000000000000',
+            privacyEmail: 'privacy@kedrovnik.example',
+            privacyEdition: new Date('2026-09-01'),
+          },
         }),
     },
     linkTo: (code, locale) =>

@@ -38,3 +38,8 @@
 .successTitle {
   font-size: var(--display-xs);
 }
+
+.policyLink {
+  color: var(--color-pine);
+  text-underline-offset: 2px;
+}

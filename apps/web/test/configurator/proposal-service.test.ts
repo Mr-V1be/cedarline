@@ -10,8 +10,8 @@ import {
   codesFrom,
   configuratorDeps,
   proposalDeps,
-} from './support/fakes'
-import { seedModel } from './support/seed-model'
+} from '../support/fakes'
+import { seedModel } from '../support/seed-model'
 
 const model = seedModel('kedr')
 

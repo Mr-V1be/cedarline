@@ -4,7 +4,7 @@ import { getPayload } from 'payload'
 import { seedBuiltObjects, seedPages } from './steps/content'
 import { seedDictionaries, seedUsers } from './steps/dictionaries'
 import { seedProjects } from './steps/projects'
-import { seedCatalogOptions, seedTariff, seedTechnology } from './steps/settings'
+import { seedCatalogOptions, seedFinancing, seedTariff, seedTechnology } from './steps/settings'
 
 /**
  * Demo content generator. Idempotent: every document is keyed by a natural unique key, so
@@ -24,7 +24,8 @@ async function seed() {
   await seedTechnology(payload)
   await seedCatalogOptions(payload)
   await seedTariff(payload)
-  log('technology, catalog options and tariff')
+  await seedFinancing(payload)
+  log('technology, catalog options, tariff and financing')
   const projects = await seedProjects(payload, ids)
   log(`${projects.size} projects`)
   const { objects, skipped } = await seedBuiltObjects(payload, projects)

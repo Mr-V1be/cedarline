@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest'
 
 import { openConfigurator } from '@/modules/configurator/application/open-configurator'
 
-import { configuratorDeps } from './support/fakes'
-import { seedModel } from './support/seed-model'
+import { configuratorDeps } from '../support/fakes'
+import { seedModel } from '../support/seed-model'
 
 const model = seedModel('yasen', 'yasen-2')
 const deps = configuratorDeps(model, { yasen: 'Ясень', 'yasen-2': 'Ясень 2' })

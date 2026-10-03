@@ -5,4 +5,17 @@ export interface SiteContent {
   readonly address: string
   readonly hours: string
   readonly region: string
+  /** [longitude, latitude] of the factory, when it is set. */
+  readonly location: readonly [number, number] | null
+  readonly legal: LegalDetails
+}
+
+/** Who the operator is, for the contacts page and the personal data policy. */
+export interface LegalDetails {
+  readonly name: string
+  readonly taxId: string
+  readonly registrationNumber: string
+  readonly privacyEmail: string
+  /** Date of the current personal data policy version. */
+  readonly privacyEdition: Date
 }

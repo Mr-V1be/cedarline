@@ -4,6 +4,7 @@ import { CheckCircleIcon, PaperPlaneTiltIcon } from '@phosphor-icons/react/ssr'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRef, useState, type SubmitEvent } from 'react'
 
+import { Link } from '@/i18n/navigation'
 import { Button } from '@/ui/components/button/button'
 import { CheckboxField } from '@/ui/components/checkbox/checkbox-field'
 import { Icon } from '@/ui/components/icon/icon'
@@ -202,7 +203,14 @@ export function LeadSheet({ open, onClose, code, submit, phone }: LeadSheetProps
             }}
           />
           <CheckboxField
-            label={t('fields.consent')}
+            label={t.rich('fields.consent', {
+              // A new tab keeps the sheet and everything typed in it.
+              policy: (chunks) => (
+                <Link href="/privacy" target="_blank" className={styles.policyLink}>
+                  {chunks}
+                </Link>
+              ),
+            })}
             name="consent"
             value="true"
             checked={values.consent}

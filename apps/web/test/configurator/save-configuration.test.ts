@@ -11,8 +11,8 @@ import {
   MemorySavedConfigurations,
   codesFrom,
   configuratorDeps,
-} from './support/fakes'
-import { seedModel } from './support/seed-model'
+} from '../support/fakes'
+import { seedModel } from '../support/seed-model'
 
 const model = seedModel('pikhta', 'pikhta-m')
 const SAVED_AT = new Date('2026-10-03T09:00:00Z')

@@ -8,7 +8,7 @@
     "email": "Email",
     "comment": "Comment",
     "commentHint": "Where the plot is, when to call — optional",
-    "consent": "I agree to the processing of my personal data to answer this request",
+    "consent": "I agree to the processing of my personal data to answer this request, under the <policy>personal data policy</policy>",
     "trap": "Leave this field empty"
   },
   "errors": {

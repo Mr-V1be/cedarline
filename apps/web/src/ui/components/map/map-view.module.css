@@ -1,0 +1,74 @@
+.frame {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  min-height: 280px;
+  border-radius: var(--radius-l);
+  background: var(--color-surface-sunken);
+  isolation: isolate;
+}
+
+/* One grid cell for the map and its overlays: MapLibre makes its container position: relative. */
+.map,
+.overlay {
+  grid-area: 1 / 1;
+  min-height: 0;
+}
+
+.overlay {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: var(--color-surface-sunken);
+}
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+}
+
+/* MapLibre controls in the site's language: tokens instead of the library's colours. */
+.frame :global(.maplibregl-ctrl-group) {
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+
+.frame :global(.maplibregl-ctrl-group button) {
+  width: var(--control-height);
+  height: var(--control-height);
+}
+
+.frame :global(.maplibregl-ctrl-group button + button) {
+  border-top-color: var(--color-line);
+}
+
+.frame :global(.maplibregl-ctrl-icon) {
+  filter: var(--map-control-filter, none);
+}
+
+.frame :global(.maplibregl-ctrl.maplibregl-ctrl-attrib),
+.frame :global(.maplibregl-ctrl-attrib.maplibregl-compact) {
+  background: var(--color-glass-pane);
+  color: var(--color-ink-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-2xs);
+}
+
+.frame :global(.maplibregl-ctrl-attrib a) {
+  color: inherit;
+}
+
+.frame :global(.maplibregl-ctrl-attrib-button) {
+  filter: var(--map-control-filter, none);
+}
+
+.frame :global(.maplibregl-cooperative-gesture-screen) {
+  background: var(--color-scrim);
+  color: var(--color-on-pine);
+  font-family: var(--font-ui);
+  font-size: var(--text-m);
+}

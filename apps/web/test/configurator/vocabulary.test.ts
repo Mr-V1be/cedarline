@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { createVocabulary, type Translate } from '@/modules/configurator/application/vocabulary'
 
-import { SEED_NAMES } from './support/seed-model'
+import { SEED_NAMES } from '../support/seed-model'
 
 /** Translators that echo the key and its values, so the test sees what was asked for. */
 const echo: Translate = (key, values) =>

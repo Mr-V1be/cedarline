@@ -69,12 +69,8 @@
           "name": "users_roles_parent_fk",
           "tableFrom": "users_roles",
           "tableTo": "users",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -157,12 +153,8 @@
           "name": "users_sessions_parent_id_fk",
           "tableFrom": "users_sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -582,12 +574,8 @@
           "name": "media_locales_parent_id_fk",
           "tableFrom": "media_locales",
           "tableTo": "media",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -763,12 +751,8 @@
           "name": "project_types_locales_parent_id_fk",
           "tableFrom": "project_types_locales",
           "tableTo": "project_types",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -943,12 +927,8 @@
           "name": "room_kinds_locales_parent_id_fk",
           "tableFrom": "room_kinds_locales",
           "tableTo": "room_kinds",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1048,12 +1028,8 @@
           "name": "projects_gallery_image_id_media_id_fk",
           "tableFrom": "projects_gallery",
           "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["image_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1061,12 +1037,8 @@
           "name": "projects_gallery_parent_id_fk",
           "tableFrom": "projects_gallery",
           "tableTo": "projects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1195,12 +1167,8 @@
           "name": "projects_design_rooms_kind_id_room_kinds_id_fk",
           "tableFrom": "projects_design_rooms",
           "tableTo": "room_kinds",
-          "columnsFrom": [
-            "kind_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["kind_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1208,12 +1176,8 @@
           "name": "projects_design_rooms_parent_id_fk",
           "tableFrom": "projects_design_rooms",
           "tableTo": "projects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1350,12 +1314,8 @@
           "name": "projects_design_openings_parent_id_fk",
           "tableFrom": "projects_design_openings",
           "tableTo": "projects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1464,12 +1424,8 @@
           "name": "projects_design_doors_parent_id_fk",
           "tableFrom": "projects_design_doors",
           "tableTo": "projects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1552,12 +1508,8 @@
           "name": "projects_configurator_sizes_parent_id_fk",
           "tableFrom": "projects_configurator_sizes",
           "tableTo": "projects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2031,12 +1983,8 @@
           "name": "projects_type_id_project_types_id_fk",
           "tableFrom": "projects",
           "tableTo": "project_types",
-          "columnsFrom": [
-            "type_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["type_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2044,12 +1992,8 @@
           "name": "projects_configurator_variant_of_id_projects_id_fk",
           "tableFrom": "projects",
           "tableTo": "projects",
-          "columnsFrom": [
-            "configurator_variant_of_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["configurator_variant_of_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2124,12 +2068,8 @@
           "name": "projects_locales_parent_id_fk",
           "tableFrom": "projects_locales",
           "tableTo": "projects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2203,12 +2143,8 @@
           "name": "projects_texts_parent_fk",
           "tableFrom": "projects_texts",
           "tableTo": "projects",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2400,12 +2336,8 @@
           "name": "built_objects_project_id_projects_id_fk",
           "tableFrom": "built_objects",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2413,12 +2345,8 @@
           "name": "built_objects_cover_id_media_id_fk",
           "tableFrom": "built_objects",
           "tableTo": "media",
-          "columnsFrom": [
-            "cover_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["cover_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2499,12 +2427,8 @@
           "name": "built_objects_locales_parent_id_fk",
           "tableFrom": "built_objects_locales",
           "tableTo": "built_objects",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2606,12 +2530,8 @@
           "name": "leads_deliveries_parent_id_fk",
           "tableFrom": "leads_deliveries",
           "tableTo": "leads",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2831,12 +2751,8 @@
           "name": "leads_configuration_id_configurations_id_fk",
           "tableFrom": "leads",
           "tableTo": "configurations",
-          "columnsFrom": [
-            "configuration_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["configuration_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2844,12 +2760,8 @@
           "name": "leads_project_id_projects_id_fk",
           "tableFrom": "leads",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2857,12 +2769,8 @@
           "name": "leads_proposal_id_documents_id_fk",
           "tableFrom": "leads",
           "tableTo": "documents",
-          "columnsFrom": [
-            "proposal_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["proposal_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -3050,12 +2958,8 @@
           "name": "configurations_project_id_projects_id_fk",
           "tableFrom": "configurations",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3063,12 +2967,8 @@
           "name": "configurations_render_id_documents_id_fk",
           "tableFrom": "configurations",
           "tableTo": "documents",
-          "columnsFrom": [
-            "render_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["render_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3076,12 +2976,8 @@
           "name": "configurations_proposal_id_documents_id_fk",
           "tableFrom": "configurations",
           "tableTo": "documents",
-          "columnsFrom": [
-            "proposal_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["proposal_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -3761,12 +3657,8 @@
           "name": "payload_locked_documents_rels_parent_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "payload_locked_documents",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3774,12 +3666,8 @@
           "name": "payload_locked_documents_rels_users_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3787,12 +3675,8 @@
           "name": "payload_locked_documents_rels_media_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "media",
-          "columnsFrom": [
-            "media_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["media_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3800,12 +3684,8 @@
           "name": "payload_locked_documents_rels_project_types_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "project_types",
-          "columnsFrom": [
-            "project_types_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_types_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3813,12 +3693,8 @@
           "name": "payload_locked_documents_rels_room_kinds_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "room_kinds",
-          "columnsFrom": [
-            "room_kinds_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["room_kinds_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3826,12 +3702,8 @@
           "name": "payload_locked_documents_rels_projects_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "projects",
-          "columnsFrom": [
-            "projects_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["projects_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3839,12 +3711,8 @@
           "name": "payload_locked_documents_rels_built_objects_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "built_objects",
-          "columnsFrom": [
-            "built_objects_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["built_objects_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3852,12 +3720,8 @@
           "name": "payload_locked_documents_rels_leads_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "leads",
-          "columnsFrom": [
-            "leads_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["leads_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3865,12 +3729,8 @@
           "name": "payload_locked_documents_rels_configurations_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "configurations",
-          "columnsFrom": [
-            "configurations_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["configurations_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3878,12 +3738,8 @@
           "name": "payload_locked_documents_rels_documents_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "documents",
-          "columnsFrom": [
-            "documents_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["documents_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3891,12 +3747,8 @@
           "name": "payload_locked_documents_rels_rate_limit_hits_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "rate_limit_hits",
-          "columnsFrom": [
-            "rate_limit_hits_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["rate_limit_hits_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4100,12 +3952,8 @@
           "name": "payload_preferences_rels_parent_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "payload_preferences",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4113,12 +3961,8 @@
           "name": "payload_preferences_rels_users_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4271,12 +4115,8 @@
           "name": "tariff_sections_parent_id_fk",
           "tableFrom": "tariff_sections",
           "tableTo": "tariff",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4345,12 +4185,8 @@
           "name": "tariff_sections_locales_parent_id_fk",
           "tableFrom": "tariff_sections_locales",
           "tableTo": "tariff_sections",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4428,12 +4264,8 @@
           "name": "tariff_rates_conditions_parent_id_fk",
           "tableFrom": "tariff_rates_conditions",
           "tableTo": "tariff_rates",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4529,12 +4361,8 @@
           "name": "tariff_rates_parent_id_fk",
           "tableFrom": "tariff_rates",
           "tableTo": "tariff",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4603,12 +4431,8 @@
           "name": "tariff_rates_locales_parent_id_fk",
           "tableFrom": "tariff_rates_locales",
           "tableTo": "tariff_rates",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4685,12 +4509,8 @@
           "name": "tariff_completeness_parent_id_fk",
           "tableFrom": "tariff_completeness",
           "tableTo": "tariff",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4759,12 +4579,8 @@
           "name": "tariff_completeness_locales_parent_id_fk",
           "tableFrom": "tariff_completeness_locales",
           "tableTo": "tariff_completeness",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4841,12 +4657,8 @@
           "name": "tariff_phases_parent_id_fk",
           "tableFrom": "tariff_phases",
           "tableTo": "tariff",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4915,12 +4727,8 @@
           "name": "tariff_phases_locales_parent_id_fk",
           "tableFrom": "tariff_phases_locales",
           "tableTo": "tariff_phases",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4998,12 +4806,8 @@
           "name": "tariff_stages_conditions_parent_id_fk",
           "tableFrom": "tariff_stages_conditions",
           "tableTo": "tariff_stages",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5112,12 +4916,8 @@
           "name": "tariff_stages_parent_id_fk",
           "tableFrom": "tariff_stages",
           "tableTo": "tariff",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5186,12 +4986,8 @@
           "name": "tariff_stages_locales_parent_id_fk",
           "tableFrom": "tariff_stages_locales",
           "tableTo": "tariff_stages",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5325,12 +5121,8 @@
           "name": "tariff_texts_parent_fk",
           "tableFrom": "tariff_texts",
           "tableTo": "tariff",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5407,12 +5199,8 @@
           "name": "catalog_options_facade_palettes_colors_parent_id_fk",
           "tableFrom": "catalog_options_facade_palettes_colors",
           "tableTo": "catalog_options_facade_palettes",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5481,12 +5269,8 @@
           "name": "catalog_options_facade_palettes_colors_locales_parent_id_fk",
           "tableFrom": "catalog_options_facade_palettes_colors_locales",
           "tableTo": "catalog_options_facade_palettes_colors",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5564,12 +5348,8 @@
           "name": "catalog_options_facade_palettes_parent_id_fk",
           "tableFrom": "catalog_options_facade_palettes",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5647,12 +5427,8 @@
           "name": "catalog_options_roof_kinds_parent_fk",
           "tableFrom": "catalog_options_roof_kinds",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5730,12 +5506,8 @@
           "name": "catalog_options_window_styles_parent_fk",
           "tableFrom": "catalog_options_window_styles",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5812,12 +5584,8 @@
           "name": "catalog_options_engineering_systems_parent_id_fk",
           "tableFrom": "catalog_options_engineering_systems",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5886,12 +5654,8 @@
           "name": "catalog_options_engineering_systems_locales_parent_id_fk",
           "tableFrom": "catalog_options_engineering_systems_locales",
           "tableTo": "catalog_options_engineering_systems",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5969,12 +5733,8 @@
           "name": "catalog_options_rules_conditions_parent_id_fk",
           "tableFrom": "catalog_options_rules_conditions",
           "tableTo": "catalog_options_rules",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6051,12 +5811,8 @@
           "name": "catalog_options_rules_parent_id_fk",
           "tableFrom": "catalog_options_rules",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6125,12 +5881,8 @@
           "name": "catalog_options_rules_locales_parent_id_fk",
           "tableFrom": "catalog_options_rules_locales",
           "tableTo": "catalog_options_rules",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6242,12 +5994,8 @@
           "name": "catalog_options_texts_parent_fk",
           "tableFrom": "catalog_options_texts",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6321,12 +6069,8 @@
           "name": "catalog_options_numbers_parent_fk",
           "tableFrom": "catalog_options_numbers",
           "tableTo": "catalog_options",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6422,12 +6166,8 @@
           "name": "technology_layers_parent_id_fk",
           "tableFrom": "technology_layers",
           "tableTo": "technology",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6496,12 +6236,8 @@
           "name": "technology_layers_locales_parent_id_fk",
           "tableFrom": "technology_layers_locales",
           "tableTo": "technology_layers",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6578,12 +6314,8 @@
           "name": "technology_insulation_options_parent_id_fk",
           "tableFrom": "technology_insulation_options",
           "tableTo": "technology",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6676,12 +6408,8 @@
           "name": "home_hero_project_id_projects_id_fk",
           "tableFrom": "home",
           "tableTo": "projects",
-          "columnsFrom": [
-            "hero_project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["hero_project_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -6815,12 +6543,8 @@
           "name": "home_rels_parent_fk",
           "tableFrom": "home_rels",
           "tableTo": "home",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -6828,12 +6552,8 @@
           "name": "home_rels_projects_fk",
           "tableFrom": "home_rels",
           "tableTo": "projects",
-          "columnsFrom": [
-            "projects_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["projects_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -6841,12 +6561,8 @@
           "name": "home_rels_built_objects_fk",
           "tableFrom": "home_rels",
           "tableTo": "built_objects",
-          "columnsFrom": [
-            "built_objects_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["built_objects_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6976,12 +6692,8 @@
           "name": "site_locales_parent_id_fk",
           "tableFrom": "site_locales",
           "tableTo": "site",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -6997,166 +6709,97 @@
     "public._locales": {
       "name": "_locales",
       "schema": "public",
-      "values": [
-        "ru",
-        "en"
-      ]
+      "values": ["ru", "en"]
     },
     "public.enum_users_roles": {
       "name": "enum_users_roles",
       "schema": "public",
-      "values": [
-        "admin",
-        "content-manager",
-        "sales-manager"
-      ]
+      "values": ["admin", "content-manager", "sales-manager"]
     },
     "public.enum_projects_gallery_view": {
       "name": "enum_projects_gallery_view",
       "schema": "public",
-      "values": [
-        "front",
-        "evening",
-        "back",
-        "side",
-        "aerial",
-        "detail"
-      ]
+      "values": ["front", "evening", "back", "side", "aerial", "detail"]
     },
     "public.enum_projects_design_openings_type": {
       "name": "enum_projects_design_openings_type",
       "schema": "public",
-      "values": [
-        "window",
-        "door"
-      ]
+      "values": ["window", "door"]
     },
     "public.enum_projects_design_openings_role": {
       "name": "enum_projects_design_openings_role",
       "schema": "public",
-      "values": [
-        "view",
-        "standard"
-      ]
+      "values": ["view", "standard"]
     },
     "public.enum_projects_design_openings_side": {
       "name": "enum_projects_design_openings_side",
       "schema": "public",
-      "values": [
-        "front",
-        "right",
-        "back",
-        "left"
-      ]
+      "values": ["front", "right", "back", "left"]
     },
     "public.enum_projects_design_doors_orientation": {
       "name": "enum_projects_design_doors_orientation",
       "schema": "public",
-      "values": [
-        "horizontal",
-        "vertical"
-      ]
+      "values": ["horizontal", "vertical"]
     },
     "public.enum_projects_status": {
       "name": "enum_projects_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
+      "values": ["draft", "published"]
     },
     "public.enum_projects_design_ridge_axis": {
       "name": "enum_projects_design_ridge_axis",
       "schema": "public",
-      "values": [
-        "x",
-        "y"
-      ]
+      "values": ["x", "y"]
     },
     "public.enum_projects_design_terrace_reach": {
       "name": "enum_projects_design_terrace_reach",
       "schema": "public",
-      "values": [
-        "left",
-        "right",
-        "both"
-      ]
+      "values": ["left", "right", "both"]
     },
     "public.enum_projects_defaults_roof_kind": {
       "name": "enum_projects_defaults_roof_kind",
       "schema": "public",
-      "values": [
-        "gable",
-        "shed",
-        "gambrel"
-      ]
+      "values": ["gable", "shed", "gambrel"]
     },
     "public.enum_projects_defaults_facade_finish": {
       "name": "enum_projects_defaults_facade_finish",
       "schema": "public",
-      "values": [
-        "timber-imitation",
-        "planken",
-        "fiber-cement"
-      ]
+      "values": ["timber-imitation", "planken", "fiber-cement"]
     },
     "public.enum_projects_defaults_window_style": {
       "name": "enum_projects_defaults_window_style",
       "schema": "public",
-      "values": [
-        "standard",
-        "panoramic"
-      ]
+      "values": ["standard", "panoramic"]
     },
     "public.enum_built_objects_status": {
       "name": "enum_built_objects_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
+      "values": ["draft", "published"]
     },
     "public.enum_leads_deliveries_status": {
       "name": "enum_leads_deliveries_status",
       "schema": "public",
-      "values": [
-        "delivered",
-        "failed"
-      ]
+      "values": ["delivered", "failed"]
     },
     "public.enum_leads_status": {
       "name": "enum_leads_status",
       "schema": "public",
-      "values": [
-        "new",
-        "in-progress",
-        "won",
-        "lost"
-      ]
+      "values": ["new", "in-progress", "won", "lost"]
     },
     "public.enum_leads_locale": {
       "name": "enum_leads_locale",
       "schema": "public",
-      "values": [
-        "ru",
-        "en"
-      ]
+      "values": ["ru", "en"]
     },
     "public.enum_configurations_locale": {
       "name": "enum_configurations_locale",
       "schema": "public",
-      "values": [
-        "ru",
-        "en"
-      ]
+      "values": ["ru", "en"]
     },
     "public.enum_documents_kind": {
       "name": "enum_documents_kind",
       "schema": "public",
-      "values": [
-        "render",
-        "proposal"
-      ]
+      "values": ["render", "proposal"]
     },
     "public.enum_tariff_rates_conditions_option": {
       "name": "enum_tariff_rates_conditions_option",
@@ -7245,37 +6888,22 @@
     "public.enum_tariff_advertised_rounding_mode": {
       "name": "enum_tariff_advertised_rounding_mode",
       "schema": "public",
-      "values": [
-        "up",
-        "down",
-        "nearest"
-      ]
+      "values": ["up", "down", "nearest"]
     },
     "public.enum_catalog_options_facade_palettes_finish": {
       "name": "enum_catalog_options_facade_palettes_finish",
       "schema": "public",
-      "values": [
-        "timber-imitation",
-        "planken",
-        "fiber-cement"
-      ]
+      "values": ["timber-imitation", "planken", "fiber-cement"]
     },
     "public.enum_catalog_options_roof_kinds": {
       "name": "enum_catalog_options_roof_kinds",
       "schema": "public",
-      "values": [
-        "gable",
-        "shed",
-        "gambrel"
-      ]
+      "values": ["gable", "shed", "gambrel"]
     },
     "public.enum_catalog_options_window_styles": {
       "name": "enum_catalog_options_window_styles",
       "schema": "public",
-      "values": [
-        "standard",
-        "panoramic"
-      ]
+      "values": ["standard", "panoramic"]
     },
     "public.enum_catalog_options_rules_conditions_option": {
       "name": "enum_catalog_options_rules_conditions_option",
@@ -7294,14 +6922,7 @@
     "public.enum_technology_layers_role": {
       "name": "enum_technology_layers_role",
       "schema": "public",
-      "values": [
-        "cladding",
-        "air-gap",
-        "membrane",
-        "insulation",
-        "batten",
-        "lining"
-      ]
+      "values": ["cladding", "air-gap", "membrane", "insulation", "batten", "lining"]
     }
   },
   "schemas": {},

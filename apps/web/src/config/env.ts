@@ -8,6 +8,10 @@ loadRootEnv()
 export const LEAD_SINK_KEYS = ['cms', 'bitrix24'] as const
 export type LeadSinkKey = (typeof LEAD_SINK_KEYS)[number]
 
+/** An empty value in `.env` means «use the default», as if the line were absent. */
+const withDefault = <T extends z.ZodType>(type: T) =>
+  z.preprocess((value) => (value === '' ? undefined : value), type)
+
 const schema = z
   .object({
     DATABASE_URL: z.url({ protocol: /^postgres(ql)?$/ }),
@@ -33,6 +37,13 @@ const schema = z
       .union([z.url(), z.literal('')])
       .optional()
       .default(''),
+    MAP_STYLE_LIGHT_URL: withDefault(
+      z.url().default('https://tiles.openfreemap.org/styles/positron'),
+    ),
+    MAP_STYLE_DARK_URL: withDefault(z.url().default('https://tiles.openfreemap.org/styles/dark')),
+    CBR_DAILY_INFO_URL: withDefault(
+      z.url().default('https://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx'),
+    ),
   })
   .refine((value) => !value.LEAD_SINKS.includes('bitrix24') || value.BITRIX24_WEBHOOK_URL !== '', {
     message: 'BITRIX24_WEBHOOK_URL is required when LEAD_SINKS includes bitrix24',
