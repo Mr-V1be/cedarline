@@ -148,6 +148,11 @@ export default tseslint.config(
       ],
     },
   },
+  // k6 scripts run inside k6, which provides its own modules and the __ENV global.
+  {
+    files: ['tools/load/**/*.js'],
+    languageOptions: { globals: { __ENV: 'readonly' } },
+  },
   // Command-line tools report to the terminal.
   {
     files: ['tools/**/*.mjs', 'apps/web/scripts/**/*.ts', 'apps/web/src/seed/**/*.ts'],
