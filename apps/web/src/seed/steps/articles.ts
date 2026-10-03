@@ -4,9 +4,19 @@ import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richt
 import type { Payload } from 'payload'
 import sharp from 'sharp'
 
-import { ARTICLES, type ArticleCover, type ArticleSeed } from '../data/articles'
+import {
+  ARTICLES,
+  SCHEME_ALTS,
+  isSchemeName,
+  type ArticlePicture,
+  type SchemeName,
+} from '../data/articles'
 import type { Localized } from '../data/localized'
-import { pileFoundationScheme, wallSectionScheme } from '../data/schemes'
+import {
+  insulationComparisonScheme,
+  pileFoundationScheme,
+  wallSectionScheme,
+} from '../data/schemes'
 import { WALL_LAYERS } from '../data/technology'
 import { DEFAULT_STANDARDS } from '@kedrovnik/house'
 import { holdsSeedFile } from './media'
@@ -15,9 +25,15 @@ import { SEED, translate, upsert } from './upsert'
 const SCHEME_SOURCE = 'Схема, нарисованная по данным сайта / scheme drawn from the site data'
 const WEBP = { quality: 88, effort: 5 } as const
 
-const SCHEMES: Readonly<Record<Extract<ArticleCover, { kind: 'scheme' }>['name'], () => string>> = {
+/** The wall with another insulation thickness: deeper studs, the other layers unchanged. */
+const wallWithInsulation = (thickness: number) =>
+  WALL_LAYERS.map((layer) => (layer.role === 'insulation' ? { ...layer, thickness } : layer))
+
+const SCHEMES: Readonly<Record<SchemeName, () => string>> = {
   'wall-section': () => wallSectionScheme(WALL_LAYERS),
   'pile-foundation': () => pileFoundationScheme(DEFAULT_STANDARDS),
+  'insulation-compare': () =>
+    insulationComparisonScheme(wallWithInsulation(150), wallWithInsulation(200)),
 }
 
 /** A scheme cover as a media document, keyed by name and replaced when the drawing changes. */
@@ -81,10 +97,55 @@ async function existingRender(payload: Payload, name: string) {
   return media.id
 }
 
-const coverOf = (payload: Payload, article: ArticleSeed) =>
-  article.cover.kind === 'scheme'
-    ? seedScheme(payload, article.cover.name, article.coverAlt)
-    : existingRender(payload, article.cover.name)
+/** Media document of an article picture; schemes are drawn and stored on the way. */
+const pictureOf = (payload: Payload, picture: ArticlePicture) =>
+  picture.kind === 'scheme'
+    ? seedScheme(payload, picture.name, SCHEME_ALTS[picture.name])
+    : existingRender(payload, picture.name)
+
+/** A line of its own placing a picture in the text: `{{figure:render:kedr-aerial}}`. */
+const FIGURE_LINE = /^\{\{figure:(render|scheme):([a-z0-9-]+)\}\}$/m
+
+const parsePicture = (kind: string, name: string): ArticlePicture => {
+  if (kind === 'render') return { kind, name }
+  if (isSchemeName(name)) return { kind: 'scheme', name }
+  throw new Error(`Unknown scheme ${name} in an article figure`)
+}
+
+/** Lexical id of a figure node: stable per article and position, so a reseed changes nothing. */
+const figureId = (slug: string, index: number) =>
+  createHash('sha256').update(`figure:${slug}:${index}`).digest('hex').slice(0, 24)
+
+type LexicalState = ReturnType<typeof convertMarkdownToLexical>
+
+/**
+ * The article body: Markdown converted to the editor's format, with figure lines turned into
+ * image nodes of the media they name (rendered as figures with the image's caption).
+ */
+async function articleBody(
+  payload: Payload,
+  slug: string,
+  markdown: string,
+  toLexical: (markdown: string) => LexicalState,
+): Promise<LexicalState> {
+  const pieces = markdown.split(new RegExp(FIGURE_LINE.source, 'gm'))
+  const state = toLexical(pieces[0] ?? '')
+  const children = [...state.root.children]
+  for (let index = 1; index + 1 < pieces.length; index += 3) {
+    const picture = parsePicture(pieces[index] ?? '', pieces[index + 1] ?? '')
+    children.push({
+      type: 'upload',
+      version: 3,
+      format: '',
+      id: figureId(slug, index),
+      fields: {},
+      relationTo: 'media',
+      value: await pictureOf(payload, picture),
+    } as (typeof children)[number])
+    children.push(...toLexical(pieces[index + 2] ?? '').root.children)
+  }
+  return { ...state, root: { ...state.root, children } }
+}
 
 export async function seedArticles(payload: Payload, projects: Map<string, number>) {
   const editorConfig = await editorConfigFactory.default({ config: payload.config })
@@ -101,15 +162,15 @@ export async function seedArticles(payload: Payload, projects: Map<string, numbe
         publishedAt: article.publishedAt,
         title: article.title.ru,
         excerpt: article.excerpt.ru,
-        body: lexical(article.body.ru),
-        cover: await coverOf(payload, article),
+        body: await articleBody(payload, article.slug, article.body.ru, lexical),
+        cover: await pictureOf(payload, article.cover),
         projects: article.projects.flatMap((slug) => projects.get(slug) ?? []),
       },
     )
     await translate(payload, 'articles', id, {
       title: article.title.en,
       excerpt: article.excerpt.en,
-      body: lexical(article.body.en),
+      body: await articleBody(payload, article.slug, article.body.en, lexical),
     })
   }
   return ARTICLES.length

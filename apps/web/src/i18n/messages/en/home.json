@@ -9,7 +9,7 @@
   },
   "featured": {
     "title": "Selected projects",
-    "lead": "Prices are for the base specification with materials, delivery and assembly."
+    "lead": "Prices are for the base package with materials, delivery and assembly."
   },
   "technology": {
     "title": "The wall in section",
@@ -25,7 +25,7 @@
   },
   "process": {
     "title": "Stages and timing",
-    "lead": "Schedule of the “{project}” project, “{completeness}” specification. The kit is made in the factory while piles go in on site."
+    "lead": "Schedule of the “{project}” project, “{completeness}” package. The kit is made in the workshop while piles go in on site."
   },
   "built": {
     "title": "Built houses",

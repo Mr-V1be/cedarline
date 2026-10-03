@@ -70,7 +70,7 @@ export const PRODUCTION: {
       title: t('Монтаж на сваях', 'Assembly on piles'),
       text: t(
         'Панели ставят на обвязку по маркировке, затем перекрытия и кровля. Дом закрыт от погоды в первую неделю.',
-        'Panels go onto the strapping beam by their marks, then the floors and the roof. The house is weather-tight in the first week.',
+        'Panels go onto the strapping beam by their marks, then the floors and the roof. The house is weathertight in the first week.',
       ),
     },
   ],

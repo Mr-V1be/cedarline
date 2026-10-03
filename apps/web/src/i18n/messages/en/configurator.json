@@ -38,7 +38,7 @@
     "terrace": "Terrace",
     "insulation": "Wall insulation",
     "engineering": "Building services",
-    "completeness": "Completeness"
+    "completeness": "Package"
   },
   "values": {
     "footprint": "{width, number, ::.#} × {depth, number, ::.#} m",
@@ -58,7 +58,7 @@
   "restrictions": {
     "rule": "This combination is not built.",
     "requires": "Choose first: {systems}.",
-    "requiredBy": "{systems} depends on this system. Remove it first.",
+    "requiredBy": "First switch off what depends on it: {systems}.",
     "atticRoof": "An attic does not fit under a {roof} roof: choose a gable or gambrel roof.",
     "geometry": {
       "OPENING_OUT_OF_WALL": "With this footprint the windows do not fit in the wall.",
@@ -73,12 +73,12 @@
   "estimate": {
     "title": "Estimate",
     "total": "Total",
-    "completeness": "“{name}” completeness",
+    "completeness": "“{name}” package",
     "line": "{quantity} × {price}",
     "schedule": "Build time",
     "phase": "{name}: {weeks}",
     "area": "Total area",
-    "note": "Prices include materials, delivery and assembly. Item amounts are exact; the catalog’s “from” price is rounded."
+    "note": "Prices include materials, delivery and assembly. Item amounts are exact; the catalogue’s “from” price is rounded."
   },
   "actions": {
     "save": "Save and share",
@@ -95,15 +95,15 @@
     "lead": "The link opens exactly this configuration at today’s price, even if the tariff changes later.",
     "link": "Configuration link",
     "error": "Could not save. Check the connection and try again.",
-    "limited": "Too many saves in a row. Try again in a few minutes."
+    "limited": "Too many saves in a row. Try again in an hour."
   },
   "saved": {
     "eyebrow": "Saved configuration",
     "savedAt": "Saved on {date}, prices under tariff revision {revision}",
     "changed": "Prices have changed since: today this configuration costs {amount}.",
-    "unavailable": "This configuration cannot be repeated exactly today: the catalog has changed. The estimate below is as it was saved.",
+    "unavailable": "This configuration cannot be repeated exactly today: the catalogue has changed. The estimate below is as it was saved.",
     "options": "Configuration",
-    "restored": "The saved configuration cannot be opened as it was because the catalog has changed. The project opens with its defaults."
+    "restored": "The saved configuration cannot be opened as it was because the catalogue has changed. The project opens with its defaults."
   },
   "stage": {
     "label": "3D model: {project}",

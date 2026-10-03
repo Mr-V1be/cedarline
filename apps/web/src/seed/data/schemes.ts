@@ -74,24 +74,20 @@ function verticalDimension(x: number, y0: number, y1: number, value: string) {
   )
 }
 
-/** Plan section of the exterior wall, outside on the left, every layer to scale. */
-export function wallSectionScheme(
-  layers: ReadonlyArray<{ readonly role: LayerRole; readonly thickness: number }>,
-): string {
-  const total = layers.reduce((sum, layer) => sum + layer.thickness, 0)
-  const scale = 1100 / total
-  const left = (WIDTH - total * scale) / 2
-  const top = 230
-  const bottom = 930
+type WallLayers = ReadonlyArray<{ readonly role: LayerRole; readonly thickness: number }>
+
+const wallThickness = (layers: WallLayers) =>
+  layers.reduce((sum, layer) => sum + layer.thickness, 0)
+
+/** One wall section drawn from `left` at `scale` px/mm: layers, studs and dimension lines. */
+function section(layers: WallLayers, left: number, scale: number, top: number, bottom: number) {
   const thin = 6
   let x = left
   const parts: string[] = []
-  const dimensions: string[] = []
   for (const layer of layers) {
     const width = Math.max(layer.thickness * scale, thin)
-    const fill = FILL[layer.role]
     parts.push(
-      `<rect x="${x}" y="${top}" width="${width}" height="${bottom - top}" fill="${fill}" stroke="${INK.line}" stroke-width="2"/>`,
+      `<rect x="${x}" y="${top}" width="${width}" height="${bottom - top}" fill="${FILL[layer.role]}" stroke="${INK.line}" stroke-width="2"/>`,
     )
     if (layer.role === 'insulation') {
       parts.push(
@@ -104,11 +100,30 @@ export function wallSectionScheme(
       )
     }
     if (layer.thickness >= 10)
-      dimensions.push(dimension(x, x + width, bottom + 80, String(layer.thickness)))
+      parts.push(dimension(x, x + width, bottom + 80, String(layer.thickness)))
     x += width
   }
+  parts.push(dimension(left, x, bottom + 190, String(wallThickness(layers))))
+  return parts.join('')
+}
+
+/** Plan section of the exterior wall, outside on the left, every layer to scale. */
+export function wallSectionScheme(layers: WallLayers): string {
+  const scale = 1100 / wallThickness(layers)
+  return frame(section(layers, (WIDTH - wallThickness(layers) * scale) / 2, scale, 230, 930))
+}
+
+/**
+ * The same wall with two insulation thicknesses side by side, at one scale: what the 50 mm of
+ * extra wool and the deeper studs add to the wall.
+ */
+export function insulationComparisonScheme(thinner: WallLayers, thicker: WallLayers): string {
+  const gap = 260
+  const scale = (WIDTH - 2 * 160 - gap) / (wallThickness(thinner) + wallThickness(thicker))
+  const left = (WIDTH - (wallThickness(thinner) + wallThickness(thicker)) * scale - gap) / 2
   return frame(
-    parts.join('') + dimensions.join('') + dimension(left, x, bottom + 190, String(total)),
+    section(thinner, left, scale, 230, 930) +
+      section(thicker, left + wallThickness(thinner) * scale + gap, scale, 230, 930),
   )
 }
 

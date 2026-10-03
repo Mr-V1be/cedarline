@@ -21,7 +21,7 @@
     },
     "content-manager": {
       "title": "Content manager",
-      "summary": "Catalog, prices and articles, no developer needed.",
+      "summary": "Catalogue, prices and articles, no developer needed.",
       "enter": "Sign in as a content manager"
     },
     "admin": {

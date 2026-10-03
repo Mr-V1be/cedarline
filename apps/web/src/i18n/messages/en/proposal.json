@@ -5,7 +5,7 @@
   "project": "{name} project",
   "facts": {
     "total": "Price",
-    "completeness": "Completeness",
+    "completeness": "Package",
     "term": "Build time",
     "termValue": "{weeks} from contract to handover",
     "area": "Total area",

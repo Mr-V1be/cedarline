@@ -4,7 +4,7 @@
     "description": "Houses, saunas and guest houses handed over by Kedrovnik in St Petersburg and Leningrad Oblast: the project, year and area of each."
   },
   "title": "Built houses",
-  "lead": "Every point is a handed-over house: a catalog project, its year and area.",
+  "lead": "Every point is a handed-over house: a catalogue project, its year and area.",
   "facts": {
     "houses": "{count, plural, one {# house handed over} other {# houses handed over}}",
     "settlements": "{count, plural, one {in # settlement} other {in # settlements}}",
@@ -24,7 +24,7 @@
   "empty": {
     "title": "Nothing to show yet",
     "description": "Handed-over houses appear here once they are published.",
-    "action": "Go to the catalog"
+    "action": "Go to the catalogue"
   },
   "error": {
     "title": "The houses did not load",

@@ -17,7 +17,7 @@
   },
   "price": {
     "from": "Price from",
-    "completeness": "“{name}” specification",
+    "completeness": "“{name}” package",
     "duration": "Construction time"
   },
   "gallery": {
@@ -37,7 +37,7 @@
     "drawing": "Plan: {level}. Dimensions in millimetres."
   },
   "completeness": {
-    "title": "Specifications",
+    "title": "Packages",
     "lead": "Prices include materials, delivery and assembly. Time runs from contract to handover.",
     "includes": "Included"
   },
