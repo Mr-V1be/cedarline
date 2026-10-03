@@ -55,7 +55,8 @@ export default tseslint.config(
       ],
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
-      'import-x/no-cycle': 'error',
+      // Cycles inside the workspace; walking into dependencies costs memory and finds nothing of ours.
+      'import-x/no-cycle': ['error', { ignoreExternal: true }],
       'import-x/no-duplicates': 'error',
       'no-console': ['error', { allow: ['error', 'warn'] }],
     },

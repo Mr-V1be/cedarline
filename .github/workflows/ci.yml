@@ -28,7 +28,11 @@ jobs:
       - name: Code shape (file and folder size limits)
         run: pnpm gate:shape
       - run: pnpm typecheck
-      - run: pnpm lint
+      - name: Lint
+        run: pnpm lint
+        env:
+          # Typed linting of the whole workspace needs more than the runner's default heap.
+          NODE_OPTIONS: --max-old-space-size=3072
       - run: pnpm format:check
       - run: pnpm test
 
