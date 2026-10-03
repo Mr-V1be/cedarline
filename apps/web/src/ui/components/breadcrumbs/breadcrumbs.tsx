@@ -19,7 +19,7 @@ export function Breadcrumbs({
   readonly label: string
 }) {
   return (
-    <nav aria-label={label}>
+    <nav aria-label={label} className={styles.nav}>
       <ol className={styles.list}>
         {items.map((item, index) => (
           <li key={item.label} className={styles.item}>
@@ -27,7 +27,7 @@ export function Breadcrumbs({
               <Icon glyph={CaretRightIcon} size="s" className={styles.separator} />
             ) : null}
             {item.href === undefined ? (
-              <span aria-current="page" className={styles.current}>
+              <span aria-current="page" className={styles.current} title={item.label}>
                 {item.label}
               </span>
             ) : (
