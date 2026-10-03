@@ -1,6 +1,10 @@
-.page {
+.top {
   display: grid;
   gap: var(--space-6);
+  padding-top: var(--space-6);
+}
+
+.content {
   padding-block: var(--space-6) var(--section-gap);
 }
 
@@ -125,4 +129,9 @@
   .more {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.loadingBody {
+  display: grid;
+  gap: var(--space-3);
 }

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getFormatter, getTranslations } from 'next-intl/server'
 
@@ -8,7 +7,6 @@ import { env } from '@/config/env'
 import type { Locale } from '@/i18n/locales'
 import { ProjectActionBar } from '@/modules/catalog/ui/project-action-bar'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'
-import { ProjectSummary } from '@/modules/catalog/ui/project-summary'
 import { HouseStage } from '@/modules/house-3d/ui/house-stage'
 import { FloorPlans } from '@/modules/plans/ui/floor-plans'
 import { formatRubles } from '@/modules/pricing/ui/money'
@@ -17,15 +15,12 @@ import { breadcrumbSchema, productSchema } from '@/modules/seo/application/struc
 import { JsonLd } from '@/modules/seo/ui/json-ld'
 import { localizedPath, pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { resolveWall } from '@/modules/technology/domain/wall-assembly'
-import { Breadcrumbs } from '@/ui/components/breadcrumbs/breadcrumbs'
 import { Facts } from '@/ui/components/facts/facts'
-import { Gallery } from '@/ui/components/gallery/gallery'
 import { Container, Section } from '@/ui/components/layout/container'
 import { SectionHeading } from '@/ui/components/section-heading/section-heading'
 import { ClientMessages } from '@/i18n/client-messages'
 
 import { loadOverview } from './load-overview'
-import styles from './project.module.css'
 
 /** Every request reads current catalog data; caching belongs to the repositories. */
 export const dynamic = 'force-dynamic'
@@ -67,7 +62,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     getFormatter(),
   ])
   const wall = resolveWall(technology.layers, project.options.insulation)
-  const cheapest = offers.find((offer) => offer.key === project.pricing?.fromCompleteness) ?? null
 
   const url = (path: string) => `${env.SITE_URL}${localizedPath(locale, path)}`
 
@@ -91,51 +85,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           { name: project.title, url: url(`/projects/${project.slug}`) },
         ])}
       />
-      <Container className={styles.top}>
-        <Breadcrumbs
-          label={t('breadcrumbs.label')}
-          items={[{ label: t('breadcrumbs.catalog'), href: '/projects' }, { label: project.title }]}
-        />
-        <div className={styles.hero}>
-          <div className={styles.media}>
-            <Gallery
-              labels={{
-                region: t('gallery.region'),
-                previous: t('gallery.previous'),
-                next: t('gallery.next'),
-              }}
-              slides={project.gallery.map((item, index) => ({
-                key: `view-${item.view}`,
-                label: registry(`galleryView.${item.view}`),
-                content: (
-                  <Image
-                    className={styles.slideImage}
-                    src={item.image.url}
-                    alt={item.image.alt}
-                    fill
-                    sizes="(min-width: 1024px) 60vw, 100vw"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                  />
-                ),
-                thumbnail: (
-                  <Image
-                    className={styles.slideImage}
-                    src={item.image.url}
-                    alt=""
-                    fill
-                    sizes="88px"
-                  />
-                ),
-              }))}
-            />
-          </div>
-          <aside className={styles.summary}>
-            <ProjectSummary project={project} completenessName={cheapest?.name ?? null} />
-          </aside>
-        </div>
-      </Container>
-
       <Section id="model" aria-labelledby="model-title">
         <Container>
           <SectionHeading id="model-title" title={t('gallery.model')} />

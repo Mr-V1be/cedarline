@@ -1,31 +1,10 @@
 .frame {
   display: grid;
-  gap: var(--space-5);
-  padding-block: var(--space-5) var(--section-gap);
+  gap: var(--space-6);
+  padding-block: var(--section-gap);
 }
 
-.hero {
-  display: grid;
-  gap: var(--space-7);
-}
-
-@media (width >= 1024px) {
-  .hero {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-    gap: var(--space-8);
-  }
-}
-
-.media {
-  aspect-ratio: 16 / 10;
-}
-
-.summary {
-  display: grid;
-  gap: var(--space-4);
-  align-content: start;
-}
-
-.price {
-  height: 8rem;
+.stage {
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-m);
 }

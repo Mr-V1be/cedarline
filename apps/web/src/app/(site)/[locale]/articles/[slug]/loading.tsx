@@ -5,18 +5,12 @@ import styles from './article.module.css'
 
 const LINES = 8
 
+/** The body while it streams; the header and cover come with the layout. */
 export default function ArticleLoading() {
   return (
-    <Container className={styles.page}>
-      <Skeleton shape="line" style={{ width: 'min(240px, 60%)' }} />
-      <header className={styles.header}>
-        <Skeleton shape="line" style={{ width: 'min(300px, 70%)' }} />
-        <Skeleton shape="line" style={{ width: 'min(760px, 95%)', height: '3.5rem' }} />
-        <Skeleton shape="line" style={{ width: 'min(620px, 90%)' }} />
-      </header>
-      <Skeleton className={styles.cover} />
+    <Container className={styles.content}>
       <div className={styles.layout}>
-        <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div className={styles.loadingBody}>
           {Array.from({ length: LINES }, (_, index) => (
             <Skeleton
               key={index}

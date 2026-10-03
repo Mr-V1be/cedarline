@@ -3,20 +3,15 @@ import { Skeleton } from '@/ui/components/skeleton/skeleton'
 
 import styles from './loading.module.css'
 
-/** Same two-column frame as the project page: gallery and summary. */
+/**
+ * The sections below the hero while they stream: the 3D model's heading and stage. The hero
+ * itself comes with the layout.
+ */
 export default function ProjectLoading() {
   return (
     <Container className={styles.frame}>
-      <Skeleton shape="line" style={{ width: '12rem' }} />
-      <div className={styles.hero}>
-        <Skeleton className={styles.media} />
-        <div className={styles.summary}>
-          <Skeleton shape="line" style={{ width: '30%' }} />
-          <Skeleton shape="line" style={{ width: '70%', height: '2.5em' }} />
-          <Skeleton shape="line" style={{ width: '90%' }} />
-          <Skeleton className={styles.price} />
-        </div>
-      </div>
+      <Skeleton shape="line" style={{ width: 'min(16rem, 60%)', height: '2.5em' }} />
+      <Skeleton className={styles.stage} />
     </Container>
   )
 }
