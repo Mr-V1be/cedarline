@@ -15,6 +15,21 @@ const RENDER_SOURCE = 'Рендер 3D-сцены сайта / render of the sit
 export const renderFile = (name: string) => path.join(RENDER_DIRECTORY, `${name}.webp`)
 
 /**
+ * Whether a seeded media document still holds the seed's file: stored under the asset's name
+ * and present on disk. A file replaced in the CMS (the demo stand lets visitors do it) gets
+ * the uploaded file's name, so the seed puts its own file back.
+ */
+export function holdsSeedFile(
+  payload: Payload,
+  filename: string | null | undefined,
+  name: string,
+): boolean {
+  if (typeof filename !== 'string' || !filename.startsWith(name)) return false
+  const { staticDir = '' } = payload.collections.media.config.upload
+  return existsSync(path.resolve(process.cwd(), staticDir, filename))
+}
+
+/**
  * Uploads a render and returns its id, or null when the render has not been produced yet.
  * Renders are found by their import key; a re-produced render (another checksum) replaces the
  * file of the same media document, so every page that shows it keeps its link.
@@ -48,7 +63,8 @@ export async function seedRender(
     id = created.id
   } else {
     id = stored.id
-    const changed = stored.origin?.checksum !== checksum
+    const changed =
+      stored.origin?.checksum !== checksum || !holdsSeedFile(payload, stored.filename, name)
     await withVersionedName(source, checksum, changed, (filePath) =>
       payload.update({
         ...SEED,

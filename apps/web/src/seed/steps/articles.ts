@@ -9,6 +9,7 @@ import type { Localized } from '../data/localized'
 import { pileFoundationScheme, wallSectionScheme } from '../data/schemes'
 import { WALL_LAYERS } from '../data/technology'
 import { DEFAULT_STANDARDS } from '@kedrovnik/house'
+import { holdsSeedFile } from './media'
 import { SEED, translate, upsert } from './upsert'
 
 const SCHEME_SOURCE = 'Схема, нарисованная по данным сайта / scheme drawn from the site data'
@@ -57,7 +58,10 @@ async function seedScheme(payload: Payload, name: keyof typeof SCHEMES, alt: Loc
             id: stored.id,
             locale: 'ru',
             data: { alt: alt.ru, origin },
-            ...(stored.origin?.checksum === origin.checksum ? {} : { file }),
+            ...(stored.origin?.checksum === origin.checksum &&
+            holdsSeedFile(payload, stored.filename, name)
+              ? {}
+              : { file }),
           })
         ).id
   await payload.update({ ...SEED, collection: 'media', id, locale: 'en', data: { alt: alt.en } })

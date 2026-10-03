@@ -1,5 +1,6 @@
 import type { TaskConfig } from 'payload'
 
+import { isDemoStand } from '@/composition/demo'
 import { deliveryServices } from '@/composition/deliveries'
 import { financeServices } from '@/composition/finance'
 import { refreshKeyRate } from '@/modules/finance/application/key-rate-service'
@@ -10,6 +11,7 @@ import {
   DELIVERY_TASK,
 } from '@/modules/leads/infrastructure/payload-delivery-queue'
 import { DEMO_MAILBOX_RETENTION_DAYS } from '@/modules/mail/domain/mailbox'
+import { resetDemoData } from '@/seed/reset-demo'
 
 /** Housekeeping runs in its own queue so that it never delays lead deliveries. */
 export const MAINTENANCE_QUEUE = 'maintenance'
@@ -61,5 +63,22 @@ const refreshKeyRateTask: TaskConfig<{ input: object; output: object }> = {
   },
 }
 
-export const TASKS = [deliverLead, purgeMailbox, refreshKeyRateTask]
+/**
+ * Demo stand only: every night everything visitors created goes and the seed content comes
+ * back (cron in the server's time zone, TZ). On a real site the task is never scheduled.
+ */
+const resetDemo: TaskConfig<{ input: object; output: { removed: number } }> = {
+  slug: 'reset-demo',
+  label: 'Ночной сброс демо-стенда / Nightly demo reset',
+  schedule: isDemoStand() ? [{ cron: '30 3 * * *', queue: MAINTENANCE_QUEUE }] : [],
+  handler: async ({ req }) => {
+    if (!isDemoStand()) return { output: { removed: 0 } }
+    const removed = await resetDemoData(req.payload, (message) => {
+      req.payload.logger.info(`demo reset: ${message}`)
+    })
+    return { output: { removed: Object.values(removed).reduce((sum, count) => sum + count, 0) } }
+  },
+}
+
+export const TASKS = [deliverLead, purgeMailbox, refreshKeyRateTask, resetDemo]
 export { DELIVERY_QUEUE }
