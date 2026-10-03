@@ -24,8 +24,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['@phosphor-icons/react'],
     // Configuration saves carry the scene's still (JPEG, well under this).
     serverActions: { bodySizeLimit: '4mb' },
-    // The site's CSS is small: inlining it removes render-blocking requests on slow networks.
-    inlineCss: true,
+    // Styles come as one cached stylesheet: Turbopack merges the site's CSS into a single chunk,
+    // and inlining it repeated the whole sheet in every page's HTML and RSC payload.
+    inlineCss: false,
   },
   webpack: (config: { resolve: { extensionAlias?: Record<string, string[]> } }) => {
     config.resolve.extensionAlias = {

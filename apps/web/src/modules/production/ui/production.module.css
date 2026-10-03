@@ -59,7 +59,7 @@
 }
 
 .stageNumber {
-  color: var(--color-wood-strong);
+  color: var(--color-wood-ink);
   font-weight: var(--weight-semibold);
   font-variant-numeric: tabular-nums;
 }

@@ -10,6 +10,7 @@ import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Container } from '@/ui/components/layout/container'
 import { StateMessage } from '@/ui/components/state/state-message'
+import { ClientMessages } from '@/i18n/client-messages'
 
 import styles from './calculator.module.css'
 
@@ -61,28 +62,30 @@ export default async function CalculatorPage({ params, searchParams }: Calculato
           action={<ButtonLink href="/contacts">{t('unavailable.action')}</ButtonLink>}
         />
       ) : (
-        <Calculator
-          terms={terms}
-          keyRate={
-            keyRate === null
-              ? null
-              : {
-                  rate: keyRate.keyRate.rate,
-                  effectiveFrom: keyRate.keyRate.effectiveFrom.toISOString(),
-                  fetchedAt: keyRate.fetchedAt.toISOString(),
-                  stale: keyRate.stale,
-                }
-          }
-          projects={projects.map((project) => ({
-            slug: project.slug,
-            title: project.title,
-            price: project.fromPrice,
-          }))}
-          initial={{
-            project: amount === null ? (chosen?.slug ?? '') : '',
-            price: amount ?? chosen?.fromPrice ?? 0,
-          }}
-        />
+        <ClientMessages namespaces={['calculator']}>
+          <Calculator
+            terms={terms}
+            keyRate={
+              keyRate === null
+                ? null
+                : {
+                    rate: keyRate.keyRate.rate,
+                    effectiveFrom: keyRate.keyRate.effectiveFrom.toISOString(),
+                    fetchedAt: keyRate.fetchedAt.toISOString(),
+                    stale: keyRate.stale,
+                  }
+            }
+            projects={projects.map((project) => ({
+              slug: project.slug,
+              title: project.title,
+              price: project.fromPrice,
+            }))}
+            initial={{
+              project: amount === null ? (chosen?.slug ?? '') : '',
+              price: amount ?? chosen?.fromPrice ?? 0,
+            }}
+          />
+        </ClientMessages>
       )}
     </Container>
   )

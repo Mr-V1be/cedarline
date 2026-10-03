@@ -1,10 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import {
-  activeFilterCount,
-  parseCatalogQuery,
-  serializeCatalogQuery,
-} from '@/modules/catalog/domain/catalog-query'
+import { activeFilterCount, serializeCatalogQuery } from '@/modules/catalog/domain/catalog-query'
+import { parseCatalogQuery } from '@/modules/catalog/domain/catalog-query-parse'
 import { bedroomThresholds, thresholds } from '@/modules/catalog/domain/facets'
 
 describe('catalog query codec', () => {

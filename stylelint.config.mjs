@@ -36,5 +36,10 @@ export default {
       files: ['apps/web/src/ui/tokens/base.css'],
       rules: { 'selector-class-pattern': null },
     },
+    {
+      // Restyles a library's own class names (MapLibre controls), which are not ours to name.
+      files: ['apps/web/src/ui/components/map/maplibre-theme.css'],
+      rules: { 'selector-class-pattern': null },
+    },
   ],
 }

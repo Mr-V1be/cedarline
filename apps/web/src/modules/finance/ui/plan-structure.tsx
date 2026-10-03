@@ -18,9 +18,14 @@ interface PlanStructureProps {
 /** One bar for the whole sum: the down payment, the loan and the interest in proportion. */
 export function PlanStructure({ plan, labels, format }: PlanStructureProps) {
   const parts = [
-    { key: 'down', label: labels.down, amount: plan.downPayment },
-    { key: 'loan', label: labels.loan, amount: plan.loan },
-    { key: 'interest', label: labels.interest, amount: plan.overpayment },
+    { key: 'down', label: labels.down, amount: plan.downPayment, tone: styles.partDown },
+    { key: 'loan', label: labels.loan, amount: plan.loan, tone: styles.partLoan },
+    {
+      key: 'interest',
+      label: labels.interest,
+      amount: plan.overpayment,
+      tone: styles.partInterest,
+    },
   ].filter((part) => part.amount > 0)
   return (
     <figure className={styles.structure}>
@@ -29,7 +34,7 @@ export function PlanStructure({ plan, labels, format }: PlanStructureProps) {
         {parts.map((part) => (
           <span
             key={part.key}
-            className={styles[`part-${part.key}`]}
+            className={part.tone}
             style={{ '--share': plan.total === 0 ? 0 : part.amount / plan.total } as CSSProperties}
           />
         ))}
@@ -37,7 +42,7 @@ export function PlanStructure({ plan, labels, format }: PlanStructureProps) {
       <ul className={styles.legend}>
         {parts.map((part) => (
           <li key={part.key}>
-            <span className={`${styles.swatch} ${styles[`part-${part.key}`] ?? ''}`} aria-hidden />
+            <span className={`${styles.swatch} ${part.tone ?? ''}`} aria-hidden />
             {part.label}
             <span className={styles.legendValue}>{format(part.amount)}</span>
           </li>

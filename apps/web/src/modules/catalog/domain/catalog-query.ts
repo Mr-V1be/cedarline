@@ -1,5 +1,3 @@
-import { z } from 'zod'
-
 /** Sort orders of the catalog: a key per order, the repository maps them to fields. */
 export const CATALOG_SORTS = [
   'recommended',
@@ -39,7 +37,8 @@ export const QUERY_PARAMS = {
   page: 'page',
 } as const satisfies Record<keyof CatalogQuery, string>
 
-const FILTER_KEYS = [
+/** Filter fields in URL order. */
+export const FILTER_KEYS = [
   'type',
   'areaMin',
   'areaMax',
@@ -47,46 +46,6 @@ const FILTER_KEYS = [
   'bedroomsMin',
   'budgetMax',
 ] as const satisfies ReadonlyArray<keyof CatalogFilters>
-
-const positiveInt = z.coerce.number().int().positive()
-const key = z.string().regex(/^[a-z0-9-]+$/)
-
-/** Each field is parsed on its own: one bad parameter is dropped, the rest still apply. */
-const fieldSchemas = {
-  type: key,
-  areaMin: positiveInt,
-  areaMax: positiveInt,
-  storeys: key,
-  bedroomsMin: positiveInt,
-  budgetMax: positiveInt,
-  sort: z.enum(CATALOG_SORTS),
-  page: positiveInt,
-} as const
-
-export type SearchParams = Readonly<Record<string, string | readonly string[] | undefined>>
-
-function first(value: string | readonly string[] | undefined): string | undefined {
-  return typeof value === 'string' ? value : value?.[0]
-}
-
-export function parseCatalogQuery(params: SearchParams): CatalogQuery {
-  const read = <K extends keyof typeof fieldSchemas>(
-    field: K,
-  ): z.infer<(typeof fieldSchemas)[K]> | undefined => {
-    const parsed = fieldSchemas[field].safeParse(first(params[QUERY_PARAMS[field]]))
-    return parsed.success ? (parsed.data as z.infer<(typeof fieldSchemas)[K]>) : undefined
-  }
-  const filters: Record<string, string | number> = {}
-  for (const field of FILTER_KEYS) {
-    const value = read(field)
-    if (value !== undefined) filters[field] = value
-  }
-  return {
-    ...(filters as CatalogFilters),
-    sort: read('sort') ?? DEFAULT_SORT,
-    page: read('page') ?? 1,
-  }
-}
 
 /** Query string without defaults, stable for links and sharing. */
 export function serializeCatalogQuery(query: Partial<CatalogQuery>): string {

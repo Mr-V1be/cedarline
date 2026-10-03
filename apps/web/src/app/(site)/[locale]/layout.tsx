@@ -3,12 +3,13 @@ import '@/ui/tokens/base.css'
 
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { hasLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
 
 import { getServices } from '@/composition/services'
 import { env } from '@/config/env'
+import { ClientMessages } from '@/i18n/client-messages'
 import { LOCALE_DEFINITIONS } from '@/i18n/locales'
 import { routing } from '@/i18n/routing'
 import { SiteFooter } from '@/modules/site/ui/site-footer'
@@ -60,7 +61,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
         <ThemeScript />
       </head>
       <body>
-        <NextIntlClientProvider>
+        <ClientMessages>
           <a href="#content" className={styles.skip}>
             {t('a11y.skipToContent')}
           </a>
@@ -69,7 +70,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
             {children}
           </main>
           <SiteFooter site={site} />
-        </NextIntlClientProvider>
+        </ClientMessages>
       </body>
     </html>
   )

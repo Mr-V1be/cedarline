@@ -42,7 +42,7 @@
 
 .hint {
   font-size: var(--text-xs);
-  color: var(--color-ink-faint);
+  color: var(--color-ink-muted);
 }
 
 .error {

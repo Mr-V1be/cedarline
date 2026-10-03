@@ -80,7 +80,7 @@
   gap: var(--space-1);
   margin: 0;
   padding-left: var(--space-5);
-  color: var(--color-ink-faint);
+  color: var(--color-ink-muted);
   font-size: var(--text-s);
 }
 
@@ -118,7 +118,7 @@
 }
 
 .number {
-  color: var(--color-wood-strong);
+  color: var(--color-wood-ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -145,7 +145,7 @@
 
 .pointNumber {
   padding-top: 2px;
-  color: var(--color-ink-faint);
+  color: var(--color-ink-muted);
   font-size: var(--text-s);
   font-variant-numeric: tabular-nums;
 }

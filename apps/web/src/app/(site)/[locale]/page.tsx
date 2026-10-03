@@ -17,6 +17,7 @@ import { ScheduleChart } from '@/modules/pricing/ui/schedule-chart'
 import { WallSection } from '@/modules/technology/ui/wall-section'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Container, Section } from '@/ui/components/layout/container'
+import { ClientMessages } from '@/i18n/client-messages'
 
 import styles from './home.module.css'
 
@@ -108,10 +109,12 @@ export default async function HomePage({
             title={t('technology.title')}
             lead={t('technology.lead')}
           />
-          <WallSection
-            layers={technology.layers}
-            insulationOptions={technology.insulationOptions}
-          />
+          <ClientMessages namespaces={['home.technology']}>
+            <WallSection
+              layers={technology.layers}
+              insulationOptions={technology.insulationOptions}
+            />
+          </ClientMessages>
         </Container>
       </Section>
 

@@ -8,6 +8,8 @@ import type { Locale } from '@/i18n/locales'
 import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { openConfigurator } from '@/modules/configurator/application/open-configurator'
 import { Configurator } from '@/modules/configurator/ui/configurator'
+import { ClientMessages } from '@/i18n/client-messages'
+import { CONFIGURATOR_MESSAGES } from '@/modules/configurator/ui/client-messages'
 
 import { saveConfigurationAction, submitLeadAction } from '../actions'
 
@@ -49,11 +51,13 @@ export default async function ConfiguratorPage({ params, searchParams }: Configu
   ])
   if (view === null) notFound()
   return (
-    <Configurator
-      view={view}
-      save={saveConfigurationAction}
-      submitLead={submitLeadAction}
-      companyPhone={site.phone}
-    />
+    <ClientMessages namespaces={CONFIGURATOR_MESSAGES}>
+      <Configurator
+        view={view}
+        save={saveConfigurationAction}
+        submitLead={submitLeadAction}
+        companyPhone={site.phone}
+      />
+    </ClientMessages>
   )
 }

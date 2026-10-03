@@ -25,6 +25,9 @@
   --color-on-band-hover: #fff;
   --color-wood: #d8be94;
   --color-wood-strong: #a8875a;
+
+  /* Wood tone dark enough for small text on paper (AA). */
+  --color-wood-ink: #7d5f36;
   --color-wood-soft: #efe4d1;
   --color-accent: #a9661a;
   --color-accent-soft: #f1e1c8;
@@ -160,6 +163,7 @@
     --color-on-band-hover: #fff;
     --color-wood: #c9ab80;
     --color-wood-strong: #d9be95;
+    --color-wood-ink: #d9be95;
     --color-wood-soft: #2d271e;
     --color-accent: #e2a04a;
     --color-accent-soft: #3a2c19;
@@ -204,6 +208,7 @@
   --color-on-band-hover: #fff;
   --color-wood: #c9ab80;
   --color-wood-strong: #d9be95;
+  --color-wood-ink: #d9be95;
   --color-wood-soft: #2d271e;
   --color-accent: #e2a04a;
   --color-accent-soft: #3a2c19;

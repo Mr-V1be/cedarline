@@ -7,11 +7,10 @@ import type { Locale } from '@/i18n/locales'
 import { browseCatalog } from '@/modules/catalog/application/browse-catalog'
 import {
   activeFilterCount,
-  parseCatalogQuery,
   serializeCatalogQuery,
   withoutFilters,
-  type SearchParams,
 } from '@/modules/catalog/domain/catalog-query'
+import { parseCatalogQuery, type SearchParams } from '@/modules/catalog/domain/catalog-query-parse'
 import { CatalogBrowser } from '@/modules/catalog/ui/catalog-browser'
 import { catalogFields, sortOptions } from '@/modules/catalog/ui/catalog-fields'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'

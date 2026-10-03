@@ -1,0 +1,43 @@
+/*
+ * MapLibre controls in the site's language: the library's own class names, restyled with the
+ * design tokens and scoped to the site's map frames.
+ */
+[data-map] .maplibregl-ctrl-group {
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+
+[data-map] .maplibregl-ctrl-group button {
+  width: var(--control-height);
+  height: var(--control-height);
+}
+
+[data-map] .maplibregl-ctrl-group button + button {
+  border-top-color: var(--color-line);
+}
+
+[data-map] .maplibregl-ctrl-icon,
+[data-map] .maplibregl-ctrl-attrib-button {
+  filter: var(--map-control-filter, none);
+}
+
+[data-map] .maplibregl-ctrl.maplibregl-ctrl-attrib,
+[data-map] .maplibregl-ctrl-attrib.maplibregl-compact {
+  background: var(--color-glass-pane);
+  color: var(--color-ink-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-2xs);
+}
+
+[data-map] .maplibregl-ctrl-attrib a {
+  color: inherit;
+}
+
+[data-map] .maplibregl-cooperative-gesture-screen {
+  background: var(--color-scrim);
+  color: var(--color-on-pine);
+  font-family: var(--font-ui);
+  font-size: var(--text-m);
+}

@@ -9,6 +9,7 @@ import type { ImageAsset } from '@/modules/catalog/domain/project'
 import type { CameraPreset } from '@/modules/house-3d/domain/camera-presets'
 import type { SceneCapture } from '@/modules/house-3d/domain/capture'
 import { detectQuality } from '@/modules/house-3d/scene/quality'
+import { useSceneActivation } from '@/modules/house-3d/ui/scene-activation'
 import { useWebglSupport } from '@/modules/house-3d/ui/webgl-support'
 
 import styles from './configurator-stage.module.css'
@@ -54,11 +55,12 @@ export function ConfiguratorStage({
   captureRef,
 }: ConfiguratorStageProps) {
   const supported = useWebglSupport()
+  const active = useSceneActivation()
   const reducedMotion = useReducedMotion()
   const [ready, setReady] = useState(false)
 
   return (
-    <div className={styles.stage} aria-busy={supported && !ready}>
+    <div className={styles.stage} aria-busy={supported && active && !ready}>
       {poster === null ? null : (
         <Image
           className={`${styles.poster} ${ready ? styles.hidden : ''}`}
@@ -69,7 +71,7 @@ export function ConfiguratorStage({
           sizes="(min-width: 1024px) 65vw, 100vw"
         />
       )}
-      {supported ? (
+      {supported && active ? (
         <div className={`${styles.canvas} ${ready ? styles.shown : ''}`}>
           <HouseCanvas
             input={input}
@@ -86,7 +88,7 @@ export function ConfiguratorStage({
           />
         </div>
       ) : null}
-      {supported && !ready ? (
+      {supported && active && !ready ? (
         <div className={styles.progress} role="progressbar" aria-label={loadingLabel} />
       ) : null}
     </div>

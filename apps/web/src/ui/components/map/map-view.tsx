@@ -5,6 +5,7 @@ import type * as MaplibreModule from 'maplibre-gl'
 import type { GeoJSONSource, Map as MapLibreMap, MapLayerMouseEvent } from 'maplibre-gl'
 import { useEffect, useEffectEvent, useRef, useState } from 'react'
 
+import { useIntentStart } from '../../hooks/use-intent-start'
 import { useTheme } from '../../theme/use-theme'
 import { Button } from '../button/button'
 import { Skeleton } from '../skeleton/skeleton'
@@ -18,6 +19,7 @@ import {
   selectedFilter,
   type MapPoint,
 } from './map-layers'
+import './maplibre-theme.css'
 import styles from './map-view.module.css'
 
 export type { MapPoint } from './map-layers'
@@ -83,6 +85,8 @@ const FIT_PADDING = 56
 const FLY_ZOOM = 11
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+/** Phones and small screens start the map on intent; desktops as soon as it is in view. */
+const isHandheld = () => !window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches
 
 /**
  * Interactive vector map with points and optional clusters (MapLibre). The base style follows
@@ -102,6 +106,7 @@ export function MapView({
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MapLibreMap | null>(null)
   const [visible, setVisible] = useState(false)
+  const allowed = useIntentStart(isHandheld)
   const [phase, setPhase] = useState<Phase>('loading')
   const [attempt, setAttempt] = useState(0)
   const theme = useTheme()
@@ -138,7 +143,7 @@ export function MapView({
 
   useEffect(() => {
     const container = containerRef.current
-    if (container === null || !visible || !themeKnown) return
+    if (container === null || !visible || !allowed || !themeKnown) return
     // Aborted when the effect is cleaned up: async steps check it before touching the map.
     const lifetime = new AbortController()
     const disposed = () => lifetime.signal.aborted
@@ -239,7 +244,7 @@ export function MapView({
       map?.remove()
       mapRef.current = null
     }
-  }, [visible, themeKnown, attempt])
+  }, [visible, allowed, themeKnown, attempt])
 
   // Theme switch: swap the base style, the layers come back on style.load.
   useEffect(() => {
@@ -273,6 +278,7 @@ export function MapView({
   return (
     <div
       className={[styles.frame, className].filter(Boolean).join(' ')}
+      data-map
       role="region"
       aria-label={labels.title}
       aria-busy={phase === 'loading'}

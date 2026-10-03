@@ -12,6 +12,7 @@ import { WallSection } from '@/modules/technology/ui/wall-section'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Container, Section } from '@/ui/components/layout/container'
 import { SectionHeading } from '@/ui/components/section-heading/section-heading'
+import { ClientMessages } from '@/i18n/client-messages'
 
 import styles from './production.module.css'
 
@@ -68,10 +69,12 @@ export default async function ProductionPage({ params }: ProductionPageProps) {
       <Section tone="sunken" aria-labelledby="wall-title">
         <Container>
           <SectionHeading id="wall-title" title={t('wall.title')} lead={t('wall.lead')} />
-          <WallSection
-            layers={technology.layers}
-            insulationOptions={technology.insulationOptions}
-          />
+          <ClientMessages namespaces={['home.technology']}>
+            <WallSection
+              layers={technology.layers}
+              insulationOptions={technology.insulationOptions}
+            />
+          </ClientMessages>
         </Container>
       </Section>
 

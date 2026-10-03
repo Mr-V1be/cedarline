@@ -83,7 +83,7 @@
 }
 
 .rowHint {
-  color: var(--color-ink-faint);
+  color: var(--color-ink-muted);
   font-size: var(--text-xs);
   font-weight: var(--weight-regular);
 }
@@ -112,15 +112,15 @@
   min-width: 2px;
 }
 
-.part-down {
+.partDown {
   background: var(--color-wood-strong);
 }
 
-.part-loan {
+.partLoan {
   background: var(--color-pine);
 }
 
-.part-interest {
+.partInterest {
   background: var(--color-accent);
 }
 
@@ -171,7 +171,7 @@
 
 .note {
   margin: 0;
-  color: var(--color-ink-faint);
+  color: var(--color-ink-muted);
   font-size: var(--text-xs);
 }
 

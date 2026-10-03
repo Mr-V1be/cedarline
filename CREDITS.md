@@ -8,6 +8,9 @@
 | Literata | The Literata Project Authors, пакет `@fontsource-variable/literata` (npm) | SIL Open Font License 1.1 |
 
 Шрифты хранятся на собственном сервере (self-hosted), сторонние CDN не используются.
+Заголовочный Literata на сайте — статические начертания 500 (`apps/web/assets/fonts/web`),
+полученные из вариативных файлов пакета `@fontsource-variable/literata` (подмножества latin
+и cyrillic) инструментом `fontTools varLib.instancer` (`wght=500`); лицензия та же, SIL OFL 1.1.
 
 Для КП в PDF (`apps/web/assets/fonts`) — статические начертания тех же шрифтов: Manrope 400 и
 600, Literata 500. Они получены из вариативных файлов репозитория Google Fonts

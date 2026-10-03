@@ -22,6 +22,7 @@ import { Facts } from '@/ui/components/facts/facts'
 import { Gallery } from '@/ui/components/gallery/gallery'
 import { Container, Section } from '@/ui/components/layout/container'
 import { SectionHeading } from '@/ui/components/section-heading/section-heading'
+import { ClientMessages } from '@/i18n/client-messages'
 
 import { loadOverview } from './load-overview'
 import styles from './project.module.css'
@@ -160,7 +161,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <Section tone="sunken" id="plan" aria-labelledby="plan-title">
         <Container>
           <SectionHeading id="plan-title" title={t('plan.title')} />
-          <FloorPlans plans={plans} roomNames={roomNames} />
+          <ClientMessages namespaces={['project.plan']}>
+            <FloorPlans plans={plans} roomNames={roomNames} />
+          </ClientMessages>
         </Container>
       </Section>
 
@@ -231,7 +234,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <Section aria-labelledby="similar-title">
           <Container>
             <SectionHeading id="similar-title" title={t('similar.title')} />
-            <ProjectGrid projects={similar} />
+            <ProjectGrid projects={similar} leading={false} />
           </Container>
         </Section>
       ) : null}

@@ -7,6 +7,8 @@ import type { Locale } from '@/i18n/locales'
 import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { openSaved } from '@/modules/configurator/application/open-saved'
 import { SavedConfiguration } from '@/modules/configurator/ui/share/saved-configuration'
+import { ClientMessages } from '@/i18n/client-messages'
+import { CONFIGURATOR_MESSAGES } from '@/modules/configurator/ui/client-messages'
 
 import { submitLeadAction } from '../../configurator/actions'
 
@@ -43,11 +45,13 @@ export default async function SavedConfigurationPage({ params }: SavedPageProps)
   if (view === null) notFound()
   const site = await services.site.load(locale)
   return (
-    <SavedConfiguration
-      view={view}
-      renderUrl={view.saved.renderId === null ? null : `/files/c/${code}/render`}
-      submitLead={submitLeadAction}
-      companyPhone={site.phone}
-    />
+    <ClientMessages namespaces={CONFIGURATOR_MESSAGES}>
+      <SavedConfiguration
+        view={view}
+        renderUrl={view.saved.renderId === null ? null : `/files/c/${code}/render`}
+        submitLead={submitLeadAction}
+        companyPhone={site.phone}
+      />
+    </ClientMessages>
   )
 }

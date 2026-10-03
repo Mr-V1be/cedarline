@@ -91,6 +91,10 @@ for (let run = 0; run < RUNS; run += 1) {
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU_SLOWDOWN })
   const started = Date.now()
   await page.goto(base + path, { waitUntil: 'domcontentloaded' })
+  // On phones the scene waits for a sign of intent; a tap on the stage gives it at once, so
+  // the time below is the scene's own cost, not the wait.
+  await page.waitForLoadState('load')
+  await page.touchscreen.tap(195, 300)
   await page.waitForSelector('canvas', { timeout: 180000 })
   await page.waitForSelector('[role="progressbar"]', { state: 'detached', timeout: 180000 })
   const readyMs = Date.now() - started
