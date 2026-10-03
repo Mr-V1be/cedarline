@@ -1,5 +1,3 @@
-import 'server-only'
-
 import type { Payload } from 'payload'
 
 import type { DocumentStore } from '@/modules/configurator/ports/document-store'

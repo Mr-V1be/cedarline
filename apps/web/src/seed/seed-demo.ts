@@ -3,6 +3,7 @@ import type { Payload } from 'payload'
 import { seedArticles } from './steps/articles'
 import { seedBuiltObjects, seedPages } from './steps/content'
 import { seedDictionaries, seedUsers } from './steps/dictionaries'
+import { seedLeads } from './steps/leads'
 import { seedProjects } from './steps/projects'
 import {
   seedCatalogOptions,
@@ -41,4 +42,6 @@ export async function seedDemoContent(payload: Payload, log: (message: string) =
   log(`${await seedArticles(payload, projects)} articles`)
   await seedProduction(payload)
   log('production page')
+  // Last: a lead needs the projects, the tariff and the company details in place.
+  log(`${await seedLeads(payload)} sample leads`)
 }
