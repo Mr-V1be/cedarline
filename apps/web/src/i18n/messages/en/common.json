@@ -82,7 +82,7 @@
     "gesturesMobile": "Use two fingers to move the map",
     "loading": "Loading the map",
     "error": "The map did not load",
-    "errorHint": "The map server did not respond. The list below works without it.",
+    "errorHint": "The map server did not respond. The rest of the page works without it.",
     "retry": "Load again"
   }
 }

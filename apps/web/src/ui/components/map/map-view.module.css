@@ -1,5 +1,4 @@
 .frame {
-  position: relative;
   display: grid;
   overflow: hidden;
   min-height: 280px;
@@ -8,14 +7,23 @@
   isolation: isolate;
 }
 
-/* One grid cell for the map and its overlays: MapLibre makes its container position: relative. */
+/*
+ * One grid cell for the map and its overlays: MapLibre makes its container position: relative.
+ * The frame itself stays unpositioned, so a page may make it sticky.
+ */
 .map,
 .overlay {
   grid-area: 1 / 1;
   min-height: 0;
 }
 
+/* Its own stacking layer: the overlay covers the map controls too. */
+.map {
+  z-index: 0;
+}
+
 .overlay {
+  position: relative;
   z-index: 1;
   display: grid;
   place-items: center;
