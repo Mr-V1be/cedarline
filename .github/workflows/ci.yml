@@ -76,6 +76,14 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Apply migrations to an empty database
         run: pnpm --filter @kedrovnik/web migrate
+      - name: Every schema change has a migration
+        run: |
+          pnpm --filter @kedrovnik/web migrate:create schema-drift --skip-empty
+          test -z "$(git status --porcelain apps/web/src/migrations)" || {
+            git status --porcelain apps/web/src/migrations
+            echo "The Payload schema differs from the migrations: run migrate:create." >&2
+            exit 1
+          }
       - name: Seed demo content
         run: pnpm --filter @kedrovnik/web seed
       - run: pnpm build
