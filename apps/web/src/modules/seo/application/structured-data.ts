@@ -66,3 +66,28 @@ export function breadcrumbSchema(crumbs: readonly Crumb[]): Schema {
     })),
   }
 }
+
+export interface ArticleInput {
+  readonly title: string
+  readonly description: string
+  readonly url: string
+  readonly image: string | null
+  readonly publishedAt: Date
+  readonly language: string
+  readonly publisherUrl: string
+}
+
+export function articleSchema(input: ArticleInput): Schema {
+  return {
+    '@type': 'Article',
+    headline: input.title,
+    description: input.description,
+    url: input.url,
+    mainEntityOfPage: input.url,
+    datePublished: input.publishedAt.toISOString(),
+    inLanguage: input.language,
+    ...(input.image === null ? {} : { image: [input.image] }),
+    author: { '@id': `${input.publisherUrl}#organization` },
+    publisher: { '@id': `${input.publisherUrl}#organization` },
+  }
+}

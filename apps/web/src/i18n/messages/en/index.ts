@@ -5,10 +5,12 @@ import configurator from './configurator.json'
 import home from './home.json'
 import lead from './lead.json'
 import mail from './mail.json'
+import articles from './pages/articles.json'
 import calculator from './pages/calculator.json'
 import contacts from './pages/contacts.json'
 import objects from './pages/objects.json'
 import privacy from './pages/privacy.json'
+import production from './pages/production.json'
 import project from './project.json'
 import proposal from './proposal.json'
 import registry from './registry.json'
@@ -29,6 +31,8 @@ const messages: Messages = {
   objects,
   contacts,
   calculator,
+  articles,
+  production,
 }
 
 export default messages

@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "Articles about frame houses",
+    "description": "How Kedrovnik frame houses and saunas are built: the wall assembly, foundations, roofs, estimates and construction stages."
+  },
+  "title": "Articles",
+  "lead": "On technology, projects and money — short and to the point.",
+  "topic": "Topic",
+  "allTopics": "All topics",
+  "reading": "{minutes, plural, one {# minute} other {# minutes}} read",
+  "count": "{count, plural, one {# article} other {# articles}}",
+  "pagination": {
+    "navigation": "Article pages",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {page}"
+  },
+  "breadcrumbs": "Breadcrumbs",
+  "related": "Related projects",
+  "more": "More articles",
+  "configure": "Configure a house in 3D",
+  "empty": {
+    "title": "No articles on this topic yet",
+    "description": "Have a look at other topics, or at the project catalog.",
+    "action": "All articles"
+  }
+}

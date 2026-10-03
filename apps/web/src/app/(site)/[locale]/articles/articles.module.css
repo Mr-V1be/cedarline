@@ -1,0 +1,63 @@
+.page {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--space-7) var(--section-gap);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-5);
+  align-items: end;
+}
+
+@media (width >= 768px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  }
+}
+
+.heading {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--display-m);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.lead {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-l);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-7) var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (width >= 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.skeletonCard {
+  display: grid;
+  gap: var(--space-3);
+}

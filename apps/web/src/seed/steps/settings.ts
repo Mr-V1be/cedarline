@@ -22,6 +22,7 @@ import {
 } from '../data/tariff'
 import { englishRows, SEED } from './upsert'
 import { FINANCING } from '../data/financing'
+import { PRODUCTION } from '../data/production'
 
 const at = <T>(items: readonly T[], index: number): T => {
   const item = items[index]
@@ -163,4 +164,35 @@ export async function seedTariff(payload: Payload) {
 
 export async function seedFinancing(payload: Payload) {
   await payload.updateGlobal({ ...SEED, slug: 'financing', data: FINANCING })
+}
+
+export async function seedProduction(payload: Payload) {
+  const saved = await payload.updateGlobal({
+    ...SEED,
+    slug: 'production',
+    locale: 'ru',
+    data: {
+      title: PRODUCTION.title.ru,
+      lead: PRODUCTION.lead.ru,
+      stages: PRODUCTION.stages.map((stage) => ({
+        illustration: stage.illustration,
+        place: stage.place,
+        title: stage.title.ru,
+        text: stage.text.ru,
+      })),
+    },
+  })
+  await payload.updateGlobal({
+    ...SEED,
+    slug: 'production',
+    locale: 'en',
+    data: {
+      title: PRODUCTION.title.en,
+      lead: PRODUCTION.lead.en,
+      stages: englishRows(saved.stages, (row, index) => ({
+        title: PRODUCTION.stages[index]?.title.en ?? row.title,
+        text: PRODUCTION.stages[index]?.text.en ?? row.text,
+      })),
+    },
+  })
 }

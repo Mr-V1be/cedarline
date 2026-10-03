@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Production",
+    "description": "How Kedrovnik makes houses: from the drawing and machine cutting to assembly on screw piles. Stages, the wall section and the build schedule."
+  },
+  "stages": "From drawing to keys",
+  "stagesLead": "Most of the work happens in the workshop: on site the house is assembled from finished panels.",
+  "place": {
+    "workshop": "In the workshop",
+    "site": "On site"
+  },
+  "wall": {
+    "title": "The wall in section",
+    "lead": "The same layers and thicknesses as in every house's calculation."
+  },
+  "schedule": {
+    "title": "Schedule",
+    "lead": "For the “{project}” project in the “{completeness}” package: production and assembly week by week."
+  },
+  "cta": {
+    "title": "Visit the factory",
+    "lead": "We will show the workshop, panels in progress and finished assemblies. Call to arrange a visit.",
+    "contacts": "Contacts"
+  }
+}

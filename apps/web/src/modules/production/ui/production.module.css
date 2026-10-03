@@ -1,0 +1,196 @@
+.stages {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: stage;
+}
+
+@media (width >= 640px) {
+  .stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 1024px) {
+  .stages {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-7) var(--space-6);
+  }
+}
+
+.stage {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.stageFigure {
+  padding: var(--space-4);
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-l);
+  background: var(--color-surface);
+}
+
+.stage[data-place='site'] .stageFigure {
+  background: var(--color-wood-soft);
+}
+
+.illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--drawing-wall);
+}
+
+.stageText {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.stageMeta {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}
+
+.stageNumber {
+  color: var(--color-wood-strong);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.stageTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.stageDescription {
+  margin: 0;
+  color: var(--color-ink-muted);
+  line-height: var(--leading-body);
+}
+
+/* Drawing styles of the schemes: ink, wood, accent and drafting lines from the tokens. */
+.line,
+.thin,
+.dimension,
+.cut,
+.check,
+.wool,
+.ground,
+.stud,
+.pile {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.line {
+  stroke: currentcolor;
+  stroke-width: 2.5;
+}
+
+.thin {
+  stroke: currentcolor;
+  stroke-width: 1.5;
+}
+
+.dimension {
+  stroke: var(--drawing-dimension);
+  stroke-width: 1.5;
+}
+
+.cut {
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.check {
+  stroke: var(--drawing-membrane);
+  stroke-width: 6;
+}
+
+.wool {
+  stroke: var(--color-wood-strong);
+  stroke-width: 1.5;
+}
+
+.ground {
+  stroke: var(--drawing-dimension);
+  stroke-width: 2;
+}
+
+.stud {
+  stroke: var(--color-wood-strong);
+  stroke-width: 5;
+}
+
+.pile {
+  stroke: var(--drawing-partition);
+  stroke-width: 5;
+}
+
+.paper {
+  fill: var(--drawing-room);
+  stroke: currentcolor;
+  stroke-width: 2;
+}
+
+.wall {
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 5;
+  stroke-linejoin: round;
+}
+
+.table {
+  fill: var(--drawing-partition);
+}
+
+.woodFill {
+  fill: var(--color-wood);
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.accentFill {
+  fill: var(--color-accent);
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.blade {
+  fill: var(--drawing-insulation);
+  stroke: currentcolor;
+  stroke-width: 2.5;
+}
+
+.window {
+  fill: var(--drawing-wet);
+  stroke: currentcolor;
+  stroke-width: 2;
+}
+
+.cab {
+  fill: var(--drawing-membrane);
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.wheel {
+  fill: var(--drawing-wall);
+  stroke: var(--drawing-room);
+  stroke-width: 3;
+}

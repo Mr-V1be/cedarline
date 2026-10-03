@@ -73,6 +73,7 @@ export interface Config {
     'room-kinds': RoomKind
     projects: Project
     'built-objects': BuiltObject
+    articles: Article
     leads: Lead
     configurations: Configuration
     documents: Document
@@ -90,6 +91,7 @@ export interface Config {
     'room-kinds': RoomKindsSelect<false> | RoomKindsSelect<true>
     projects: ProjectsSelect<false> | ProjectsSelect<true>
     'built-objects': BuiltObjectsSelect<false> | BuiltObjectsSelect<true>
+    articles: ArticlesSelect<false> | ArticlesSelect<true>
     leads: LeadsSelect<false> | LeadsSelect<true>
     configurations: ConfigurationsSelect<false> | ConfigurationsSelect<true>
     documents: DocumentsSelect<false> | DocumentsSelect<true>
@@ -111,6 +113,7 @@ export interface Config {
     financing: Financing
     'key-rate': KeyRate
     home: Home
+    production: Production
     site: Site
   }
   globalsSelect: {
@@ -120,6 +123,7 @@ export interface Config {
     financing: FinancingSelect<false> | FinancingSelect<true>
     'key-rate': KeyRateSelect<false> | KeyRateSelect<true>
     home: HomeSelect<false> | HomeSelect<true>
+    production: ProductionSelect<false> | ProductionSelect<true>
     site: SiteSelect<false> | SiteSelect<true>
   }
   locale: 'ru' | 'en'
@@ -403,6 +407,45 @@ export interface BuiltObject {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles".
+ */
+export interface Article {
+  id: number
+  title: string
+  slug: string
+  status: 'draft' | 'published'
+  publishedAt: string
+  topic: 'technology' | 'construction' | 'design' | 'sauna' | 'money'
+  readingMinutes?: number | null
+  /**
+   * Shown in the list, in link previews and as the search description
+   */
+  excerpt: string
+  /**
+   * A render of the 3D scene or a scheme — no stock photos of people
+   */
+  cover: number | Media
+  body: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  }
+  projects?: (number | Project)[] | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "leads".
  */
 export interface Lead {
@@ -548,6 +591,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'built-objects'
         value: number | BuiltObject
+      } | null)
+    | ({
+        relationTo: 'articles'
+        value: number | Article
       } | null)
     | ({
         relationTo: 'leads'
@@ -842,6 +889,24 @@ export interface BuiltObjectsSelect<T extends boolean = true> {
   area?: T
   location?: T
   cover?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  title?: T
+  slug?: T
+  status?: T
+  publishedAt?: T
+  topic?: T
+  readingMinutes?: T
+  excerpt?: T
+  cover?: T
+  body?: T
+  projects?: T
   updatedAt?: T
   createdAt?: T
 }
@@ -1249,6 +1314,26 @@ export interface Home {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "production".
+ */
+export interface Production {
+  id: number
+  title: string
+  lead: string
+  stages?:
+    | {
+        illustration: 'design' | 'cutting' | 'panels' | 'inspection' | 'delivery' | 'assembly'
+        place: 'workshop' | 'site'
+        title: string
+        text: string
+        id?: string | null
+      }[]
+    | null
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site".
  */
 export interface Site {
@@ -1476,6 +1561,26 @@ export interface HomeSelect<T extends boolean = true> {
   heroProject?: T
   featuredProjects?: T
   builtObjects?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "production_select".
+ */
+export interface ProductionSelect<T extends boolean = true> {
+  title?: T
+  lead?: T
+  stages?:
+    | T
+    | {
+        illustration?: T
+        place?: T
+        title?: T
+        text?: T
+        id?: T
+      }
   updatedAt?: T
   createdAt?: T
   globalType?: T

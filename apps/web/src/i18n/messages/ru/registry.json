@@ -120,5 +120,20 @@
     "in-progress": "В работе",
     "won": "Договор",
     "lost": "Отказ"
+  },
+  "articleTopic": {
+    "technology": "Технология",
+    "construction": "Стройка",
+    "design": "Проект и планировка",
+    "sauna": "Бани",
+    "money": "Цена и оплата"
+  },
+  "stageIllustration": {
+    "design": "Чертёж и раскладка",
+    "cutting": "Раскрой на станке",
+    "panels": "Сборка панелей",
+    "inspection": "Контроль и маркировка",
+    "delivery": "Доставка",
+    "assembly": "Монтаж на сваях"
   }
 }

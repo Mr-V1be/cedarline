@@ -120,5 +120,20 @@
     "in-progress": "In progress",
     "won": "Contract",
     "lost": "Lost"
+  },
+  "articleTopic": {
+    "technology": "Technology",
+    "construction": "Construction",
+    "design": "Design and layout",
+    "sauna": "Saunas",
+    "money": "Price and payment"
+  },
+  "stageIllustration": {
+    "design": "Drawing and layout",
+    "cutting": "Machine cutting",
+    "panels": "Panel assembly",
+    "inspection": "Inspection and marking",
+    "delivery": "Delivery",
+    "assembly": "Assembly on piles"
   }
 }

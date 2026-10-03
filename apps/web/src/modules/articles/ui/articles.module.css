@@ -1,0 +1,168 @@
+.card {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.cardMedia {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 11;
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-l);
+  background: var(--color-surface-sunken);
+}
+
+.cardImage {
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.card:hover .cardImage {
+  transform: scale(1.02);
+}
+
+.placeholder {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--color-ink-faint);
+}
+
+.cardBody {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.topic {
+  margin: 0;
+  color: var(--color-wood-strong);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.cardLink {
+  text-decoration: none;
+}
+
+/* The whole card is the link's hit area; the title keeps the accessible name. */
+.cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.card:has(.cardLink:focus-visible) {
+  outline: 2px solid var(--color-pine);
+  outline-offset: 4px;
+  border-radius: var(--radius-l);
+}
+
+.cardLink:hover {
+  color: var(--color-pine);
+}
+
+.excerpt {
+  margin: 0;
+  color: var(--color-ink-muted);
+  line-height: var(--leading-body);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-ink-faint);
+  font-size: var(--text-s);
+}
+
+@media (width >= 900px) {
+  .featured {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .featured .cardTitle {
+    font-size: var(--display-s);
+  }
+}
+
+.prose {
+  max-width: 68ch;
+  font-size: var(--text-l);
+  line-height: var(--leading-body);
+}
+
+.prose > * {
+  margin: 0 0 var(--space-5);
+}
+
+.prose h2 {
+  margin-top: var(--space-7);
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.prose h3 {
+  margin-top: var(--space-6);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+}
+
+.prose ul,
+.prose ol {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-6);
+}
+
+.prose blockquote {
+  padding: var(--space-4) var(--space-5);
+  border-left: 3px solid var(--color-wood-strong);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  background: var(--color-wood-soft);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: var(--leading-tight);
+}
+
+.prose a {
+  color: var(--color-pine);
+  text-underline-offset: 2px;
+}
+
+.figure {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-m);
+}
+
+.figure figcaption {
+  color: var(--color-ink-muted);
+  font-size: var(--text-s);
+}

@@ -1,10 +1,17 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
 
+import { seedArticles } from './steps/articles'
 import { seedBuiltObjects, seedPages } from './steps/content'
 import { seedDictionaries, seedUsers } from './steps/dictionaries'
 import { seedProjects } from './steps/projects'
-import { seedCatalogOptions, seedFinancing, seedTariff, seedTechnology } from './steps/settings'
+import {
+  seedCatalogOptions,
+  seedFinancing,
+  seedProduction,
+  seedTariff,
+  seedTechnology,
+} from './steps/settings'
 
 /**
  * Demo content generator. Idempotent: every document is keyed by a natural unique key, so
@@ -37,6 +44,9 @@ async function seed() {
   }
   await seedPages(payload, projects, objects)
   log('home page and company details')
+  log(`${await seedArticles(payload, projects)} articles`)
+  await seedProduction(payload)
+  log('production page')
 }
 
 await seed()

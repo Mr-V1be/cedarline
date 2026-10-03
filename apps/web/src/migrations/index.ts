@@ -7,6 +7,8 @@ import * as migration_20261002_222613_lead_link from './20261002_222613_lead_lin
 import * as migration_20261003_071441_entrance_landings from './20261003_071441_entrance_landings'
 import * as migration_20261003_083147_site_location_and_legal from './20261003_083147_site_location_and_legal'
 import * as migration_20261003_085408_financing_and_key_rate from './20261003_085408_financing_and_key_rate'
+import * as migration_20261003_091553_articles from './20261003_091553_articles'
+import * as migration_20261003_091942_production_page from './20261003_091942_production_page'
 
 export const migrations = [
   {
@@ -53,5 +55,15 @@ export const migrations = [
     up: migration_20261003_085408_financing_and_key_rate.up,
     down: migration_20261003_085408_financing_and_key_rate.down,
     name: '20261003_085408_financing_and_key_rate',
+  },
+  {
+    up: migration_20261003_091553_articles.up,
+    down: migration_20261003_091553_articles.down,
+    name: '20261003_091553_articles',
+  },
+  {
+    up: migration_20261003_091942_production_page.up,
+    down: migration_20261003_091942_production_page.down,
+    name: '20261003_091942_production_page',
   },
 ]

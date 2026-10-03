@@ -6,6 +6,7 @@ import { cache } from 'react'
 
 import { env } from '@/config/env'
 import type { Locale } from '@/i18n/locales'
+import { PayloadArticleRepository } from '@/modules/articles/infrastructure/payload-article-repository'
 import { PayloadBuiltObjectRepository } from '@/modules/built-objects/infrastructure/payload-built-object-repository'
 import { PayloadHouseContextRepository } from '@/modules/catalog/infrastructure/payload-house-context-repository'
 import { PayloadProjectRepository } from '@/modules/catalog/infrastructure/payload-project-repository'
@@ -21,6 +22,7 @@ import { CbrKeyRateSource } from '@/modules/finance/infrastructure/cbr-key-rate-
 import { PayloadFinancingRepository } from '@/modules/finance/infrastructure/payload-financing-repository'
 import { PayloadKeyRateCache } from '@/modules/finance/infrastructure/payload-key-rate-cache'
 import { PayloadHomeRepository } from '@/modules/home/infrastructure/payload-home-repository'
+import { PayloadProductionRepository } from '@/modules/production/infrastructure/payload-production-repository'
 import { PayloadPricingRepositoryFactory } from '@/modules/pricing/infrastructure/payload-tariff-repository'
 import { PayloadSiteRepository } from '@/modules/site/infrastructure/payload-site-repository'
 import { PayloadTechnologyRepository } from '@/modules/technology/infrastructure/payload-technology-repository'
@@ -65,6 +67,8 @@ export const getServices = cache(async (locale: Locale) => {
     technology,
     home: new PayloadHomeRepository(payload),
     builtObjects: new PayloadBuiltObjectRepository(payload),
+    articles: new PayloadArticleRepository(payload),
+    production: new PayloadProductionRepository(payload),
     finance: { terms: new PayloadFinancingRepository(payload), keyRate },
     site,
     configurator,
