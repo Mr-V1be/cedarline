@@ -9,6 +9,7 @@ import { label } from '../fields/labels'
  */
 const WEBP_QUALITY = 82
 const ADMIN_THUMBNAIL_WIDTH = 480
+const MEDIA_CACHE = 'public, max-age=86400, stale-while-revalidate=604800'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -27,6 +28,11 @@ export const Media: CollectionConfig = {
     adminThumbnail: 'thumb',
     focalPoint: true,
     formatOptions: { format: 'webp', options: { quality: WEBP_QUALITY } },
+    // A replaced file may keep its name, so originals are cached for a day, not for good.
+    modifyResponseHeaders: ({ headers }) => {
+      headers.set('Cache-Control', MEDIA_CACHE)
+      return headers
+    },
     imageSizes: [
       {
         name: 'thumb',

@@ -1,0 +1,29 @@
+# Caddy in front of the site: automatic HTTPS (Let's Encrypt) for SITE_DOMAIN, HTTP/3,
+# compression of what the app does not compress itself, and security headers. Cache headers
+# come from the app (docs/deploy.md, «Кэширование»), so they are the same with or without Caddy.
+{
+	email {$ACME_EMAIL}
+}
+
+{$SITE_DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+		-X-Powered-By
+	}
+
+	reverse_proxy web:3000 {
+		health_uri /api/health
+		health_interval 30s
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}

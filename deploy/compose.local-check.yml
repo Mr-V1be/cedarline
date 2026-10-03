@@ -1,0 +1,16 @@
+# Override for checking the production stack on a developer machine: the stack gets its own
+# unused subnet (the host's default address pools are exhausted), and the site container is
+# also published on 127.0.0.1:46144 for the load test, which must reach it without the proxy
+# (Caddy rightly replaces client addresses, so every virtual visitor would look like one).
+# Ports and the domain come from the env file (127.0.0.1-bound ports, SITE_DOMAIN=localhost →
+# Caddy's local CA). See docs/deploy.md, «Проверка на своей машине».
+services:
+  web:
+    ports:
+      - '127.0.0.1:46144:3000'
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.239.146.32/27

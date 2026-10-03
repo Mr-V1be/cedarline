@@ -31,6 +31,7 @@ import { Production } from './cms/globals/production'
 import { Site } from './cms/globals/site'
 import { Tariff } from './cms/globals/tariff'
 import { Technology } from './cms/globals/technology'
+import { health } from './cms/endpoints/health'
 import { DELIVERY_QUEUE, MAINTENANCE_QUEUE, TASKS } from './cms/jobs/tasks'
 import { env } from './config/env'
 import { DEFAULT_LOCALE, LOCALE_DEFINITIONS, LOCALES } from './i18n/locales'
@@ -129,6 +130,7 @@ export default buildConfig({
   },
   // The site reads through the Local API; the REST API serves the admin panel.
   graphQL: { disable: true },
+  endpoints: [health],
   db: postgresAdapter({
     pool: { connectionString: env.DATABASE_URL },
     // Schema changes go through committed migrations only, never through dev-time push.

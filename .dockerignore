@@ -1,0 +1,22 @@
+# Build context of the container images: sources and lockfile only.
+**/node_modules
+**/.next
+**/.turbo
+**/*.tsbuildinfo
+.git
+.github
+.run
+.env
+.env.*
+!.env.example
+!.env.production.example
+docs
+coverage
+playwright-report
+test-results
+apps/web/media
+apps/web/documents
+apps/web/mailbox-files
+apps/web/.render-cache
+apps/web/.scene-cache
+**/*.log

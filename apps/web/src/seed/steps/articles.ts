@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto'
+import path from 'node:path'
 
 import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
 import type { Payload } from 'payload'
@@ -23,6 +24,10 @@ import { holdsSeedFile } from './media'
 import { SEED, translate, upsert } from './upsert'
 
 const SCHEME_SOURCE = 'Схема, нарисованная по данным сайта / scheme drawn from the site data'
+
+// Text in the schemes is drawn with the site's fonts (see assets/fonts/fonts.conf); containers
+// set the variable themselves, a developer machine gets it here before the first drawing.
+process.env.FONTCONFIG_FILE ??= path.resolve(process.cwd(), 'assets/fonts/fonts.conf')
 const WEBP = { quality: 88, effort: 5 } as const
 
 /** The wall with another insulation thickness: deeper studs, the other layers unchanged. */
