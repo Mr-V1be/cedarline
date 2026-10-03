@@ -22,7 +22,7 @@ import { SelectField } from '@/ui/components/select/select-field'
 import type { ConfiguratorView } from '../application/open-configurator'
 import { proposalHref, type SaveAction } from './action-types'
 import styles from './configurator.module.css'
-import { useWebglSupport } from '@/modules/house-3d/ui/webgl-support'
+import { useWebglSupport } from '@/ui/hooks/use-webgl-support'
 
 import { ConfiguratorStage } from './configurator-stage'
 import { ShareSheet } from './share/share-sheet'

@@ -10,7 +10,7 @@ import type { CameraPreset } from '@/modules/house-3d/domain/camera-presets'
 import type { SceneCapture } from '@/modules/house-3d/domain/capture'
 import { detectQuality } from '@/modules/house-3d/scene/quality'
 import { useSceneActivation } from '@/modules/house-3d/ui/scene-activation'
-import { useWebglSupport } from '@/modules/house-3d/ui/webgl-support'
+import { useWebglSupport } from '@/ui/hooks/use-webgl-support'
 
 import styles from './configurator-stage.module.css'
 

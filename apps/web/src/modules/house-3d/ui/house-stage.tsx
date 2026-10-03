@@ -14,7 +14,7 @@ import { VIEWER_PRESETS, type ViewerPreset } from '../domain/camera-presets'
 import type { ScenePresetKey } from '../scene/presets'
 import { detectQuality } from '../scene/quality'
 import styles from './house-stage.module.css'
-import { useWebglSupport } from './webgl-support'
+import { useWebglSupport } from '@/ui/hooks/use-webgl-support'
 
 const HouseCanvas = dynamic(() => import('./house-canvas'), { ssr: false })
 

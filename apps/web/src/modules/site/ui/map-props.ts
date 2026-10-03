@@ -24,6 +24,8 @@ export async function mapProps(): Promise<{ setup: MapSetup; labels: MapLabels }
       error: t('error'),
       errorHint: t('errorHint'),
       retry: t('retry'),
+      unsupported: t('unsupported'),
+      unsupportedHint: t('unsupportedHint'),
     },
   }
 }

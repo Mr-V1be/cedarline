@@ -86,6 +86,8 @@
     "loading": "Loading the map",
     "error": "The map did not load",
     "errorHint": "The map server did not respond. The rest of the page works without it.",
-    "retry": "Load again"
+    "retry": "Load again",
+    "unsupported": "This browser cannot show the map",
+    "unsupportedHint": "The map needs WebGL 2 support. The rest of the page works without it."
   }
 }

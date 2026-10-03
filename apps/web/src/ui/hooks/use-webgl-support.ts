@@ -5,9 +5,9 @@ import { useSyncExternalStore } from 'react'
 let supported: boolean | undefined
 
 /**
- * Whether the browser can draw the scene. Probed once per page with a throw-away context that
- * is released at once: browsers cap live WebGL contexts, and probing on every render would
- * evict the scene's own context.
+ * Whether the browser can draw WebGL 2 (the 3D scene, the map). Probed once per page with a
+ * throw-away context that is released at once: browsers cap live WebGL contexts, and probing on
+ * every render would evict the scene's own context.
  */
 function probe(): boolean {
   if (supported !== undefined) return supported

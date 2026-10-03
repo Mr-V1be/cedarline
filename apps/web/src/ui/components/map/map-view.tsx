@@ -6,6 +6,7 @@ import type { GeoJSONSource, Map as MapLibreMap, MapLayerMouseEvent } from 'mapl
 import { useEffect, useEffectEvent, useRef, useState } from 'react'
 
 import { useIntentStart } from '../../hooks/use-intent-start'
+import { useWebglSupport } from '../../hooks/use-webgl-support'
 import { useTheme } from '../../theme/use-theme'
 import { Button } from '../button/button'
 import { Skeleton } from '../skeleton/skeleton'
@@ -60,6 +61,8 @@ export interface MapLabels {
   readonly error: string
   readonly errorHint: string
   readonly retry: string
+  readonly unsupported: string
+  readonly unsupportedHint: string
 }
 
 interface MapViewProps {
@@ -107,6 +110,8 @@ export function MapView({
   const mapRef = useRef<MapLibreMap | null>(null)
   const [visible, setVisible] = useState(false)
   const allowed = useIntentStart(isHandheld)
+  // MapLibre draws with WebGL 2; without it the map says so instead of trying and failing.
+  const drawable = useWebglSupport()
   const [phase, setPhase] = useState<Phase>('loading')
   const [attempt, setAttempt] = useState(0)
   const theme = useTheme()
@@ -143,7 +148,7 @@ export function MapView({
 
   useEffect(() => {
     const container = containerRef.current
-    if (container === null || !visible || !allowed || !themeKnown) return
+    if (container === null || !visible || !allowed || !themeKnown || !drawable) return
     // Aborted when the effect is cleaned up: async steps check it before touching the map.
     const lifetime = new AbortController()
     const disposed = () => lifetime.signal.aborted
@@ -281,10 +286,18 @@ export function MapView({
       data-map
       role="region"
       aria-label={labels.title}
-      aria-busy={phase === 'loading'}
+      aria-busy={drawable && phase === 'loading'}
     >
       <div ref={containerRef} className={styles.map} />
-      {phase === 'loading' ? (
+      {!drawable ? (
+        <div className={styles.overlay}>
+          <StateMessage
+            glyph={MapTrifoldIcon}
+            title={labels.unsupported}
+            description={labels.unsupportedHint}
+          />
+        </div>
+      ) : phase === 'loading' ? (
         <div className={styles.overlay}>
           <Skeleton className={styles.skeleton} />
           <span className="visually-hidden">{labels.loading}</span>
