@@ -16,6 +16,8 @@ import { PROJECTS } from '@/seed/steps/projects'
 
 const WEBP = { quality: 84, effort: 5 } as const
 const READY_TIMEOUT_MS = 600_000
+// Software WebGL on a busy machine can take a while to composite a full-size frame.
+const SCREENSHOT_TIMEOUT_MS = 120_000
 
 interface RenderJob {
   readonly name: string
@@ -64,7 +66,7 @@ const renderJob = async (browser: Browser, job: RenderJob) => {
     await page.waitForSelector(`html[${RENDER_READY_ATTRIBUTE}="true"]`, {
       timeout: READY_TIMEOUT_MS,
     })
-    const png = await page.screenshot({ type: 'png' })
+    const png = await page.screenshot({ type: 'png', timeout: SCREENSHOT_TIMEOUT_MS })
     if (await isBlank(png)) throw new Error('the captured frame is blank')
     await sharp(png).webp(WEBP).toFile(renderFile(job.name))
   } finally {
