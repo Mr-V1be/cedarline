@@ -16,7 +16,10 @@
 | `apps/web`              | Next.js 16 (App Router) + Payload CMS 3 + PostgreSQL/PostGIS: сайт, CMS, демо-контент              |
 | `tools/code-shape`      | Гейт формы кода: файл ≤ 700 строк, папка ≤ 15 файлов исходников                                    |
 | `tools/crm-mock`        | Мок внешней CRM в REST-диалекте Битрикс24 (локально в Docker Compose)                              |
-| `docs/`                 | Архитектура и скриншоты вех                                                                        |
+| `tools/stand`           | Локальный демо-стенд: `make stand`, `make status`, `make stop`                                     |
+| `tools/load`            | Нагрузочный тест k6 (в Docker-образе `grafana/k6`)                                                 |
+| `deploy/`, `Dockerfile` | Продакшен: образы, `docker-compose.prod.yml`, Caddy с автоматическим TLS, бэкапы                   |
+| `docs/`                 | Архитектура, производительность, выкатка, материалы кейса и скриншоты вех                          |
 
 Подробно об устройстве — в [docs/architecture.md](docs/architecture.md).
 
@@ -42,9 +45,25 @@ pnpm dev                      # http://localhost:46100
 - Мок CRM (лиды, дошедшие до «внешней CRM»): <http://localhost:46140>. Если мок остановлен,
   доставка повторяется сама (очередь задач), а в карточке заявки есть ручной повтор.
 
+### Демо-стенд одной командой
+
+```bash
+make stand    # Docker-сервисы, миграции, сид на пустой базе, продакшен-сборка, сайт на :46100
+make status   # что запущено и отвечают ли сайт, CMS и /demo
+make stop     # остановить сайт и Docker-сервисы
+```
+
+Сайт работает отвязанно от терминала (`setsid`), логи — в `.run/logs/`. Стенд запускается в
+демо-режиме (`DEMO_MODE=true`): вход в CMS под любой ролью в один клик со страницы
+<http://localhost:46100/demo> (ссылка «Войти в CMS как…» в подвале) и с экрана входа CMS, а
+каждую ночь в 03:30 данные возвращаются к сиду — заявки, конфигурации, письма и правки
+контента. Вручную то же делает `pnpm --filter @kedrovnik/web demo:reset`. Без `DEMO_MODE`
+(по умолчанию) ни страницы `/demo`, ни сброса нет.
+
 ### Демо-доступы в CMS
 
-Учётные записи создаёт `seed` (файл `apps/web/src/seed/data/users.ts`):
+Учётные записи создаёт `seed` (адреса — `apps/web/src/modules/demo/domain/demo-tours.ts`,
+пароли — `apps/web/src/seed/data/users.ts`). На демо-стенде их нельзя изменить или удалить:
 
 | Роль             | Логин                       | Пароль                   |
 | ---------------- | --------------------------- | ------------------------ |
@@ -79,7 +98,13 @@ pnpm test
 ```bash
 pnpm --filter @kedrovnik/web perf:lighthouse http://localhost:46100 3   # Lighthouse, мобильный
 pnpm --filter @kedrovnik/web perf:scene http://localhost:46100 /configurator/sosny 3
+sh tools/load/run.sh http://localhost:46100                            # нагрузка, k6 в Docker
 ```
+
+## Продакшен
+
+Образы, стек с Caddy и бэкапами, пошаговая выкатка на чистый Ubuntu и проверка стека на своей
+машине — в [docs/deploy.md](docs/deploy.md).
 
 CI (GitHub Actions) запускает те же проверки, затем применяет миграции к пустой базе,
 выполняет сид и собирает продакшен-сборку.
