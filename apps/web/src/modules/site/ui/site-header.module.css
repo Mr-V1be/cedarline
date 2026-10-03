@@ -32,6 +32,7 @@
 }
 
 .navLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: var(--control-height);
@@ -62,6 +63,7 @@
 }
 
 .menuLink {
+  position: relative;
   display: flex;
   align-items: center;
   min-height: calc(var(--control-height) + var(--space-3));

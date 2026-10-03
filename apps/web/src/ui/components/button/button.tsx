@@ -3,6 +3,7 @@ import type { ComponentProps, ReactNode } from 'react'
 import { Link } from '@/i18n/navigation'
 
 import { Icon, type IconGlyph } from '../icon/icon'
+import { LinkPending } from '../link-pending/link-pending'
 import styles from './button.module.css'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'quiet' | 'inverse'
@@ -76,6 +77,7 @@ export function ButtonLink({
       <Content icon={icon} iconPosition={iconPosition}>
         {children}
       </Content>
+      <LinkPending />
     </Link>
   )
 }

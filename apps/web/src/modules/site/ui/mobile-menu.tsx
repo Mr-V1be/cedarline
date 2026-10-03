@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Link, usePathname } from '@/i18n/navigation'
 import { ButtonLink } from '@/ui/components/button/button'
 import { IconButton } from '@/ui/components/button/icon-button'
+import { LinkPending } from '@/ui/components/link-pending/link-pending'
 import { Sheet } from '@/ui/components/sheet/sheet'
 
 import { SITE_NAVIGATION, type NavigationKey } from '../domain/navigation'
@@ -73,20 +74,25 @@ export function MobileMenu({
       >
         <nav aria-label={labels.navigation}>
           <ul className={styles.menuList}>
-            {SITE_NAVIGATION.map((item) => (
-              <li key={item.key}>
-                <Link
-                  href={item.href}
-                  className={styles.menuLink}
-                  aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
-                  onClick={() => {
-                    setOpen(false)
-                  }}
-                >
-                  {labels.items[item.key]}
-                </Link>
-              </li>
-            ))}
+            {SITE_NAVIGATION.map((item) => {
+              const current = pathname.startsWith(item.href)
+              return (
+                <li key={item.key}>
+                  {/* Another section closes the menu once it opens; until then the link shows it is loading. */}
+                  <Link
+                    href={item.href}
+                    className={styles.menuLink}
+                    aria-current={current ? 'page' : undefined}
+                    onClick={() => {
+                      if (current) setOpen(false)
+                    }}
+                  >
+                    {labels.items[item.key]}
+                    <LinkPending />
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </nav>
         <LocaleSwitcher label={labels.locale} className={styles.menuLocale} />

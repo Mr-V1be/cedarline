@@ -14,8 +14,3 @@
 .pagination {
   margin-top: var(--space-8);
 }
-
-.skeletonTitle {
-  width: min(16rem, 60%);
-  height: var(--display-m);
-}

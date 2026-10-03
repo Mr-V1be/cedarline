@@ -1,0 +1,48 @@
+.mark {
+  position: absolute;
+  right: var(--space-2);
+  bottom: 3px;
+  left: var(--space-2);
+  overflow: hidden;
+  height: var(--stroke);
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Shown only when loading takes a moment, so quick pages do not flicker. */
+.mark[data-pending] {
+  opacity: 1;
+  transition: opacity var(--duration-fast) var(--ease-out) 120ms;
+}
+
+.mark::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: var(--color-accent);
+}
+
+.mark[data-pending]::after {
+  animation: travel 1.1s var(--ease-in-out) infinite;
+}
+
+@keyframes travel {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark[data-pending]::after {
+    width: 100%;
+    animation: none;
+  }
+}

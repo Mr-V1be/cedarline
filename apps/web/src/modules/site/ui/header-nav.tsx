@@ -1,6 +1,7 @@
 'use client'
 
 import { Link, usePathname } from '@/i18n/navigation'
+import { LinkPending } from '@/ui/components/link-pending/link-pending'
 
 import { SITE_NAVIGATION, type NavigationKey } from '../domain/navigation'
 import styles from './site-header.module.css'
@@ -25,6 +26,7 @@ export function HeaderNav({
               aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
             >
               {labels[item.key]}
+              <LinkPending />
             </Link>
           </li>
         ))}

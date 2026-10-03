@@ -15,12 +15,3 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-
-.skeletonCard {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.skeletonImage {
-  aspect-ratio: 4 / 3;
-}
