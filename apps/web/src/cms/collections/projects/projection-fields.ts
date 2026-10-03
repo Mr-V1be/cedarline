@@ -2,6 +2,7 @@ import type { Field, GroupField } from 'payload'
 
 import { projected } from '../../fields/common'
 import { label } from '../../fields/labels'
+import { rublesField } from '../../fields/rubles'
 
 const number = (name: string, labels: ReturnType<typeof label>, index = false): Field =>
   projected({ name, type: 'number', label: labels, index, admin: { width: '25%' } })
@@ -61,7 +62,14 @@ export const pricingField: GroupField = {
     {
       type: 'row',
       fields: [
-        number('fromPrice', label('Цена от, ₽', 'Price from, ₽'), true),
+        projected(
+          rublesField({
+            name: 'fromPrice',
+            label: label('Цена от', 'Price from'),
+            index: true,
+            width: '25%',
+          }),
+        ),
         projected({
           name: 'fromCompleteness',
           type: 'text',

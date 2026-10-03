@@ -4,6 +4,7 @@ import { LOCALES } from '@/i18n/locales'
 
 import { declareReadCapability, requireCapability } from '../access/policies'
 import { label } from '../fields/labels'
+import { rublesField } from '../fields/rubles'
 
 const SALES_READ = 'leads.read'
 
@@ -51,12 +52,7 @@ export const Configurations: CollectionConfig = {
           label: label('Проект', 'Project'),
           admin: { readOnly: true, width: '40%' },
         },
-        {
-          name: 'total',
-          type: 'number',
-          label: label('Сумма, ₽', 'Total, ₽'),
-          admin: { readOnly: true, width: '20%' },
-        },
+        rublesField({ name: 'total', label: label('Сумма', 'Total'), width: '20%' }),
         {
           name: 'tariffRevision',
           type: 'number',

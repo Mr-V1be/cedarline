@@ -7,6 +7,7 @@ import { declareReadCapability, requireCapability } from '../access/policies'
 import { retryLeadDelivery } from '../endpoints/retry-lead-delivery'
 import { label } from '../fields/labels'
 import { registryOptions } from '../fields/registry-labels'
+import { rublesField } from '../fields/rubles'
 
 const SALES_READ = 'leads.read'
 
@@ -84,7 +85,7 @@ export const Leads: CollectionConfig = {
           type: 'text',
           label: label('Конфигурация', 'Configuration'),
         }),
-        sent({ name: 'total', type: 'number', label: label('Сумма, ₽', 'Total, ₽') }),
+        sent(rublesField({ name: 'total', label: label('Сумма', 'Total') })),
         sent({
           name: 'locale',
           type: 'select',
