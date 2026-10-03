@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="Manrope, 'Segoe UI', Arial, sans-serif">
+  <title>Архитектура «Кедровника»: слои и направления зависимостей</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10z" fill="#2b312d"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10z" fill="#a9661a"/>
+    </marker>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#e3e4dd" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" fill="#f3f3ee"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+
+  <text x="40" y="52" font-size="26" font-weight="600" fill="#2b312d">Архитектура «Кедровника»</text>
+  <text x="40" y="80" font-size="15" fill="#5c625e">Зависимости направлены внутрь: домен не знает о базе, сети и фреймворке; внешние сервисы — только за портами.</text>
+
+  <!-- Clients -->
+  <g>
+    <rect x="40" y="108" width="540" height="72" rx="12" fill="#ffffff" stroke="#b4b8ae"/>
+    <text x="64" y="138" font-size="17" font-weight="600" fill="#2b312d">Покупатель — сайт RU/EN</text>
+    <text x="64" y="162" font-size="14" fill="#5c625e">каталог, проекты, 3D-конфигуратор, карта, калькулятор</text>
+    <rect x="620" y="108" width="540" height="72" rx="12" fill="#ffffff" stroke="#b4b8ae"/>
+    <text x="644" y="138" font-size="17" font-weight="600" fill="#2b312d">Команда — CMS Payload</text>
+    <text x="644" y="162" font-size="14" fill="#5c625e">контент-менеджер, менеджер продаж, администратор</text>
+  </g>
+  <path d="M310 180V214" stroke="#2b312d" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M890 180V214" stroke="#2b312d" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- Delivery -->
+  <rect x="40" y="218" width="1120" height="86" rx="12" fill="#e7ece8" stroke="#1e3b2f"/>
+  <text x="64" y="248" font-size="17" font-weight="600" fill="#1e3b2f">Доставка — Next.js 16 (App Router) + Payload CMS 3 в одном приложении</text>
+  <text x="64" y="273" font-size="14" fill="#2b312d">страницы и server actions · REST CMS · фоновые задачи в базе (повтор доставки заявок, сброс демо-стенда, ставка ЦБ)</text>
+  <text x="64" y="293" font-size="14" fill="#2b312d">корень композиции связывает порты с адаптерами; вход валидируется схемами на границе</text>
+  <path d="M600 304V338" stroke="#2b312d" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- Application modules -->
+  <rect x="40" y="342" width="1120" height="150" rx="12" fill="#ffffff" stroke="#b4b8ae"/>
+  <text x="64" y="372" font-size="17" font-weight="600" fill="#2b312d">Модули приложения — domain · application · ports · infrastructure · ui</text>
+  <g font-size="14" fill="#2b312d">
+    <rect x="64" y="390" width="150" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="139" y="412" text-anchor="middle">Каталог</text>
+    <rect x="226" y="390" width="160" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="306" y="412" text-anchor="middle">Конфигуратор</text>
+    <rect x="398" y="390" width="140" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="468" y="412" text-anchor="middle">3D-сцена</text>
+    <rect x="550" y="390" width="140" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="620" y="412" text-anchor="middle">КП в PDF</text>
+    <rect x="702" y="390" width="130" height="34" rx="17" fill="#f6efe4" stroke="#a9661a"/><text x="767" y="412" text-anchor="middle">Заявки</text>
+    <rect x="844" y="390" width="120" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="904" y="412" text-anchor="middle">Почта</text>
+    <rect x="976" y="390" width="160" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="1056" y="412" text-anchor="middle">Планировки</text>
+    <rect x="64" y="438" width="150" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="139" y="460" text-anchor="middle">Финансы</text>
+    <rect x="226" y="438" width="160" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="306" y="460" text-anchor="middle">Карта объектов</text>
+    <rect x="398" y="438" width="140" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="468" y="460" text-anchor="middle">Статьи</text>
+    <rect x="550" y="438" width="140" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="620" y="460" text-anchor="middle">SEO</text>
+    <rect x="702" y="438" width="130" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="767" y="460" text-anchor="middle">Доступ</text>
+    <rect x="844" y="438" width="120" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="904" y="460" text-anchor="middle">Лимиты</text>
+    <rect x="976" y="438" width="160" height="34" rx="17" fill="#f3f3ee" stroke="#b4b8ae"/><text x="1056" y="460" text-anchor="middle">Демо-стенд</text>
+  </g>
+  <path d="M600 492V526" stroke="#2b312d" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- Domain packages -->
+  <rect x="40" y="530" width="1120" height="176" rx="12" fill="#1e3b2f"/>
+  <text x="64" y="560" font-size="17" font-weight="600" fill="#f3f3ee">Доменные пакеты — чистый TypeScript, без React, Next.js и базы; покрыты тестами</text>
+  <g>
+    <rect x="64" y="578" width="330" height="110" rx="10" fill="#f3f3ee"/>
+    <text x="84" y="606" font-size="16" font-weight="600" fill="#1e3b2f">house</text>
+    <text x="84" y="630" font-size="13" fill="#2b312d">спецификация → каркас → 3D-сетка,</text>
+    <text x="84" y="650" font-size="13" fill="#2b312d">ведомость объёмов, обмерные планы,</text>
+    <text x="84" y="670" font-size="13" fill="#2b312d">инварианты входа и геометрии</text>
+
+    <rect x="435" y="578" width="330" height="110" rx="10" fill="#f6efe4"/>
+    <text x="455" y="606" font-size="16" font-weight="600" fill="#1e3b2f">configurator</text>
+    <text x="455" y="630" font-size="13" fill="#2b312d">опции и правила совместимости</text>
+    <text x="455" y="650" font-size="13" fill="#2b312d">из данных CMS, состояние выбора,</text>
+    <text x="455" y="670" font-size="13" fill="#2b312d">живая смета, коды ссылок</text>
+
+    <rect x="806" y="578" width="330" height="110" rx="10" fill="#f3f3ee"/>
+    <text x="826" y="606" font-size="16" font-weight="600" fill="#1e3b2f">pricing</text>
+    <text x="826" y="630" font-size="13" fill="#2b312d">деньги в копейках, тарифная сетка,</text>
+    <text x="826" y="650" font-size="13" fill="#2b312d">комплектации, график строительства</text>
+    <text x="826" y="670" font-size="13" fill="#2b312d">по критическому пути</text>
+  </g>
+  <path d="M435 633H400" stroke="#d8be94" stroke-width="2" marker-end="url(#arrow-accent)"/>
+  <path d="M765 633H800" stroke="#d8be94" stroke-width="2" marker-end="url(#arrow-accent)"/>
+
+  <!-- Adapters -->
+  <rect x="40" y="740" width="1120" height="128" rx="12" fill="#ffffff" stroke="#b4b8ae" stroke-dasharray="6 5"/>
+  <text x="64" y="770" font-size="17" font-weight="600" fill="#2b312d">Адаптеры — реализуют порты модулей</text>
+  <g font-size="13" fill="#2b312d">
+    <text x="64" y="798">PostgreSQL + PostGIS: данные, сессии, лимиты, очередь задач</text>
+    <text x="64" y="820">LeadSink: заявки в CMS · Битрикс24 (мок по REST-документации)</text>
+    <text x="64" y="842">Mailer: демо-ящик · SMTP-релей компании</text>
+    <text x="620" y="798">ЦБ РФ: ключевая ставка с кэшем и последним значением</text>
+    <text x="620" y="820">OpenFreeMap + MapLibre: карта · react-pdf: КП</text>
+    <text x="620" y="842">sharp: превью для соцсетей, схемы статей</text>
+  </g>
+  <path d="M1160 804H1176V417H1166" fill="none" stroke="#a9661a" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-accent)"/>
+  <text x="1193" y="724" font-size="12" fill="#a9661a" text-anchor="end" transform="rotate(-90 1193 724)">реализуют порты</text>
+</svg>
