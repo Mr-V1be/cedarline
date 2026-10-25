@@ -24,11 +24,19 @@ export function validateRoundingRule(rule: RoundingRule): RoundingRule {
   return rule
 }
 
+/**
+ * Rounds a non-negative integer count of minor units to a multiple of `step`. One rule for
+ * every amount: tariff money in kopecks and display amounts in any currency's minor units.
+ */
+export function roundToStep(value: number, step: number, mode: RoundingMode): number {
+  const whole = Math.floor(value / step)
+  const remainder = value - whole * step
+  if (remainder === 0) return value
+  const roundUp = mode === 'up' || (mode === 'nearest' && remainder * 2 >= step)
+  return (roundUp ? whole + 1 : whole) * step
+}
+
 /** Rounds a non-negative amount to a multiple of the rule's step. */
 export function roundMoney(amount: Money, rule: RoundingRule): Money {
-  const whole = Math.floor(amount / rule.step)
-  const remainder = amount - whole * rule.step
-  if (remainder === 0) return amount
-  const roundUp = rule.mode === 'up' || (rule.mode === 'nearest' && remainder * 2 >= rule.step)
-  return Money.ofKopecks((roundUp ? whole + 1 : whole) * rule.step)
+  return Money.ofKopecks(roundToStep(amount, rule.step, rule.mode))
 }

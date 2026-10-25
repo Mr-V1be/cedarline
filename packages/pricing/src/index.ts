@@ -43,6 +43,7 @@ export {
 export {
   ROUNDING_MODES,
   roundMoney,
+  roundToStep,
   validateRoundingRule,
   type RoundingMode,
   type RoundingRule,
