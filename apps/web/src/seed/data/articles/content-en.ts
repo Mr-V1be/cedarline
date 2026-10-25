@@ -71,7 +71,7 @@ How much heat this saves depends on the wall area. For a single-storey house lik
 
 ## What it means in the estimate
 
-The extra cost comes from two lines: a 50×200 wall frame instead of 50×150, and 200 mm of insulation instead of 150. At the 2026 tariff this is about 1,150 rubles per square metre of wall, so for the same “Pines” it is over a hundred thousand rubles. The configurator shows the exact difference for any project right next to the option, before you choose.
+The extra cost comes from two lines: a 50×200 wall frame instead of 50×150, and 200 mm of insulation instead of 150. At the 2026 tariff this is about $13.50 per square metre of wall, so for the same “Pines” it is over $1,100. The configurator shows the exact difference for any project right next to the option, before you choose.
 
 Counting only the heating savings, the extra cost pays back slowly. So the decision is made not by a payback table but by how the house will be lived in.
 
@@ -194,9 +194,9 @@ Nothing is entered by hand: areas are measured from the same dimensions as the p
 
 ## Rates: what the factory maintains
 
-Every estimate line is a quantity times a rate: rubles per square metre of wall, per pile, per running metre of perimeter. For example, the line “Wall frame 50×150” is the wall area from the model multiplied by the rate per square metre. The rates make up a tariff that the factory maintains in the CMS. When a material gets more expensive, one rate is changed, and the new prices appear in every project at once.
+Every estimate line is a quantity times a rate: a price per square metre of wall, per pile, per running metre of perimeter. For example, the line “Wall frame 50×150” is the wall area from the model multiplied by the rate per square metre. The rates make up a tariff that the factory maintains in the CMS. When a material gets more expensive, one rate is changed, and the new prices appear in every project at once.
 
-Options switch rates rather than add a guessed mark-up. Fibre-cement cladding changes the facade rate, 200 mm insulation changes the frame and insulation rates, a gambrel roof changes the rafter rate. That is why the difference between options is shown in rubles next to each of them.
+Options switch rates rather than add a guessed mark-up. Fibre-cement cladding changes the facade rate, 200 mm insulation changes the frame and insulation rates, a gambrel roof changes the rafter rate. That is why every option shows its exact price difference right next to it.
 
 Kit delivery with a site cabin is a fixed sum within the region, while supervision and site cleaning are calculated from the total area of the house.
 
@@ -208,7 +208,9 @@ The lines are grouped into sections: foundation, kit and frame, insulation and m
 - **Ready for finishing** — plus building services: wiring, water and drainage, heating, ventilation, and the stove if the project has one.
 - **Turnkey** — plus finishing of walls, floors and ceilings, and interior doors.
 
-The “from” price in the catalogue is the weathertight shell without options, rounded up to a thousand rubles. The estimate itself stays exact to the ruble.
+The “from” price in the catalogue is the weathertight shell without options, rounded up to the nearest $100. The estimate itself is exact to the dollar.
+
+The factory keeps its tariff in its home currency; on this site every amount is converted to US dollars at a rate the factory sets, and a saved configuration keeps the rate of the day it was saved.
 
 ## The schedule comes from the same quantities
 
@@ -262,7 +264,7 @@ An attic floor gives a second level for little more than the cost of the roof: b
 
 The “from” price in the catalogue is the weathertight shell: the house closed from outside, without services or finishing. If you want to move in straight away, look at the Turnkey package; the project page shows all three packages side by side, with their totals and schedules.
 
-In the configurator the price of every option is shown next to it: panoramic windows, cladding, insulation, terrace. Decisions are made in rubles, not by eye. If the budget is tight, start from a smaller size of the same series: the layout stays, the total goes down. Size is the first step of the configurator.
+In the configurator the price of every option is shown next to it: panoramic windows, cladding, insulation, terrace. Decisions are made on exact figures, not by eye. If the budget is tight, start from a smaller size of the same series: the layout stays, the total goes down. Size is the first step of the configurator.
 
 ## How to compare options
 
