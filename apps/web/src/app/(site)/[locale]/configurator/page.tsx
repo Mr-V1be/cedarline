@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
-import { getServices } from '@/composition/services'
+import { getDisplayCurrency, getServices } from '@/composition/services'
 import type { Locale } from '@/i18n/locales'
 import { pageMetadata } from '@/modules/seo/ui/page-metadata'
 import { parseCatalogQuery, type SearchParams } from '@/modules/catalog/domain/catalog-query-parse'
@@ -33,10 +33,11 @@ export async function generateMetadata({ params }: PickerPageProps): Promise<Met
 export default async function ConfiguratorPickerPage({ params, searchParams }: PickerPageProps) {
   const [{ locale }, search] = await Promise.all([params, searchParams])
   const query = parseCatalogQuery({ page: search.page })
-  const [services, t, common] = await Promise.all([
+  const [services, t, common, currency] = await Promise.all([
     getServices(locale),
     getTranslations('configurator.picker'),
     getTranslations('catalog'),
+    getDisplayCurrency(locale),
   ])
   const page = await services.projects.list(query, locale)
 
@@ -46,7 +47,11 @@ export default async function ConfiguratorPickerPage({ params, searchParams }: P
         <h1 className={styles.title}>{t('title')}</h1>
         <p className={styles.lead}>{t('lead')}</p>
       </header>
-      <ProjectGrid projects={page.items} hrefOf={(project) => `/configurator/${project.slug}`} />
+      <ProjectGrid
+        projects={page.items}
+        currency={currency}
+        hrefOf={(project) => `/configurator/${project.slug}`}
+      />
       {page.pageCount > 1 ? (
         <Pagination
           page={page.page}

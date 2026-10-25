@@ -5,7 +5,7 @@ import { Money } from '@kedrovnik/pricing'
 import { useFormatter, useTranslations } from 'next-intl'
 import { useState } from 'react'
 
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { usePrices } from '@/modules/pricing/ui/prices'
 import { ButtonLink } from '@/ui/components/button/button'
 import { RangeField } from '@/ui/components/range-field/range-field'
 import { SegmentedControl } from '@/ui/components/segmented/segmented-control'
@@ -43,8 +43,9 @@ interface CalculatorProps {
 
 /** The slider stops here: a larger down payment is paying in cash. */
 const MAX_DOWN_PERCENT = 90
-const MIN_PRICE = 100_000
-const MAX_PRICE = 1_000_000_000
+/** Bounds of a typed price, in the tariff's rubles; the visitor reads them in their currency. */
+const MIN_PRICE = Money.ofRubles(100_000)
+const MAX_PRICE = Money.ofRubles(1_000_000_000)
 const CUSTOM = ''
 
 type TermState = Readonly<Record<FinancingKind, number>>
@@ -54,13 +55,17 @@ const digitsOnly = (text: string) => Number(text.replace(/\D/g, '') || '0')
 /**
  * Mortgage and instalment calculator. Everything is computed in the browser with the domain
  * rules, so the payment follows every move of a slider; the key rate comes from the server.
+ * The visitor types and reads the price in their currency; the plan is computed in rubles.
  */
 export function Calculator({ terms, keyRate, projects, initial }: CalculatorProps) {
   const t = useTranslations('calculator')
   const format = useFormatter()
+  const prices = usePrices()
+  /** A project's «from» price as a figure of the visitor's currency, for the price field. */
+  const fromFigure = (rubles: number) => format.number(prices.value(Money.ofRubles(rubles), 'from'))
   const [kind, setKind] = useState<FinancingKind>(keyRate === null ? 'installment' : 'mortgage')
   const [project, setProject] = useState(initial.project)
-  const [priceText, setPriceText] = useState(format.number(initial.price))
+  const [priceText, setPriceText] = useState(() => fromFigure(initial.price))
   const [down, setDown] = useState<TermState>({
     mortgage: terms.mortgage.defaultDownPercent,
     installment: terms.installment.defaultDownPercent,
@@ -71,7 +76,10 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
   })
 
   const price = digitsOnly(priceText)
-  const priceValid = price >= MIN_PRICE && price <= MAX_PRICE
+  const minPrice = prices.value(MIN_PRICE, 'from')
+  const priceValid = price >= minPrice && price <= prices.value(MAX_PRICE, 'exact')
+  /** The typed price in rubles; only a valid figure is converted. */
+  const basePrice = priceValid ? prices.toBase(price) : null
   const limits = {
     mortgage: {
       minDown: terms.mortgage.minDownPercent,
@@ -98,18 +106,19 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
   /** A mortgage is priced off the key rate; without one only interest-free instalments are. */
   const mortgageUnavailable = keyRate === null && kind === 'mortgage'
   const plan: PaymentPlan | null =
-    priceValid && !mortgageUnavailable
+    basePrice !== null && !mortgageUnavailable
       ? PLANNERS[kind](
           {
-            price: Money.ofRubles(price),
-            downPayment: percentOf(Money.ofRubles(price), down[kind]),
+            price: basePrice,
+            downPayment: percentOf(basePrice, down[kind]),
             term: chosenTerm,
           },
           terms,
           effectiveKeyRate,
         )
       : null
-  const rubles = (amount: Money) => formatRubles(format, Money.toWholeRubles(amount))
+  const money = (amount: Money) => prices.format(amount, 'exact')
+  const priceError = t('errors.price', { min: prices.formatValue(minPrice) })
   const rateExplanation = (current: PaymentPlan) => {
     if (current.kind === 'mortgage') {
       return t('result.rateMortgage', {
@@ -146,25 +155,23 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
           options={[
             ...projects.map((item) => ({
               value: item.slug,
-              label: `${item.title} · ${formatRubles(format, item.price)}`,
+              label: `${item.title} · ${prices.format(Money.ofRubles(item.price), 'from')}`,
             })),
             { value: CUSTOM, label: t('fields.customProject') },
           ]}
           onChange={(event) => {
             const chosen = projects.find((item) => item.slug === event.target.value)
             setProject(event.target.value)
-            if (chosen !== undefined) setPriceText(format.number(chosen.price))
+            if (chosen !== undefined) setPriceText(fromFigure(chosen.price))
           }}
         />
         <TextField
-          label={t('fields.price')}
+          label={t('fields.price', { currency: prices.symbol })}
           inputMode="numeric"
           autoComplete="off"
           value={priceText}
           hint={t('fields.priceHint')}
-          error={
-            priceValid ? undefined : t('errors.price', { min: formatRubles(format, MIN_PRICE) })
-          }
+          error={priceValid ? undefined : priceError}
           onChange={(event) => {
             setProject(CUSTOM)
             setPriceText(event.target.value)
@@ -178,7 +185,7 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
           value={down[kind]}
           min={limits.minDown}
           max={MAX_DOWN_PERCENT}
-          valueText={`${percentText(down[kind])} · ${priceValid ? rubles(percentOf(Money.ofRubles(price), down[kind])) : '—'}`}
+          valueText={`${percentText(down[kind])} · ${basePrice === null ? '—' : money(percentOf(basePrice, down[kind]))}`}
           minText={percentText(limits.minDown)}
           maxText={percentText(MAX_DOWN_PERCENT)}
           onChange={(value) => {
@@ -212,20 +219,18 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
               tone="error"
             />
           ) : (
-            <p className={styles.placeholder}>
-              {t('errors.price', { min: formatRubles(format, MIN_PRICE) })}
-            </p>
+            <p className={styles.placeholder}>{priceError}</p>
           )
         ) : (
           <>
             <p className={styles.monthlyLabel}>
               {plan.rate === 0 ? t('result.monthlyFree') : t('result.monthly')}
             </p>
-            <p className={styles.monthly}>{rubles(plan.monthly)}</p>
+            <p className={styles.monthly}>{money(plan.monthly)}</p>
             <dl className={styles.rows}>
               <div className={styles.row}>
                 <dt>{plan.kind === 'mortgage' ? t('result.loan') : t('result.loanInstallment')}</dt>
-                <dd>{rubles(plan.loan)}</dd>
+                <dd>{money(plan.loan)}</dd>
               </div>
               <div className={styles.row}>
                 <dt>{t('result.rate')}</dt>
@@ -236,11 +241,11 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
               </div>
               <div className={styles.row}>
                 <dt>{t('result.overpayment')}</dt>
-                <dd>{rubles(plan.overpayment)}</dd>
+                <dd>{money(plan.overpayment)}</dd>
               </div>
               <div className={styles.row}>
                 <dt>{t('result.total')}</dt>
-                <dd>{rubles(plan.total)}</dd>
+                <dd>{money(plan.total)}</dd>
               </div>
             </dl>
             <PlanStructure
@@ -251,7 +256,7 @@ export function Calculator({ terms, keyRate, projects, initial }: CalculatorProp
                 loan: t('result.loanPart'),
                 interest: t('result.interestPart'),
               }}
-              format={rubles}
+              format={money}
             />
           </>
         )}

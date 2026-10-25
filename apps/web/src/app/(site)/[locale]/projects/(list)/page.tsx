@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from '@phosphor-icons/react/ssr'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
-import { getServices } from '@/composition/services'
+import { getDisplayCurrency, getServices } from '@/composition/services'
 import type { Locale } from '@/i18n/locales'
 import { browseCatalog } from '@/modules/catalog/application/browse-catalog'
 import {
@@ -46,9 +46,13 @@ const hrefWith = (search: string) => (search === '' ? '/projects' : `/projects?$
 export default async function CatalogPage({ params, searchParams }: CatalogPageProps) {
   const [{ locale }, search] = await Promise.all([params, searchParams])
   const query = parseCatalogQuery(search)
-  const [services, t] = await Promise.all([getServices(locale), getTranslations()])
-  const { page, facets } = await browseCatalog(services.projects, query, locale)
-  const [fields, sorts] = await Promise.all([catalogFields(facets), sortOptions()])
+  const [services, t, currency] = await Promise.all([
+    getServices(locale),
+    getTranslations(),
+    getDisplayCurrency(locale),
+  ])
+  const { page, facets } = await browseCatalog(services.projects, query, locale, currency)
+  const [fields, sorts] = await Promise.all([catalogFields(facets, currency), sortOptions()])
   const count = t('catalog.count', { count: page.total })
 
   return (
@@ -87,7 +91,7 @@ export default async function CatalogPage({ params, searchParams }: CatalogPageP
           />
         ) : (
           <>
-            <ProjectGrid projects={page.items} />
+            <ProjectGrid projects={page.items} currency={currency} />
             <div className={styles.pagination}>
               <Pagination
                 page={page.page}

@@ -1,9 +1,11 @@
+import { Money } from '@kedrovnik/pricing'
 import { BedIcon, HouseLineIcon, RulerIcon } from '@phosphor-icons/react/ssr'
 import Image from 'next/image'
-import { getFormatter, getTranslations } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 
 import { Link } from '@/i18n/navigation'
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
+import type { DisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 import { Icon } from '@/ui/components/icon/icon'
 
 import type { ProjectSummary } from '../domain/project'
@@ -11,6 +13,8 @@ import styles from './project-card.module.css'
 
 interface ProjectCardProps {
   readonly project: ProjectSummary
+  /** The visitor's currency. */
+  readonly currency: DisplayCurrency
   readonly sizes: string
   readonly priority?: boolean
   readonly headingLevel?: 'h2' | 'h3'
@@ -21,12 +25,13 @@ interface ProjectCardProps {
 /** Catalog entry: the render, the name and the three numbers people compare. */
 export async function ProjectCard({
   project,
+  currency,
   sizes,
   priority = false,
   headingLevel: Heading = 'h3',
   href,
 }: ProjectCardProps) {
-  const [t, format] = await Promise.all([getTranslations('common'), getFormatter()])
+  const t = await getTranslations('common')
   const { metrics, pricing } = project
   return (
     <article className={styles.card}>
@@ -68,7 +73,12 @@ export async function ProjectCard({
         </ul>
         {pricing === null ? null : (
           <p className={styles.price}>
-            {t('units.priceFrom', { price: formatRubles(format, pricing.fromPrice) })}
+            {t('units.priceFrom', {
+              price: createPriceFormatter(currency).format(
+                Money.ofRubles(pricing.fromPrice),
+                'from',
+              ),
+            })}
           </p>
         )}
       </div>

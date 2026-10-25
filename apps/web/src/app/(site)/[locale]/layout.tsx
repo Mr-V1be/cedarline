@@ -8,11 +8,12 @@ import { getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
 
 import { isDemoStand } from '@/composition/demo'
-import { getServices } from '@/composition/services'
+import { getDisplayCurrency, getServices } from '@/composition/services'
 import { env } from '@/config/env'
 import { ClientMessages } from '@/i18n/client-messages'
 import { LOCALE_DEFINITIONS } from '@/i18n/locales'
 import { routing } from '@/i18n/routing'
+import { PricesProvider } from '@/modules/pricing/ui/prices'
 import { SiteFooter } from '@/modules/site/ui/site-footer'
 import { SiteHeader } from '@/modules/site/ui/site-header'
 import { fontVariables } from '@/ui/fonts'
@@ -50,9 +51,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 export default async function SiteLayout({ children, params }: LayoutProps) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
-  const [services, t] = await Promise.all([
+  const [services, t, currency] = await Promise.all([
     getServices(locale),
     getTranslations({ locale, namespace: 'common' }),
+    getDisplayCurrency(locale),
   ])
   const site = await services.site.load(locale)
 
@@ -63,14 +65,16 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
       </head>
       <body>
         <ClientMessages>
-          <a href="#content" className={styles.skip}>
-            {t('a11y.skipToContent')}
-          </a>
-          <SiteHeader />
-          <main id="content" className={styles.main}>
-            {children}
-          </main>
-          <SiteFooter site={site} demoAccess={isDemoStand()} />
+          <PricesProvider value={currency}>
+            <a href="#content" className={styles.skip}>
+              {t('a11y.skipToContent')}
+            </a>
+            <SiteHeader />
+            <main id="content" className={styles.main}>
+              {children}
+            </main>
+            <SiteFooter site={site} demoAccess={isDemoStand()} />
+          </PricesProvider>
         </ClientMessages>
       </body>
     </html>

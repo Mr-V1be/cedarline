@@ -20,7 +20,11 @@ interface SavedPageProps {
 
 async function load(locale: Locale, code: string) {
   const services = await getServices(locale)
-  return openSaved({ ...services.configurator, saved: services.saved }, code, locale)
+  return openSaved(
+    { ...services.configurator, saved: services.saved, exchangeRates: services.exchangeRates },
+    code,
+    locale,
+  )
 }
 
 export async function generateMetadata({ params }: SavedPageProps): Promise<Metadata> {

@@ -12,6 +12,7 @@ export interface Page<T> {
 }
 
 export interface ProjectRepository {
+  /** Amounts in the query are the tariff's rubles. */
   list(query: CatalogQuery, locale: Locale): Promise<Page<ProjectSummary>>
   facets(locale: Locale): Promise<CatalogFacets>
   findBySlug(slug: string, locale: Locale): Promise<ProjectDetails | null>

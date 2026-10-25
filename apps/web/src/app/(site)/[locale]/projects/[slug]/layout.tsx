@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 
+import { getDisplayCurrency } from '@/composition/services'
 import { isLocale } from '@/i18n/locales'
 
 import { loadOverview } from './load-overview'
@@ -16,11 +17,15 @@ export default async function ProjectLayout({
   params,
 }: LayoutProps<'/[locale]/projects/[slug]'>) {
   const { locale, slug } = await params
-  const overview = isLocale(locale) ? await loadOverview(slug, locale) : null
+  if (!isLocale(locale)) notFound()
+  const [overview, currency] = await Promise.all([
+    loadOverview(slug, locale),
+    getDisplayCurrency(locale),
+  ])
   if (overview === null) notFound()
   return (
     <>
-      <ProjectHero overview={overview} />
+      <ProjectHero overview={overview} currency={currency} />
       {children}
     </>
   )

@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getFormatter, getTranslations } from 'next-intl/server'
+import { Money } from '@kedrovnik/pricing'
+import { getTranslations } from 'next-intl/server'
 
-import { getServices } from '@/composition/services'
+import { getDisplayCurrency, getServices } from '@/composition/services'
 import { env } from '@/config/env'
 import type { Locale } from '@/i18n/locales'
 import { ProjectActionBar } from '@/modules/catalog/ui/project-action-bar'
 import { ProjectGrid } from '@/modules/catalog/ui/project-grid'
 import { HouseStage } from '@/modules/house-3d/ui/house-stage'
 import { FloorPlans } from '@/modules/plans/ui/floor-plans'
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
 import { Offers } from '@/modules/pricing/ui/offers'
 import { breadcrumbSchema, productSchema } from '@/modules/seo/application/structured-data'
 import { JsonLd } from '@/modules/seo/ui/json-ld'
@@ -52,16 +53,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (overview === null) notFound()
   const services = await getServices(locale)
   const { project, offers, takeoff, plans, roomNames, viewer: input } = overview
-  const [technology, similar, t, common, registry, viewer, format] = await Promise.all([
+  const [technology, similar, t, common, registry, viewer, currency] = await Promise.all([
     services.technology.load(),
     services.projects.findSimilar(project, SIMILAR_COUNT, locale),
     getTranslations('project'),
     getTranslations('common'),
     getTranslations('registry'),
     getTranslations('viewer'),
-    getFormatter(),
+    getDisplayCurrency(locale),
   ])
   const wall = resolveWall(technology.layers, project.options.insulation)
+  const prices = createPriceFormatter(currency)
+  const fromPrice = project.pricing === null ? null : Money.ofRubles(project.pricing.fromPrice)
 
   const url = (path: string) => `${env.SITE_URL}${localizedPath(locale, path)}`
 
@@ -74,7 +77,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           url: url(`/projects/${project.slug}`),
           image: project.cover === null ? null : `${env.SITE_URL}/files/og/${project.cover.id}.jpg`,
           category: project.type.title,
-          priceFrom: project.pricing?.fromPrice ?? null,
+          priceFrom:
+            fromPrice === null
+              ? null
+              : { amount: prices.value(fromPrice, 'from'), currency: currency.currency },
           packages: offers.length,
           sellerUrl: url('/'),
         })}
@@ -123,7 +129,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             title={t('completeness.title')}
             lead={t('completeness.lead')}
           />
-          <Offers offers={offers} />
+          <Offers offers={offers} currency={currency} />
         </Container>
       </Section>
 
@@ -183,15 +189,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <Section aria-labelledby="similar-title">
           <Container>
             <SectionHeading id="similar-title" title={t('similar.title')} />
-            <ProjectGrid projects={similar} leading={false} />
+            <ProjectGrid projects={similar} currency={currency} leading={false} />
           </Container>
         </Section>
       ) : null}
 
-      {project.pricing === null ? null : (
+      {fromPrice === null ? null : (
         <ProjectActionBar
           priceLabel={t('price.from')}
-          price={formatRubles(format, project.pricing.fromPrice)}
+          price={prices.format(fromPrice, 'from')}
           action={common('actions.configure')}
           href={`/configurator/${project.slug}`}
         />

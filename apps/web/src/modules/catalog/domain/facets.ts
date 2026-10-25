@@ -14,9 +14,8 @@ export interface CatalogFacets {
   readonly price: Range | null
 }
 
-/** Area thresholds every 20 m², price thresholds every 1 000 000 ₽, spanning the catalog. */
+/** Area thresholds every 20 m²; price thresholds step by the visitor's currency. */
 export const AREA_STEP = 20
-export const PRICE_STEP = 1_000_000
 
 export function thresholds(range: Range | null, step: number): number[] {
   if (range === null) return []

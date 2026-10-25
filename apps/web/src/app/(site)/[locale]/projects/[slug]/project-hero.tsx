@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 
 import type { ProjectOverview } from '@/modules/catalog/application/project-overview'
 import { ProjectSummary } from '@/modules/catalog/ui/project-summary'
+import type { DisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 import { Breadcrumbs } from '@/ui/components/breadcrumbs/breadcrumbs'
 import { Gallery } from '@/ui/components/gallery/gallery'
 import { Container } from '@/ui/components/layout/container'
@@ -14,7 +15,13 @@ import styles from './project.module.css'
  * renders it from data it has already loaded, so the largest image is in the first paint and
  * only the sections below wait behind the loading skeleton.
  */
-export async function ProjectHero({ overview }: { readonly overview: ProjectOverview }) {
+export async function ProjectHero({
+  overview,
+  currency,
+}: {
+  readonly overview: ProjectOverview
+  readonly currency: DisplayCurrency
+}) {
   const { project, offers } = overview
   const [t, registry] = await Promise.all([getTranslations('project'), getTranslations('registry')])
   const cheapest = offers.find((offer) => offer.key === project.pricing?.fromCompleteness) ?? null
@@ -60,7 +67,11 @@ export async function ProjectHero({ overview }: { readonly overview: ProjectOver
           />
         </div>
         <aside className={styles.summary}>
-          <ProjectSummary project={project} completenessName={cheapest?.name ?? null} />
+          <ProjectSummary
+            project={project}
+            completenessName={cheapest?.name ?? null}
+            currency={currency}
+          />
         </aside>
       </div>
     </Container>

@@ -1,21 +1,29 @@
-import { getFormatter, getTranslations } from 'next-intl/server'
+import { Money } from '@kedrovnik/pricing'
+import { getTranslations } from 'next-intl/server'
 
 import { Link } from '@/i18n/navigation'
 import type { ProjectOverview } from '@/modules/catalog/application/project-overview'
 import { HouseStage } from '@/modules/house-3d/ui/house-stage'
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
+import type { DisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Container } from '@/ui/components/layout/container'
 
 import styles from './hero-section.module.css'
 
 /** First screen: the brand thesis and the hero project as a live model with its real numbers. */
-export async function HeroSection({ hero }: { readonly hero: ProjectOverview | null }) {
-  const [t, common, viewer, format] = await Promise.all([
+export async function HeroSection({
+  hero,
+  currency,
+}: {
+  readonly hero: ProjectOverview | null
+  /** The visitor's currency. */
+  readonly currency: DisplayCurrency
+}) {
+  const [t, common, viewer] = await Promise.all([
     getTranslations('home.hero'),
     getTranslations('common'),
     getTranslations('viewer'),
-    getFormatter(),
   ])
   return (
     <section className={styles.hero}>
@@ -73,7 +81,10 @@ export async function HeroSection({ hero }: { readonly hero: ProjectOverview | n
                     <dt>{t('price')}</dt>
                     <dd>
                       {common('units.priceFrom', {
-                        price: formatRubles(format, hero.project.pricing.fromPrice),
+                        price: createPriceFormatter(currency).format(
+                          Money.ofRubles(hero.project.pricing.fromPrice),
+                          'from',
+                        ),
                       })}
                     </dd>
                   </div>

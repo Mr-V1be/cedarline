@@ -1,10 +1,10 @@
 'use client'
 
-import { Money, type Quote } from '@kedrovnik/pricing'
-import { useFormatter, useTranslations } from 'next-intl'
+import type { Quote } from '@kedrovnik/pricing'
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { usePrices } from '@/modules/pricing/ui/prices'
 
 import styles from './summary-bar.module.css'
 
@@ -21,7 +21,7 @@ interface SummaryBarProps {
 export function SummaryBar({ quote, completeness, primary, secondary }: SummaryBarProps) {
   const t = useTranslations('configurator')
   const common = useTranslations('common')
-  const format = useFormatter()
+  const prices = usePrices()
   return (
     <div className={styles.bar}>
       <dl className={styles.figures}>
@@ -34,7 +34,7 @@ export function SummaryBar({ quote, completeness, primary, secondary }: SummaryB
             </span>
           </dt>
           <dd className={styles.total} aria-live="polite">
-            {formatRubles(format, Money.toWholeRubles(quote.estimate.total))}
+            {prices.format(quote.estimate.total, 'exact')}
           </dd>
         </div>
         <div className={styles.figure}>

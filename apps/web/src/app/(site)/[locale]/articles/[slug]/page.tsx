@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 
-import { getServices } from '@/composition/services'
+import { getDisplayCurrency, getServices } from '@/composition/services'
 import { env } from '@/config/env'
 import { LOCALE_DEFINITIONS, type Locale } from '@/i18n/locales'
 import { ArticleBody } from '@/modules/articles/ui/article-body'
@@ -46,10 +46,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const { locale, slug } = await params
   const article = await loadArticle(slug, locale)
   if (article === null) notFound()
-  const [services, t, nav] = await Promise.all([
+  const [services, t, nav, currency] = await Promise.all([
     getServices(locale),
     getTranslations('articles'),
     getTranslations('common.nav'),
+    getDisplayCurrency(locale),
   ])
   const latest = await services.articles.list({ topic: null, page: 1 }, locale)
   const more = latest.items.filter((item) => item.id !== article.id).slice(0, MORE_COUNT)
@@ -86,7 +87,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <ul className={styles.related}>
                 {article.projects.map((project) => (
                   <li key={project.id}>
-                    <ProjectCard project={project} sizes="(min-width: 1024px) 320px, 100vw" />
+                    <ProjectCard
+                      project={project}
+                      currency={currency}
+                      sizes="(min-width: 1024px) 320px, 100vw"
+                    />
                   </li>
                 ))}
               </ul>

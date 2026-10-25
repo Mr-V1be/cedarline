@@ -98,8 +98,8 @@ export interface ProductInput {
   readonly url: string
   readonly image: string | null
   readonly category: string
-  /** «Price from», whole rubles; null when the project is not priced. */
-  readonly priceFrom: number | null
+  /** «Price from» as the page shows it (search engines want the same figure); null if unpriced. */
+  readonly priceFrom: { readonly amount: number; readonly currency: string } | null
   readonly packages: number
   readonly sellerUrl: string
 }
@@ -119,8 +119,8 @@ export function productSchema(input: ProductInput): Schema {
       : {
           offers: {
             '@type': 'AggregateOffer',
-            lowPrice: input.priceFrom,
-            priceCurrency: 'RUB',
+            lowPrice: input.priceFrom.amount,
+            priceCurrency: input.priceFrom.currency,
             offerCount: input.packages,
             url: input.url,
             seller: { '@id': `${input.sellerUrl}#organization` },

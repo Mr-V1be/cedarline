@@ -1,13 +1,13 @@
 'use client'
 
 import { QUANTITY_DRIVERS, isQuantityDriver } from '@kedrovnik/house'
-import { Money, type Estimate, type Schedule } from '@kedrovnik/pricing'
+import type { Estimate, Schedule } from '@kedrovnik/pricing'
 import { CaretDownIcon } from '@phosphor-icons/react/ssr'
 import { useFormatter, useTranslations } from 'next-intl'
 
 import { toScheduleView } from '@/modules/pricing/application/offers'
 import type { TariffNames } from '@/modules/pricing/ports/tariff-repository'
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { usePrices } from '@/modules/pricing/ui/prices'
 import { ScheduleChart } from '@/modules/pricing/ui/schedule-chart'
 import { Icon } from '@/ui/components/icon/icon'
 
@@ -35,7 +35,8 @@ export function EstimateDetails({
   const common = useTranslations('common')
   const registry = useTranslations('registry')
   const format = useFormatter()
-  const rubles = (amount: Money) => formatRubles(format, Money.toWholeRubles(amount))
+  const prices = usePrices()
+  const { rate } = prices.display
   const unitOf = (driver: string) =>
     isQuantityDriver(driver) ? registry(`quantityUnit.${QUANTITY_DRIVERS[driver].unit}`) : ''
   const view = toScheduleView(schedule, names)
@@ -54,7 +55,7 @@ export function EstimateDetails({
                   <Icon glyph={CaretDownIcon} size="s" className={styles.caret} />
                   {names.sections[section.key] ?? section.key}
                 </span>
-                <span className={styles.amount}>{rubles(section.subtotal)}</span>
+                <span className={styles.amount}>{prices.format(section.subtotal, 'exact')}</span>
               </summary>
               <ul className={styles.lines}>
                 {section.lines.map((line) => (
@@ -64,10 +65,10 @@ export function EstimateDetails({
                       {t('line', {
                         quantity:
                           `${format.number(line.quantity, { maximumFractionDigits: 2 })} ${unitOf(line.driver)}`.trim(),
-                        price: rubles(line.unitPrice),
+                        price: prices.format(line.unitPrice, 'unitPrice'),
                       })}
                     </span>
-                    <span className={styles.amount}>{rubles(line.amount)}</span>
+                    <span className={styles.amount}>{prices.format(line.amount, 'exact')}</span>
                   </li>
                 ))}
               </ul>
@@ -77,7 +78,7 @@ export function EstimateDetails({
       </ul>
       <p className={styles.total}>
         <span>{t('total')}</span>
-        <strong>{rubles(estimate.total)}</strong>
+        <strong>{prices.format(estimate.total, 'exact')}</strong>
       </p>
 
       <Heading className={styles.heading}>{t('schedule')}</Heading>
@@ -103,7 +104,12 @@ export function EstimateDetails({
               : common('schedule.weekRange', { from, to }),
         }}
       />
-      <p className={styles.note}>{t('note')}</p>
+      <p className={styles.note}>
+        {t('note')}
+        {rate === null
+          ? null
+          : ` ${common('prices.converted', { date: format.dateTime(new Date(rate.setOn), { dateStyle: 'long' }) })}`}
+      </p>
     </div>
   )
 }

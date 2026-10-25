@@ -17,6 +17,7 @@ export interface CatalogFilters {
   readonly areaMax?: number
   readonly storeys?: string
   readonly bedroomsMin?: number
+  /** In the address: whole units of the visitor's currency; for the repository: rubles. */
   readonly budgetMax?: number
 }
 

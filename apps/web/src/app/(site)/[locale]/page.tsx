@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
-import { getServices } from '@/composition/services'
+import { getDisplayCurrency, getServices } from '@/composition/services'
 import { env } from '@/config/env'
 import { LOCALE_DEFINITIONS, type Locale } from '@/i18n/locales'
 import { BuiltGallery } from '@/modules/built-objects/ui/built-gallery'
@@ -40,10 +40,11 @@ export default async function HomePage({
   readonly params: Promise<{ locale: Locale }>
 }) {
   const { locale } = await params
-  const [services, t, common] = await Promise.all([
+  const [services, t, common, currency] = await Promise.all([
     getServices(locale),
     getTranslations('home'),
     getTranslations('common'),
+    getDisplayCurrency(locale),
   ])
   const [{ hero, featured, builtObjects, technology }, site] = await Promise.all([
     loadHomeOverview(services, locale),
@@ -73,7 +74,7 @@ export default async function HomePage({
           site,
         })}
       />
-      <HeroSection hero={hero} />
+      <HeroSection hero={hero} currency={currency} />
 
       {featured.length > 0 ? (
         <Section aria-labelledby="featured">
@@ -93,6 +94,7 @@ export default async function HomePage({
                 <li key={project.id}>
                   <ProjectCard
                     project={project}
+                    currency={currency}
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                 </li>

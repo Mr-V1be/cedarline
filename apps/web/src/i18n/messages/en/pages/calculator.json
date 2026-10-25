@@ -13,7 +13,7 @@
   "fields": {
     "project": "Project",
     "customProject": "My own amount",
-    "price": "House price, ₽",
+    "price": "House price, {currency}",
     "priceHint": "The “from” price of the chosen project; you can enter your own",
     "down": "Down payment",
     "term": "Term"

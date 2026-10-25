@@ -22,6 +22,7 @@ interface CalculatorPageProps {
   readonly searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
+/** `?amount=`: a house price in the tariff's rubles; the calculator shows it in the visitor's currency. */
 const AMOUNT = /^\d{5,10}$/
 
 export async function generateMetadata({ params }: CalculatorPageProps): Promise<Metadata> {

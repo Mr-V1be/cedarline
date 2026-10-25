@@ -1,4 +1,4 @@
-import { Money, type Quote, type Schedule } from '@kedrovnik/pricing'
+import type { Money, Quote, Schedule } from '@kedrovnik/pricing'
 
 import type { TariffNames } from '../ports/tariff-repository'
 
@@ -43,13 +43,13 @@ export function toScheduleView(schedule: Schedule, names: TariffNames): Schedule
 export interface CompletenessOffer {
   readonly key: string
   readonly name: string
-  /** Whole rubles. */
-  readonly total: number
+  /** Tariff money; the visitor's currency is chosen when it is written. */
+  readonly total: Money
   readonly schedule: ScheduleView
   readonly sections: ReadonlyArray<{
     readonly key: string
     readonly name: string
-    readonly subtotal: number
+    readonly subtotal: Money
   }>
 }
 
@@ -58,12 +58,12 @@ export function toOffer(quote: Quote, names: TariffNames): CompletenessOffer {
   return {
     key: estimate.completeness,
     name: names.completeness[estimate.completeness] ?? estimate.completeness,
-    total: Money.toWholeRubles(estimate.total),
+    total: estimate.total,
     schedule: toScheduleView(schedule, names),
     sections: estimate.sections.map((section) => ({
       key: section.key,
       name: names.sections[section.key] ?? section.key,
-      subtotal: Money.toWholeRubles(section.subtotal),
+      subtotal: section.subtotal,
     })),
   }
 }

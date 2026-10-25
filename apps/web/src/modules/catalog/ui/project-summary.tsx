@@ -8,9 +8,11 @@ import {
   ArrowLineUpIcon,
   PlantIcon,
 } from '@phosphor-icons/react/ssr'
-import { getFormatter, getTranslations } from 'next-intl/server'
+import { Money } from '@kedrovnik/pricing'
+import { getTranslations } from 'next-intl/server'
 
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
+import type { DisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Facts, type Fact } from '@/ui/components/facts/facts'
 
@@ -20,15 +22,16 @@ import styles from './project-summary.module.css'
 interface ProjectSummaryProps {
   readonly project: Project
   readonly completenessName: string | null
+  /** The visitor's currency. */
+  readonly currency: DisplayCurrency
 }
 
 /** Name, the numbers people compare, the price and the one action of the page. */
-export async function ProjectSummary({ project, completenessName }: ProjectSummaryProps) {
-  const [t, common, registry, format] = await Promise.all([
+export async function ProjectSummary({ project, completenessName, currency }: ProjectSummaryProps) {
+  const [t, common, registry] = await Promise.all([
     getTranslations('project'),
     getTranslations('common'),
     getTranslations('registry'),
-    getFormatter(),
   ])
   const { metrics, pricing } = project
   const storeyKey = metrics.storeyType as '1'
@@ -90,7 +93,9 @@ export async function ProjectSummary({ project, completenessName }: ProjectSumma
       {pricing === null ? null : (
         <div className={styles.price}>
           <p className={styles.priceLabel}>{t('price.from')}</p>
-          <p className={styles.priceValue}>{formatRubles(format, pricing.fromPrice)}</p>
+          <p className={styles.priceValue}>
+            {createPriceFormatter(currency).format(Money.ofRubles(pricing.fromPrice), 'from')}
+          </p>
           <p className={styles.priceNote}>
             {completenessName === null ? null : t('price.completeness', { name: completenessName })}
             <br />

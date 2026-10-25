@@ -1,20 +1,31 @@
-import { getFormatter, getTranslations } from 'next-intl/server'
+import { Money } from '@kedrovnik/pricing'
+import { getTranslations } from 'next-intl/server'
 
-import { formatRublesCompact } from '@/modules/pricing/ui/money'
+import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
+import type { DisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 
 import { CATALOG_SORTS } from '../domain/catalog-query'
-import {
-  AREA_STEP,
-  PRICE_STEP,
-  bedroomThresholds,
-  thresholds,
-  type CatalogFacets,
-} from '../domain/facets'
+import { AREA_STEP, bedroomThresholds, thresholds, type CatalogFacets } from '../domain/facets'
 import type { FilterField } from './catalog-filter-fields'
 
-/** Filter dropdowns built from what the published catalog actually contains. */
-export async function catalogFields(facets: CatalogFacets): Promise<FilterField[]> {
-  const [t, format] = await Promise.all([getTranslations(), getFormatter()])
+/**
+ * Filter dropdowns built from what the published catalog actually contains. Budgets are round
+ * figures of the visitor's currency, spanning the catalog's «from» prices as the visitor reads
+ * them.
+ */
+export async function catalogFields(
+  facets: CatalogFacets,
+  currency: DisplayCurrency,
+): Promise<FilterField[]> {
+  const t = await getTranslations()
+  const prices = createPriceFormatter(currency)
+  const budgets =
+    facets.price === null
+      ? null
+      : {
+          min: prices.value(Money.ofRubles(facets.price.min), 'from'),
+          max: prices.value(Money.ofRubles(facets.price.max), 'from'),
+        }
   const storeyTypes = facets.storeyTypes.filter((key) =>
     t.has(`registry.storeyType.${key}` as 'registry.storeyType.1'),
   )
@@ -72,9 +83,9 @@ export async function catalogFields(facets: CatalogFacets): Promise<FilterField[
       label: t('catalog.filters.budget'),
       options: [
         any(t('catalog.filters.anyBudget')),
-        ...thresholds(facets.price, PRICE_STEP).map((value) => ({
+        ...thresholds(budgets, prices.thresholdStep).map((value) => ({
           value: String(value),
-          label: formatRublesCompact(format, value),
+          label: prices.compact(value),
         })),
       ],
     },

@@ -7,11 +7,11 @@ import type {
   GroupState,
   OptionGroup,
 } from '@kedrovnik/configurator'
-import { Money } from '@kedrovnik/pricing'
-import { useFormatter, useTranslations } from 'next-intl'
+import type { Money } from '@kedrovnik/pricing'
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 
-import { formatRubles } from '@/modules/pricing/ui/money'
+import { usePrices } from '@/modules/pricing/ui/prices'
 import { ChoiceList, type ChoiceItem } from '@/ui/components/choice-list/choice-list'
 import { Switch } from '@/ui/components/switch/switch'
 
@@ -47,16 +47,18 @@ export function StepSection({
   children,
 }: StepSectionProps) {
   const t = useTranslations('configurator')
-  const format = useFormatter()
+  const prices = usePrices()
   const groupState = (group: OptionGroup) =>
     state.groups.find((candidate) => candidate.group === group)
 
+  /** What a choice adds or takes, as the visitor reads it; nothing when it rounds to zero. */
   const delta = (amount: Money | null) => {
-    if (amount === null || amount === 0) return undefined
-    const sign = amount > 0 ? '+' : '−'
+    if (amount === null) return undefined
+    const shown = prices.value(amount, 'delta')
+    if (shown === 0) return undefined
     return t('choice.delta', {
-      sign,
-      amount: formatRubles(format, Money.toWholeRubles(Math.abs(amount) as Money)),
+      sign: shown > 0 ? '+' : '−',
+      amount: prices.formatValue(Math.abs(shown)),
     })
   }
 
