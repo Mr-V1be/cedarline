@@ -12,6 +12,7 @@ import * as migration_20261003_091942_production_page from './20261003_091942_pr
 import * as migration_20261003_093631_mailbox_and_jobs from './20261003_093631_mailbox_and_jobs';
 import * as migration_20261003_131530_site_demo_details from './20261003_131530_site_demo_details';
 import * as migration_20261003_170740_demo_reset_job from './20261003_170740_demo_reset_job';
+import * as migration_20261025_154657_display_currency from './20261025_154657_display_currency';
 
 export const migrations = [
   {
@@ -82,6 +83,11 @@ export const migrations = [
   {
     up: migration_20261003_170740_demo_reset_job.up,
     down: migration_20261003_170740_demo_reset_job.down,
-    name: '20261003_170740_demo_reset_job'
+    name: '20261003_170740_demo_reset_job',
+  },
+  {
+    up: migration_20261025_154657_display_currency.up,
+    down: migration_20261025_154657_display_currency.down,
+    name: '20261025_154657_display_currency'
   },
 ];

@@ -1,5 +1,7 @@
 import type { Payload } from 'payload'
 
+import { storeDisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
+
 import type { Lead, LeadReceipt } from '../domain/lead-record'
 import type { LeadSink } from '../ports/lead-sink'
 
@@ -34,6 +36,7 @@ export class CmsLeadSink implements LeadSink {
         summary: lead.summary.description,
         link: lead.summary.link,
         total: lead.summary.total,
+        display: storeDisplayCurrency(lead.summary.prices),
         locale: lead.locale,
         configuration: lead.configurationId,
         ...(project.docs[0] === undefined ? {} : { project: project.docs[0].id }),

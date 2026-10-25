@@ -1,10 +1,15 @@
+import { Money } from '@kedrovnik/pricing'
 import { createTranslator } from 'next-intl'
 import type { Payload } from 'payload'
 
-import type { Locale } from '@/i18n/locales'
+import { LOCALE_DEFINITIONS, type Locale } from '@/i18n/locales'
 import { loadMessages } from '@/i18n/messages'
-
 import type { Mailer, OutgoingMail } from '@/modules/mail/ports/mailer'
+import {
+  createPriceFormatter,
+  formatExchangeRate,
+} from '@/modules/pricing/application/price-formatter'
+import { BASE_DISPLAY } from '@/modules/pricing/domain/exchange-rate'
 
 import type { Lead, LeadReceipt } from '../domain/lead-record'
 import type { LeadDelivery } from '../ports/lead-delivery'
@@ -22,12 +27,12 @@ async function translators(locale: Locale) {
   }
 }
 
-const rubles = (locale: Locale, amount: number) =>
-  new Intl.NumberFormat(locale === 'ru' ? 'ru-RU' : 'en-GB', {
-    style: 'currency',
-    currency: 'RUB',
-    maximumFractionDigits: 0,
-  }).format(amount)
+/** Staff work in the tariff's currency. */
+const staffPrices = createPriceFormatter(BASE_DISPLAY)
+
+/** The lead's total in whole rubles, written as the customer read it on the site. */
+const customerTotal = (lead: Lead) =>
+  createPriceFormatter(lead.summary.prices).format(Money.ofRubles(lead.summary.total), 'exact')
 
 /**
  * The two letters about a new lead: the customer's, with the proposal attached, and the sales
@@ -75,7 +80,7 @@ export class PayloadLeadMails {
       rows: [
         { label: mail('rows.project'), value: summary.projectTitle },
         { label: mail('rows.configuration'), value: summary.description },
-        { label: mail('rows.total'), value: rubles(lead.locale, summary.total) },
+        { label: mail('rows.total'), value: customerTotal(lead) },
         { label: mail('rows.term'), value: common('units.weeks', { count: summary.totalWeeks }) },
       ],
       action: { label: mail('client.open'), href: summary.link },
@@ -94,6 +99,25 @@ export class PayloadLeadMails {
     const cms = receipts.find((receipt) => receipt.channel === 'cms')
     const crm = receipts.filter((receipt) => receipt.channel !== 'cms')
     const reference = cms?.reference ?? summary.code
+    const staffTotal = staffPrices.format(Money.ofRubles(summary.total), 'exact')
+    const { rate } = summary.prices
+    // A customer who read another currency: what they saw and at which rate, beside the rubles.
+    const customerPrice =
+      rate === null
+        ? []
+        : [
+            {
+              label: mail('rows.customerPrice'),
+              value: mail('manager.customerPrice', {
+                amount: customerTotal(lead),
+                rate: formatExchangeRate(rate),
+                currency: rate.currency,
+                date: new Intl.DateTimeFormat(LOCALE_DEFINITIONS[STAFF_LOCALE].tag, {
+                  dateStyle: 'long',
+                }).format(new Date(rate.setOn)),
+              }),
+            },
+          ]
     const content: MailContent = {
       preheader: mail('manager.intro'),
       heading: mail('manager.heading', { reference }),
@@ -105,7 +129,8 @@ export class PayloadLeadMails {
         { label: mail('rows.comment'), value: contact.comment === '' ? '—' : contact.comment },
         { label: mail('rows.project'), value: summary.projectTitle },
         { label: mail('rows.configuration'), value: summary.description },
-        { label: mail('rows.total'), value: rubles(STAFF_LOCALE, summary.total) },
+        { label: mail('rows.total'), value: staffTotal },
+        ...customerPrice,
         { label: mail('rows.term'), value: common('units.weeks', { count: summary.totalWeeks }) },
         { label: mail('rows.link'), value: summary.link },
         ...crm.map((receipt) => ({
@@ -123,7 +148,7 @@ export class PayloadLeadMails {
       subject: mail('manager.subject', {
         reference,
         project: summary.projectTitle,
-        total: rubles(STAFF_LOCALE, summary.total),
+        total: staffTotal,
       }),
       content,
     }

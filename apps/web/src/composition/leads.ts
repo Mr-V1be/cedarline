@@ -5,6 +5,7 @@ import type { SavedConfigurationRepository } from '@/modules/configurator/ports/
 import type { SubmitLeadDeps } from '@/modules/leads/application/submit-lead'
 import { describeLead } from '@/modules/leads/infrastructure/lead-description'
 import { PayloadRateLimiter } from '@/modules/protection/infrastructure/payload-rate-limiter'
+import type { ExchangeRateRepository } from '@/modules/pricing/ports/exchange-rate-repository'
 import type { ProposalDeps } from '@/modules/proposals/application/proposal-service'
 import { ReactPdfProposalRenderer } from '@/modules/proposals/infrastructure/react-pdf-proposal-renderer'
 import type { SiteRepository } from '@/modules/site/ports/site-repository'
@@ -19,22 +20,26 @@ export function leadServices({
   saved,
   documents,
   site,
+  exchangeRates,
 }: {
   readonly payload: Payload
   readonly saved: SavedConfigurationRepository
   readonly documents: DocumentStore
   readonly site: SiteRepository
+  readonly exchangeRates: ExchangeRateRepository
 }) {
   const proposals: ProposalDeps = {
     saved,
     documents,
     renderer: new ReactPdfProposalRenderer(),
     site,
+    exchangeRates,
     linkTo: configurationLink,
   }
   const delivery = deliveryServices(payload)
   const leads: SubmitLeadDeps = {
     saved,
+    exchangeRates,
     proposals,
     primary: delivery.primary,
     deliveries: delivery.deliveries,

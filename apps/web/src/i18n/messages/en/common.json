@@ -55,6 +55,9 @@
     "bedrooms": "{count, plural, one {# bedroom} other {# bedrooms}}",
     "priceFrom": "from {price}"
   },
+  "prices": {
+    "converted": "Converted from the factory price list at the rate of {date}."
+  },
   "states": {
     "errorTitle": "The page did not load",
     "errorDescription": "The server did not respond in time. Try again — your filters and choices are kept.",

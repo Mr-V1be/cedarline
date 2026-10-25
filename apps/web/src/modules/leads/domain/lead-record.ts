@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/locales'
+import type { DisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 
 import type { LeadContact } from './lead'
 
@@ -10,6 +11,8 @@ export interface LeadConfigurationSummary {
   readonly description: string
   /** Whole rubles, exactly as in the saved estimate. */
   readonly total: number
+  /** The currency and the rate the customer read the prices in: the total as they saw it. */
+  readonly prices: DisplayCurrency
   readonly totalWeeks: number
   readonly link: string
 }

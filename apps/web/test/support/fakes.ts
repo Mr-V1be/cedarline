@@ -7,6 +7,8 @@ import type {
   NewSavedConfiguration,
   SavedConfigurationRepository,
 } from '@/modules/configurator/ports/saved-configuration-repository'
+import type { ExchangeRates } from '@/modules/pricing/domain/exchange-rate'
+import type { ExchangeRateRepository } from '@/modules/pricing/ports/exchange-rate-repository'
 import type { ProposalDeps } from '@/modules/proposals/application/proposal-service'
 import type { ProposalInput } from '@/modules/proposals/ports/proposal-renderer'
 
@@ -111,12 +113,29 @@ export class MemoryDocuments implements DocumentStore {
   }
 }
 
+/** The rate of the demo seed: 85 rubles per dollar. */
+export const USD_RATE = { currency: 'USD', rate: 85, setOn: '2026-10-01T09:00:00.000Z' } as const
+
+/** Today's rates as staff keep them; a test changes them to move «today». */
+export class MemoryExchangeRates implements ExchangeRateRepository {
+  constructor(public rates: ExchangeRates = [USD_RATE]) {}
+
+  load(): Promise<ExchangeRates> {
+    return Promise.resolve(this.rates)
+  }
+}
+
 /** A proposal renderer that records its inputs and returns a tiny PDF-looking buffer. */
-export function proposalDeps(saved: MemorySavedConfigurations, documents: MemoryDocuments) {
+export function proposalDeps(
+  saved: MemorySavedConfigurations,
+  documents: MemoryDocuments,
+  exchangeRates: ExchangeRateRepository = new MemoryExchangeRates(),
+) {
   const rendered: ProposalInput[] = []
   const deps: ProposalDeps = {
     saved,
     documents,
+    exchangeRates,
     renderer: {
       render: (input) => {
         rendered.push(input)

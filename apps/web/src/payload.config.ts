@@ -24,6 +24,7 @@ import { RateLimitHits } from './cms/collections/rate-limit-hits'
 import { RoomKinds } from './cms/collections/room-kinds'
 import { Users } from './cms/collections/users'
 import { CatalogOptions } from './cms/globals/catalog-options'
+import { ExchangeRates } from './cms/globals/exchange-rates'
 import { Financing } from './cms/globals/financing'
 import { Home } from './cms/globals/home'
 import { KeyRate } from './cms/globals/key-rate'
@@ -86,7 +87,17 @@ export default buildConfig({
     MailboxFiles,
     RateLimitHits,
   ],
-  globals: [Tariff, CatalogOptions, Technology, Financing, KeyRate, Home, Production, Site],
+  globals: [
+    Tariff,
+    ExchangeRates,
+    CatalogOptions,
+    Technology,
+    Financing,
+    KeyRate,
+    Home,
+    Production,
+    Site,
+  ],
   // Demo: every letter stays in the site's demo mailbox. SMTP: Mailpit locally, the company's
   // relay in production.
   email:

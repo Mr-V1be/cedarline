@@ -6,6 +6,7 @@ import {
 } from '@kedrovnik/configurator'
 
 import { LOCALES, type Locale } from '@/i18n/locales'
+import type { ExchangeRateRepository } from '@/modules/pricing/ports/exchange-rate-repository'
 
 import type { ConfiguratorNames } from '../domain/names'
 import { SNAPSHOT_VERSION, type ConfigurationSnapshot } from '../domain/snapshot'
@@ -20,6 +21,8 @@ export interface SaveDeps extends ConfiguratorDeps {
   readonly documents: DocumentStore
   readonly renders: RenderImages
   readonly codes: ShareCodeSource
+  /** Frozen into the snapshot: other currencies keep the rate of the day of saving. */
+  readonly exchangeRates: ExchangeRateRepository
   readonly clock: () => Date
 }
 
@@ -41,7 +44,7 @@ const CODE_ATTEMPTS = 3
 /**
  * Saves a configuration behind a short unguessable code. The server recomputes everything
  * from the choices: the browser's prices are never trusted, and the snapshot freezes what
- * the configuration costs under the current tariff.
+ * the configuration costs under the current tariff and exchange rates.
  */
 export async function saveConfiguration(deps: SaveDeps, request: SaveRequest): Promise<SaveResult> {
   let configuration
@@ -67,6 +70,7 @@ export async function saveConfiguration(deps: SaveDeps, request: SaveRequest): P
   }
   const state = configurator.evaluate(configuration)
 
+  const exchangeRates = await deps.exchangeRates.load()
   const names: Partial<Record<Locale, ConfiguratorNames>> = { [request.locale]: loaded.names }
   for (const locale of LOCALES) {
     if (names[locale] !== undefined) continue
@@ -83,6 +87,7 @@ export async function saveConfiguration(deps: SaveDeps, request: SaveRequest): P
     estimate: state.quote.estimate,
     schedule: state.quote.schedule,
     tariffRevision: loaded.tariffRevision,
+    exchangeRates,
     names,
   }
 

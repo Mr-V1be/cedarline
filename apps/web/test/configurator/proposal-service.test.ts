@@ -6,6 +6,7 @@ import { proposalFor } from '@/modules/proposals/application/proposal-service'
 
 import {
   MemoryDocuments,
+  MemoryExchangeRates,
   MemorySavedConfigurations,
   codesFrom,
   configuratorDeps,
@@ -29,6 +30,7 @@ describe('proposalFor', () => {
         documents,
         renders: { normalise: (image) => Promise.resolve(image) },
         codes: codesFrom('kedrkedrkedr'),
+        exchangeRates: new MemoryExchangeRates(),
         clock: () => new Date('2026-10-03T09:00:00Z'),
       },
       { configuration: initialConfiguration(model), locale: 'ru', render: Buffer.from('jpeg') },

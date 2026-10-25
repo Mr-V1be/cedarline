@@ -3,6 +3,7 @@ import type { Payload } from 'payload'
 import { isLocale } from '@/i18n/locales'
 import type { DocumentStore } from '@/modules/configurator/ports/document-store'
 import type { SavedConfigurationRepository } from '@/modules/configurator/ports/saved-configuration-repository'
+import { restoreDisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
 import { Money } from '@kedrovnik/pricing'
 
 import type { Lead } from '../domain/lead-record'
@@ -37,7 +38,10 @@ export class PayloadLeadArchive implements LeadArchive {
       stored.locale !== null && stored.locale !== undefined && isLocale(stored.locale)
         ? stored.locale
         : null
-    if (configuration === null || proposalId === null || locale === null) return null
+    const prices = restoreDisplayCurrency(stored.display)
+    if (configuration === null || proposalId === null || locale === null || prices === null) {
+      return null
+    }
     const [saved, proposal] = await Promise.all([
       this.saved.findByCode(configuration.code),
       this.documents.read(proposalId),
@@ -60,6 +64,7 @@ export class PayloadLeadArchive implements LeadArchive {
         projectTitle: names?.projects[saved.snapshot.configuration.project] ?? saved.projectSlug,
         description: stored.summary ?? '',
         total: stored.total ?? Money.toWholeRubles(saved.snapshot.estimate.total),
+        prices,
         totalWeeks: saved.snapshot.schedule.totalWeeks,
         link: stored.link ?? this.linkTo(saved.code, locale),
       },

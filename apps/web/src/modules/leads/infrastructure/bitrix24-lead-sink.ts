@@ -1,3 +1,5 @@
+import { BASE_CURRENCY } from '@/modules/pricing/domain/currencies'
+
 import type { Lead, LeadReceipt } from '../domain/lead-record'
 import type { LeadSink } from '../ports/lead-sink'
 
@@ -35,8 +37,9 @@ export class Bitrix24LeadSink implements LeadSink {
           COMMENTS: [contact.comment, summary.link].filter((line) => line !== '').join('\n\n'),
           SOURCE_ID: 'WEB',
           SOURCE_DESCRIPTION: `configurator ${summary.code}`,
+          // The CRM works in the tariff's currency, like the CMS.
           OPPORTUNITY: summary.total,
-          CURRENCY_ID: 'RUB',
+          CURRENCY_ID: BASE_CURRENCY,
         },
         params: { REGISTER_SONET_EVENT: 'Y' },
       }),

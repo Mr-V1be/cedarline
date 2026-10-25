@@ -1,13 +1,14 @@
 import { QUANTITY_DRIVERS, isQuantityDriver } from '@kedrovnik/house'
-import { Money } from '@kedrovnik/pricing'
 import { createTranslator } from 'next-intl'
 
+import { LOCALE_DEFINITIONS } from '@/i18n/locales'
 import { loadMessages } from '@/i18n/messages'
 import {
   createVocabulary,
   type ConfigurationRow,
   type Translate,
 } from '@/modules/configurator/application/vocabulary'
+import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
 
 import type { ProposalInput } from '../../ports/proposal-renderer'
 
@@ -73,8 +74,6 @@ export interface ProposalView {
   readonly pageLabel: (page: number, total: number) => string
 }
 
-const formatLocale = (locale: string) => (locale === 'ru' ? 'ru-RU' : 'en-GB')
-
 /** Builds the printable proposal from the snapshot: every figure is the saved one. */
 export async function buildProposalView(input: ProposalInput): Promise<ProposalView> {
   const { snapshot, names, locale } = input
@@ -90,16 +89,13 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
     designs: { [snapshot.configuration.project]: snapshot.house.design },
   })
 
-  const numbers = new Intl.NumberFormat(formatLocale(locale), { maximumFractionDigits: 2 })
-  const rubles = (amount: Money) =>
-    new Intl.NumberFormat(formatLocale(locale), {
-      style: 'currency',
-      currency: 'RUB',
-      maximumFractionDigits: 0,
-    }).format(Money.toWholeRubles(amount))
-  const date = new Intl.DateTimeFormat(formatLocale(locale), { dateStyle: 'long' }).format(
-    new Date(snapshot.savedAt),
-  )
+  const { tag } = LOCALE_DEFINITIONS[locale]
+  const numbers = new Intl.NumberFormat(tag, { maximumFractionDigits: 2 })
+  const prices = createPriceFormatter(input.prices)
+  const day = (iso: string) =>
+    new Intl.DateTimeFormat(tag, { dateStyle: 'long' }).format(new Date(iso))
+  const date = day(snapshot.savedAt)
+  const { rate } = input.prices
   const unitOf = (driver: string) =>
     isQuantityDriver(driver) ? registry(`quantityUnit.${QUANTITY_DRIVERS[driver].unit}`) : ''
 
@@ -127,7 +123,7 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
     render: input.render,
     noRender: t('noRender'),
     facts: [
-      { label: t('facts.total'), value: rubles(estimate.total), large: true },
+      { label: t('facts.total'), value: prices.format(estimate.total, 'exact'), large: true },
       { label: t('facts.completeness'), value: completeness },
       { label: t('facts.term'), value: weeks(schedule.totalWeeks) },
       { label: t('facts.area'), value: common('units.area', { value: metrics.totalArea }) },
@@ -145,16 +141,16 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
     },
     sections: estimate.sections.map((section) => ({
       name: names.tariff.sections[section.key] ?? section.key,
-      subtotal: rubles(section.subtotal),
+      subtotal: prices.format(section.subtotal, 'exact'),
       lines: section.lines.map((line) => ({
         name: names.tariff.rates[line.code] ?? line.code,
         quantity: `${numbers.format(line.quantity)} ${unitOf(line.driver)}`.trim(),
-        price: rubles(line.unitPrice),
-        amount: rubles(line.amount),
+        price: prices.format(line.unitPrice, 'unitPrice'),
+        amount: prices.format(line.amount, 'exact'),
       })),
     })),
     totalLabel: t('total'),
-    total: rubles(estimate.total),
+    total: prices.format(estimate.total, 'exact'),
     scheduleTitle: t('schedule'),
     phases: schedule.phases.map((phase) => ({
       key: phase.key,
@@ -174,7 +170,10 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
     link: input.link,
     linkTitle: t('link'),
     linkNote: t('linkNote'),
-    terms: t('terms', { date, revision: snapshot.tariffRevision }),
+    terms: [
+      t('terms', { date, revision: snapshot.tariffRevision }),
+      ...(rate === null ? [] : [common('prices.converted', { date: day(rate.setOn) })]),
+    ].join(' '),
     footer: {
       company: [common('brand.name'), input.company.phone, input.company.email].join(' · '),
       demo: common('footer.demo'),

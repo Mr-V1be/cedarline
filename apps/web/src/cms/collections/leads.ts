@@ -2,14 +2,20 @@ import type { CollectionConfig, Field } from 'payload'
 
 import { LOCALES } from '@/i18n/locales'
 import { LEAD_STATUSES } from '@/modules/leads/domain/lead'
+import { CURRENCY_CODES } from '@/modules/pricing/domain/currencies'
 
 import { declareReadCapability, requireCapability } from '../access/policies'
 import { retryLeadDelivery } from '../endpoints/retry-lead-delivery'
+import { DAY_WITH_YEAR } from '../fields/common'
 import { label } from '../fields/labels'
 import { registryOptions } from '../fields/registry-labels'
-import { rublesField } from '../fields/rubles'
+import { inRubles, rublesField } from '../fields/rubles'
 
 const SALES_READ = 'leads.read'
+
+/** Rate fields mean something only for a converted currency; a ruble lead has none. */
+const whenConverted = (_: unknown, siblingData: { rate?: unknown } | undefined) =>
+  typeof siblingData?.rate === 'number'
 
 /** What the customer sent stays as sent: staff change only the status and their notes. */
 const sent = (field: Field): Field =>
@@ -92,6 +98,52 @@ export const Leads: CollectionConfig = {
           label: label('Язык', 'Language'),
           options: LOCALES.map((locale) => ({ value: locale, label: locale.toUpperCase() })),
         }),
+      ],
+    },
+    {
+      // The total above is the tariff's rubles; this is what the customer read on the site.
+      name: 'display',
+      type: 'group',
+      label: label('Цены у клиента', 'Prices as the customer saw them'),
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            sent({
+              name: 'currency',
+              type: 'select',
+              required: true,
+              label: label('Валюта', 'Currency'),
+              options: CURRENCY_CODES.map((code) => ({ value: code, label: code })),
+              admin: { width: '20%' },
+            }),
+            sent({
+              name: 'rate',
+              type: 'number',
+              label: inRubles(label('Курс за 1 единицу', 'Rate per unit')),
+              admin: { width: '25%', condition: whenConverted },
+            }),
+            sent({
+              name: 'rateSetOn',
+              type: 'date',
+              label: label('Курс установлен', 'Rate set on'),
+              admin: {
+                width: '25%',
+                condition: whenConverted,
+                date: DAY_WITH_YEAR,
+              },
+            }),
+            {
+              name: 'amount',
+              type: 'ui',
+              label: label('Сумма у клиента', 'Total the customer saw'),
+              admin: {
+                width: '30%',
+                components: { Field: '/cms/admin/customer-price#CustomerPrice' },
+              },
+            },
+          ],
+        },
       ],
     },
     {

@@ -7,6 +7,7 @@ import { seedLeads } from './steps/leads'
 import { seedProjects } from './steps/projects'
 import {
   seedCatalogOptions,
+  seedExchangeRates,
   seedFinancing,
   seedProduction,
   seedTariff,
@@ -26,8 +27,9 @@ export async function seedDemoContent(payload: Payload, log: (message: string) =
   await seedTechnology(payload)
   await seedCatalogOptions(payload)
   await seedTariff(payload)
+  await seedExchangeRates(payload)
   await seedFinancing(payload)
-  log('technology, catalog options, tariff and financing')
+  log('technology, catalog options, tariff, exchange rates and financing')
   const projects = await seedProjects(payload, ids)
   log(`${projects.size} projects`)
   const { objects, skipped } = await seedBuiltObjects(payload, projects)

@@ -15,12 +15,14 @@
     "intro": "A configurator lead has arrived from the site. The proposal is attached.",
     "open": "Open the lead in the CMS",
     "crmLead": "{channel}: lead {reference}",
-    "footer": "Customer language: {language}. Total and schedule come from the saved configuration."
+    "footer": "Customer language: {language}. Total and schedule come from the saved configuration.",
+    "customerPrice": "{amount} at {rate} per 1 {currency}, rate of {date}"
   },
   "rows": {
     "project": "Project",
     "configuration": "Configuration",
     "total": "Estimate total",
+    "customerPrice": "Price the customer saw",
     "term": "Contract to handover",
     "name": "Name",
     "phone": "Phone",

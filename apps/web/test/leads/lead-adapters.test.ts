@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { Lead } from '@/modules/leads/domain/lead-record'
+import { BASE_DISPLAY } from '@/modules/pricing/domain/exchange-rate'
 import { Bitrix24LeadSink } from '@/modules/leads/infrastructure/bitrix24-lead-sink'
 import { escapeHtml, renderMailHtml } from '@/modules/leads/infrastructure/mail-layout'
 
@@ -20,6 +21,7 @@ const lead: Lead = {
     projectTitle: 'Кедр',
     description: 'Кедр · 10 × 9 м · Под ключ',
     total: 6_308_000,
+    prices: BASE_DISPLAY,
     totalWeeks: 18,
     link: 'https://kedrovnik.example/c/abcdefghjkmn',
   },

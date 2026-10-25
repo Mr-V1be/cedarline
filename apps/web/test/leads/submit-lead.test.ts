@@ -1,4 +1,5 @@
 import { initialConfiguration } from '@kedrovnik/configurator'
+import { Money } from '@kedrovnik/pricing'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { saveConfiguration } from '@/modules/configurator/application/save-configuration'
@@ -8,10 +9,13 @@ import type { DeliveryOutcome, Lead, LeadReceipt } from '@/modules/leads/domain/
 import { sinkDelivery } from '@/modules/leads/infrastructure/sink-delivery'
 import type { LeadDelivery } from '@/modules/leads/ports/lead-delivery'
 import type { LeadSink } from '@/modules/leads/ports/lead-sink'
+import { BASE_DISPLAY } from '@/modules/pricing/domain/exchange-rate'
 
 import {
   MemoryDocuments,
+  MemoryExchangeRates,
   MemorySavedConfigurations,
+  USD_RATE,
   codesFrom,
   configuratorDeps,
   proposalDeps,
@@ -66,9 +70,11 @@ describe('submitLead', () => {
   let cms: RecordingSink
   let customerMail: RecordingMail
   let staffMail: RecordingMail
+  let rates: MemoryExchangeRates
 
   const deps = (secondary: LeadSink[] = []): SubmitLeadDeps => ({
     saved,
+    exchangeRates: rates,
     proposals: proposalDeps(saved, new MemoryDocuments()).deps,
     primary: cms,
     deliveries: [...secondary.map(sinkDelivery), customerMail, staffMail],
@@ -97,6 +103,7 @@ describe('submitLead', () => {
     cms = new RecordingSink('cms')
     customerMail = new RecordingMail('mail:client', 'customer')
     staffMail = new RecordingMail('mail:manager', 'staff')
+    rates = new MemoryExchangeRates()
     await saveConfiguration(
       {
         ...configuratorDeps(model, { sosny: 'Сосны' }),
@@ -104,6 +111,7 @@ describe('submitLead', () => {
         documents: new MemoryDocuments(),
         renders: { normalise: (image) => Promise.resolve(image) },
         codes: codesFrom(CODE),
+        exchangeRates: rates,
         clock: () => new Date('2026-10-03T09:00:00Z'),
       },
       { configuration: initialConfiguration(model), locale: 'ru', render: null },
@@ -167,6 +175,45 @@ describe('submitLead', () => {
     expect(outcome).toMatchObject({ channel: 'mail:manager', status: 'delivered' })
     expect(staffMail.sent).toHaveLength(1)
     expect(journal.at(-1)?.outcomes).toEqual([outcome])
+  })
+
+  describe('prices the customer saw', () => {
+    const submitIn = (locale: 'ru' | 'en') =>
+      submitLead(deps(), { form, code: CODE, locale, trap: '' })
+    const savedTotal = () => {
+      const stored = saved.items.get(CODE)
+      if (stored === undefined) throw new Error('not saved')
+      return Money.toWholeRubles(stored.snapshot.estimate.total)
+    }
+
+    it('keeps the ruble total and, from the English site, the dollar and its rate', async () => {
+      await submitIn('en')
+      const [lead] = cms.leads
+      expect(lead?.summary.total).toBe(savedTotal())
+      expect(lead?.summary.prices).toEqual({ currency: 'USD', rate: USD_RATE })
+    })
+
+    it('needs no rate on the Russian site', async () => {
+      await submitIn('ru')
+      expect(cms.leads[0]?.summary.prices).toEqual(BASE_DISPLAY)
+    })
+
+    it('keeps the rate the configuration was saved with when today’s rate has moved', async () => {
+      rates.rates = [{ currency: 'USD', rate: 90, setOn: '2026-10-20T09:00:00.000Z' }]
+      await submitIn('en')
+      expect(cms.leads[0]?.summary.prices.rate).toEqual(USD_RATE)
+    })
+
+    it('uses today’s rate for a configuration saved before rates were kept', async () => {
+      const stored = saved.items.get(CODE)
+      if (stored === undefined) throw new Error('not saved')
+      const { exchangeRates: _, ...legacy } = stored.snapshot
+      saved.items.set(CODE, { ...stored, snapshot: legacy })
+      const today = { currency: 'USD', rate: 90, setOn: '2026-10-20T09:00:00.000Z' } as const
+      rates.rates = [today]
+      await submitIn('en')
+      expect(cms.leads[0]?.summary.prices).toEqual({ currency: 'USD', rate: today })
+    })
   })
 
   it('answers bots in kind and stores nothing', async () => {

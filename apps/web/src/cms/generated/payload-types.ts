@@ -113,6 +113,7 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('ru' | 'en') | ('ru' | 'en')[];
   globals: {
     tariff: Tariff;
+    'exchange-rates': ExchangeRate;
     'catalog-options': CatalogOption;
     technology: Technology;
     financing: Financing;
@@ -124,6 +125,7 @@ export interface Config {
   };
   globalsSelect: {
     tariff: TariffSelect<false> | TariffSelect<true>;
+    'exchange-rates': ExchangeRatesSelect<false> | ExchangeRatesSelect<true>;
     'catalog-options': CatalogOptionsSelect<false> | CatalogOptionsSelect<true>;
     technology: TechnologySelect<false> | TechnologySelect<true>;
     financing: FinancingSelect<false> | FinancingSelect<true>;
@@ -143,6 +145,7 @@ export interface Config {
       'deliver-lead': TaskDeliverLead;
       'purge-mailbox': TaskPurgeMailbox;
       'refresh-key-rate': TaskRefreshKeyRate;
+      'reset-demo': TaskResetDemo;
       inline: {
         input: unknown;
         output: unknown;
@@ -478,6 +481,11 @@ export interface Lead {
   summary?: string | null;
   total?: number | null;
   locale?: ('ru' | 'en') | null;
+  display: {
+    currency: 'RUB' | 'USD';
+    rate?: number | null;
+    rateSetOn?: string | null;
+  };
   configuration?: (number | null) | Configuration;
   project?: (number | null) | Project;
   proposal?: (number | null) | Document;
@@ -672,7 +680,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'deliver-lead' | 'purge-mailbox' | 'refresh-key-rate';
+        taskSlug: 'inline' | 'deliver-lead' | 'purge-mailbox' | 'refresh-key-rate' | 'reset-demo';
         taskID: string;
         input?:
           | {
@@ -705,7 +713,7 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'deliver-lead' | 'purge-mailbox' | 'refresh-key-rate') | null;
+  taskSlug?: ('inline' | 'deliver-lead' | 'purge-mailbox' | 'refresh-key-rate' | 'reset-demo') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -1093,6 +1101,13 @@ export interface LeadsSelect<T extends boolean = true> {
   summary?: T;
   total?: T;
   locale?: T;
+  display?:
+    | T
+    | {
+        currency?: T;
+        rate?: T;
+        rateSetOn?: T;
+      };
   configuration?: T;
   project?: T;
   proposal?: T;
@@ -1398,6 +1413,28 @@ export interface Tariff {
   createdAt?: string | null;
 }
 /**
+ * The tariff and estimates are kept in rubles; prices are converted at these rates for EN — USD. A saved configuration keeps the rate of the day it was saved
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exchange-rates".
+ */
+export interface ExchangeRate {
+  id: number;
+  rates?:
+    | {
+        currency: 'USD';
+        rate: number;
+        /**
+         * Set automatically when the rate changes
+         */
+        setOn?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "catalog-options".
  */
@@ -1678,6 +1715,23 @@ export interface TariffSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exchange-rates_select".
+ */
+export interface ExchangeRatesSelect<T extends boolean = true> {
+  rates?:
+    | T
+    | {
+        currency?: T;
+        rate?: T;
+        setOn?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "catalog-options_select".
  */
 export interface CatalogOptionsSelect<T extends boolean = true> {
@@ -1889,6 +1943,14 @@ export interface TaskPurgeMailbox {
  * via the `definition` "TaskRefresh-key-rate".
  */
 export interface TaskRefreshKeyRate {
+  input?: unknown;
+  output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskReset-demo".
+ */
+export interface TaskResetDemo {
   input?: unknown;
   output?: unknown;
 }

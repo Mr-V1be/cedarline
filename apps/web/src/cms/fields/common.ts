@@ -94,3 +94,6 @@ export const projected = <T extends Field>(field: T): T => ({
   ...field,
   admin: { ...('admin' in field ? field.admin : {}), readOnly: true },
 })
+
+/** A day read with its year, «1 окт. 2026»: for dates that matter years later, like a rate. */
+export const DAY_WITH_YEAR = { pickerAppearance: 'dayOnly', displayFormat: 'd MMM yyyy' } as const

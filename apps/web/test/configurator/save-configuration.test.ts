@@ -8,7 +8,9 @@ import {
 
 import {
   MemoryDocuments,
+  MemoryExchangeRates,
   MemorySavedConfigurations,
+  USD_RATE,
   codesFrom,
   configuratorDeps,
 } from '../support/fakes'
@@ -27,6 +29,7 @@ function deps(saved = new MemorySavedConfigurations()) {
       normalise: (image) => Promise.resolve(Buffer.concat([Buffer.from('jpeg:'), image])),
     },
     codes: codesFrom('23456789abcd', 'bcdefghjkmnp'),
+    exchangeRates: new MemoryExchangeRates(),
     clock: () => SAVED_AT,
   }
   return { value, saved, documents }
@@ -47,6 +50,8 @@ describe('saveConfiguration', () => {
     const expected = new Configurator(model).quote(initial)
     expect(stored?.snapshot.estimate.total).toBe(expected.estimate.total)
     expect(stored?.snapshot.tariffRevision).toBe(model.grid.revision)
+    // Other currencies keep the rate of the day of saving.
+    expect(stored?.snapshot.exchangeRates).toEqual([USD_RATE])
     expect(stored?.snapshot.savedAt).toBe(SAVED_AT.toISOString())
     expect(stored?.snapshot.names.ru?.projects).toEqual({ pikhta: 'Пихта', 'pikhta-m': 'Пихта М' })
     expect(stored?.snapshot.names.en).toBeDefined()

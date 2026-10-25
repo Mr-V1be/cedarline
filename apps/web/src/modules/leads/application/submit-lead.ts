@@ -2,7 +2,9 @@ import { isShareCode } from '@kedrovnik/configurator'
 import { Money } from '@kedrovnik/pricing'
 
 import type { Locale } from '@/i18n/locales'
+import { savedPrices } from '@/modules/configurator/application/saved-prices'
 import type { SavedConfigurationRepository } from '@/modules/configurator/ports/saved-configuration-repository'
+import type { ExchangeRateRepository } from '@/modules/pricing/ports/exchange-rate-repository'
 import { proposalFor, type ProposalDeps } from '@/modules/proposals/application/proposal-service'
 
 import { validateLeadForm, type LeadField, type LeadFieldError } from '../domain/lead'
@@ -15,6 +17,8 @@ import { attemptDelivery } from './deliver'
 
 export interface SubmitLeadDeps {
   readonly saved: SavedConfigurationRepository
+  /** Today's rates, for configurations saved before rates were kept with them. */
+  readonly exchangeRates: ExchangeRateRepository
   readonly proposals: ProposalDeps
   /** The system of record: it must take the lead, or the customer is asked to try again. */
   readonly primary: LeadSink
@@ -104,6 +108,7 @@ export async function submitLead(
           snapshot.estimate.completeness,
       }),
       total: Money.toWholeRubles(snapshot.estimate.total),
+      prices: await savedPrices(snapshot, request.locale, deps.exchangeRates),
       totalWeeks: snapshot.schedule.totalWeeks,
       link: deps.proposals.linkTo(saved.code, request.locale),
     },

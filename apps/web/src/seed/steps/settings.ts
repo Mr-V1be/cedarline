@@ -21,6 +21,7 @@ import {
   WORKING_DAYS_PER_WEEK,
 } from '../data/tariff'
 import { englishRows, SEED } from './upsert'
+import { EXCHANGE_RATES } from '../data/exchange-rates'
 import { FINANCING } from '../data/financing'
 import { PRODUCTION } from '../data/production'
 
@@ -164,6 +165,14 @@ export async function seedTariff(payload: Payload) {
 
 export async function seedFinancing(payload: Payload) {
   await payload.updateGlobal({ ...SEED, slug: 'financing', data: FINANCING })
+}
+
+export async function seedExchangeRates(payload: Payload) {
+  await payload.updateGlobal({
+    ...SEED,
+    slug: 'exchange-rates',
+    data: { rates: EXCHANGE_RATES.map((entry) => ({ ...entry })) },
+  })
 }
 
 export async function seedProduction(payload: Payload) {

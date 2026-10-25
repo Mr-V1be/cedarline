@@ -14,6 +14,7 @@ import { PayloadSavedConfigurationRepository } from '@/modules/configurator/infr
 import { SharpRenderImages } from '@/modules/configurator/infrastructure/sharp-render-images'
 import { PayloadHomeRepository } from '@/modules/home/infrastructure/payload-home-repository'
 import { PayloadProductionRepository } from '@/modules/production/infrastructure/payload-production-repository'
+import { PayloadExchangeRateRepository } from '@/modules/pricing/infrastructure/payload-exchange-rate-repository'
 import { PayloadPricingRepositoryFactory } from '@/modules/pricing/infrastructure/payload-tariff-repository'
 import { SharpPreviewImages } from '@/modules/seo/infrastructure/sharp-preview-images'
 import { PayloadSiteRepository } from '@/modules/site/infrastructure/payload-site-repository'
@@ -31,6 +32,7 @@ export function siteServices(payload: Payload, locale: Locale) {
   const technology = new PayloadTechnologyRepository(payload, locale)
   const houseContext = new PayloadHouseContextRepository(payload, technology)
   const tariffs = new PayloadPricingRepositoryFactory(payload)
+  const exchangeRates = new PayloadExchangeRateRepository(payload)
   const site = new PayloadSiteRepository(payload)
   const configurator: ConfiguratorDeps = {
     families: new PayloadProjectFamilyRepository(payload),
@@ -45,6 +47,7 @@ export function siteServices(payload: Payload, locale: Locale) {
     projects: new PayloadProjectRepository(payload),
     houseContext,
     tariff: tariffs.forLocale(locale),
+    exchangeRates,
     technology,
     home: new PayloadHomeRepository(payload),
     builtObjects: new PayloadBuiltObjectRepository(payload),
@@ -60,10 +63,11 @@ export function siteServices(payload: Payload, locale: Locale) {
       documents,
       renders: new SharpRenderImages(),
       codes: new CryptoShareCodes(),
+      exchangeRates,
       clock: () => new Date(),
     },
     saved,
-    ...leadServices({ payload, saved, documents, site }),
+    ...leadServices({ payload, saved, documents, site, exchangeRates }),
     logger: payload.logger,
   }
 }
