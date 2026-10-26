@@ -19,7 +19,7 @@
 | `tools/stand`           | Локальный демо-стенд: `make stand`, `make status`, `make stop`                                     |
 | `tools/load`            | Нагрузочный тест k6 (в Docker-образе `grafana/k6`)                                                 |
 | `deploy/`, `Dockerfile` | Продакшен: образы, `docker-compose.prod.yml`, Caddy с автоматическим TLS, бэкапы                   |
-| `docs/`                 | Архитектура, производительность, выкатка, материалы кейса и скриншоты вех                          |
+| `docs/`                 | Архитектура, производительность, выкатка, материалы кейса и скриншоты экранов                      |
 
 Подробно об устройстве — в [docs/architecture.md](docs/architecture.md).
 
@@ -110,6 +110,24 @@ sh tools/load/run.sh http://localhost:46100                            # наг�
 pnpm --filter @cedarline/web video:record landscape browse      # и configure; portrait — телефон
 pnpm --filter @cedarline/web video:assemble landscape
 ```
+
+## Скриншоты
+
+Все снимки в репозитории снимаются скриптами с запущенного демо-стенда (`make stand`), так что
+после изменения экрана их можно переснять одной командой:
+
+```bash
+pnpm --filter @cedarline/web shots case       # docs/case/images и обложка кейса
+pnpm --filter @cedarline/web shots demo       # экран CMS на странице /demo
+pnpm --filter @cedarline/web shots showcase --out <папка>   # конфигуратор на английском, PNG 2880×1800
+pnpm --filter @cedarline/web screenshots ../../docs/screenshots http://localhost:46100 home=/ catalog=/projects
+pnpm --filter @cedarline/web screenshots ../../docs/screenshots http://localhost:46100 --as sales-manager cms-leads=/admin/collections/leads
+```
+
+`shots` берёт набор из `apps/web/scripts/shots/sets.ts` (экран, устройство, тема и действия до
+снимка; `--only <файл,…>` — переснять часть). `screenshots` снимает каждую страницу целиком на
+телефоне, планшете и ПК в обеих темах (`docs/screenshots`); `--as <роль>` входит в CMS под
+демо-ролью.
 
 ## Продакшен
 

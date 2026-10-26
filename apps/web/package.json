@@ -19,6 +19,8 @@
     "scene:assets": "node scripts/scene-assets/build.ts",
     "perf:scene": "node scripts/measure-scene.mjs",
     "perf:lighthouse": "node scripts/measure-lighthouse.mjs",
+    "shots": "node scripts/shots/run.ts",
+    "screenshots": "node scripts/screenshots.ts",
     "video:record": "node scripts/video/record.mjs",
     "video:assemble": "node scripts/video/assemble.mjs"
   },

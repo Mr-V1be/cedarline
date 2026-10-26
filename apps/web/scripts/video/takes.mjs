@@ -2,24 +2,12 @@
 // browse — home with the evening scene, catalogue, project page;
 // configure — configurator options with camera flights and the live estimate, the PDF
 // proposal, the lead and the letter in the demo mailbox.
+import { configuratorOption as option, sceneReady } from '../shots/stage.ts'
 import { clickOn, glide, scrollBy, tapOn, typeInto } from './pointer.mjs'
 
 export const PROJECT = 'listvennitsa'
 
 const pause = (page, ms) => page.waitForTimeout(ms)
-
-/** Waits until the 3D scene inside `scope` is drawn (the canvas has replaced the poster). */
-async function sceneReady(page, timeout = 30000) {
-  await page.waitForFunction(
-    () => {
-      const canvas = document.querySelector('main canvas')
-      return canvas !== null && canvas.getBoundingClientRect().height > 100
-    },
-    undefined,
-    { timeout },
-  )
-  await pause(page, 2500)
-}
 
 async function browseDesktop(page, take, base) {
   await page.goto(`${base}/`, { waitUntil: 'networkidle' })
@@ -104,9 +92,6 @@ async function browsePhone(page, take, base) {
   await page.waitForURL(new RegExp(`/configurator/${PROJECT}`))
   await pause(page, 600)
 }
-
-const option = (page, name, value) =>
-  page.locator(`label:has(input[name="configurator-${name}"][value="${value}"])`)
 
 /** The options the video changes, in order, with time for the camera to fly. */
 const CHANGES = [
