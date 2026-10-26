@@ -89,6 +89,101 @@ docker compose -f docker-compose.prod.yml --env-file .env.production up -d
 миграции пишутся по схеме «расширить → перенести → сузить», поэтому предыдущая версия работает
 с базой, расширенной следующей.
 
+## Переход со старого имени
+
+Компания переименована: «Кедровник» (Kedrovnik) стал Cedarline. Вместе с названием сменились
+имена проекта Compose, образов, базы и роли, поэтому установка, развёрнутая под старым
+именем, переезжает один раз по шагам ниже. Сервисы и порты прежние.
+
+| Что                                            | Было                                                        | Стало                                            |
+| ---------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| Проект Compose (контейнеры, сеть)              | `kedrovnik`, сеть `kedrovnik_default`                       | `cedarline`, сеть `cedarline_default`            |
+| Тома                                           | `kedrovnik_<том>`                                           | `cedarline_<том>`                                |
+| Образы                                         | `kedrovnik-web`, `kedrovnik-tools`                          | `cedarline-web`, `cedarline-tools`               |
+| Переменные образов                             | `KEDROVNIK_WEB_IMAGE`, `KEDROVNIK_TOOLS_IMAGE`              | `CEDARLINE_WEB_IMAGE`, `CEDARLINE_TOOLS_IMAGE`   |
+| Сервисы                                        | `postgres`, `migrate`, `web`, `caddy`, `backup`, `crm-mock` | без изменений                                    |
+| База и роль                                    | `kedrovnik`                                                 | `cedarline`                                      |
+| `POSTGRES_DB`, `POSTGRES_USER`, `DATABASE_URL` | с `kedrovnik`                                               | с `cedarline`                                    |
+| Отправитель писем (`MAIL_FROM_NAME`)           | Кедровник                                                   | Cedarline                                        |
+| Демо-учётки CMS                                | `*@kedrovnik.example`, пароли `kedrovnik-*-demo`            | `*@cedarline.example`, пароли `cedarline-*-demo` |
+| Каталог на сервере                             | `/opt/kedrovnik`                                            | `/opt/cedarline`                                 |
+| Проект проверки на своей машине                | `kedrovnik-prodcheck`                                       | `cedarline-prodcheck`                            |
+| Ключ темы в `localStorage`                     | `kedrovnik-theme`                                           | `cedarline-theme`                                |
+
+Тома: `postgres-data`, `media`, `documents`, `mailbox-files`, `backups`, `caddy-data`,
+`caddy-config`, `crm-mock-data`. Keycloak, Redis и внешних очередей в проекте нет: очередь задач
+Payload живёт в базе и переезжает вместе с ней. Посетители, выбравшие тему вручную, один раз
+увидят тему системы. Адрес сайта не меняется, поэтому сертификат из `caddy-data` переезжает
+вместе с томом.
+
+Порядок проверен на стеке проверки (`kedrovnik-prodcheck` → `cedarline-prodcheck`): база,
+загрузки, КП, письма демо-ящика, бэкапы и сертификаты на месте, сайт работает на
+переименованной базе с прежним паролем роли. Перерыв — от шага 2 до шага 8, несколько минут.
+
+```sh
+# 1. Новый код и образы; старый стек пока работает. На демо-стенде к обеим строкам
+#    добавить --profile demo.
+cd /opt/kedrovnik
+git pull
+old="docker compose -p kedrovnik -f docker-compose.prod.yml --env-file .env.production"
+new="docker compose -f docker-compose.prod.yml --env-file .env.production"
+$new build
+
+# 2. Остановить всех, кто пишет в базу и тома.
+$old stop caddy web backup crm-mock
+
+# 3. Переименовать базу и роль. Через сокет контейнера psql входит без пароля; роль нельзя
+#    переименовать из-под неё самой, поэтому на время нужен второй суперпользователь. Пароль
+#    роли (SCRAM) переименование не сбрасывает.
+$old exec -T postgres psql -v ON_ERROR_STOP=1 -U kedrovnik -d postgres \
+  -c 'CREATE ROLE rename_helper SUPERUSER LOGIN'
+$old exec -T postgres psql -v ON_ERROR_STOP=1 -U rename_helper -d postgres \
+  -c 'ALTER DATABASE kedrovnik RENAME TO cedarline' -c 'ALTER ROLE kedrovnik RENAME TO cedarline'
+$old exec -T postgres psql -v ON_ERROR_STOP=1 -U cedarline -d postgres -c 'DROP ROLE rename_helper'
+
+# 4. Убрать контейнеры и сеть старого проекта; тома остаются.
+$old down
+
+# 5. Новые имена в настройках. Значения переменных образов — ссылки на новые образы.
+#    MAIL_FROM_NAME=Cedarline и адрес отправителя — вручную.
+sed -i -e 's/^POSTGRES_DB=kedrovnik$/POSTGRES_DB=cedarline/' \
+  -e 's/^POSTGRES_USER=kedrovnik$/POSTGRES_USER=cedarline/' \
+  -e 's#^DATABASE_URL=postgres://kedrovnik:\(.*\)@postgres:5432/kedrovnik$#DATABASE_URL=postgres://cedarline:\1@postgres:5432/cedarline#' \
+  -e 's/^KEDROVNIK_\([A-Z]*_IMAGE\)=/CEDARLINE_\1=/' .env.production
+
+# 6. Каталог.
+cd /opt && mv kedrovnik cedarline && cd cedarline
+
+# 7. Тома нового проекта с метками Compose (create ничего не запускает) и копия данных в них.
+$new create
+for volume in postgres-data media documents mailbox-files backups caddy-data caddy-config crm-mock-data; do
+  docker volume inspect "kedrovnik_$volume" >/dev/null 2>&1 || continue
+  docker run --rm -v "kedrovnik_$volume:/from:ro" -v "cedarline_$volume:/to" \
+    --entrypoint sh postgis/postgis:18-3.6 -c 'cp -a /from/. /to/'
+done
+
+# 8. Запуск: миграции, сайт, Caddy.
+$new up -d --wait
+curl -fsS https://<домен>/api/health
+
+# 9. Только демо-стенд: демо-учётки, реквизиты компании и примеры заявок с КП — под новым
+#    именем (то же сделал бы ночной сброс).
+$new run --rm migrate run src/seed/reset.ts
+
+# 10. Когда всё проверено (сайт, вход в CMS, заявка, бэкап ночью), удалить старые тома.
+for volume in postgres-data media documents mailbox-files backups caddy-data caddy-config crm-mock-data; do
+  docker volume rm "kedrovnik_$volume" 2>/dev/null || true
+done
+```
+
+Откат до шага 10: `$new down`, вернуть каталог и `.env.production`, поднять в старом проекте
+только `postgres` (`$old up -d postgres`), выполнить шаг 3 с переставленными именами и затем
+`$old up -d`. Старые тома после шага 3 не меняются: копия данных живёт в новых.
+
+Локальный стенд разработчика проще поднять заново: поправить имена в `.env` по таблице,
+`docker compose -p kedrovnik down` (освобождает подсеть, тома остаются) и `make stand` —
+пустая база получит миграции и сид.
+
 ## Бэкапы и восстановление
 
 Сервис `backup` раз в сутки (`BACKUP_TIME`, по умолчанию 03:00) кладёт в том `backups`
