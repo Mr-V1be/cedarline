@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="Manrope, 'Segoe UI', Arial, sans-serif">
-  <title>Архитектура «Кедровника»: слои и направления зависимостей</title>
+  <title>Архитектура Cedarline: слои и направления зависимостей</title>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M0 0 10 5 0 10z" fill="#2b312d"/>
@@ -15,7 +15,7 @@
   <rect width="1200" height="900" fill="#f3f3ee"/>
   <rect width="1200" height="900" fill="url(#grid)"/>
 
-  <text x="40" y="52" font-size="26" font-weight="600" fill="#2b312d">Архитектура «Кедровника»</text>
+  <text x="40" y="52" font-size="26" font-weight="600" fill="#2b312d">Архитектура Cedarline</text>
   <text x="40" y="80" font-size="15" fill="#5c625e">Зависимости направлены внутрь: домен не знает о базе, сети и фреймворке; внешние сервисы — только за портами.</text>
 
   <!-- Clients -->

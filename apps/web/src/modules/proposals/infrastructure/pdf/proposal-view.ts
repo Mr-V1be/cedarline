@@ -1,4 +1,4 @@
-import { QUANTITY_DRIVERS, isQuantityDriver } from '@kedrovnik/house'
+import { QUANTITY_DRIVERS, isQuantityDriver } from '@cedarline/house'
 import { createTranslator } from 'next-intl'
 
 import { LOCALE_DEFINITIONS } from '@/i18n/locales'
@@ -9,6 +9,7 @@ import {
   type Translate,
 } from '@/modules/configurator/application/vocabulary'
 import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'
+import { BRAND_NAME } from '@/ui/brand/brand'
 
 import type { ProposalInput } from '../../ports/proposal-renderer'
 
@@ -107,7 +108,7 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
 
   return {
     locale,
-    brand: common('brand.name'),
+    brand: BRAND_NAME,
     title: t('title'),
     number: t('number', { code: input.code }),
     date: t('date', { date }),
@@ -175,7 +176,7 @@ export async function buildProposalView(input: ProposalInput): Promise<ProposalV
       ...(rate === null ? [] : [common('prices.converted', { date: day(rate.setOn) })]),
     ].join(' '),
     footer: {
-      company: [common('brand.name'), input.company.phone, input.company.email].join(' · '),
+      company: [BRAND_NAME, input.company.phone, input.company.email].join(' · '),
       demo: common('footer.demo'),
     },
     pageLabel: (page, total) => t('page', { page, total }),

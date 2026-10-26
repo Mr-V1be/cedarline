@@ -20,7 +20,7 @@ export async function SiteHeader() {
   return (
     <header className={styles.header}>
       <Container className={styles.bar}>
-        <Logo name={t('brand.name')} />
+        <Logo />
         <div className={styles.desktopOnly}>
           <HeaderNav labels={items} label={t('nav.label')} />
         </div>

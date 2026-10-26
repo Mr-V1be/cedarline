@@ -4,12 +4,15 @@ import { getTranslations } from 'next-intl/server'
 import { DEFAULT_LOCALE, LOCALES, LOCALE_DEFINITIONS, type Locale } from '@/i18n/locales'
 import { getPathname } from '@/i18n/navigation'
 import type { ImageAsset } from '@/modules/catalog/domain/project'
+import { BRAND_NAME } from '@/ui/brand/brand'
 
 import { PREVIEW_SIZE } from '../ports/preview-images'
 
 /** File name of the site-wide preview: the render of the project the home page leads with. */
 export const SITE_PREVIEW = 'site.jpg'
 const PREVIEW_PATH = '/files/og'
+/** The brand's logo for search engines: the 180 px PNG of the app icon (app/apple-icon.ts). */
+export const SITE_LOGO_PATH = '/apple-icon'
 
 /** An image for link previews: a render of our scene or a scheme, never a stock photo. */
 export interface PreviewImage {
@@ -66,7 +69,7 @@ export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> 
       title: input.title,
       description: input.description,
       url: canonical,
-      siteName: t('brand.name'),
+      siteName: BRAND_NAME,
       type: input.type ?? 'website',
       locale: LOCALE_DEFINITIONS[input.locale].openGraph,
       images,

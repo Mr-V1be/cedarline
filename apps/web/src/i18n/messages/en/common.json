@@ -1,12 +1,11 @@
 {
   "brand": {
-    "name": "Kedrovnik",
     "tagline": "Timber-frame houses and saunas from our own factory"
   },
   "meta": {
-    "title": "Kedrovnik — timber-frame houses and saunas from the manufacturer",
+    "title": "Cedarline — timber-frame houses and saunas from the manufacturer",
     "description": "Catalogue of timber-frame houses, saunas and guest houses built in our own factory: floor plans, packages, price and construction time for every project.",
-    "previewAlt": "A Kedrovnik frame house — a render from the 3D configurator"
+    "previewAlt": "A Cedarline frame house — a render from the 3D configurator"
   },
   "nav": {
     "label": "Main navigation",
@@ -41,7 +40,7 @@
   "footer": {
     "contacts": "Contacts",
     "sections": "Sections",
-    "copyright": "© {year} Kedrovnik",
+    "copyright": "© {year} Cedarline",
     "demo": "Demo version. The company and all data are fictional.",
     "legal": "Documents",
     "demoAccess": "Sign in to the CMS as…"

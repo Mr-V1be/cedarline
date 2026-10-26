@@ -7,7 +7,7 @@
     "keep": "The link opens the configuration exactly as you saved it, at the price of the day it was saved.",
     "open": "Open the configuration",
     "contacts": "Questions: call {phone} or write to {email}.",
-    "signature": "The Kedrovnik team"
+    "signature": "The Cedarline team"
   },
   "manager": {
     "subject": "Lead #{reference}: {project}, {total}",

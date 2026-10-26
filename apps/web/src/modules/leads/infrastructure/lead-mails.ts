@@ -1,4 +1,4 @@
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import { createTranslator } from 'next-intl'
 import type { Payload } from 'payload'
 
@@ -41,12 +41,11 @@ const customerTotal = (lead: Lead) =>
 export class PayloadLeadMails {
   constructor(private readonly payload: Payload) {}
 
-  private async letter(lead: Lead, to: string, subject: string, content: MailContent) {
-    const brand = (await translators(lead.locale)).common('brand.name')
+  private letter(lead: Lead, to: string, subject: string, content: MailContent) {
     return {
       to,
       subject,
-      html: renderMailHtml(content, brand),
+      html: renderMailHtml(content),
       text: renderMailText(content),
       attachments: [
         {

@@ -1,5 +1,7 @@
 import { Document, Image, Page, Path, Svg, Text, View } from '@react-pdf/renderer'
 
+import { MARK_GRID, MARK_LINE, MARK_STROKES } from '@/ui/brand/brand'
+
 import { QrCode } from './qr-code'
 import { PDF_COLOURS, styles } from './proposal-styles'
 import type { ProposalView } from './proposal-view'
@@ -8,17 +10,21 @@ const QR_SIZE = 92
 /** Phases alternate between two greens on the chart. */
 const PHASE_COLOURS = [PDF_COLOURS.band, PDF_COLOURS.bar] as const
 
+/** The brand's mark on the green band, from the same geometry as the site's logo. */
 function Mark() {
   return (
-    <Svg width={22} height={22} viewBox="0 0 32 32">
-      <Path d="M4 15 16 5l12 10" stroke={PDF_COLOURS.onBand} strokeWidth={1.6} fill="none" />
-      <Path d="M8 13v14h16V13" stroke={PDF_COLOURS.onBand} strokeWidth={1.6} fill="none" />
-      <Path
-        d="M16 11v16M12 17l4-3 4 3M11.5 22l4.5-3.5 4.5 3.5"
-        stroke={PDF_COLOURS.onBand}
-        strokeWidth={1.3}
-        fill="none"
-      />
+    <Svg width={22} height={22} viewBox={`0 0 ${MARK_GRID} ${MARK_GRID}`}>
+      {MARK_STROKES.map((stroke) => (
+        <Path
+          key={stroke.d}
+          d={stroke.d}
+          stroke={PDF_COLOURS.onBand}
+          strokeWidth={stroke.width}
+          strokeLinecap={MARK_LINE.cap}
+          strokeLinejoin={MARK_LINE.join}
+          fill="none"
+        />
+      ))}
     </Svg>
   )
 }

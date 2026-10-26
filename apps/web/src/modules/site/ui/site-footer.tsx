@@ -22,7 +22,7 @@ export async function SiteFooter({ site, demoAccess }: SiteFooterProps) {
     <footer className={styles.footer}>
       <Container className={styles.grid}>
         <div className={styles.brand}>
-          <Logo name={t('brand.name')} />
+          <Logo />
           <p className={styles.tagline}>{t('brand.tagline')}</p>
           <p className={styles.muted}>{site.region}</p>
         </div>

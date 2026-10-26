@@ -10,7 +10,7 @@ import { loadHomeOverview } from '@/modules/home/application/home-overview'
 import { CtaBand } from '@/modules/home/ui/cta-band'
 import { businessSchema, websiteSchema } from '@/modules/seo/application/structured-data'
 import { JsonLd } from '@/modules/seo/ui/json-ld'
-import { localizedPath, pageMetadata } from '@/modules/seo/ui/page-metadata'
+import { localizedPath, pageMetadata, SITE_LOGO_PATH } from '@/modules/seo/ui/page-metadata'
 import { HeroSection } from '@/modules/home/ui/hero-section'
 import { SectionHeading } from '@/ui/components/section-heading/section-heading'
 import { ScheduleChart } from '@/modules/pricing/ui/schedule-chart'
@@ -18,6 +18,7 @@ import { WallSection } from '@/modules/technology/ui/wall-section'
 import { ButtonLink } from '@/ui/components/button/button'
 import { Container, Section } from '@/ui/components/layout/container'
 import { ClientMessages } from '@/i18n/client-messages'
+import { BRAND_NAME } from '@/ui/brand/brand'
 
 import styles from './home.module.css'
 
@@ -61,16 +62,16 @@ export default async function HomePage({
     <>
       <JsonLd
         data={websiteSchema({
-          name: common('brand.name'),
+          name: BRAND_NAME,
           url: homeUrl,
           language: LOCALE_DEFINITIONS[locale].tag,
         })}
       />
       <JsonLd
         data={businessSchema({
-          name: common('brand.name'),
+          name: BRAND_NAME,
           url: homeUrl,
-          logo: `${env.SITE_URL}/icon.svg`,
+          logo: `${env.SITE_URL}${SITE_LOGO_PATH}`,
           site,
         })}
       />

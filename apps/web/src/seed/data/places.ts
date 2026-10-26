@@ -2,8 +2,8 @@ import { t } from './localized'
 
 export const SITE = {
   phone: '+7 (812) 000-46-10',
-  email: 'hello@kedrovnik.example',
-  leadsEmail: 'sales@kedrovnik.example',
+  email: 'hello@cedarline.example',
+  leadsEmail: 'sales@cedarline.example',
   address: t(
     'Ленинградская область, Тосненский район, производственная зона «Северная», 4',
     'Leningrad Oblast, Tosno District, Severnaya industrial zone, 4',
@@ -15,11 +15,11 @@ export const SITE = {
   ),
   /** The factory near Tosno, [longitude, latitude]. */
   location: [30.8693, 59.5512] as [number, number],
-  legalName: t('ООО «Кедровник» (вымышленная компания)', 'Kedrovnik LLC (a fictional company)'),
+  legalName: t('ООО «Cedarline» (вымышленная компания)', 'Cedarline LLC (a fictional company)'),
   // Obviously fictional identifiers: the company does not exist.
   taxId: '0000000000',
   registrationNumber: '0000000000000',
-  privacyEmail: 'privacy@kedrovnik.example',
+  privacyEmail: 'privacy@cedarline.example',
   privacyEdition: '2026-09-01',
 }
 

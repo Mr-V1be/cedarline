@@ -31,7 +31,10 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // The site except the API, internal render endpoints, Next internals and files; the CMS only
-  // to annotate its requests.
-  matcher: ['/((?!api|admin|render|files|_next|_vercel|.*\\..*).*)', '/admin/:path*'],
+  // The site except the API, internal render endpoints, Next internals, the generated app icons
+  // and files; the CMS only to annotate its requests.
+  matcher: [
+    '/((?!api|admin|render|files|_next|_vercel|icon|apple-icon|.*\\..*).*)',
+    '/admin/:path*',
+  ],
 }

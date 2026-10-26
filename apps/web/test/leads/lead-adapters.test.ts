@@ -23,7 +23,7 @@ const lead: Lead = {
     total: 6_308_000,
     prices: BASE_DISPLAY,
     totalWeeks: 18,
-    link: 'https://kedrovnik.example/c/abcdefghjkmn',
+    link: 'https://cedarline.example/c/abcdefghjkmn',
   },
   proposal: { documentId: 3, filename: 'kp.pdf', data: Buffer.from('%PDF') },
 }
@@ -68,17 +68,14 @@ describe('Bitrix24 lead sink', () => {
 describe('mail layout', () => {
   it('escapes every value', () => {
     expect(escapeHtml('<b>"&\'</b>')).toBe('&lt;b&gt;&quot;&amp;&#39;&lt;/b&gt;')
-    const html = renderMailHtml(
-      {
-        preheader: 'p',
-        heading: '<script>',
-        paragraphs: ['a & b'],
-        rows: [{ label: 'Имя', value: '<img src=x>' }],
-        action: { label: 'Open', href: 'https://x.example/?a=1&b="2"' },
-        footer: [],
-      },
-      'Кедровник',
-    )
+    const html = renderMailHtml({
+      preheader: 'p',
+      heading: '<script>',
+      paragraphs: ['a & b'],
+      rows: [{ label: 'Имя', value: '<img src=x>' }],
+      action: { label: 'Open', href: 'https://x.example/?a=1&b="2"' },
+      footer: [],
+    })
     expect(html).not.toContain('<script>')
     expect(html).not.toContain('<img src=x>')
     expect(html).toContain('href="https://x.example/?a=1&amp;b=&quot;2&quot;"')

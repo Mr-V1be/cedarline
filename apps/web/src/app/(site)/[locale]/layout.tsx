@@ -16,6 +16,7 @@ import { routing } from '@/i18n/routing'
 import { PricesProvider } from '@/modules/pricing/ui/prices'
 import { SiteFooter } from '@/modules/site/ui/site-footer'
 import { SiteHeader } from '@/modules/site/ui/site-header'
+import { BRAND_NAME } from '@/ui/brand/brand'
 import { fontVariables } from '@/ui/fonts'
 import { ThemeScript } from '@/ui/theme/theme-script'
 
@@ -38,10 +39,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   const t = await getTranslations({ locale, namespace: 'common' })
   return {
     metadataBase: new URL(env.SITE_URL),
-    title: { default: t('meta.title'), template: `%s — ${t('brand.name')}` },
+    title: { default: t('meta.title'), template: `%s — ${BRAND_NAME}` },
     description: t('meta.description'),
     openGraph: {
-      siteName: t('brand.name'),
+      siteName: BRAND_NAME,
       locale: LOCALE_DEFINITIONS[locale].openGraph,
       type: 'website',
     },

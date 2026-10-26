@@ -8,6 +8,8 @@ import path from 'node:path'
 
 import sharp from 'sharp'
 
+import { BRAND_COLOURS, BRAND_NAME, MARK_GRID, markLines } from '../../src/ui/brand/brand.ts'
+
 const FORMATS = {
   landscape: { width: 1920, height: 1080 },
   portrait: { width: 1080, height: 1920 },
@@ -16,9 +18,8 @@ const FPS = 30
 const FADE = 0.4
 const PROPOSAL_SECONDS = 4.5
 const END_SECONDS = 2.6
-const PAPER = '#f3f3ee'
-const PINE = '#1e3b2f'
-const INK = '#2b312d'
+const PAPER = BRAND_COLOURS.paper
+const INK = BRAND_COLOURS.ink
 
 const format = process.argv[2]
 const size = FORMATS[format]
@@ -29,7 +30,7 @@ if (size === undefined) {
 const root = path.resolve(import.meta.dirname, '../../../..')
 const takes = path.join(root, '.run/video', format)
 const work = path.join(takes, 'cut')
-const output = path.join(root, 'docs/case/video', `kedrovnik-${format}.mp4`)
+const output = path.join(root, 'docs/case/video', `${BRAND_NAME.toLowerCase()}-${format}.mp4`)
 rmSync(work, { recursive: true, force: true })
 mkdirSync(work, { recursive: true })
 mkdirSync(path.dirname(output), { recursive: true })
@@ -174,12 +175,8 @@ async function endCardImage() {
   const mark = 150 * scale
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size.width}" height="${size.height}">
     <rect width="100%" height="100%" fill="${PAPER}"/>
-    <g transform="translate(${size.width / 2 - mark / 2} ${size.height / 2 - mark - 40 * scale}) scale(${mark / 32})" fill="none" stroke="${PINE}">
-      <path d="M4 15 16 5l12 10" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M8 13v14h16V13" stroke-width="1.6"/>
-      <path d="M16 11v16M12 17l4-3 4 3M11.5 22l4.5-3.5 4.5 3.5" stroke-width="1.3"/>
-    </g>
-    <text x="50%" y="${size.height / 2 + 70 * scale}" text-anchor="middle" font-family="Literata" font-weight="500" font-size="${96 * scale}" fill="${INK}">Кедровник</text>
+    <g transform="translate(${size.width / 2 - mark / 2} ${size.height / 2 - mark - 40 * scale}) scale(${mark / MARK_GRID})">${markLines(BRAND_COLOURS.pine)}</g>
+    <text x="50%" y="${size.height / 2 + 70 * scale}" text-anchor="middle" font-family="Literata" font-weight="500" font-size="${96 * scale}" fill="${INK}">${BRAND_NAME}</text>
     <text x="50%" y="${size.height / 2 + 140 * scale}" text-anchor="middle" font-family="Manrope" font-size="${34 * scale}" fill="${INK}" fill-opacity="0.72">Каркасные дома и бани собственного производства</text>
   </svg>`
   const image = path.join(work, 'end.png')

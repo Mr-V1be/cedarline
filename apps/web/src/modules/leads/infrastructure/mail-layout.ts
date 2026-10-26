@@ -1,3 +1,5 @@
+import { BRAND_NAME } from '@/ui/brand/brand'
+
 /** Escapes text for HTML email bodies; every value from users or the CMS goes through it. */
 export function escapeHtml(value: string): string {
   return value
@@ -32,7 +34,7 @@ export interface MailContent {
 }
 
 /** A table-based layout every mail client renders the same; values are escaped here. */
-export function renderMailHtml(content: MailContent, brand: string): string {
+export function renderMailHtml(content: MailContent): string {
   const paragraphs = content.paragraphs
     .map((text) => `<p style="margin:0 0 14px;line-height:1.55">${escapeHtml(text)}</p>`)
     .join('')
@@ -57,7 +59,7 @@ export function renderMailHtml(content: MailContent, brand: string): string {
 <span style="display:none;max-height:0;overflow:hidden">${escapeHtml(content.preheader)}</span>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${COLOURS.paper}"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid ${COLOURS.line};border-radius:8px">
-<tr><td style="background:${COLOURS.band};color:#ffffff;padding:18px 24px;font-size:20px;font-weight:700;border-radius:8px 8px 0 0">${escapeHtml(brand)}</td></tr>
+<tr><td style="background:${COLOURS.band};color:#ffffff;padding:18px 24px;font-size:20px;font-weight:700;border-radius:8px 8px 0 0">${escapeHtml(BRAND_NAME)}</td></tr>
 <tr><td style="padding:24px">
 <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3">${escapeHtml(content.heading)}</h1>
 ${paragraphs}

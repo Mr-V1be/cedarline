@@ -37,6 +37,7 @@ import { DELIVERY_QUEUE, MAINTENANCE_QUEUE, TASKS } from './cms/jobs/tasks'
 import { env } from './config/env'
 import { DEFAULT_LOCALE, LOCALE_DEFINITIONS, LOCALES } from './i18n/locales'
 import { demoMailboxEmailAdapter } from './modules/mail/infrastructure/demo-mailbox-email-adapter'
+import { BRAND_NAME } from './ui/brand/brand'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -59,7 +60,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: { baseDir: dirname },
-    meta: { titleSuffix: ' · Кедровник' },
+    meta: { titleSuffix: ` · ${BRAND_NAME}` },
     components: {
       graphics: { Icon: '/cms/admin/brand#Icon', Logo: '/cms/admin/brand#Logo' },
       // Renders only on a demo stand: one-click sign-in by role.
