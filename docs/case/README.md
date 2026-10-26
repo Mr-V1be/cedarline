@@ -6,7 +6,7 @@ Playwright · k6 · Docker · Caddy
 
 ![Конфигуратор на ПК и телефоне](images/cover.webp)
 
-Видео без звука, 70 секунд: [ПК, 1920×1080](video/cedarline-landscape.mp4) ·
+Видео без звука, 70–75 секунд: [ПК, 1920×1080](video/cedarline-landscape.mp4) ·
 [телефон, 1080×1920](video/cedarline-portrait.mp4).
 
 ## Задача
