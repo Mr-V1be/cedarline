@@ -1,7 +1,9 @@
 /**
  * Captures every screen in the review matrix: phone, tablet and desktop, light and dark, the
- * whole page, as WebP. `--as <demo role>` signs in to the CMS first (demo stands only).
- * Usage: node scripts/screenshots.ts <output-dir> <base-url> [--as <role>] <name=path> [name=path …]
+ * whole page, as WebP. `--as <demo role>` signs in to the CMS first (demo stands only);
+ * `--fold` keeps the first screen only, for pages with a map: the full-page capture resizes the
+ * page, and the map's canvas is blank until it redraws.
+ * Usage: node scripts/screenshots.ts <output-dir> <base-url> [--as <role>] [--fold] <name=path> …
  */
 import path from 'node:path'
 import { parseArgs } from 'node:util'
@@ -24,12 +26,12 @@ const SCHEMES = ['light', 'dark'] as const
 
 const { positionals, values } = parseArgs({
   allowPositionals: true,
-  options: { as: { type: 'string' } },
+  options: { as: { type: 'string' }, fold: { type: 'boolean', default: false } },
 })
 const [outputArgument, baseUrl, ...pages] = positionals
 if (outputArgument === undefined || baseUrl === undefined || pages.length === 0) {
   console.error(
-    'Usage: node scripts/screenshots.ts <output-dir> <base-url> [--as <role>] <name=path> …',
+    'Usage: node scripts/screenshots.ts <output-dir> <base-url> [--as <role>] [--fold] <name=path> …',
   )
   process.exit(1)
 }
@@ -46,7 +48,7 @@ try {
     for (const viewport of VIEWPORTS) {
       for (const scheme of SCHEMES) {
         const context = await newShotContext(browser, viewport, scheme, session)
-        if (session !== undefined) await setCmsTheme(context, baseUrl, scheme)
+        await setCmsTheme(context, baseUrl, scheme)
         const tab = await context.newPage()
         await tab.goto(new URL(route, baseUrl).toString(), {
           waitUntil: 'networkidle',
@@ -67,7 +69,7 @@ try {
           () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
         )
         const file = path.join(output, `${name}-${viewport.name}-${scheme}.webp`)
-        await saveImage(await tab.screenshot({ fullPage: true }), file)
+        await saveImage(await tab.screenshot({ fullPage: !values.fold }), file)
         console.log(`${file}${overflow > 0 ? `  ⚠ horizontal overflow ${overflow}px` : ''}`)
         await context.close()
       }

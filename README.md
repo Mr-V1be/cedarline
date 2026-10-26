@@ -127,7 +127,7 @@ pnpm --filter @cedarline/web screenshots ../../docs/screenshots http://localhost
 `shots` берёт набор из `apps/web/scripts/shots/sets.ts` (экран, устройство, тема и действия до
 снимка; `--only <файл,…>` — переснять часть). `screenshots` снимает каждую страницу целиком на
 телефоне, планшете и ПК в обеих темах (`docs/screenshots`); `--as <роль>` входит в CMS под
-демо-ролью.
+демо-ролью, `--fold` оставляет только первый экран (страницы с картой).
 
 ## Продакшен
 
