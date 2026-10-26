@@ -1,6 +1,6 @@
 'use client'
 
-import type { Bounds } from '@kedrovnik/house'
+import type { Bounds } from '@cedarline/house'
 import { useLayoutEffect, useMemo, useRef } from 'react'
 import { type InstancedMesh, Matrix4, PlaneGeometry, Quaternion, Vector3 } from 'three'
 

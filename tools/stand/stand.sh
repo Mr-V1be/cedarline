@@ -11,12 +11,12 @@ echo "→ docker services"
 docker compose up -d --wait
 
 echo "→ migrations"
-pnpm --filter @kedrovnik/web migrate >>"$LOG_DIR/migrate.log" 2>&1
+pnpm --filter @cedarline/web migrate >>"$LOG_DIR/migrate.log" 2>&1
 
 users="$(docker compose exec -T postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -tAc "select count(*) from users"')"
 if [ "$users" = "0" ]; then
   echo "→ seed (empty database)"
-  pnpm --filter @kedrovnik/web seed >>"$LOG_DIR/seed.log" 2>&1
+  pnpm --filter @cedarline/web seed >>"$LOG_DIR/seed.log" 2>&1
 fi
 
 if web_running; then
@@ -31,7 +31,7 @@ if [ ! -f "$build_id" ] || [ -n "$(find apps/web/src apps/web/public packages -n
 fi
 
 echo "→ site in demo mode"
-DEMO_MODE=true setsid nohup pnpm --filter @kedrovnik/web start >"$LOG_DIR/web.log" 2>&1 </dev/null &
+DEMO_MODE=true setsid nohup pnpm --filter @cedarline/web start >"$LOG_DIR/web.log" 2>&1 </dev/null &
 echo $! >"$WEB_PID"
 
 if wait_for "$WEB_URL/api/health" 120; then

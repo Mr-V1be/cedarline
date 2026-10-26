@@ -1,4 +1,4 @@
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import { getTranslations } from 'next-intl/server'
 
 import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'

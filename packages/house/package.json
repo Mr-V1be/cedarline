@@ -1,5 +1,5 @@
 {
-  "name": "@kedrovnik/house",
+  "name": "@cedarline/house",
   "version": "1.0.0",
   "private": true,
   "description": "Parametric house domain: specification, derived frame, mesh geometry, quantity takeoff and floor plans.",

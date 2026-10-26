@@ -1,6 +1,6 @@
 'use client'
 
-import type { Quote } from '@kedrovnik/pricing'
+import type { Quote } from '@cedarline/pricing'
 import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 

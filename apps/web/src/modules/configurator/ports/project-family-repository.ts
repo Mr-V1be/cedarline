@@ -1,4 +1,4 @@
-import type { ProjectBlueprint } from '@kedrovnik/configurator'
+import type { ProjectBlueprint } from '@cedarline/configurator'
 
 import type { Locale } from '@/i18n/locales'
 import type { ImageAsset } from '@/modules/catalog/domain/project'

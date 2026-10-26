@@ -1,4 +1,4 @@
-import { mirrorDesign, resizeDesign, type HouseInput, type HouseOptions } from '@kedrovnik/house'
+import { mirrorDesign, resizeDesign, type HouseInput, type HouseOptions } from '@cedarline/house'
 
 import { blueprintOf } from './choices'
 import type { Configuration } from './configuration'

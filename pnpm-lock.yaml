@@ -65,21 +65,21 @@ importers:
 
   apps/web:
     dependencies:
+      '@cedarline/configurator':
+        specifier: workspace:*
+        version: link:../../packages/configurator
+      '@cedarline/house':
+        specifier: workspace:*
+        version: link:../../packages/house
+      '@cedarline/pricing':
+        specifier: workspace:*
+        version: link:../../packages/pricing
       '@fontsource-variable/literata':
         specifier: 5.3.0
         version: 5.3.0
       '@fontsource-variable/manrope':
         specifier: 5.3.0
         version: 5.3.0
-      '@kedrovnik/configurator':
-        specifier: workspace:*
-        version: link:../../packages/configurator
-      '@kedrovnik/house':
-        specifier: workspace:*
-        version: link:../../packages/house
-      '@kedrovnik/pricing':
-        specifier: workspace:*
-        version: link:../../packages/pricing
       '@payloadcms/db-postgres':
         specifier: 3.90.2
         version: 3.90.2(@opentelemetry/api@1.9.1)(payload@3.90.2(graphql@16.14.2)(typescript@6.0.3))
@@ -192,10 +192,10 @@ importers:
 
   packages/configurator:
     dependencies:
-      '@kedrovnik/house':
+      '@cedarline/house':
         specifier: workspace:*
         version: link:../house
-      '@kedrovnik/pricing':
+      '@cedarline/pricing':
         specifier: workspace:*
         version: link:../pricing
 

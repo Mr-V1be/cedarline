@@ -1,5 +1,5 @@
-import { initialConfiguration } from '@kedrovnik/configurator'
-import { Money } from '@kedrovnik/pricing'
+import { initialConfiguration } from '@cedarline/configurator'
+import { Money } from '@cedarline/pricing'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { saveConfiguration } from '@/modules/configurator/application/save-configuration'
@@ -126,7 +126,7 @@ describe('submitLead', () => {
     const [lead] = cms.leads
     expect(lead?.contact.phone).toBe('+70000000000')
     expect(lead?.summary.description).toBe('Сосны · Тёплый контур')
-    expect(lead?.summary.link).toBe(`https://kedrovnik.example/c/${CODE}`)
+    expect(lead?.summary.link).toBe(`https://cedarline.example/c/${CODE}`)
     expect(lead?.proposal.data.toString()).toContain('%PDF')
     expect(crm.leads).toHaveLength(1)
     expect(journal[0]?.outcomes.map((outcome) => [outcome.channel, outcome.status])).toEqual([

@@ -1,4 +1,4 @@
-import type { Money, Quote, Schedule } from '@kedrovnik/pricing'
+import type { Money, Quote, Schedule } from '@cedarline/pricing'
 
 import type { TariffNames } from '../ports/tariff-repository'
 

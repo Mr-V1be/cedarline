@@ -7,7 +7,7 @@ import type {
   WallSide,
   WindowRole,
   WindowStyle,
-} from '@kedrovnik/house'
+} from '@cedarline/house'
 
 import type { Localized } from '../localized'
 

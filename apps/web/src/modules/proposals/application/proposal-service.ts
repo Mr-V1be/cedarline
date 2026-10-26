@@ -27,7 +27,7 @@ export interface ProposalFile {
 }
 
 export const proposalFilename = (code: string, locale: Locale) =>
-  locale === 'ru' ? `kedrovnik-kp-${code}.pdf` : `kedrovnik-proposal-${code}-${locale}.pdf`
+  locale === 'ru' ? `cedarline-kp-${code}.pdf` : `cedarline-proposal-${code}-${locale}.pdf`
 
 /**
  * The proposal of a saved configuration. In the language it was saved in, the PDF is made

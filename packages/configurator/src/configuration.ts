@@ -1,4 +1,4 @@
-import type { FacadeFinish, RoofKindKey, WindowStyle } from '@kedrovnik/house'
+import type { FacadeFinish, RoofKindKey, WindowStyle } from '@cedarline/house'
 
 import type { Footprint } from './model'
 

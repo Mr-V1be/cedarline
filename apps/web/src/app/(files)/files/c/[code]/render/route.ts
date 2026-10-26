@@ -1,4 +1,4 @@
-import { isShareCode } from '@kedrovnik/configurator'
+import { isShareCode } from '@cedarline/configurator'
 
 import { getServices } from '@/composition/services'
 import { DEFAULT_LOCALE } from '@/i18n/locales'

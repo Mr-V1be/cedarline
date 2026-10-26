@@ -5,7 +5,7 @@ import {
   Configurator,
   type Configuration,
   type ConfiguratorModel,
-} from '@kedrovnik/configurator'
+} from '@cedarline/configurator'
 
 import type { Locale } from '@/i18n/locales'
 import type { ImageAsset } from '@/modules/catalog/domain/project'

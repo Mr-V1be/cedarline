@@ -1,6 +1,6 @@
 'use client'
 
-import type { Approach, Bounds } from '@kedrovnik/house'
+import type { Approach, Bounds } from '@cedarline/house'
 import { Environment, useTexture } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useLayoutEffect, useRef } from 'react'

@@ -1,4 +1,4 @@
-import { SELECTION_OPTIONS } from '@kedrovnik/configurator'
+import { SELECTION_OPTIONS } from '@cedarline/configurator'
 import type { ArrayField } from 'payload'
 
 import { label, type Labels } from './labels'

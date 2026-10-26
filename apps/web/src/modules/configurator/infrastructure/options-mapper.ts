@@ -1,5 +1,5 @@
-import type { ConfiguratorOffer } from '@kedrovnik/configurator'
-import { isFacadeFinish, isRoofKindKey, isWindowStyle } from '@kedrovnik/house'
+import type { ConfiguratorOffer } from '@cedarline/configurator'
+import { isFacadeFinish, isRoofKindKey, isWindowStyle } from '@cedarline/house'
 
 import type { CatalogOption } from '@/cms/generated/payload-types'
 

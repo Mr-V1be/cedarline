@@ -1,5 +1,5 @@
 /** Request header with the CMS path being served, set by the proxy. */
-export const ADMIN_PATH_HEADER = 'x-kedrovnik-admin-path'
+export const ADMIN_PATH_HEADER = 'x-cedarline-admin-path'
 
 export type AdminEntity =
   | { readonly kind: 'collection'; readonly slug: string }

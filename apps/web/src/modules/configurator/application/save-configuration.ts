@@ -3,7 +3,7 @@ import {
   parseConfiguration,
   unofferedGroups,
   ConfiguratorError,
-} from '@kedrovnik/configurator'
+} from '@cedarline/configurator'
 
 import { LOCALES, type Locale } from '@/i18n/locales'
 import type { ExchangeRateRepository } from '@/modules/pricing/ports/exchange-rate-repository'

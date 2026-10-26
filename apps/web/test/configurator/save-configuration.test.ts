@@ -1,4 +1,4 @@
-import { Configurator, initialConfiguration } from '@kedrovnik/configurator'
+import { Configurator, initialConfiguration } from '@cedarline/configurator'
 import { describe, expect, it } from 'vitest'
 
 import {

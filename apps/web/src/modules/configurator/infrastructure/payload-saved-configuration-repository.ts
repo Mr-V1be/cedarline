@@ -3,7 +3,7 @@ import type { Payload } from 'payload'
 import type { Configuration as ConfigurationDocument } from '@/cms/generated/payload-types'
 import { isLocale } from '@/i18n/locales'
 import { relationId } from '@/modules/catalog/infrastructure/project-design-mapper'
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 
 import {
   SNAPSHOT_VERSION,

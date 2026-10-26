@@ -1,4 +1,4 @@
-# Кедровник
+# Cedarline
 
 Сайт производителя каркасных домов и бань: каталог проектов с фильтрами, страница проекта
 с 3D-моделью, планировками по уровням, комплектациями и сроками, 3D-конфигуратор с живой
@@ -31,8 +31,8 @@
 cp .env.example .env          # заполнить значения (см. комментарии в файле)
 pnpm install
 docker compose up -d          # PostGIS 46132, Mailpit: SMTP 46125 и UI 46180, мок CRM 46140
-pnpm --filter @kedrovnik/web migrate
-pnpm --filter @kedrovnik/web seed
+pnpm --filter @cedarline/web migrate
+pnpm --filter @cedarline/web seed
 pnpm dev                      # http://localhost:46100
 ```
 
@@ -57,7 +57,7 @@ make stop     # остановить сайт и Docker-сервисы
 демо-режиме (`DEMO_MODE=true`): вход в CMS под любой ролью в один клик со страницы
 <http://localhost:46100/demo> (ссылка «Войти в CMS как…» в подвале) и с экрана входа CMS, а
 каждую ночь в 03:30 данные возвращаются к сиду — заявки, конфигурации, письма и правки
-контента; три заявки-примера с КП и письмами сид создаёт заново. Вручную то же делает `pnpm --filter @kedrovnik/web demo:reset`. Без `DEMO_MODE`
+контента; три заявки-примера с КП и письмами сид создаёт заново. Вручную то же делает `pnpm --filter @cedarline/web demo:reset`. Без `DEMO_MODE`
 (по умолчанию) ни страницы `/demo`, ни сброса нет.
 
 ### Демо-доступы в CMS
@@ -67,9 +67,9 @@ make stop     # остановить сайт и Docker-сервисы
 
 | Роль             | Логин                       | Пароль                   |
 | ---------------- | --------------------------- | ------------------------ |
-| Администратор    | `admin@kedrovnik.example`   | `kedrovnik-admin-demo`   |
-| Контент-менеджер | `content@kedrovnik.example` | `kedrovnik-content-demo` |
-| Менеджер продаж  | `sales@kedrovnik.example`   | `kedrovnik-sales-demo`   |
+| Администратор    | `admin@cedarline.example`   | `cedarline-admin-demo`   |
+| Контент-менеджер | `content@cedarline.example` | `cedarline-content-demo` |
+| Менеджер продаж  | `sales@cedarline.example`   | `cedarline-sales-demo`   |
 
 ### Рендеры проектов
 
@@ -77,8 +77,8 @@ make stop     # остановить сайт и Docker-сервисы
 `apps/web/seed-assets/renders` и загружаются сидом. Пересоздать их можно при запущенном сайте:
 
 ```bash
-pnpm --filter @kedrovnik/web render:covers   # все рендеры; можно указать префиксы: sosny kedr-back
-pnpm --filter @kedrovnik/web seed            # загрузить обновлённые рендеры в медиатеку
+pnpm --filter @cedarline/web render:covers   # все рендеры; можно указать префиксы: sosny kedr-back
+pnpm --filter @cedarline/web seed            # загрузить обновлённые рендеры в медиатеку
 ```
 
 ## Проверки
@@ -96,8 +96,8 @@ pnpm test
 [docs/performance.md](docs/performance.md)):
 
 ```bash
-pnpm --filter @kedrovnik/web perf:lighthouse http://localhost:46100 3   # Lighthouse, мобильный
-pnpm --filter @kedrovnik/web perf:scene http://localhost:46100 /configurator/sosny 3
+pnpm --filter @cedarline/web perf:lighthouse http://localhost:46100 3   # Lighthouse, мобильный
+pnpm --filter @cedarline/web perf:scene http://localhost:46100 /configurator/sosny 3
 sh tools/load/run.sh http://localhost:46100                            # нагрузка, k6 в Docker
 ```
 
@@ -107,8 +107,8 @@ sh tools/load/run.sh http://localhost:46100                            # наг�
 экрана с отметками времени, видимый указатель), ffmpeg монтирует их в 1920×1080 и 1080×1920.
 
 ```bash
-pnpm --filter @kedrovnik/web video:record landscape browse      # и configure; portrait — телефон
-pnpm --filter @kedrovnik/web video:assemble landscape
+pnpm --filter @cedarline/web video:record landscape browse      # и configure; portrait — телефон
+pnpm --filter @cedarline/web video:assemble landscape
 ```
 
 ## Продакшен
@@ -124,7 +124,7 @@ CI (GitHub Actions) запускает те же проверки, затем п
 Схема меняется только миграциями (`apps/web/src/migrations`):
 
 ```bash
-pnpm --filter @kedrovnik/web generate:types   # типы Payload после изменения модели
-pnpm --filter @kedrovnik/web migrate:create <name>
-pnpm --filter @kedrovnik/web migrate
+pnpm --filter @cedarline/web generate:types   # типы Payload после изменения модели
+pnpm --filter @cedarline/web migrate:create <name>
+pnpm --filter @cedarline/web migrate
 ```

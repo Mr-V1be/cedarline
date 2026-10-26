@@ -1,6 +1,6 @@
 // Scene performance on an emulated phone: what the 3D view costs to load and to orbit.
 //
-// usage: pnpm --filter @kedrovnik/web perf:scene [base url] [page path] [runs]
+// usage: pnpm --filter @cedarline/web perf:scene [base url] [page path] [runs]
 // Needs Playwright's Chromium (pnpm exec playwright install chromium) and a running site.
 //
 // The phone is emulated: 390×844 at DPR 3, touch, 4× CPU slowdown, WebGL in SwiftShader. The

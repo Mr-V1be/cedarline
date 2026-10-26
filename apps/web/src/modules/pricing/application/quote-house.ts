@@ -1,6 +1,6 @@
-import { designSelections } from '@kedrovnik/configurator'
-import type { HouseDesign, HouseOptions, MeasuredHouse } from '@kedrovnik/house'
-import { quoteEveryCompleteness, type Quote, type TariffGrid } from '@kedrovnik/pricing'
+import { designSelections } from '@cedarline/configurator'
+import type { HouseDesign, HouseOptions, MeasuredHouse } from '@cedarline/house'
+import { quoteEveryCompleteness, type Quote, type TariffGrid } from '@cedarline/pricing'
 
 /** Quotes of a catalog project as designed, for every completeness level, in grid order. */
 export function quoteHouse(

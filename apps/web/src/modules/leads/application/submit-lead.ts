@@ -1,5 +1,5 @@
-import { isShareCode } from '@kedrovnik/configurator'
-import { Money } from '@kedrovnik/pricing'
+import { isShareCode } from '@cedarline/configurator'
+import { Money } from '@cedarline/pricing'
 
 import type { Locale } from '@/i18n/locales'
 import { savedPrices } from '@/modules/configurator/application/saved-prices'

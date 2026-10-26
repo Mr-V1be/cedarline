@@ -7,7 +7,7 @@ import {
   type Configuration,
   type ConfiguratorModel,
   type OptionGroup,
-} from '@kedrovnik/configurator'
+} from '@cedarline/configurator'
 import {
   HouseError,
   entranceViolations,
@@ -19,7 +19,7 @@ import {
   type HouseInput,
   type MeasuredHouse,
   type Vec3,
-} from '@kedrovnik/house'
+} from '@cedarline/house'
 import { describe, expect, it } from 'vitest'
 
 import { quoteHouse } from '@/modules/pricing/application/quote-house'

@@ -1,6 +1,6 @@
-import { Configurator, blueprintIssues } from '@kedrovnik/configurator'
-import { measureHouse } from '@kedrovnik/house'
-import { lowestQuote } from '@kedrovnik/pricing'
+import { Configurator, blueprintIssues } from '@cedarline/configurator'
+import { measureHouse } from '@cedarline/house'
+import { lowestQuote } from '@cedarline/pricing'
 import { describe, expect, it } from 'vitest'
 
 import { quoteHouse } from '@/modules/pricing/application/quote-house'

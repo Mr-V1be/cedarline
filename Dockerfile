@@ -20,7 +20,7 @@ COPY apps/web/package.json apps/web/
 COPY packages/configurator/package.json packages/configurator/
 COPY packages/house/package.json packages/house/
 COPY packages/pricing/package.json packages/pricing/
-RUN --mount=type=cache,id=kedrovnik-pnpm,target=/pnpm/store \
+RUN --mount=type=cache,id=cedarline-pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile
 
 FROM deps AS build
@@ -33,7 +33,7 @@ RUN NEXT_OUTPUT=standalone \
     SITE_URL=http://localhost:3000 \
     MAIL_FROM_ADDRESS=build@localhost.localdomain \
     MAIL_FROM_NAME=build \
-    pnpm --filter @kedrovnik/web build
+    pnpm --filter @cedarline/web build
 
 FROM base AS runner
 ENV NODE_ENV=production \

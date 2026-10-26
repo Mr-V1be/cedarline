@@ -1,4 +1,4 @@
-import type { HouseDesign, HouseOptions } from '@kedrovnik/house'
+import type { HouseDesign, HouseOptions } from '@cedarline/house'
 
 import type { Project } from '@/cms/generated/payload-types'
 

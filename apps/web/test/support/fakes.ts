@@ -1,4 +1,4 @@
-import type { ConfiguratorModel } from '@kedrovnik/configurator'
+import type { ConfiguratorModel } from '@cedarline/configurator'
 
 import type { ConfiguratorDeps } from '@/modules/configurator/application/configurator-model'
 import type { SavedConfiguration } from '@/modules/configurator/domain/snapshot'
@@ -146,23 +146,23 @@ export function proposalDeps(
       load: () =>
         Promise.resolve({
           phone: '+7 (812) 000-46-10',
-          email: 'hello@kedrovnik.example',
+          email: 'hello@cedarline.example',
           address: 'Тосно',
           hours: '9–19',
           region: 'СПб',
           location: [30.87, 59.55],
           legal: {
             demo: true,
-            name: 'ООО «Кедровник»',
+            name: 'ООО «Cedarline»',
             taxId: '0000000000',
             registrationNumber: '0000000000000',
-            privacyEmail: 'privacy@kedrovnik.example',
+            privacyEmail: 'privacy@cedarline.example',
             privacyEdition: new Date('2026-09-01'),
           },
         }),
     },
     linkTo: (code, locale) =>
-      `https://kedrovnik.example${locale === 'ru' ? '' : `/${locale}`}/c/${code}`,
+      `https://cedarline.example${locale === 'ru' ? '' : `/${locale}`}/c/${code}`,
   }
   return { deps, rendered }
 }

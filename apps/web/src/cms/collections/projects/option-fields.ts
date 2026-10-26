@@ -1,4 +1,4 @@
-import { FACADE_FINISHES, ROOF_KIND_KEYS, WINDOW_STYLES } from '@kedrovnik/house'
+import { FACADE_FINISHES, ROOF_KIND_KEYS, WINDOW_STYLES } from '@cedarline/house'
 import type { GroupField } from 'payload'
 
 import { hexColorField, millimetres } from '../../fields/common'

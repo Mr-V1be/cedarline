@@ -1,6 +1,6 @@
 'use client'
 
-import type { Bounds } from '@kedrovnik/house'
+import type { Bounds } from '@cedarline/house'
 import { useThree } from '@react-three/fiber'
 import { useEffect, type RefObject } from 'react'
 import { AgXToneMapping, type PerspectiveCamera, Vector2 } from 'three'

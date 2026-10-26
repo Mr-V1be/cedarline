@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
   // it is one cheap query, and previews, audits and crawlers all see the same head.
   htmlLimitedBots: /.*/,
   // Workspace domain packages ship TypeScript sources.
-  transpilePackages: ['@kedrovnik/configurator', '@kedrovnik/house', '@kedrovnik/pricing'],
+  transpilePackages: ['@cedarline/configurator', '@cedarline/house', '@cedarline/pricing'],
   images: {
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/files/c/*/render' }],
     formats: ['image/avif', 'image/webp'],

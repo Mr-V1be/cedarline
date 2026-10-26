@@ -1,4 +1,4 @@
-import { Money, roundToStep } from '@kedrovnik/pricing'
+import { Money, roundToStep } from '@cedarline/pricing'
 
 import {
   BASE_CURRENCY,

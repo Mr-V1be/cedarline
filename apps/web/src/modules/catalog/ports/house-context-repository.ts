@@ -1,4 +1,4 @@
-import type { ConstructionStandards, RoomKindCatalog } from '@kedrovnik/house'
+import type { ConstructionStandards, RoomKindCatalog } from '@cedarline/house'
 
 import type { Locale } from '@/i18n/locales'
 

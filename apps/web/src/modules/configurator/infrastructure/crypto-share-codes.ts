@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto'
 
-import { shareCodeFrom } from '@kedrovnik/configurator'
+import { shareCodeFrom } from '@cedarline/configurator'
 
 import type { ShareCodeSource } from '../ports/share-code-source'
 

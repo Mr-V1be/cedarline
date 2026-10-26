@@ -37,10 +37,10 @@
    sudo ufw enable
    ```
 3. **Код.** Репозиторий приватный: добавить на сервере deploy-ключ только на чтение и
-   склонировать в `/opt/kedrovnik`.
+   склонировать в `/opt/cedarline`.
 4. **Настройки.**
    ```sh
-   cd /opt/kedrovnik
+   cd /opt/cedarline
    cp .env.production.example .env.production
    chmod 600 .env.production
    openssl rand -hex 24   # POSTGRES_PASSWORD
@@ -78,7 +78,7 @@ docker compose -f docker-compose.prod.yml --env-file .env.production --profile d
 ## Обновление
 
 ```sh
-cd /opt/kedrovnik
+cd /opt/cedarline
 git pull
 docker compose -f docker-compose.prod.yml --env-file .env.production build
 docker compose -f docker-compose.prod.yml --env-file .env.production up -d
@@ -103,7 +103,7 @@ compose="docker compose -f docker-compose.prod.yml --env-file .env.production"
 $compose stop web caddy
 $compose run --rm --entrypoint sh backup -c \
   'PGPASSWORD="$POSTGRES_PASSWORD" pg_restore -h postgres -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists /backups/db_<дата>.dump'
-$compose run --rm --entrypoint sh -v kedrovnik_media:/data/media -v kedrovnik_documents:/data/documents backup -c \
+$compose run --rm --entrypoint sh -v cedarline_media:/data/media -v cedarline_documents:/data/documents backup -c \
   'tar -xzf /backups/files_<дата>.tar.gz -C /data'
 $compose up -d
 ```
@@ -140,14 +140,14 @@ $compose up -d
 ## Проверка на своей машине
 
 Стек целиком поднимается и локально — в своей подсети и на свободных портах. Для проверки
-нужен отдельный env-файл (например, `/tmp/kedrovnik.prodcheck.env`) с `SITE_DOMAIN=localhost`,
+нужен отдельный env-файл (например, `/tmp/cedarline.prodcheck.env`) с `SITE_DOMAIN=localhost`,
 `SITE_URL=https://localhost:46143`, `HTTP_PORT=127.0.0.1:46181`, `HTTPS_PORT=127.0.0.1:46143` и
 остальными значениями как для сервера. Caddy для `localhost` выпускает сертификат своего
 локального центра сертификации.
 
 ```sh
-export APP_ENV_FILE=/tmp/kedrovnik.prodcheck.env
-compose="docker compose -p kedrovnik-prodcheck -f docker-compose.prod.yml -f deploy/compose.local-check.yml --env-file $APP_ENV_FILE"
+export APP_ENV_FILE=/tmp/cedarline.prodcheck.env
+compose="docker compose -p cedarline-prodcheck -f docker-compose.prod.yml -f deploy/compose.local-check.yml --env-file $APP_ENV_FILE"
 $compose up -d --build
 curl -kfsS https://localhost:46143/api/health
 $compose down -v   # убрать стек проверки вместе с томами

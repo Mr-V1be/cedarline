@@ -8,7 +8,7 @@ import {
   ArrowLineUpIcon,
   PlantIcon,
 } from '@phosphor-icons/react/ssr'
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import { getTranslations } from 'next-intl/server'
 
 import { createPriceFormatter } from '@/modules/pricing/application/price-formatter'

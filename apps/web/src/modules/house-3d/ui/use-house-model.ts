@@ -1,6 +1,6 @@
 'use client'
 
-import { houseModel, measureHouse, type HouseModel } from '@kedrovnik/house'
+import { houseModel, measureHouse, type HouseModel } from '@cedarline/house'
 import { useMemo } from 'react'
 
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'

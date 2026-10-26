@@ -1,4 +1,4 @@
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import type { GlobalBeforeChangeHook } from 'payload'
 import { describe, expect, it } from 'vitest'
 

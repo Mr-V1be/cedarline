@@ -4,7 +4,7 @@ import {
   type Condition,
   type StageNorm,
   type TariffGrid,
-} from '@kedrovnik/pricing'
+} from '@cedarline/pricing'
 
 import type { Tariff as TariffDocument } from '@/cms/generated/payload-types'
 

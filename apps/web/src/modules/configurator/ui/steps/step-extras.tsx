@@ -1,6 +1,6 @@
 'use client'
 
-import type { ConfigurationState } from '@kedrovnik/configurator'
+import type { ConfigurationState } from '@cedarline/configurator'
 import { useTranslations } from 'next-intl'
 import { useMemo, type ReactNode } from 'react'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import type { HouseModel } from '@kedrovnik/house'
+import type { HouseModel } from '@cedarline/house'
 import { useEffect, useMemo } from 'react'
 import { BufferAttribute, BufferGeometry } from 'three'
 

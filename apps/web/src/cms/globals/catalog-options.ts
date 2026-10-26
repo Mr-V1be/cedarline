@@ -1,4 +1,4 @@
-import { FACADE_FINISHES, ROOF_KIND_KEYS, WINDOW_STYLES } from '@kedrovnik/house'
+import { FACADE_FINISHES, ROOF_KIND_KEYS, WINDOW_STYLES } from '@cedarline/house'
 import type { GlobalConfig } from 'payload'
 
 import { anyone, requireCapability } from '../access/policies'

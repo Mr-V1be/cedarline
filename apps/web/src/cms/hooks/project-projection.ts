@@ -1,4 +1,4 @@
-import { HouseError } from '@kedrovnik/house'
+import { HouseError } from '@cedarline/house'
 import { ValidationError, type CollectionBeforeChangeHook } from 'payload'
 
 import type { Project } from '@/cms/generated/payload-types'

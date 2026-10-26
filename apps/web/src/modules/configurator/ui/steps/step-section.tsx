@@ -6,8 +6,8 @@ import type {
   ConfigurationState,
   GroupState,
   OptionGroup,
-} from '@kedrovnik/configurator'
-import type { Money } from '@kedrovnik/pricing'
+} from '@cedarline/configurator'
+import type { Money } from '@cedarline/pricing'
 import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 

@@ -2,7 +2,7 @@
 # plus nightly backups. Settings and secrets live in `.env.production` (template:
 # `.env.production.example`), passed with `--env-file .env.production`; each service gets only
 # the variables it needs. docs/deploy.md walks through a first deployment.
-name: kedrovnik
+name: cedarline
 
 x-logging: &logging # Container logs rotate: at most 5 files of 10 MB per service.
   driver: json-file
@@ -36,7 +36,7 @@ services:
   # Schema migrations before every start of the site; exits when the database is current. The
   # same image runs the seed and the demo reset by hand (docs/deploy.md).
   migrate:
-    image: ${KEDROVNIK_TOOLS_IMAGE:-kedrovnik-tools:latest}
+    image: ${CEDARLINE_TOOLS_IMAGE:-cedarline-tools:latest}
     build:
       context: .
       target: tools
@@ -54,7 +54,7 @@ services:
     logging: *logging
 
   web:
-    image: ${KEDROVNIK_WEB_IMAGE:-kedrovnik-web:latest}
+    image: ${CEDARLINE_WEB_IMAGE:-cedarline-web:latest}
     build:
       context: .
       target: runner

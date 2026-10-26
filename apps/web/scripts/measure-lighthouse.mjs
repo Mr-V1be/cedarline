@@ -1,6 +1,6 @@
 // Lighthouse on mobile for the public pages: median of several runs per page.
 //
-// usage: pnpm --filter @kedrovnik/web perf:lighthouse [base url] [runs] [output json] [paths…]
+// usage: pnpm --filter @cedarline/web perf:lighthouse [base url] [runs] [output json] [paths…]
 // Needs a production build (`pnpm build && pnpm start`) and Playwright's Chromium.
 //
 // Lighthouse's default mobile profile: Moto G Power viewport, simulated slow 4G and a 4× CPU

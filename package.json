@@ -1,5 +1,5 @@
 {
-  "name": "kedrovnik",
+  "name": "cedarline",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.33.0",
@@ -8,8 +8,8 @@
     "pnpm": ">=10.0.0"
   },
   "scripts": {
-    "dev": "pnpm --filter @kedrovnik/web dev",
-    "build": "pnpm --filter @kedrovnik/web build",
+    "dev": "pnpm --filter @cedarline/web dev",
+    "build": "pnpm --filter @cedarline/web build",
     "typecheck": "pnpm -r --workspace-concurrency=1 typecheck",
     "lint": "eslint . && stylelint \"**/*.css\"",
     "format": "prettier --write .",

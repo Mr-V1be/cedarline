@@ -1,4 +1,4 @@
-import type { HouseDesign } from '@kedrovnik/house'
+import type { HouseDesign } from '@cedarline/house'
 
 import type { Footprint, ProjectBlueprint } from './model'
 

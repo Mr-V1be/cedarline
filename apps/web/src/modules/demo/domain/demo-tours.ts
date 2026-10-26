@@ -20,7 +20,7 @@ export interface DemoTour {
 export const DEMO_TOURS = [
   {
     role: 'sales-manager',
-    email: 'sales@kedrovnik.example',
+    email: 'sales@cedarline.example',
     stops: [
       { key: 'leads', path: '/admin/collections/leads' },
       { key: 'mailbox', path: '/admin/collections/mailbox' },
@@ -29,7 +29,7 @@ export const DEMO_TOURS = [
   },
   {
     role: 'content-manager',
-    email: 'content@kedrovnik.example',
+    email: 'content@cedarline.example',
     stops: [
       { key: 'projects', path: '/admin/collections/projects' },
       { key: 'rules', path: '/admin/globals/catalog-options' },
@@ -39,7 +39,7 @@ export const DEMO_TOURS = [
   },
   {
     role: 'admin',
-    email: 'admin@kedrovnik.example',
+    email: 'admin@cedarline.example',
     stops: [
       { key: 'dashboard', path: '/admin' },
       { key: 'users', path: '/admin/collections/users' },

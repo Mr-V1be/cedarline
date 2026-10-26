@@ -1,6 +1,6 @@
 'use client'
 
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import type { UIFieldClientComponent } from 'payload'
 import { TextInput, useFormFields } from '@payloadcms/ui'
 

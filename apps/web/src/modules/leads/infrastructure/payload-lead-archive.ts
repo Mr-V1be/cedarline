@@ -4,7 +4,7 @@ import { isLocale } from '@/i18n/locales'
 import type { DocumentStore } from '@/modules/configurator/ports/document-store'
 import type { SavedConfigurationRepository } from '@/modules/configurator/ports/saved-configuration-repository'
 import { restoreDisplayCurrency } from '@/modules/pricing/domain/exchange-rate'
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 
 import type { Lead } from '../domain/lead-record'
 import type { LeadArchive } from '../ports/lead-archive'

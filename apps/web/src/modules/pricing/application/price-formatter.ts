@@ -1,4 +1,4 @@
-import type { Money } from '@kedrovnik/pricing'
+import type { Money } from '@cedarline/pricing'
 
 import {
   fractionDigitsOf,

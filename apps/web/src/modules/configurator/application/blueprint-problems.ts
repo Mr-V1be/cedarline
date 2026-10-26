@@ -5,8 +5,8 @@ import {
   type ConfiguratorOffer,
   type HouseContext,
   type ProjectBlueprint,
-} from '@kedrovnik/configurator'
-import type { TariffGrid } from '@kedrovnik/pricing'
+} from '@cedarline/configurator'
+import type { TariffGrid } from '@cedarline/pricing'
 
 export interface BlueprintProblem {
   readonly slug: string

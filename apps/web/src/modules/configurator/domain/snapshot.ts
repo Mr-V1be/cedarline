@@ -1,6 +1,6 @@
-import type { Configuration } from '@kedrovnik/configurator'
-import type { HouseMetrics } from '@kedrovnik/house'
-import type { Estimate, Schedule } from '@kedrovnik/pricing'
+import type { Configuration } from '@cedarline/configurator'
+import type { HouseMetrics } from '@cedarline/house'
+import type { Estimate, Schedule } from '@cedarline/pricing'
 
 import type { Locale } from '@/i18n/locales'
 import type { HouseViewerInput } from '@/modules/catalog/application/project-overview'

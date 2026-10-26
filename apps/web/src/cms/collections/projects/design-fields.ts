@@ -6,7 +6,7 @@ import {
   TERRACE_REACHES,
   WALL_SIDES,
   WINDOW_ROLES,
-} from '@kedrovnik/house'
+} from '@cedarline/house'
 import type { Field, GroupField } from 'payload'
 
 import { keyField, millimetres } from '../../fields/common'

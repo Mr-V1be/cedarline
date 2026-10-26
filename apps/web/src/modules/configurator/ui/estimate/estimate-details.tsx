@@ -1,7 +1,7 @@
 'use client'
 
-import { QUANTITY_DRIVERS, isQuantityDriver } from '@kedrovnik/house'
-import type { Estimate, Schedule } from '@kedrovnik/pricing'
+import { QUANTITY_DRIVERS, isQuantityDriver } from '@cedarline/house'
+import type { Estimate, Schedule } from '@cedarline/pricing'
 import { CaretDownIcon } from '@phosphor-icons/react/ssr'
 import { useFormatter, useTranslations } from 'next-intl'
 

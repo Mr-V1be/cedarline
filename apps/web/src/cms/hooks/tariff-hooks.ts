@@ -1,4 +1,4 @@
-import { PricingError } from '@kedrovnik/pricing'
+import { PricingError } from '@cedarline/pricing'
 import { ValidationError, type GlobalBeforeChangeHook } from 'payload'
 
 import { toTariffGrid, type TariffData } from '@/modules/pricing/infrastructure/tariff-mapper'

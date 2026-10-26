@@ -52,7 +52,7 @@ describe('one-click demo sign-in', () => {
     const { value, opened } = deps()
     const outcome = await startDemoSession(value, request)
     expect(outcome).toMatchObject({ ok: true, landing: '/admin/collections/leads' })
-    expect(opened).toEqual(['sales@kedrovnik.example'])
+    expect(opened).toEqual(['sales@cedarline.example'])
   })
 
   it('lands on a chosen stop of the tour', async () => {

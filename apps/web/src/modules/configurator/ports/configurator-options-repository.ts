@@ -1,4 +1,4 @@
-import type { ConfiguratorOffer } from '@kedrovnik/configurator'
+import type { ConfiguratorOffer } from '@cedarline/configurator'
 
 import type { Locale } from '@/i18n/locales'
 

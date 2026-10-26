@@ -1,4 +1,4 @@
-import { isShareCode } from '@kedrovnik/configurator'
+import { isShareCode } from '@cedarline/configurator'
 import type { NextRequest } from 'next/server'
 
 import { getServices } from '@/composition/services'

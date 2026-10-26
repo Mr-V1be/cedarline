@@ -1,5 +1,5 @@
-import type { SelectionOption } from '@kedrovnik/configurator'
-import type { FacadeFinish, RoofKindKey, WindowStyle } from '@kedrovnik/house'
+import type { SelectionOption } from '@cedarline/configurator'
+import type { FacadeFinish, RoofKindKey, WindowStyle } from '@cedarline/house'
 
 import { t, type Localized } from './localized'
 

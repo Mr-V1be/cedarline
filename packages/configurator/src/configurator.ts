@@ -1,5 +1,5 @@
-import { HouseError, measureHouse, type HouseInput, type MeasuredHouse } from '@kedrovnik/house'
-import { Money, quote, type Quote } from '@kedrovnik/pricing'
+import { HouseError, measureHouse, type HouseInput, type MeasuredHouse } from '@cedarline/house'
+import { Money, quote, type Quote } from '@cedarline/pricing'
 
 import { applyChoice, blueprintOf, choicesOf, isChosen } from './choices'
 import {

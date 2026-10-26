@@ -1,4 +1,4 @@
-import type { ConfiguratorModel } from '@kedrovnik/configurator'
+import type { ConfiguratorModel } from '@cedarline/configurator'
 
 import type { Locale } from '@/i18n/locales'
 import type { HouseContextRepository } from '@/modules/catalog/ports/house-context-repository'

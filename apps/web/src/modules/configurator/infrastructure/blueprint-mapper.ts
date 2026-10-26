@@ -1,4 +1,4 @@
-import type { ProjectBlueprint } from '@kedrovnik/configurator'
+import type { ProjectBlueprint } from '@cedarline/configurator'
 
 import type { Project } from '@/cms/generated/payload-types'
 import {

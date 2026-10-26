@@ -1,4 +1,4 @@
-import type { Bounds } from '@kedrovnik/house'
+import type { Bounds } from '@cedarline/house'
 
 import { CAMERA_PRESETS, type CameraPreset } from '../domain/camera-presets'
 

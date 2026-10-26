@@ -1,4 +1,4 @@
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 
 import { FinanceError } from './finance-error'
 import type { FinancingTerms } from './financing-terms'

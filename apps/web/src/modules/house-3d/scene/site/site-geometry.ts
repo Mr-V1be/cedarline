@@ -1,4 +1,4 @@
-import type { GroundRect, SiteAnchors } from '@kedrovnik/house'
+import type { GroundRect, SiteAnchors } from '@cedarline/house'
 import { BoxGeometry, BufferAttribute, PlaneGeometry, type BufferGeometry } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 

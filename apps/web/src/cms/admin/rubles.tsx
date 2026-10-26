@@ -1,6 +1,6 @@
 'use client'
 
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import type { DefaultCellComponentProps, NumberFieldClientComponent } from 'payload'
 import { TextInput, useField } from '@payloadcms/ui'
 

@@ -1,4 +1,4 @@
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 
 import type { Locale } from '@/i18n/locales'
 import { toBaseMoney, toMinor } from '@/modules/pricing/domain/conversion'

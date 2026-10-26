@@ -1,4 +1,4 @@
-import type { FloorPlan, PlanDeck, PlanRect } from '@kedrovnik/house'
+import type { FloorPlan, PlanDeck, PlanRect } from '@cedarline/house'
 
 /** A partition strip on a room axis that is not part of the outer contour. */
 export interface PartitionSegment {

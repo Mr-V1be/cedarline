@@ -1,4 +1,4 @@
-import type { HouseDesign, HouseOptions } from '@kedrovnik/house'
+import type { HouseDesign, HouseOptions } from '@cedarline/house'
 
 /** A CMS image; responsive sizes are produced by the image optimizer on request. */
 /** An image the site can show: its address, intrinsic size and description. */

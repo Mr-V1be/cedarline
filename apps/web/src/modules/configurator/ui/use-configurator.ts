@@ -6,7 +6,7 @@ import {
   type Choice,
   type Configuration,
   type ConfigurationState,
-} from '@kedrovnik/configurator'
+} from '@cedarline/configurator'
 import { useCallback, useMemo, useState } from 'react'
 
 import type { ConfiguratorView } from '../application/open-configurator'

@@ -1,4 +1,4 @@
-import { DEFAULT_STANDARDS, type ConstructionStandards } from '@kedrovnik/house'
+import { DEFAULT_STANDARDS, type ConstructionStandards } from '@cedarline/house'
 
 import { resolveWall, type WallLayer } from '../domain/wall-assembly'
 

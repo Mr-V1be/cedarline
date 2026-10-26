@@ -1,4 +1,4 @@
-import type { FacadeFinish } from '@kedrovnik/house'
+import type { FacadeFinish } from '@cedarline/house'
 
 import type { MaterialKey } from './assets'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import type { FloorPlan } from '@kedrovnik/house'
+import type { FloorPlan } from '@cedarline/house'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 

@@ -6,8 +6,8 @@ import type {
   RoofKindKey,
   RoomKindCatalog,
   WindowStyle,
-} from '@kedrovnik/house'
-import type { Condition, TariffGrid } from '@kedrovnik/pricing'
+} from '@cedarline/house'
+import type { Condition, TariffGrid } from '@cedarline/pricing'
 
 /** Outer dimensions of the house, mm. */
 export interface Footprint {

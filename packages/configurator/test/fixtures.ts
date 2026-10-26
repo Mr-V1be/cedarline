@@ -1,5 +1,5 @@
-import { DEFAULT_STANDARDS, type HouseDesign, type RoomKindCatalog } from '@kedrovnik/house'
-import { Money, type TariffGrid } from '@kedrovnik/pricing'
+import { DEFAULT_STANDARDS, type HouseDesign, type RoomKindCatalog } from '@cedarline/house'
+import { Money, type TariffGrid } from '@cedarline/pricing'
 
 import type { ConfiguratorModel, ConfiguratorOffer, ProjectBlueprint } from '../src'
 

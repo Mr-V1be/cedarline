@@ -1,4 +1,4 @@
-import type { ConfigurationState, OptionGroup } from '@kedrovnik/configurator'
+import type { ConfigurationState, OptionGroup } from '@cedarline/configurator'
 
 import type { CameraPreset } from '@/modules/house-3d/domain/camera-presets'
 

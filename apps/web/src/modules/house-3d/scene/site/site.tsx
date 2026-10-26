@@ -1,6 +1,6 @@
 'use client'
 
-import type { Approach, Bounds, SiteAnchors } from '@kedrovnik/house'
+import type { Approach, Bounds, SiteAnchors } from '@cedarline/house'
 import { useEffect, useMemo } from 'react'
 import { MeshStandardMaterial } from 'three'
 

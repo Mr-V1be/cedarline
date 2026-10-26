@@ -1,4 +1,4 @@
-import { ConfiguratorError, validateOffer, type OfferField } from '@kedrovnik/configurator'
+import { ConfiguratorError, validateOffer, type OfferField } from '@cedarline/configurator'
 import { ValidationError, type GlobalBeforeChangeHook, type PayloadRequest } from 'payload'
 
 import { loadRoomKindIndex } from '@/modules/catalog/infrastructure/room-kind-index'

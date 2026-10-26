@@ -7,8 +7,8 @@ import {
   type HouseOptions,
   type RoomKindCatalog,
   type Takeoff,
-} from '@kedrovnik/house'
-import type { Quote } from '@kedrovnik/pricing'
+} from '@cedarline/house'
+import type { Quote } from '@cedarline/pricing'
 
 import type { Locale } from '@/i18n/locales'
 import { quoteHouse } from '@/modules/pricing/application/quote-house'

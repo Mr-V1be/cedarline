@@ -1,5 +1,5 @@
-import { ROOF_KINDS, type HouseErrorCode, type RoofKindKey } from '@kedrovnik/house'
-import { allConditionsHold } from '@kedrovnik/pricing'
+import { ROOF_KINDS, type HouseErrorCode, type RoofKindKey } from '@cedarline/house'
+import { allConditionsHold } from '@cedarline/pricing'
 
 import { blueprintOf } from './choices'
 import type { Configuration } from './configuration'

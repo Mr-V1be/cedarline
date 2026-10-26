@@ -1,4 +1,4 @@
-import type { TariffGrid } from '@kedrovnik/pricing'
+import type { TariffGrid } from '@cedarline/pricing'
 
 /** Localised names of the keys used in the grid, for estimates and schedules on screen. */
 export interface TariffNames {

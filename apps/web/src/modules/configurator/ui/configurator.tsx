@@ -1,6 +1,6 @@
 'use client'
 
-import type { Configuration } from '@kedrovnik/configurator'
+import type { Configuration } from '@cedarline/configurator'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,

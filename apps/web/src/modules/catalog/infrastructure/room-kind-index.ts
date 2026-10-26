@@ -1,4 +1,4 @@
-import type { RoomKindCatalog } from '@kedrovnik/house'
+import type { RoomKindCatalog } from '@cedarline/house'
 import type { Payload, PayloadRequest } from 'payload'
 
 import type { Locale } from '@/i18n/locales'

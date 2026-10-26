@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import { getTranslations } from 'next-intl/server'
 
 import { getDisplayCurrency, getServices } from '@/composition/services'

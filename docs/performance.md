@@ -2,7 +2,7 @@
 
 ## 3D-сцена на телефоне
 
-Замер — `pnpm --filter @kedrovnik/web perf:scene <url> /configurator/sosny 3`
+Замер — `pnpm --filter @cedarline/web perf:scene <url> /configurator/sosny 3`
 (`apps/web/scripts/measure-scene.mjs`) на продакшен-сборке (`next build && next start`).
 Эмуляция телефона: 390 × 844, DPR 3, замедление CPU в 4 раза, программный WebGL (SwiftShader),
 три прогона, медиана. Сцена на телефоне работает на уровне качества `low`. «Кадр» — время
@@ -34,7 +34,7 @@
 
 ## Lighthouse, мобильный профиль
 
-Замер — `pnpm --filter @kedrovnik/web perf:lighthouse <url> <прогонов> [json] [пути…]`
+Замер — `pnpm --filter @cedarline/web perf:lighthouse <url> <прогонов> [json] [пути…]`
 (`apps/web/scripts/measure-lighthouse.mjs`): Lighthouse 13 с мобильной эмуляцией по умолчанию
 (Moto G Power, замедление CPU в 4 раза, медленный 4G по модели Lantern), продакшен-сборка,
 три прогона на страницу, в таблице — медиана по Performance. Машина общая и загружена чужими

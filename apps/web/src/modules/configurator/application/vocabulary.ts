@@ -5,8 +5,8 @@ import {
   type OptionGroup,
   type ProjectBlueprint,
   type Restriction,
-} from '@kedrovnik/configurator'
-import type { HouseDesign } from '@kedrovnik/house'
+} from '@cedarline/configurator'
+import type { HouseDesign } from '@cedarline/house'
 
 import type { ConfiguratorNames } from '../domain/names'
 

@@ -3,9 +3,9 @@ import {
   type ConfiguratorModel,
   type ConfiguratorOffer,
   type ProjectBlueprint,
-} from '@kedrovnik/configurator'
-import type { HouseDesign, RoomKindCatalog } from '@kedrovnik/house'
-import { Money, validateTariffGrid, type TariffGrid } from '@kedrovnik/pricing'
+} from '@cedarline/configurator'
+import type { HouseDesign, RoomKindCatalog } from '@cedarline/house'
+import { Money, validateTariffGrid, type TariffGrid } from '@cedarline/pricing'
 
 import { standardsFor } from '@/modules/technology/application/standards'
 import {

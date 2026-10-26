@@ -1,4 +1,4 @@
-import type { RoundingMode } from '@kedrovnik/pricing'
+import type { RoundingMode } from '@cedarline/pricing'
 
 import type { Locale } from '@/i18n/locales'
 

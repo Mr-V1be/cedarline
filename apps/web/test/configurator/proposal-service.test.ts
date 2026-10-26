@@ -1,4 +1,4 @@
-import { initialConfiguration } from '@kedrovnik/configurator'
+import { initialConfiguration } from '@cedarline/configurator'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { saveConfiguration } from '@/modules/configurator/application/save-configuration'
@@ -42,10 +42,10 @@ describe('proposalFor', () => {
     const configuration = await saved.findByCode('kedrkedrkedr')
     if (configuration === null) throw new Error('not saved')
     const first = await proposalFor(deps, configuration, 'ru')
-    expect(first?.filename).toBe('kedrovnik-kp-kedrkedrkedr.pdf')
+    expect(first?.filename).toBe('cedarline-kp-kedrkedrkedr.pdf')
     expect(rendered).toHaveLength(1)
     expect(rendered[0]?.render?.toString()).toBe('jpeg')
-    expect(rendered[0]?.link).toBe('https://kedrovnik.example/c/kedrkedrkedr')
+    expect(rendered[0]?.link).toBe('https://cedarline.example/c/kedrkedrkedr')
 
     const again = await proposalFor(deps, (await saved.findByCode('kedrkedrkedr'))!, 'ru')
     expect(again?.documentId).toBe(first?.documentId)
@@ -58,9 +58,9 @@ describe('proposalFor', () => {
     const english = await proposalFor(deps, configuration!, 'en')
     expect(english).toMatchObject({
       documentId: null,
-      filename: 'kedrovnik-proposal-kedrkedrkedr-en.pdf',
+      filename: 'cedarline-proposal-kedrkedrkedr-en.pdf',
     })
-    expect(rendered[0]?.link).toBe('https://kedrovnik.example/en/c/kedrkedrkedr')
+    expect(rendered[0]?.link).toBe('https://cedarline.example/en/c/kedrkedrkedr')
     expect((await saved.findByCode('kedrkedrkedr'))?.proposalId).toBeNull()
   })
 })

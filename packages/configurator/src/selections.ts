@@ -1,5 +1,5 @@
-import type { HouseDesign, HouseOptions } from '@kedrovnik/house'
-import type { Selections } from '@kedrovnik/pricing'
+import type { HouseDesign, HouseOptions } from '@cedarline/house'
+import type { Selections } from '@cedarline/pricing'
 
 import type { Configuration } from './configuration'
 import { storeyKey } from './footprint'

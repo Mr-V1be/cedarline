@@ -73,7 +73,7 @@ const visitor = () => ({ 'X-Forwarded-For': `10.${octet()}.${octet()}.${octet()}
 
 /** A server action call as the browser makes it: multipart fields of the FormData argument. */
 function callAction(path, action, fields, headers) {
-  const boundary = `----kedrovnik${Math.random().toString(16).slice(2)}`
+  const boundary = `----cedarline${Math.random().toString(16).slice(2)}`
   const parts = Object.entries(fields).map(
     ([name, value]) =>
       `--${boundary}\r\nContent-Disposition: form-data; name="_1_${name}"\r\n\r\n${value}\r\n`,

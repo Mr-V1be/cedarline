@@ -91,7 +91,7 @@ async function withVersionedName<T>(
   upload: (filePath: string | undefined) => Promise<T>,
 ): Promise<T> {
   if (!changed) return upload(undefined)
-  const directory = mkdtempSync(path.join(tmpdir(), 'kedrovnik-render-'))
+  const directory = mkdtempSync(path.join(tmpdir(), 'cedarline-render-'))
   const versioned = path.join(
     directory,
     `${path.basename(source, '.webp')}-${checksum.slice(0, 8)}.webp`,

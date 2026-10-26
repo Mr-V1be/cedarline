@@ -1,6 +1,6 @@
 'use client'
 
-import type { Bounds } from '@kedrovnik/house'
+import type { Bounds } from '@cedarline/house'
 import { OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, type ComponentRef } from 'react'

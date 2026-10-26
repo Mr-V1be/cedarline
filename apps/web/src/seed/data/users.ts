@@ -3,9 +3,9 @@ import { demoTourOf, type DemoRole } from '@/modules/demo/domain/demo-tours'
 
 /** Passwords of the demo accounts, for signing in with the form; listed in the README. */
 const PASSWORDS: Readonly<Record<DemoRole, string>> = {
-  admin: 'kedrovnik-admin-demo',
-  'content-manager': 'kedrovnik-content-demo',
-  'sales-manager': 'kedrovnik-sales-demo',
+  admin: 'cedarline-admin-demo',
+  'content-manager': 'cedarline-content-demo',
+  'sales-manager': 'cedarline-sales-demo',
 }
 
 const NAMES: Readonly<Record<DemoRole, string>> = {

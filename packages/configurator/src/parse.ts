@@ -1,4 +1,4 @@
-import { isFacadeFinish, isRoofKindKey, isWindowStyle } from '@kedrovnik/house'
+import { isFacadeFinish, isRoofKindKey, isWindowStyle } from '@cedarline/house'
 
 import type { Configuration } from './configuration'
 import { ConfiguratorError } from './errors'

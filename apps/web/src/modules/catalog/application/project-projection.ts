@@ -1,5 +1,5 @@
-import { measureHouse, type HouseDesign, type HouseOptions } from '@kedrovnik/house'
-import { Money, advertisedPrice, lowestQuote, type TariffGrid } from '@kedrovnik/pricing'
+import { measureHouse, type HouseDesign, type HouseOptions } from '@cedarline/house'
+import { Money, advertisedPrice, lowestQuote, type TariffGrid } from '@cedarline/pricing'
 
 import { quoteHouse } from '@/modules/pricing/application/quote-house'
 

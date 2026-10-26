@@ -33,7 +33,7 @@
 ## Окружение, материалы и деревья 3D-сцены
 
 Небо, освещение, PBR-текстуры и модели деревьев скачаны скриптом
-`pnpm --filter @kedrovnik/web scene:assets` (`apps/web/scripts/scene-assets`) с официальных сайтов
+`pnpm --filter @cedarline/web scene:assets` (`apps/web/scripts/scene-assets`) с официальных сайтов
 библиотек, уменьшены и сжаты в KTX2 (Basis Universal) и WebP. Результат лежит в
 `apps/web/public/scene`. Все ассеты — CC0 1.0 (общественное достояние): коммерческое
 использование без ограничений, указание авторства не требуется, но мы его приводим.

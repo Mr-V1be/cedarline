@@ -45,25 +45,25 @@ jobs:
       postgres:
         image: postgis/postgis:18-3.6
         env:
-          POSTGRES_DB: kedrovnik
-          POSTGRES_USER: kedrovnik
+          POSTGRES_DB: cedarline
+          POSTGRES_USER: cedarline
           POSTGRES_PASSWORD: ci-only-password
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U kedrovnik -d kedrovnik"
+          --health-cmd "pg_isready -U cedarline -d cedarline"
           --health-interval 5s
           --health-timeout 3s
           --health-retries 20
     env:
-      DATABASE_URL: postgres://kedrovnik:ci-only-password@localhost:5432/kedrovnik
+      DATABASE_URL: postgres://cedarline:ci-only-password@localhost:5432/cedarline
       PAYLOAD_SECRET: ci-only-secret-that-is-at-least-32-characters
       SITE_URL: http://localhost:46100
       # No mail is sent in CI; the transport only has to be configured.
       SMTP_HOST: localhost
       SMTP_PORT: '1025'
-      MAIL_FROM_ADDRESS: ci@kedrovnik.example
-      MAIL_FROM_NAME: Kedrovnik CI
+      MAIL_FROM_ADDRESS: ci@cedarline.example
+      MAIL_FROM_NAME: Cedarline CI
       LEAD_SINKS: cms
       NEXT_TELEMETRY_DISABLED: '1'
     steps:
@@ -75,17 +75,17 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Apply migrations to an empty database
-        run: pnpm --filter @kedrovnik/web migrate
+        run: pnpm --filter @cedarline/web migrate
       - name: Every schema change has a migration
         run: |
-          pnpm --filter @kedrovnik/web migrate:create schema-drift --skip-empty
+          pnpm --filter @cedarline/web migrate:create schema-drift --skip-empty
           test -z "$(git status --porcelain apps/web/src/migrations)" || {
             git status --porcelain apps/web/src/migrations
             echo "The Payload schema differs from the migrations: run migrate:create." >&2
             exit 1
           }
       - name: Seed demo content
-        run: pnpm --filter @kedrovnik/web seed
+        run: pnpm --filter @cedarline/web seed
       - run: pnpm build
 
   images:
@@ -97,31 +97,31 @@ jobs:
       postgres:
         image: postgis/postgis:18-3.6
         env:
-          POSTGRES_DB: kedrovnik
-          POSTGRES_USER: kedrovnik
+          POSTGRES_DB: cedarline
+          POSTGRES_USER: cedarline
           POSTGRES_PASSWORD: ci-only-password
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U kedrovnik -d kedrovnik"
+          --health-cmd "pg_isready -U cedarline -d cedarline"
           --health-interval 5s
           --health-timeout 3s
           --health-retries 20
     steps:
       - uses: actions/checkout@v7
-      - run: docker build --target runner -t kedrovnik-web:ci .
-      - run: docker build --target tools -t kedrovnik-tools:ci .
+      - run: docker build --target runner -t cedarline-web:ci .
+      - run: docker build --target tools -t cedarline-tools:ci .
       - name: Migrations from the tools image, then the server image answers its healthcheck
         run: |
           cat > ci.env <<'ENV'
-          DATABASE_URL=postgres://kedrovnik:ci-only-password@127.0.0.1:5432/kedrovnik
+          DATABASE_URL=postgres://cedarline:ci-only-password@127.0.0.1:5432/cedarline
           PAYLOAD_SECRET=ci-only-secret-that-is-at-least-32-characters
           SITE_URL=http://localhost:3000
-          MAIL_FROM_ADDRESS=ci@kedrovnik.example
-          MAIL_FROM_NAME=Kedrovnik CI
+          MAIL_FROM_ADDRESS=ci@cedarline.example
+          MAIL_FROM_NAME=Cedarline CI
           ENV
-          docker run --rm --network host --env-file ci.env kedrovnik-tools:ci migrate
-          docker run -d --name web --network host --env-file ci.env kedrovnik-web:ci
+          docker run --rm --network host --env-file ci.env cedarline-tools:ci migrate
+          docker run -d --name web --network host --env-file ci.env cedarline-web:ci
           for attempt in $(seq 1 60); do
             curl -fsS http://127.0.0.1:3000/api/health && exit 0
             sleep 2

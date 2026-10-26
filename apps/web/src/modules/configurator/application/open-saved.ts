@@ -1,5 +1,5 @@
-import { Configurator, isShareCode } from '@kedrovnik/configurator'
-import type { Money } from '@kedrovnik/pricing'
+import { Configurator, isShareCode } from '@cedarline/configurator'
+import type { Money } from '@cedarline/pricing'
 
 import type { Locale } from '@/i18n/locales'
 import { toDisplayMinor } from '@/modules/pricing/domain/conversion'

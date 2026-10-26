@@ -3,9 +3,9 @@
 # running build of the site. The server action ids differ per build, so they are read from the
 # build's manifest: a local `next start` (default) or the web container of a compose project.
 #   tools/load/run.sh http://localhost:46100
-#   tools/load/run.sh http://localhost:46144 "docker exec kedrovnik-prodcheck-web-1"
+#   tools/load/run.sh http://localhost:46144 "docker exec cedarline-prodcheck-web-1"
 #   VUS=25 tools/load/run.sh http://localhost:46100 "" capacity.js   (read paths, no pauses)
-# Afterwards `pnpm --filter @kedrovnik/web demo:reset` removes the test's leads and mail.
+# Afterwards `pnpm --filter @cedarline/web demo:reset` removes the test's leads and mail.
 set -eu
 BASE_URL="${1:?base URL of the site}"
 IN_CONTAINER="${2:-}"

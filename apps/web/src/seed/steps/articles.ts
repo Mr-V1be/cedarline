@@ -19,7 +19,7 @@ import {
   wallSectionScheme,
 } from '../data/schemes'
 import { WALL_LAYERS } from '../data/technology'
-import { DEFAULT_STANDARDS } from '@kedrovnik/house'
+import { DEFAULT_STANDARDS } from '@cedarline/house'
 import { holdsSeedFile } from './media'
 import { SEED, translate, upsert } from './upsert'
 

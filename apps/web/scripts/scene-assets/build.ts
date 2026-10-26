@@ -8,7 +8,7 @@
  *
  * Needs `ktx` from KTX-Software (v4.4+), `unzip` and Playwright's Chromium. Stages can be run
  * one at a time to keep each run short:
- *   pnpm --filter @kedrovnik/web scene:assets [skies] [materials] [trees]
+ *   pnpm --filter @cedarline/web scene:assets [skies] [materials] [trees]
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'

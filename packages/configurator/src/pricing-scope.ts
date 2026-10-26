@@ -1,4 +1,4 @@
-import type { TariffGrid } from '@kedrovnik/pricing'
+import type { TariffGrid } from '@cedarline/pricing'
 
 import type { OptionGroup } from './configuration'
 import type { SelectionOption } from './selections'

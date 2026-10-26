@@ -1,4 +1,4 @@
-import type { DimensionChain, FloorPlan, PlanDeck, PlanDoor, PlanOpening } from '@kedrovnik/house'
+import type { DimensionChain, FloorPlan, PlanDeck, PlanDoor, PlanOpening } from '@cedarline/house'
 
 import styles from './floor-plan.module.css'
 import { drawingBounds, entranceTreads, outdoorExtent, partitions, treads } from './plan-geometry'

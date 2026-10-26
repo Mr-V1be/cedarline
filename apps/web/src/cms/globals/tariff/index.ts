@@ -1,5 +1,5 @@
-import { QUANTITY_DRIVER_KEYS } from '@kedrovnik/house'
-import { ROUNDING_MODES } from '@kedrovnik/pricing'
+import { QUANTITY_DRIVER_KEYS } from '@cedarline/house'
+import { ROUNDING_MODES } from '@cedarline/pricing'
 import type { GlobalConfig, TextField } from 'payload'
 
 import { anyone, requireCapability } from '../../access/policies'

@@ -1,4 +1,4 @@
-import type { FacadeFinish, MaterialSlot } from '@kedrovnik/house'
+import type { FacadeFinish, MaterialSlot } from '@cedarline/house'
 import { Color, DoubleSide, MeshStandardMaterial, Vector2, type Material } from 'three'
 
 import { tileSize } from './assets'

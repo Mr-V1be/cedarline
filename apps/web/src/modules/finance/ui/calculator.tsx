@@ -1,7 +1,7 @@
 'use client'
 
 import { ChatsCircleIcon, CubeIcon, WarningCircleIcon } from '@phosphor-icons/react/ssr'
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import { useFormatter, useTranslations } from 'next-intl'
 import { useState } from 'react'
 

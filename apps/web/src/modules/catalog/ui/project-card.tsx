@@ -1,4 +1,4 @@
-import { Money } from '@kedrovnik/pricing'
+import { Money } from '@cedarline/pricing'
 import { BedIcon, HouseLineIcon, RulerIcon } from '@phosphor-icons/react/ssr'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'

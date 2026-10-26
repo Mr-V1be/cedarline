@@ -1,6 +1,6 @@
-import type { QuantityDriver } from '@kedrovnik/house'
+import type { QuantityDriver } from '@cedarline/house'
 
-import type { SelectionOption } from '@kedrovnik/configurator'
+import type { SelectionOption } from '@cedarline/configurator'
 
 import { t, type Localized } from './localized'
 
